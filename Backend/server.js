@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const axios = require('axios');
-const csvToJson = require('convert-csv-to-json');
 const app = express();
 const schedule = require('node-schedule');
+const readline = require('readline');
+
+const updateDataFromAPI = require('./module/updateDataFromAPI');
+
 
 const apiKeys =[
     'ZSQ57OXG4YKUA0B8', //API Key Hakan;
@@ -16,23 +18,89 @@ const apiKeys =[
 ]
 let apiKeyIndex = 0;
 let apiKey;
-let url;
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const routes = require('./routes/routes.js')(app, fs);
+const routes = require('./routes/routes.js')(app, fs, apiKey);
 
 // launch server on Port 3001
 const server = app.listen(3001, () => {
     setApiKey();
     console.log('listening on port %s...', server.address().port);
-    // updateData();
+    updateIntradayData();
 });
 
-//Every 3 hours the API key is changed
-const changeApiKey = schedule.scheduleJob('* */3 * * *', setApiKey);
+//INFO WICHTIGER LINK für schedule
+//https://crontab.guru/#*_*_*_*_*
 
+
+// //Every 3 hours the API key is updated
+// const updateApiKey = schedule.scheduleJob('* */3 * * *', setApiKey);
+
+// //Every hour new data are pulled from the API for Intraday
+ const updateIntraday = schedule.scheduleJob('* */1 * * *', updateIntradayData);
+
+// //Always at 0:10 the daily data is pulled from the API
+ const updateDaily = schedule.scheduleJob('30 0 * * *', updateDailyData);
+
+// //Always at 0:20 the weekly data is pulled from the API
+ const updateWeekly = schedule.scheduleJob('20 0 * * *', updateWeeklyData);
+
+// //Always at 0:30 the monthly data is pulled from the API
+ const updateMonthly = schedule.scheduleJob('30 0 * * *', updateMonthlyData);
+
+
+async function updateIntradayData(){
+    const fileStream = fs.createReadStream('./data/symbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+
+    for await (const symbol of rl) {
+        updateDataFromAPI.updateIntradaySeriesShare(symbol,30, apiKey);
+    }
+}
+
+async function updateDailyData(){
+    const fileStream = fs.createReadStream('./data/symbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+
+    for await (const symbol of rl) {
+        updateDataFromAPI.updateDailySeriesShare(symbol,apiKey);
+    }
+}
+async function updateWeeklyData(){
+    const fileStream = fs.createReadStream('./data/symbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+
+    for await (const symbol of rl) {
+        updateDataFromAPI.updateWeeklySeriesShare(symbol,apiKey);
+    }
+}
+async function updateMonthlyData(){
+    const fileStream = fs.createReadStream('./data/symbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+
+    for await (const symbol of rl) {
+        updateDataFromAPI.updateMonthlySeriesShare(symbol,apiKey);
+    }
+}
 function setApiKey(){
     console.log("API Key checked is called");
 
@@ -42,73 +110,4 @@ function setApiKey(){
     {
         apiKeyIndex = 0;
     }
-}
-
-function updateListOfQuotedUSshares(){
-    console.log("update list of quoted US shares");
-    url = `https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=${apiKey}`
-    axios.get(url)
-        .then(res => res.data)
-        .then(data => {
-            fs.writeFileSync('data/quotedUSshares.csv',data);
-            csvToJson.generateJsonFileFromCsv('data/quotedUSshares.csv','data/quotedUSshares.json');
-        })
-        .catch(error => {console.error(error)});
-}
-
-//TODO überprüfen ob symbol überhaupt existiert
-function updateIntradaySeriesShare(symbol, interval = 30){
-    console.log("update Intraday Series from " + symbol);
-
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}min&apikey=${apiKey}`;
-    let path = 'data/intraday_' + symbol + '.json';
-
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error))
-}
-function updateDailySeriesShare(symbol){
-    console.log("update Daily Series from " + symbol);
-
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/daily_' + symbol + '.json';
-
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error)
-        )
-}
-
-function updateWeeklySeriesShare(symbol){
-    console.log("update Weekly Series from " + symbol);
-
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/weekly_' + symbol + '.json';
-
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error))
-}
-
-function updateMonthlySeriesShare(symbol){
-    console.log("update Monthly Series from " + symbol);
-
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/monthly_' + symbol + '.json';
-
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error))
 }
