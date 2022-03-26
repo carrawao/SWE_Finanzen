@@ -29,7 +29,7 @@ const routes = require('./routes/routes.js')(app, fs, apiKey);
 const server = app.listen(3001, () => {
     setApiKey();
     console.log('listening on port %s...', server.address().port);
-    updateIntradayData();
+
 });
 
 //INFO WICHTIGER LINK für schedule
@@ -40,7 +40,7 @@ const server = app.listen(3001, () => {
 // const updateApiKey = schedule.scheduleJob('* */3 * * *', setApiKey);
 
 // //Every hour new data are pulled from the API for Intraday
- const updateIntraday = schedule.scheduleJob('* */1 * * *', updateIntradayData);
+ const updateIntraday = schedule.scheduleJob('0 */1 * * *', updateIntradayData);
 
 // //Always at 0:10 the daily data is pulled from the API
  const updateDaily = schedule.scheduleJob('30 0 * * *', updateDailyData);
