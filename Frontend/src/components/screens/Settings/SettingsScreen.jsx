@@ -1,16 +1,16 @@
 import React from 'react';
-import ScreensTemplate from '../ScreensTemplate';
+import ScreensTemplate from '../../ScreensTemplate';
 import Typography from '@mui/material/Typography';
 
-const Home = () => {
+const SettingsScreen = () => {
   const renderHeader = () => (
     <Typography variant='h6' noWrap component='div'>
-      Header of Home Page
+      Header of Settings Page
     </Typography>
   );
 
   const renderBody = () => (
-    <h1>Welcome to Finance App SWE- DHBW!</h1>
+    <h1>Welcome to Settings!</h1>
   );
 
   return (
@@ -18,11 +18,11 @@ const Home = () => {
       <ScreensTemplate
         headerComponent={renderHeader}
         bodyComponent={renderBody}
-        selectedNavLinkIndex={0}
+        selectedNavLinkIndex={3}
       />
     </React.Fragment>
 
   );
 }
 
-export default Home;
+export default SettingsScreen;

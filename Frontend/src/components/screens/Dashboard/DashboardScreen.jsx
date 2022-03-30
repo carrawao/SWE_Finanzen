@@ -1,26 +1,27 @@
 import React from 'react';
-import ScreensTemplate from '../ScreensTemplate';
-import { SearchField } from '../common/index';
+import ScreensTemplate from '../../ScreensTemplate';
+import {SearchField} from '../../common';
 
-const Dashboard = () => {
-    const renderHeader = () => (
-        <SearchField />
-    );
+const DashboardScreen = () => {
+  const renderHeader = () => (
+    <SearchField/>
+  );
 
-    const renderBody = () => (
-        <h1>Welcome to Dashboard!</h1>
-    );
+  const renderBody = () => (
+    <h1>Welcome to Dashboard!</h1>
+  );
 
-    return (
-        <React.Fragment>
-            <ScreensTemplate
-                headerComponent={renderHeader}
-                bodyComponent={renderBody}
-                searchBar
-            />
-        </React.Fragment>
+  return (
+    <React.Fragment>
+      <ScreensTemplate
+        headerComponent={renderHeader}
+        bodyComponent={renderBody}
+        searchBar
+        selectedNavLinkIndex={1}
+      />
+    </React.Fragment>
 
-    );
+  );
 }
 
-export default Dashboard;
+export default DashboardScreen;
