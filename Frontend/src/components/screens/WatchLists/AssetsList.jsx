@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
-import CustomTable from '../../common/CustomTable';
+import {CustomTable} from '../../common/index';
 
 
 const createData = (name, price, change) => {
