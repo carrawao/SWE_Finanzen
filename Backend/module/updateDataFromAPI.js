@@ -16,6 +16,7 @@ const updateListOfQuotedUSshares = (apiKey) => {
             csvToJson.fieldDelimiter(',').generateJsonFileFromCsv('data/quotedUSshares.csv','data/quotedUSshares.json');
         })
         .catch(error => {console.error(error)});
+    console.log("Finish update list of quoted US shares");
 }
 
 
@@ -31,6 +32,7 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
             fs.writeFileSync(path, JSON.stringify(data));
         }) 
         .catch(error => console.error(error))
+    console.log("Finish update IntraDay from " + symbol);
 }
 
 const updateDailySeriesShare = async (symbol, apiKey) => {
@@ -46,7 +48,7 @@ const updateDailySeriesShare = async (symbol, apiKey) => {
         }) 
         .catch(error => console.error(error)
         )
-        console.log("FINISH update Daily Series from " + symbol);
+        console.log("Finish update Daily Series from " + symbol);
     
 }
 
@@ -62,6 +64,7 @@ const updateWeeklySeriesShare = async (symbol, apiKey) => {
             fs.writeFileSync(path, JSON.stringify(data));
         }) 
         .catch(error => console.error(error))
+        console.log("Finish update Weekly Series from " + symbol);
 }
 
 const updateMonthlySeriesShare = async (symbol, apiKey) => {
@@ -76,6 +79,7 @@ const updateMonthlySeriesShare = async (symbol, apiKey) => {
             fs.writeFileSync(path, JSON.stringify(data));
         }) 
         .catch(error => console.error(error))
+        console.log("Finish update Monthly Series from " + symbol);
 }
 
 module.exports = {
