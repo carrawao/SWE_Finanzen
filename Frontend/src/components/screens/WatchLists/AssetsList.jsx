@@ -97,7 +97,7 @@ const AssetsList = (props) => {
     />
   );
 
-  return (
+  return props.watchListsArray.length > 0 && (
     <Container className='pe-2 pe-xl-5'>
       <Stack direction='row' alignItems='center' gap={1}>
         <Typography variant='h6' noWrap>
