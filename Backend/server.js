@@ -1,106 +1,208 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const axios = require('axios');
-const csvToJson = require('convert-csv-to-json');
 const app = express();
+const schedule = require('node-schedule');
+const readline = require('readline');
+
+const updateDataFromAPI = require('./module/updateDataFromAPI');
 
 
-//const apikey = 'ZSQ57OXG4YKUA0B8' //API Key Hakan;
-const apikey = 'MB6DE4CNFFYGP4M7' //API Key Steffen;
+const apiKeys =[
+    'ZSQ57OXG4YKUA0B8', //API Key Hakan;
+    'MB6DE4CNFFYGP4M7', //API Key Steffen;
+    'NOGQ7D1A1RHDGMU4', //API Key Cedrik
+    'ZSQ57OXG4YKUA0B8', //API Key Hakan;
+    'MB6DE4CNFFYGP4M7', //API Key Steffen;
+    'NOGQ7D1A1RHDGMU4'  //API Key Cedrik
+]
+let apiKeyIndex = 0;
+let apiKey;
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const routes = require('./routes/routes.js')(app, fs);
+const routes = require('./routes/routes.js')(app, fs, apiKey);
 
 // launch server on Port 3001
 const server = app.listen(3001, () => {
+    setApiKey();
     console.log('listening on port %s...', server.address().port);
-    updateData();
 });
 
+//INFO WICHTIGER LINK für schedule
+//https://crontab.guru/#*_*_*_*_*
 
-//let intervalID = setInterval(updateData, 10000);
+
+// //Every 3 hours the API key is updated
+const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
+
+// //Every hour new data are pulled from the API for Intraday
+const updateIntraday = schedule.scheduleJob('0 */1 * * *', updateIntradayData);
+// const updateIntraday = schedule.scheduleJob('5 15 * * *', updateIntradayData);
+
+// //Always at 0:05 the daily data is pulled from the API
+const updateDaily = schedule.scheduleJob('5 0 * * *', updateDailyData);
+// const updateDaily = schedule.scheduleJob('5 15 * * *', updateDailyData);
+
+// //Always at 1:05 the weekly data is pulled from the API
+const updateWeekly = schedule.scheduleJob('5 1 * * *', updateWeeklyData);
+// const updateWeekly = schedule.scheduleJob('5 15 * * *', updateWeeklyData);
+
+// //Always at 2:05 the monthly data is pulled from the API
+const updateMonthly = schedule.scheduleJob('5 2 * * *', updateMonthlyData);
+// const updateMonthly = schedule.scheduleJob('39 15 * * *', updateMonthlyData);
 
 
-//-------------------------
-let url;
+//Only from 3 o'clock (including 3 o'clock) the intraday data are updated
+async function updateIntradayData(){
+    let today = new Date();    
 
-function updateData(){
-    console.info("update Data called");
+    if(today.getHours() > 2){
+        const fileStream = fs.createReadStream('./data/symbols.txt');
 
-    // updateIntradaySeriesShare("IBM", 30);
-    // updateDailySeriesShare("IBM");
-    // updateWeeklySeriesShare("IBM");
-    // updateMonthlySeriesShare("IBM");
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });
+        
+        let fiveSymbols= [];
+        let i = 0;
+        let k = 0;
+        for await (const symbol of rl) {
+            if(i > 4){
+                updateFiveIntradayFromAPI(fiveSymbols, k);
+                k++;
+                fiveSymbols = [];
+                i = 0;
+            }
+            fiveSymbols[i] = symbol;
+            i++;
+        }
+        updateFiveIntradayFromAPI(fiveSymbols, k);
+        
+        rl.close()
+    }
+}
+async function updateFiveIntradayFromAPI(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateIntradaySeriesShare(symbol,30, apiKey);
+        }
+    },90000 * minutes);
+}
+
+async function updateDailyData(){
+    const fileStream = fs.createReadStream('./data/symbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
     
-
-    // console.log("quoted US shares");
-    // url = `https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=${apikey}`
-    // axios.get(url)
-    //     .then(res => res.data)
-    //     .then(data => {
-    //         fs.writeFileSync('data/quotedUSshares.csv',data);
-    //         csvToJson.generateJsonFileFromCsv('data/quotedUSshares.csv','data/quotedUSshares.json');
-    //     })
-    //     .catch(error => {console.error(error)});
-      
+    let fiveSymbols= [];
+    let i = 0;
+    let k = 0;
+    for await (const symbol of rl) {
+        if(i > 4){
+            updateFiveDailyFromAPI(fiveSymbols,k);
+            k++;
+            fiveSymbols = [];
+            i = 0;
+        }
+        fiveSymbols[i] = symbol;
+        i++;
+    }
+    updateFiveDailyFromAPI(fiveSymbols,k);
+    
+    rl.close()
+}
+async function updateFiveDailyFromAPI(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateDailySeriesShare(symbol,apiKey);
+        }
+    },90000 * minutes);
 }
 
-//TODO überprüfen ob symbol überhaupt existiert
-function updateIntradaySeriesShare(symbol, interval = 30){
-    console.log("update Intraday Series from " + symbol);
+async function updateWeeklyData(){
+    const fileStream = fs.createReadStream('./data/symbols.txt');
 
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}min&apikey=${apikey}`;
-    let path = 'data/intraday_' + symbol + '.json';
-
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error))
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    
+    let fiveSymbols= [];
+    let i = 0;
+    let k = 0;
+    for await (const symbol of rl) {
+        if(i > 4){
+            updateFiveWeeklyFromAPI(fiveSymbols,k);
+            k++;
+            fiveSymbols = [];
+            i = 0;
+        }
+        fiveSymbols[i] = symbol;
+        i++;
+    }
+    updateFiveWeeklyFromAPI(fiveSymbols,k);
+    
+    rl.close()
 }
-function updateDailySeriesShare(symbol){
-    console.log("update Daily Series from " + symbol);
-
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apikey}`;
-    let path = 'data/daily_' + symbol + '.json';
-
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error)
-        )
-}
-
-function updateWeeklySeriesShare(symbol){
-    console.log("update Weekly Series from " + symbol);
-
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${symbol}&apikey=${apikey}`;
-    let path = 'data/weekly_' + symbol + '.json';
-
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error))
+async function updateFiveWeeklyFromAPI(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateWeeklySeriesShare(symbol,apiKey);
+        }
+    },90000 * minutes);
 }
 
-function updateMonthlySeriesShare(symbol){
-    console.log("update Monthly Series from " + symbol);
+async function updateMonthlyData(){
+    const fileStream = fs.createReadStream('./data/symbols.txt');
 
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apikey}`;
-    let path = 'data/monthly_' + symbol + '.json';
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    
+    let fiveSymbols= [];
+    let i = 0;
+    let k = 0;
+    for await (const symbol of rl) {
+        if(i > 4){
+            updateFiveMonthlyFromAPI(fiveSymbols,k);
+            k++;
+            fiveSymbols = [];
+            i = 0;
+        }
+        fiveSymbols[i] = symbol;
+        i++;
+    }
+    updateFiveMonthlyFromAPI(fiveSymbols,k);
+    
+    rl.close()
+}
+async function updateFiveMonthlyFromAPI(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateMonthlySeriesShare(symbol,apiKey);
+        }
+    },90000 * minutes);
+}
 
-    axios.get(url)
-        .then(res => res.data )
-        .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
-        }) 
-        .catch(error => console.error(error))
+function setApiKey(){
+    console.log("API Key checked is called");
+
+    apiKey = apiKeys[apiKeyIndex];
+    apiKeyIndex++;
+    if(apiKeyIndex == 6)
+    {
+        apiKeyIndex = 0;
+    }
 }
