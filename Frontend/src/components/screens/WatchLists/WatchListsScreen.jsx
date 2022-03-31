@@ -23,7 +23,6 @@ const WatchListsScreen = (props) => {
     <Grid container spacing={2}>
       <Grid item className='col-sm-5 col-md-4'>
         <WatchLists
-          {...props}
           watchListsArray={props.watchListsArray}
           setWatchListsArray={props.setWatchListsArray}
           selectedListIndex={selectedListIndex}
@@ -32,7 +31,6 @@ const WatchListsScreen = (props) => {
       </Grid>
       <Grid item className='col-sm-12 col-md-8'>
         <AssetsList
-          {...props}
           watchListsArray={props.watchListsArray}
           selectedListIndex={selectedListIndex}
         />

@@ -18,7 +18,8 @@ const SettingsScreen = lazy(() => import('../components/screens/Settings/Setting
  */
 const persistState = (keyName, defaultValue) => {
   const savedData = localStorage.getItem(keyName);
-  return savedData !== '' ? JSON.parse(savedData) : defaultValue;
+  console.log('savedData ==== ', savedData);
+  return !savedData ? JSON.parse(savedData) : defaultValue;
 };
 
 /**
@@ -29,7 +30,7 @@ const AppRoutes = () => {
   const [watchListsArray, setWatchListsArray] = useState(() => persistState('watchListsArray', []));
 
   useEffect(() => {
-    localStorage.setItem("watchListsArray", JSON.stringify(watchListsArray));
+    localStorage.setItem('watchListsArray', JSON.stringify(watchListsArray));
   }, [watchListsArray]);
 
   return (
