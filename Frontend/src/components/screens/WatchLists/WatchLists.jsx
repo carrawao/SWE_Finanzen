@@ -18,6 +18,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PropTypes from 'prop-types';
 import DropdownMenu from './DropdownMenu';
+import CustomSelectField from './CustomSelectField';
 
 /**
  * Show all the watchLists
@@ -97,15 +98,14 @@ const WatchLists = (props) => {
       modalTitle='New watchlist:'
       modalBody={() => (
         <TextField
-          id='outlined-basic'
           variant='outlined'
           className='pb-3'
           label='Enter name'
-          onChange={data => onTextChange(data)}
           error={errorModal}
           helperText={errorModal ? '*Name cannot be empty' : false}
           defaultValue=''
           sx={{display: 'flex', flexGrow: 2}}
+          onChange={data => onTextChange(data)}
         />
       )}
       modalButton={() => (
@@ -198,7 +198,11 @@ const WatchLists = (props) => {
 
   return (
     <Container className='ps-2 ps-xl-5'>
-      <Stack direction='row' alignItems='center' gap={1}>
+      <Stack
+        className='d-none d-md-flex'
+        direction='row'
+        alignItems='center'
+      >
         <Typography variant='h6' noWrap>
           Watchlists:
         </Typography>
@@ -210,7 +214,20 @@ const WatchLists = (props) => {
         </IconButton>
       </Stack>
 
-      <Box sx={{display: 'flex'}}>
+      <CustomSelectField
+        className='d-flex d-md-none col-12 col-md-8 my-3'
+        watchListsArray={props.watchListsArray}
+        selectedListIndex={props.selectedListIndex}
+        setSelectedListIndex={index => props.setSelectedListIndex(index)}
+        setListDropdownIndex={setListDropdownIndex}
+        functionOptions={[
+          () => setEditListModal(true),
+          () => setRemoveListModal(true)
+        ]}
+        setAddListModal={() => setAddListModal(true)}
+      />
+
+      <Box className='d-none d-md-flex'>
         <List>
           {props.watchListsArray.map((element, index) => (
             <ListItem
@@ -246,11 +263,12 @@ const WatchLists = (props) => {
               />
             </ListItem>
           ))}
-          {renderEditListModal()}
-          {renderAddWatchlistModal()}
-          {renderRemoveListModal()}
         </List>
       </Box>
+
+      {renderEditListModal()}
+      {renderAddWatchlistModal()}
+      {renderRemoveListModal()}
     </Container>
   );
 }

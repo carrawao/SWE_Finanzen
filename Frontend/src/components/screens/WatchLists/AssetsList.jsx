@@ -66,14 +66,15 @@ const AssetsList = (props) => {
       open={showAssetModal}
       handleClose={() => handleClose()}
       labelledby='add_asset-modal-title'
+      describedby='add_asset-modal-description'
       modalTitle='New asset'
       modalBody={() => (
         <TextField
-          id='outlined-basic'
           variant='outlined'
+          className='pb-3'
           label='Enter name'
           error={errorModal}
-          helperText={errorModal ? '*Field cannot be empty' : false}
+          helperText={errorModal ? '*Name cannot be empty' : false}
           defaultValue=''
           sx={{display: 'flex', flexGrow: 2}}
           onChange={data => setAsset(data.target.value)}
@@ -85,6 +86,7 @@ const AssetsList = (props) => {
           onClick={() => addAsset()}
           sx={{
             color: 'white',
+            width: '5rem',
             backgroundColor: '#493f35',
             '&:hover': {
               backgroundColor: '#493f35',
@@ -99,18 +101,32 @@ const AssetsList = (props) => {
 
   return props.watchListsArray.length > 0 && (
     <Container className='pe-2 pe-xl-5'>
-      <Stack direction='row' alignItems='center' gap={1}>
+      <Stack
+        className='d-none d-md-flex mb-3 justify-content-between'
+        direction='row'
+        alignItems='center'
+        gap={1}
+      >
         <Typography variant='h6' noWrap>
           {props.watchListsArray[props.selectedListIndex]}:
         </Typography>
         <IconButton
           onClick={() => {
           }}
-          className='pe-0'
         >
           <AddIcon style={{color: '#493f35'}}/>
         </IconButton>
       </Stack>
+
+      <Container className='d-flex d-md-none col-12 justify-content-end pe-2'>
+        <IconButton
+          onClick={() => setShowAssetModal(true)}
+          className='pe-0'
+        >
+          <AddIcon style={{color: '#493f35'}}/>
+        </IconButton>
+      </Container>
+
       <CustomTable
         assetsArray={assetsArrayTest}
         selectedListIndex={props.selectedListIndex}

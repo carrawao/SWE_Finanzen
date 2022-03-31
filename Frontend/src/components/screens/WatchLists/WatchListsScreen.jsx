@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
 import {SearchField} from '../../common';
 import {Grid} from '@mui/material';
@@ -21,7 +21,7 @@ const WatchListsScreen = (props) => {
 
   const renderBody = () => (
     <Grid container spacing={2}>
-      <Grid item className='col-sm-5 col-md-4'>
+      <Grid item className='col-5 col-sm-5 col-md-4'>
         <WatchLists
           watchListsArray={props.watchListsArray}
           setWatchListsArray={props.setWatchListsArray}
@@ -29,7 +29,7 @@ const WatchListsScreen = (props) => {
           setSelectedListIndex={setSelectedListIndex}
         />
       </Grid>
-      <Grid item className='col-sm-12 col-md-8'>
+      <Grid item className='col-sm-12 col-md-8 pt-0 pt-md-3'>
         <AssetsList
           watchListsArray={props.watchListsArray}
           selectedListIndex={selectedListIndex}
