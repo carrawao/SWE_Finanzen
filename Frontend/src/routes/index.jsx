@@ -1,4 +1,4 @@
-import React, {lazy, useEffect, useState} from "react";
+import React, {lazy, useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 
 /**
@@ -18,8 +18,7 @@ const SettingsScreen = lazy(() => import('../components/screens/Settings/Setting
  */
 const persistState = (keyName, defaultValue) => {
   const savedData = localStorage.getItem(keyName);
-  console.log('savedData ==== ', savedData);
-  return !savedData ? JSON.parse(savedData) : defaultValue;
+  return !savedData ? defaultValue : JSON.parse(savedData);
 };
 
 /**

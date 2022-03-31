@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import SideNavLeft from "./common/SideNavLeft";
+import SideNavLeft from './common/SideNavLeft';
 
 const drawerWidth = 12; // This is the value in rem units, for responsiveness
 /**
@@ -62,7 +62,7 @@ const ScreensTemplate = (props) => {
       />
 
       <Box
-        component="main"
+        component='main'
         sx={{flexGrow: 1, padding: '1rem', width: {md: `calc(100% - ${drawerWidth}rem)`}}}
       >
         <Toolbar style={{minHeight: '3rem'}}/>

@@ -95,7 +95,7 @@ const SideNavLeft = (props) => {
         flexShrink: {md: 0},
         '& .MuiDrawer-paper': {backgroundColor: '#493f35'}
       }}
-      aria-label='mailbox folders'
+      aria-label='navigation-menu'
     >
       <Drawer
         container={container}
@@ -119,7 +119,7 @@ const SideNavLeft = (props) => {
         {drawer(routesArray)}
       </Drawer>
       <Drawer
-        variant="permanent"
+        variant='permanent'
         sx={{
           display: {xs: 'none', md: 'block'},
           '& .MuiDrawer-paper': {boxSizing: 'border-box', width: `${drawerWidth}rem`},

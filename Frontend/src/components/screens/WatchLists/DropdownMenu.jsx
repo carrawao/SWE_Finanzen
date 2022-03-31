@@ -23,7 +23,7 @@ const DropdownMenu = (props) => {
   const handleClick = (event) => {
     setOpen(true);
     setAnchorEl(event.currentTarget);
-    props.setListDropdownIndex(props.listIndex);
+    props.listIndex ? props.setListDropdownIndex(props.listIndex) : props.setListDropdownIndex(props.selectedListIndex);
   };
 
   const handleClose = () => {

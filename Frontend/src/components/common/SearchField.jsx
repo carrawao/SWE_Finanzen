@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import {Container, InputAdornment, IconButton} from "@mui/material";
+import {Container, InputAdornment, IconButton} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 //TODO: function for the search
@@ -39,7 +39,7 @@ const SearchField = () => {
         }}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               <IconButton onClick={search} className='pe-0'>
                 <SearchIcon style={{color: '#493f35'}}/>
               </IconButton>

@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
-import DropdownMenu from "../screens/WatchLists/DropdownMenu";
+import DropdownMenu from '../screens/WatchLists/DropdownMenu';
 
 
 /**
@@ -23,13 +23,20 @@ const CustomTable = (props) => {
   const [listDropdownIndex, setListDropdownIndex] = useState(0);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        '&.MuiTableContainer-root': {paddingTop: 0}
+      }}
+    >
       <Table aria-label='assets-table'>
         <TableBody>
           {props.assetsArray[props.selectedListIndex].map((row, index) => (
             <TableRow
               key={index}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 }, height: '3rem' }}
+              sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+                height: '3rem' }}
             >
               <TableCell
                 className='p-0'
