@@ -38,6 +38,7 @@ const server = app.listen(3001, () => {
 //      Shares
 
 // //Every hour new data are pulled from the API for Intraday
+//Only from 6 o'clock (including 6 o'clock) the intraday data are updated
 const updateIntradayShares = schedule.scheduleJob('0 */1 * * *', updateIntradayShareData);
 
 // //Always at 0:05 the daily data is pulled from the API
@@ -52,6 +53,7 @@ const updateMonthlyShares = schedule.scheduleJob('5 2 * * *', updateMonthlyShare
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 //      Crypto
 // //Always by half an hour new data are pulled from the API for Intraday
+//Only from 6 o'clock (including 6 o'clock) the intraday data are updated
 const updateIntradayCryptos = schedule.scheduleJob('30 */1 * * *', updateIntradayCryptoData);
 
 // //Always at 3:05 the daily data is pulled from the API
@@ -69,8 +71,6 @@ const updateMonthlyCryptos = schedule.scheduleJob('5 5 * * *', updateMonthlyCryp
 const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 //      Shares
-
-//Only from 3 o'clock (including 3 o'clock) the intraday data are updated
 async function updateIntradayShareData(){
     let today = new Date();    
 
