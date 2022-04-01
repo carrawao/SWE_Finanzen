@@ -4,7 +4,6 @@ const fs = require('fs');
 const app = express();
 const schedule = require('node-schedule');
 const readline = require('readline');
-const csvToJson = require('convert-csv-to-json');
 
 const updateDataFromAPI = require('./module/updateDataFromAPI');
 
@@ -30,10 +29,25 @@ const routes = require('./routes/routes.js')(app, fs, apiKey);
 const server = app.listen(3001, () => {
     setApiKey();
     console.log('listening on port %s...', server.address().port);
+    updateCompanyOverviewData();
 });
 
 //INFO WICHTIGER LINK für schedule
 //https://crontab.guru/#*_*_*_*_*
+
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+//      General
+
+//Every month at 0:00 the list of listed US stock exchange companies is updated
+const updateQuotedUSshares = schedule.scheduleJob('0 0 * */1 *', updateQuotedUSsharesData);
+
+//Every month at 23:30 the Company Overview is updated
+const updateCompanyOverview = schedule.scheduleJob('30 23 * */1 *', updateCompanyOverviewData);
+
+// //Every 3 hours the API key is updated
+const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
+
+
 
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 //      Shares
@@ -66,10 +80,6 @@ const updateWeeklyCryptos = schedule.scheduleJob('5 4 * * *', updateWeeklyCrypto
 // //Always at 5:05 the monthly data is pulled from the API
 const updateMonthlyCryptos = schedule.scheduleJob('5 5 * * *', updateMonthlyCryptoData);
 
-//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-
-// //Every 3 hours the API key is updated
-const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 //      Shares
 async function updateIntradayShareData(){
@@ -354,8 +364,8 @@ async function updateFiveMonthlyCryptoFromAPI(symbols, minutes){
 }
 
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-//      API Key
-function setApiKey(){
+//      General
+async function setApiKey(){
     console.log("API Key checked is called");
 
     apiKey = apiKeys[apiKeyIndex];
@@ -364,4 +374,42 @@ function setApiKey(){
     {
         apiKeyIndex = 0;
     }
+}
+
+async function updateQuotedUSsharesData(){
+    updateApiKey.updateListOfQuotedUSshares(apiKey);
+}
+
+async function updateCompanyOverviewData(){
+    const fileStream = fs.createReadStream('./data/shareSymbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    
+    let fiveSymbols= [];
+    let i = 0;
+    let k = 0;
+    for await (const symbol of rl) {
+        if(i > 4){
+            updateFiveCompanyOverviewData(fiveSymbols,k);
+            k++;
+            fiveSymbols = [];
+            i = 0;
+        }
+        fiveSymbols[i] = symbol;
+        i++;
+    }
+    updateFiveCompanyOverviewData(fiveSymbols,k);
+    
+    rl.close()
+}
+async function updateFiveCompanyOverviewData(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateCompanyOverview(symbol, apiKey);
+        }
+    },90000 * minutes);
 }
