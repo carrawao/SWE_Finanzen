@@ -5,6 +5,7 @@ const monthlyShareRoute = require('./monthlyShare');
 const weeklyShareRoute = require('./weeklyShare');
 
 const quotedUSshares = require('./quotedUSshares');
+const companyOverviewRoute = require('./companyOverview');
 
 //Crypto
 const dailyCryptoRoute = require('./dailyCrypto');
@@ -30,8 +31,9 @@ const appRouter = (app, fs, apiKey) => {
   monthlyCryptoRoute(app, fs, apiKey);
   weeklyCryptoRoute(app, fs, apiKey);
   
-
+  //Allgemein
   quotedUSshares(app, fs, apiKey);
+  companyOverviewRoute(app, fs, apiKey);
   search(app, fs);
 };
 

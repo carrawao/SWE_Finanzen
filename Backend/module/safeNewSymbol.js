@@ -10,7 +10,7 @@ const saveShareSymbol = (symbol) => {
         fs.writeFile(path, "\n" + symbol, { flag: 'a+' }, err => {})
         console.log("A new Share symbol is saved");
     }else{
-        console.log("The Crypto Symbol already exists");
+        console.log("The Share Symbol already exists");
     }
 }
 

@@ -4,6 +4,7 @@ const fs = require('fs');
 const app = express();
 const schedule = require('node-schedule');
 const readline = require('readline');
+const csvToJson = require('convert-csv-to-json');
 
 const updateDataFromAPI = require('./module/updateDataFromAPI');
 

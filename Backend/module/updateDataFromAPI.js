@@ -4,7 +4,7 @@ const fs = require('fs');
 let url;
 
 
-const updateListOfQuotedUSshares = (apiKey) => {
+const updateListOfQuotedUSshares = async (apiKey) => {
     console.log("update list of quoted US shares");
     url = `https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=${apiKey}`
     axios.get(url)
@@ -15,6 +15,21 @@ const updateListOfQuotedUSshares = (apiKey) => {
         })
         .catch(error => {console.error(error)});
     console.log("Finish update list of quoted US shares");
+}
+
+const updateCompanyOverview = async (symbol, apiKey) => {
+    console.log("update Company Overview from " + symbol);
+
+    url=`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${apiKey}`
+    let path = 'data/CompanyOverview/companyOverview_' + symbol + '.json';
+
+    const res = await axios.get(url)
+        .then(res => res.data )
+        .then(data => {
+            fs.writeFileSync(path, JSON.stringify(data));
+        }) 
+        .catch(error => console.error(error))
+    console.log("Finish update Company Overview from " + symbol);
 }
 
 //Shares
@@ -154,5 +169,6 @@ module.exports = {
     updateDailySeriesCrypto,
     updateIntradaySeriesCrypto,
     updateMonthlySeriesCrypto, 
-    updateWeeklySeriesCrypto
+    updateWeeklySeriesCrypto,
+    updateCompanyOverview
 };
