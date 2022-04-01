@@ -9,7 +9,7 @@ const userRoutes = (app, fs) => {
             const rawData = fs.readFileSync(dataPath);
             let result = JSON.parse(rawData);  
             let arrFound = result.filter(function(item) {
-                let isPartOf = item.symbol.includes(searchText) || item.name.includes(searchText);
+                let isPartOf = item.symbol.toLowerCase().includes(searchText.toLowerCase()) || item.name.toLowerCase().includes(searchText.toLowerCase());
                 return isPartOf;
             });
             
