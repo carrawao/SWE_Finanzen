@@ -1,12 +1,14 @@
 const fs = require('fs');
 
-const saveSymbol = (symbol) => {
-    console.log("A new symbol will be saved");
-    const path = 'data/symbols.txt';
+const saveShareSymbol = (symbol) => {
+    console.log("A new Share symbol will be saved");
+    const path = 'data/shareSymbols.txt';
     
 
     fs.writeFile(path, "\n" + symbol, { flag: 'a+' }, err => {})
-    console.log("A new symbol is saved");
+    console.log("A new Share symbol is saved");
 }
 
-module.exports = {saveSymbol};
+
+
+module.exports = {saveShareSymbol};

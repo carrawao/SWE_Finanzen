@@ -1,19 +1,18 @@
-const updateDataFromAPI = require('./../module/updateDataFromAPI');
-const safeNewSymbol = require('./../module/safeNewSymbol');
+const updateDataFromAPI = require('../module/updateDataFromAPI');
+const safeNewSymbol = require('../module/safeNewSymbol');
 
 
 const userRoutes = (app, fs) => {
 
-    app.get('/daily', (req, res, apiKey) => {
+    app.get('/monthlyShare', (req, res, apiKey) => {
       if(req.query.symbol){
         const symbol = req.query.symbol;
-        const dataPath = './data/daily_' + symbol + '.json';
+        const dataPath = './data/Shares/Monthly/monthly_' + symbol + '.json';
         
-
         fs.access(dataPath, fs.F_OK, (err) => {
           if (err) {
-            updateDataFromAPI.updateDailySeriesShare(symbol, apiKey).then(() => {
-              safeNewSymbol.saveSymbol(symbol);
+            updateDataFromAPI.updateMonthlySeriesShare(symbol,apiKey).then(() => {
+              safeNewSymbol.saveShareSymbol(symbol);
               fs.readFile(dataPath, 'utf8', (err, data) => {
                 if (err) {
                     throw err;
@@ -41,7 +40,7 @@ const userRoutes = (app, fs) => {
         res.send("NO Symbol");
       }
       
-    });
+      });
   };
-
+  
   module.exports = userRoutes;

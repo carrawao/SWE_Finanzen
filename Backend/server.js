@@ -39,28 +39,28 @@ const server = app.listen(3001, () => {
 const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
 
 // //Every hour new data are pulled from the API for Intraday
-const updateIntraday = schedule.scheduleJob('0 */1 * * *', updateIntradayData);
+const updateIntraday = schedule.scheduleJob('0 */1 * * *', updateIntradayShareData);
 // const updateIntraday = schedule.scheduleJob('5 15 * * *', updateIntradayData);
 
 // //Always at 0:05 the daily data is pulled from the API
-const updateDaily = schedule.scheduleJob('5 0 * * *', updateDailyData);
+const updateDaily = schedule.scheduleJob('5 0 * * *', updateDailyShareData);
 // const updateDaily = schedule.scheduleJob('5 15 * * *', updateDailyData);
 
 // //Always at 1:05 the weekly data is pulled from the API
-const updateWeekly = schedule.scheduleJob('5 1 * * *', updateWeeklyData);
+const updateWeekly = schedule.scheduleJob('5 1 * * *', updateWeeklyShareData);
 // const updateWeekly = schedule.scheduleJob('5 15 * * *', updateWeeklyData);
 
 // //Always at 2:05 the monthly data is pulled from the API
-const updateMonthly = schedule.scheduleJob('5 2 * * *', updateMonthlyData);
+const updateMonthly = schedule.scheduleJob('5 2 * * *', updateMonthlyShareData);
 // const updateMonthly = schedule.scheduleJob('39 15 * * *', updateMonthlyData);
 
 
 //Only from 3 o'clock (including 3 o'clock) the intraday data are updated
-async function updateIntradayData(){
+async function updateIntradayShareData(){
     let today = new Date();    
 
     if(today.getHours() > 2){
-        const fileStream = fs.createReadStream('./data/symbols.txt');
+        const fileStream = fs.createReadStream('./data/shareSymbols.txt');
 
         const rl = readline.createInterface({
             input: fileStream,
@@ -72,7 +72,7 @@ async function updateIntradayData(){
         let k = 0;
         for await (const symbol of rl) {
             if(i > 4){
-                updateFiveIntradayFromAPI(fiveSymbols, k);
+                updateFiveIntradayShareFromAPI(fiveSymbols, k);
                 k++;
                 fiveSymbols = [];
                 i = 0;
@@ -80,12 +80,12 @@ async function updateIntradayData(){
             fiveSymbols[i] = symbol;
             i++;
         }
-        updateFiveIntradayFromAPI(fiveSymbols, k);
+        updateFiveIntradayShareFromAPI(fiveSymbols, k);
         
         rl.close()
     }
 }
-async function updateFiveIntradayFromAPI(symbols, minutes){
+async function updateFiveIntradayShareFromAPI(symbols, minutes){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {
@@ -94,8 +94,8 @@ async function updateFiveIntradayFromAPI(symbols, minutes){
     },90000 * minutes);
 }
 
-async function updateDailyData(){
-    const fileStream = fs.createReadStream('./data/symbols.txt');
+async function updateDailyShareData(){
+    const fileStream = fs.createReadStream('./data/shareSymbols.txt');
 
     const rl = readline.createInterface({
         input: fileStream,
@@ -107,7 +107,7 @@ async function updateDailyData(){
     let k = 0;
     for await (const symbol of rl) {
         if(i > 4){
-            updateFiveDailyFromAPI(fiveSymbols,k);
+            updateFiveDailyShareFromAPI(fiveSymbols,k);
             k++;
             fiveSymbols = [];
             i = 0;
@@ -115,11 +115,11 @@ async function updateDailyData(){
         fiveSymbols[i] = symbol;
         i++;
     }
-    updateFiveDailyFromAPI(fiveSymbols,k);
+    updateFiveDailyShareFromAPI(fiveSymbols,k);
     
     rl.close()
 }
-async function updateFiveDailyFromAPI(symbols, minutes){
+async function updateFiveDailyShareFromAPI(symbols, minutes){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {
@@ -128,8 +128,8 @@ async function updateFiveDailyFromAPI(symbols, minutes){
     },90000 * minutes);
 }
 
-async function updateWeeklyData(){
-    const fileStream = fs.createReadStream('./data/symbols.txt');
+async function updateWeeklyShareData(){
+    const fileStream = fs.createReadStream('./data/shareSymbols.txt');
 
     const rl = readline.createInterface({
         input: fileStream,
@@ -141,7 +141,7 @@ async function updateWeeklyData(){
     let k = 0;
     for await (const symbol of rl) {
         if(i > 4){
-            updateFiveWeeklyFromAPI(fiveSymbols,k);
+            updateFiveWeeklyShareFromAPI(fiveSymbols,k);
             k++;
             fiveSymbols = [];
             i = 0;
@@ -149,11 +149,11 @@ async function updateWeeklyData(){
         fiveSymbols[i] = symbol;
         i++;
     }
-    updateFiveWeeklyFromAPI(fiveSymbols,k);
+    updateFiveWeeklyShareFromAPI(fiveSymbols,k);
     
     rl.close()
 }
-async function updateFiveWeeklyFromAPI(symbols, minutes){
+async function updateFiveWeeklyShareFromAPI(symbols, minutes){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {
@@ -162,8 +162,8 @@ async function updateFiveWeeklyFromAPI(symbols, minutes){
     },90000 * minutes);
 }
 
-async function updateMonthlyData(){
-    const fileStream = fs.createReadStream('./data/symbols.txt');
+async function updateMonthlyShareData(){
+    const fileStream = fs.createReadStream('./data/shareSymbols.txt');
 
     const rl = readline.createInterface({
         input: fileStream,
@@ -175,7 +175,7 @@ async function updateMonthlyData(){
     let k = 0;
     for await (const symbol of rl) {
         if(i > 4){
-            updateFiveMonthlyFromAPI(fiveSymbols,k);
+            updateFiveMonthlyShareFromAPI(fiveSymbols,k);
             k++;
             fiveSymbols = [];
             i = 0;
@@ -183,11 +183,11 @@ async function updateMonthlyData(){
         fiveSymbols[i] = symbol;
         i++;
     }
-    updateFiveMonthlyFromAPI(fiveSymbols,k);
+    updateFiveMonthlyShareFromAPI(fiveSymbols,k);
     
     rl.close()
 }
-async function updateFiveMonthlyFromAPI(symbols, minutes){
+async function updateFiveMonthlyShareFromAPI(symbols, minutes){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {

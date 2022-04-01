@@ -1,8 +1,8 @@
 // load up our shiny new route for users
-const dailyroute = require('./daily');
-const intradayroute = require('./intraday');
-const monthlyroute = require('./monthly');
-const weeklyroute = require('./weekly');
+const dailyroute = require('./dailyShare');
+const intradayroute = require('./intradayShare');
+const monthlyroute = require('./monthlyShare');
+const weeklyroute = require('./weeklyShare');
 const quotedUSshares = require('./quotedUSshares');
 const search = require('./search');
 

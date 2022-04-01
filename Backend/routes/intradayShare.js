@@ -1,18 +1,18 @@
-const updateDataFromAPI = require('./../module/updateDataFromAPI');
-const safeNewSymbol = require('./../module/safeNewSymbol');
+const updateDataFromAPI = require('../module/updateDataFromAPI');
+const safeNewSymbol = require('../module/safeNewSymbol');
 
 
 const userRoutes = (app, fs) => {
     
-    app.get('/intraday', (req, res, apiKey) => {
+    app.get('/intradayShare', (req, res, apiKey) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
-            const dataPath = './data/intraday_' + symbol + '.json';
+            const dataPath = './data/Shares/Intraday/intraday_' + symbol + '.json';
 
             fs.access(dataPath, fs.F_OK, (err) => {
                 if (err) {
                   updateDataFromAPI.updateIntradaySeriesShare(symbol,30, apiKey).then(() => {
-                    safeNewSymbol.saveSymbol(symbol);
+                    safeNewSymbol.saveShareSymbol(symbol);
                     fs.readFile(dataPath, 'utf8', (err, data) => {
                       if (err) {
                           throw err;

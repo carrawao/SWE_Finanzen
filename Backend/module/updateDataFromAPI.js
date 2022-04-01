@@ -21,10 +21,10 @@ const updateListOfQuotedUSshares = (apiKey) => {
 
 
 const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
-    console.log("update Intraday Series from " + symbol);
+    console.log("update Intraday Share Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}min&apikey=${apiKey}`;
-    let path = 'data/intraday_' + symbol + '.json';
+    let path = 'data/Shares/Intraday/intraday_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data )
@@ -32,14 +32,14 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
             fs.writeFileSync(path, JSON.stringify(data));
         }) 
         .catch(error => console.error(error))
-    console.log("Finish update IntraDay from " + symbol);
+    console.log("Finish update IntraDay Share Series from " + symbol);
 }
 
 const updateDailySeriesShare = async (symbol, apiKey) => {
-    console.log("update Daily Series from " + symbol);
+    console.log("update Daily Share Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/daily_' + symbol + '.json';
+    let path = 'data/Shares/Daily/dailyShare_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data )
@@ -48,15 +48,15 @@ const updateDailySeriesShare = async (symbol, apiKey) => {
         }) 
         .catch(error => console.error(error)
         )
-        console.log("Finish update Daily Series from " + symbol);
+        console.log("Finish update Daily Share Series from " + symbol);
     
 }
 
 const updateWeeklySeriesShare = async (symbol, apiKey) => {
-    console.log("update Weekly Series from " + symbol);
+    console.log("update Weekly Share Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/weekly_' + symbol + '.json';
+    let path = 'data/Shares/Weekly/weekly_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data )
@@ -64,14 +64,14 @@ const updateWeeklySeriesShare = async (symbol, apiKey) => {
             fs.writeFileSync(path, JSON.stringify(data));
         }) 
         .catch(error => console.error(error))
-        console.log("Finish update Weekly Series from " + symbol);
+        console.log("Finish update Weekly Share Series from " + symbol);
 }
 
 const updateMonthlySeriesShare = async (symbol, apiKey) => {
-    console.log("update Monthly Series from " + symbol);
+    console.log("update Monthly Share Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/monthly_' + symbol + '.json';
+    let path = 'data/Shares/Monthly/monthly_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data )
@@ -79,7 +79,7 @@ const updateMonthlySeriesShare = async (symbol, apiKey) => {
             fs.writeFileSync(path, JSON.stringify(data));
         }) 
         .catch(error => console.error(error))
-        console.log("Finish update Monthly Series from " + symbol);
+        console.log("Finish update Monthly Share Series from " + symbol);
 }
 
 module.exports = {

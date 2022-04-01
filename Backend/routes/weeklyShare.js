@@ -4,7 +4,7 @@ const safeNewSymbol = require('./../module/safeNewSymbol');
 
 const userRoutes = (app, fs) => {
     
-    app.get('/weekly', (req, res, apiKey) => {
+    app.get('/weeklyShare', (req, res, apiKey) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
             const dataPath = './data/weekly_' + symbol + '.json';
@@ -12,7 +12,7 @@ const userRoutes = (app, fs) => {
             fs.access(dataPath, fs.F_OK, (err) => {
               if (err) {
                 updateDataFromAPI.updateWeeklySeriesShare(symbol,apiKey).then(() => {
-                  safeNewSymbol.saveSymbol(symbol);
+                  safeNewSymbol.saveShareSymbol(symbol);
                   fs.readFile(dataPath, 'utf8', (err, data) => {
                     if (err) {
                         throw err;
