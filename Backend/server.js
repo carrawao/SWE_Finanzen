@@ -29,7 +29,6 @@ const routes = require('./routes/routes.js')(app, fs, apiKey);
 const server = app.listen(3001, () => {
     setApiKey();
     console.log('listening on port %s...', server.address().port);
-    updateCompanyOverviewData();
 });
 
 //INFO WICHTIGER LINK für schedule
