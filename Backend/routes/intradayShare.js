@@ -7,7 +7,7 @@ const userRoutes = (app, fs) => {
     app.get('/intradayShare', (req, res, apiKey) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
-            const dataPath = './data/Shares/Intraday/intraday_' + symbol + '.json';
+            const dataPath = './data/Shares/Intraday/intradayShare_' + symbol + '.json';
 
             fs.access(dataPath, fs.F_OK, (err) => {
                 if (err) {

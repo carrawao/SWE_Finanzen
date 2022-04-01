@@ -7,7 +7,7 @@ const userRoutes = (app, fs) => {
     app.get('/weeklyShare', (req, res, apiKey) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
-            const dataPath = './data/weekly_' + symbol + '.json';
+            const dataPath = './data/Shares/Weekly/weeklyShare_' + symbol + '.json';
             
             fs.access(dataPath, fs.F_OK, (err) => {
               if (err) {

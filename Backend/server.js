@@ -34,32 +34,47 @@ const server = app.listen(3001, () => {
 //INFO WICHTIGER LINK für schedule
 //https://crontab.guru/#*_*_*_*_*
 
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+//      Shares
+
+// //Every hour new data are pulled from the API for Intraday
+const updateIntradayShares = schedule.scheduleJob('0 */1 * * *', updateIntradayShareData);
+
+// //Always at 0:05 the daily data is pulled from the API
+const updateDailyShares = schedule.scheduleJob('5 0 * * *', updateDailyShareData);
+
+// //Always at 1:05 the weekly data is pulled from the API
+const updateWeeklyShares = schedule.scheduleJob('5 1 * * *', updateWeeklyShareData);
+
+// //Always at 2:05 the monthly data is pulled from the API
+const updateMonthlyShares = schedule.scheduleJob('5 2 * * *', updateMonthlyShareData);
+
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+//      Crypto
+// //Always by half an hour new data are pulled from the API for Intraday
+const updateIntradayCryptos = schedule.scheduleJob('30 */1 * * *', updateIntradayCryptoData);
+
+// //Always at 3:05 the daily data is pulled from the API
+const updateDailyCryptos = schedule.scheduleJob('5 3 * * *', updateDailyCryptoData);
+
+// //Always at 4:05 the weekly data is pulled from the API
+const updateWeeklyCryptos = schedule.scheduleJob('5 4 * * *', updateWeeklyCryptoData);
+
+// //Always at 5:05 the monthly data is pulled from the API
+const updateMonthlyCryptos = schedule.scheduleJob('5 5 * * *', updateMonthlyCryptoData);
+
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 // //Every 3 hours the API key is updated
 const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
-
-// //Every hour new data are pulled from the API for Intraday
-const updateIntraday = schedule.scheduleJob('0 */1 * * *', updateIntradayShareData);
-// const updateIntraday = schedule.scheduleJob('5 15 * * *', updateIntradayData);
-
-// //Always at 0:05 the daily data is pulled from the API
-const updateDaily = schedule.scheduleJob('5 0 * * *', updateDailyShareData);
-// const updateDaily = schedule.scheduleJob('5 15 * * *', updateDailyData);
-
-// //Always at 1:05 the weekly data is pulled from the API
-const updateWeekly = schedule.scheduleJob('5 1 * * *', updateWeeklyShareData);
-// const updateWeekly = schedule.scheduleJob('5 15 * * *', updateWeeklyData);
-
-// //Always at 2:05 the monthly data is pulled from the API
-const updateMonthly = schedule.scheduleJob('5 2 * * *', updateMonthlyShareData);
-// const updateMonthly = schedule.scheduleJob('39 15 * * *', updateMonthlyData);
-
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+//      Shares
 
 //Only from 3 o'clock (including 3 o'clock) the intraday data are updated
 async function updateIntradayShareData(){
     let today = new Date();    
 
-    if(today.getHours() > 2){
+    if(today.getHours() >= 3){
         const fileStream = fs.createReadStream('./data/shareSymbols.txt');
 
         const rl = readline.createInterface({
@@ -195,7 +210,150 @@ async function updateFiveMonthlyShareFromAPI(symbols, minutes){
         }
     },90000 * minutes);
 }
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+//      Crypto
+async function updateIntradayCryptoData(){
+    let today = new Date();    
 
+    if(today.getHours() >= 6){
+        const fileStream = fs.createReadStream('./data/cryptoSymbols.txt');
+
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });
+        
+        let fiveSymbols= [];
+        let i = 0;
+        let k = 0;
+        for await (const symbol of rl) {
+            if(i > 4){
+                updateFiveIntradayCryptoFromAPI(fiveSymbols, k);
+                k++;
+                fiveSymbols = [];
+                i = 0;
+            }
+            fiveSymbols[i] = symbol;
+            i++;
+        }
+        updateFiveIntradayCryptoFromAPI(fiveSymbols, k);
+        
+        rl.close()
+    }
+}
+async function updateFiveIntradayCryptoFromAPI(symbols, minutes){
+//Every 1.5 Minutes start update 5 Symbols
+setTimeout(() => {
+    for (const symbol of symbols) {
+        updateDataFromAPI.updateIntradaySeriesCrypto(symbol,30,apiKey);
+    }
+},90000 * minutes);
+}
+
+async function updateDailyCryptoData(){
+    const fileStream = fs.createReadStream('./data/cryptoSymbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    
+    let fiveSymbols= [];
+    let i = 0;
+    let k = 0;
+    for await (const symbol of rl) {
+        if(i > 4){
+            updateFiveDailyCryptoFromAPI(fiveSymbols,k);
+            k++;
+            fiveSymbols = [];
+            i = 0;
+        }
+        fiveSymbols[i] = symbol;
+        i++;
+    }
+    updateFiveDailyCryptoFromAPI(fiveSymbols,k);
+    
+    rl.close()
+}
+async function updateFiveDailyCryptoFromAPI(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateDailySeriesCrypto(symbol,apiKey);
+        }
+    },90000 * minutes);
+}
+
+async function updateWeeklyCryptoData(){
+    const fileStream = fs.createReadStream('./data/cryptoSymbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    
+    let fiveSymbols= [];
+    let i = 0;
+    let k = 0;
+    for await (const symbol of rl) {
+        if(i > 4){
+            updateFiveWeeklyCryptoFromAPI(fiveSymbols,k);
+            k++;
+            fiveSymbols = [];
+            i = 0;
+        }
+        fiveSymbols[i] = symbol;
+        i++;
+    }
+    updateFiveWeeklyCryptoFromAPI(fiveSymbols,k);
+    
+    rl.close()
+}
+async function updateFiveWeeklyCryptoFromAPI(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateWeeklySeriesCrypto(symbol,apiKey);
+        }
+    },90000 * minutes);
+}
+
+async function updateMonthlyCryptoData(){
+    const fileStream = fs.createReadStream('./data/cryptoSymbols.txt');
+
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    
+    let fiveSymbols= [];
+    let i = 0;
+    let k = 0;
+    for await (const symbol of rl) {
+        if(i > 4){
+            updateFiveMonthlyCryptoFromAPI(fiveSymbols,k);
+            k++;
+            fiveSymbols = [];
+            i = 0;
+        }
+        fiveSymbols[i] = symbol;
+        i++;
+    }
+    updateFiveMonthlyCryptoFromAPI(fiveSymbols,k);
+    
+    rl.close()
+}
+async function updateFiveMonthlyCryptoFromAPI(symbols, minutes){
+    //Every 1.5 Minutes start update 5 Symbols
+    setTimeout(() => {
+        for (const symbol of symbols) {
+            updateDataFromAPI.updateMonthlySeriesCrypto(symbol,apiKey);
+        }
+    },90000 * minutes);
+}
+
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+//      API Key
 function setApiKey(){
     console.log("API Key checked is called");
 

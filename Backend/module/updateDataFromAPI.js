@@ -4,8 +4,6 @@ const fs = require('fs');
 let url;
 
 
-//TODO überprüfen ob symbol überhaupt existiert
-
 const updateListOfQuotedUSshares = (apiKey) => {
     console.log("update list of quoted US shares");
     url = `https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=${apiKey}`
@@ -19,12 +17,12 @@ const updateListOfQuotedUSshares = (apiKey) => {
     console.log("Finish update list of quoted US shares");
 }
 
-
+//Shares
 const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
     console.log("update Intraday Share Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}min&apikey=${apiKey}`;
-    let path = 'data/Shares/Intraday/intraday_' + symbol + '.json';
+    let path = 'data/Shares/Intraday/intradayShare_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data )
@@ -56,7 +54,7 @@ const updateWeeklySeriesShare = async (symbol, apiKey) => {
     console.log("update Weekly Share Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/Shares/Weekly/weekly_' + symbol + '.json';
+    let path = 'data/Shares/Weekly/weeklyShare_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data )
@@ -71,7 +69,7 @@ const updateMonthlySeriesShare = async (symbol, apiKey) => {
     console.log("update Monthly Share Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apiKey}`;
-    let path = 'data/Shares/Monthly/monthly_' + symbol + '.json';
+    let path = 'data/Shares/Monthly/monthlyShare_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data )
@@ -81,10 +79,80 @@ const updateMonthlySeriesShare = async (symbol, apiKey) => {
         .catch(error => console.error(error))
         console.log("Finish update Monthly Share Series from " + symbol);
 }
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
+//Crypto
+const updateIntradaySeriesCrypto = async (symbol, interval = 30, apiKey) => {
+    console.log("update Intraday Crypto Series from " + symbol);
+
+    url = `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${symbol}&market=EUR&interval=${interval}min&apikey=${apiKey}`
+    let path = 'data/Crypto/Intraday/intradayCrypto_' + symbol + '.json';
+
+    const res = await axios.get(url)
+        .then(res => res.data )
+        .then(data => {
+            fs.writeFileSync(path, JSON.stringify(data));
+        }) 
+        .catch(error => console.error(error))
+    console.log("Finish update IntraDay Crypto Series from " + symbol);
+}
+
+const updateDailySeriesCrypto = async (symbol, apiKey) => {
+    console.log("update Daily Crypto Series from " + symbol);
+
+    url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${symbol}&market=EUR&apikey=${apiKey}'`
+    let path = 'data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
+
+    const res = await axios.get(url)
+        .then(res => res.data )
+        .then(data => {
+            fs.writeFileSync(path, JSON.stringify(data));
+        }) 
+        .catch(error => console.error(error)
+        )
+        console.log("Finish update Daily Crypto Series from " + symbol);
+    
+}
+
+const updateWeeklySeriesCrypto = async (symbol, apiKey) => {
+    console.log("update Weekly Crypto Series from " + symbol);
+
+    url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY&symbol=${symbol}&market=EUR&apikey=${apiKey}'`
+    let path = 'data/Crypto/Weekly/weeklyCrypto_' + symbol + '.json';
+
+    const res = await axios.get(url)
+        .then(res => res.data )
+        .then(data => {
+            fs.writeFileSync(path, JSON.stringify(data));
+        }) 
+        .catch(error => console.error(error))
+        console.log("Finish update Weekly Crypto Series from " + symbol);
+}
+
+const updateMonthlySeriesCrypto = async (symbol, apiKey) => {
+    console.log("update Monthly Crypto Series from " + symbol);
+
+    url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=${symbol}&market=EUR&apikey=${apiKey}'`
+    let path = 'data/Crypto/Monthly/monthlyCrypto_' + symbol + '.json';
+
+    const res = await axios.get(url)
+        .then(res => res.data )
+        .then(data => {
+            fs.writeFileSync(path, JSON.stringify(data));
+        }) 
+        .catch(error => console.error(error))
+        console.log("Finish update Monthly Crypto Series from " + symbol);
+}
+//----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 module.exports = {
+    updateListOfQuotedUSshares, 
     updateDailySeriesShare, 
     updateIntradaySeriesShare, 
-    updateListOfQuotedUSshares, 
     updateMonthlySeriesShare, 
-    updateWeeklySeriesShare};
+    updateWeeklySeriesShare,
+    updateDailySeriesCrypto,
+    updateIntradaySeriesCrypto,
+    updateMonthlySeriesCrypto, 
+    updateWeeklySeriesCrypto
+};
