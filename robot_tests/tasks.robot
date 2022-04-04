@@ -4,7 +4,7 @@ Library     SeleniumLibrary
 
 *** Variables ***
 ${LOGIN URL}      http://localhost:3000
-${BROWSER}        Chrome
+${BROWSER}    %{BROWSER}
 
 
 *** Tasks ***
