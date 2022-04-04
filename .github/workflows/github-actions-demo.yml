@@ -17,13 +17,7 @@ jobs:
       - name: Generate build
         working-directory: ./Frontend
         run: npm start & npx wait-on http://localhost:3000
-      # Share artifact inside workflow
-      - name: Share artifact inside workflow
-        uses: actions/upload-artifact@v1
-        with:
-          name: react-github-actions-build
-          path: build
-
+   
   robot_test:
     needs: react
     runs-on: ubuntu-latest
