@@ -7,5 +7,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip install rpaframework
       - name: Robot Framework
         uses: joonvena/robotframework-docker-action@v1.0
