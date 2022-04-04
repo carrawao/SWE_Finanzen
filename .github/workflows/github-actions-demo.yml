@@ -14,11 +14,6 @@ jobs:
       - name: Install dependencies
         working-directory: ./Frontend
         run: npm install    
-      - name: Test
-        working-directory: ./Frontend
-        run: npm test
-        env:
-          CI: true
       - name: Generate build
         working-directory: ./Frontend
         run: npm run build
@@ -30,6 +25,7 @@ jobs:
           path: build
 
   robot_test:
+  needs: react
     runs-on: ubuntu-latest
     name: Run Robot Framework Tests
     steps:
