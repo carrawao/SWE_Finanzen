@@ -16,7 +16,7 @@ jobs:
         run: npm install    
       - name: Generate build
         working-directory: ./Frontend
-        run: npm start
+        run: npm start & npx wait-on http://localhost:3000
       # Share artifact inside workflow
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v1
