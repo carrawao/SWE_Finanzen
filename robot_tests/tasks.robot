@@ -3,7 +3,7 @@ Documentation     Template robot main suite.
 Library     SeleniumLibrary
 
 *** Variables ***
-${LOGIN URL}      http://localhost:3000
+${LOGIN URL}      https://www.youtube.com/
 ${BROWSER}        Chrome
 
 
