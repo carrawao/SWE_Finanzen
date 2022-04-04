@@ -1,6 +1,10 @@
 *** Settings ***
 Documentation     Template robot main suite.
-Library    RPA.Browser.Selenium
+Library     SeleniumLibrary
+
+*** Variables ***
+${LOGIN URL}      http://localhost:3000
+${BROWSER}        Chrome
 
 
 *** Tasks ***
@@ -9,6 +13,6 @@ Insert the sales data for the week and export it as a PDF
 
 *** Keywords ***
 Open the intranet website
-    Open Available Browser    http://localhost:3000/
+    Open Browser    ${LOGIN URL}    ${BROWSER}
 
 
