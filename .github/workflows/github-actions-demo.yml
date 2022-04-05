@@ -20,7 +20,7 @@ jobs:
       - name: Robot Framework
         run: pip install robotframework
       - name: Selenium Libary
-        run: pip install SeleniumLibrary
+        run: pip install --upgrade robotframework-seleniumlibrary
       - name: Robot Framework
         working-directory: ./robot_tests
         run: robot tasks.robot  
