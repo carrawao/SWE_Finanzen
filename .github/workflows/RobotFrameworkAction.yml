@@ -2,7 +2,7 @@ name: Robot Framework Action
 on: [push]
 
 jobs:
-  react:
+  Testing:
     runs-on: ubuntu-latest
     steps:
       - name: Clone SWE_Finanzen repository
@@ -35,9 +35,9 @@ jobs:
           name: reports
           path: ${{ github.workspace }}/robot_tests
 
-  generate_report:
+  Generate_Report:
     if: always()
-    needs: [react] 
+    needs: [Testing] 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

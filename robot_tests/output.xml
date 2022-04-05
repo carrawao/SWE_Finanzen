@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 5.0 (Python 3.10.4 on win32)" generated="20220405 12:41:45.965" rpa="true" schemaversion="3">
+<robot generator="Robot 5.0 (Python 3.10.4 on win32)" generated="20220405 20:43:33.746" rpa="false" schemaversion="3">
 <suite id="s1" name="Tasks" source="C:\git\SWE_Finanzen\robot_tests\tasks.robot">
-<test id="s1-t1" name="Insert the sales data for the week and export it as a PDF" line="11">
+<test id="s1-t1" name="Open Localhost" line="17">
 <kw name="Open the intranet website">
-<kw name="Start Virtual Display">
-<arg>1920 1080</arg>
-<msg timestamp="20220405 12:41:46.619" level="FAIL">No keyword with name 'Start Virtual Display' found.</msg>
-<status status="FAIL" starttime="20220405 12:41:46.619" endtime="20220405 12:41:46.620"/>
-</kw>
-<kw name="Open Browser">
+<kw name="Open Browser" library="SeleniumLibrary">
 <arg>${LOGIN URL}</arg>
-<status status="NOT RUN" starttime="20220405 12:41:46.627" endtime="20220405 12:41:46.627"/>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20220405 20:43:33.965" level="INFO">Opening browser 'chrome' to base url 'http://localhost:3000'.</msg>
+<status status="PASS" starttime="20220405 20:43:33.964" endtime="20220405 20:43:35.913"/>
 </kw>
-<kw name="Set Windwos Size">
-<arg>1820 1080</arg>
-<status status="NOT RUN" starttime="20220405 12:41:46.632" endtime="20220405 12:41:46.632"/>
+<status status="PASS" starttime="20220405 20:43:33.964" endtime="20220405 20:43:35.914"/>
 </kw>
-<status status="FAIL" starttime="20220405 12:41:46.612" endtime="20220405 12:41:46.632"/>
-</kw>
-<status status="FAIL" starttime="20220405 12:41:46.608" endtime="20220405 12:41:46.640">No keyword with name 'Start Virtual Display' found.</status>
+<status status="PASS" starttime="20220405 20:43:33.963" endtime="20220405 20:43:35.914"/>
 </test>
-<doc>Template robot main suite.</doc>
-<status status="FAIL" starttime="20220405 12:41:45.969" endtime="20220405 12:41:46.648"/>
+<test id="s1-t2" name="Open Dashboard" line="20">
+<kw name="Navigate to Dashboard">
+<kw name="Click Link" library="SeleniumLibrary">
+<arg>${BUTTON_DASHBOARD}</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<msg timestamp="20220405 20:43:35.919" level="INFO">Clicking link 'xpath://*[@id="root"]/div/nav/div/div/ul/a[2]'.</msg>
+<status status="PASS" starttime="20220405 20:43:35.918" endtime="20220405 20:43:36.017"/>
+</kw>
+<kw name="Location Should Be" library="SeleniumLibrary">
+<arg>${URL_DASHBOARD}</arg>
+<doc>Verifies that the current URL is exactly ``url``.</doc>
+<msg timestamp="20220405 20:43:36.024" level="INFO">Current location is 'http://localhost:3000/dashboard'.</msg>
+<status status="PASS" starttime="20220405 20:43:36.017" endtime="20220405 20:43:36.024"/>
+</kw>
+<status status="PASS" starttime="20220405 20:43:35.917" endtime="20220405 20:43:36.025"/>
+</kw>
+<status status="PASS" starttime="20220405 20:43:35.916" endtime="20220405 20:43:36.026"/>
+</test>
+<doc>Test page buttons</doc>
+<status status="PASS" starttime="20220405 20:43:33.747" endtime="20220405 20:43:36.028"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tasks</stat>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Tasks">Tasks</stat>
+<stat pass="2" fail="0" skip="0" id="s1" name="Tasks">Tasks</stat>
 </suite>
 </statistics>
 <errors>
-<msg timestamp="20220405 12:41:46.581" level="ERROR">Error in file 'C:\git\SWE_Finanzen\robot_tests\tasks.robot' on line 3: Initializing library 'SeleniumLibrary' with arguments [ XvfbRobot ] failed: ValueError: Invalid time string 'XvfbRobot'.
-Traceback (most recent call last):
-  File "C:\Users\otto\AppData\Local\Programs\Python\Python310\lib\site-packages\SeleniumLibrary\__init__.py", line 455, in __init__
-    self.timeout = _convert_timeout(timeout)
-  File "C:\Users\otto\AppData\Local\Programs\Python\Python310\lib\site-packages\SeleniumLibrary\utils\types.py", line 35, in _convert_timeout
-    return timestr_to_secs(timeout)
-  File "C:\Users\otto\AppData\Local\Programs\Python\Python310\lib\site-packages\robot\utils\robottime.py", line 52, in timestr_to_secs
-    raise ValueError("Invalid time string '%s'." % timestr)
-ValueError: Invalid time string 'XvfbRobot'.</msg>
 </errors>
 </robot>
