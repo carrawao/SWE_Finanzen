@@ -59,7 +59,7 @@ jobs:
         REPO_OWNER: ${{ env.REPOSITORY_OWNER }}
         COMMIT_SHA: ${{ github.sha }}
         REPOSITORY: ${{ env.REPOSITORY_NAME }}
-        REPORT_PATH: robot_tests
+        REPORT_PATH: ${{ github.workspace }}/robot_tests
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
    
