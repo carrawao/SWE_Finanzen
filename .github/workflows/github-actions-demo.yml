@@ -36,7 +36,7 @@ jobs:
 
   generate_report:
     if: always()
-    needs: [test] 
+    needs: [react] 
     runs-on: ubuntu-latest
     steps:
     - name: Download reports
