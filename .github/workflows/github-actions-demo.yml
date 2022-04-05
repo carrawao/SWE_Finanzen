@@ -4,8 +4,6 @@ on: [push]
 jobs:
   react:
     runs-on: ubuntu-latest
-    ports:
-      - 3000:3000
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
@@ -19,16 +17,10 @@ jobs:
       - name: Generate build
         working-directory: ./Frontend
         run: npm start & npx wait-on http://localhost:3000
-      
-   
-  robot_test:
-    needs: react
-    runs-on: ubuntu-latest
-    name: Run Robot Framework Tests
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Robot Framework
         uses: joonvena/robotframework-docker-action@v1.0
         with:
           browser: 'chrome'
+      
+   
+  
