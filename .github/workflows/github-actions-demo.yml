@@ -45,6 +45,8 @@ jobs:
       with:
         name: reports
     - name: Get Repository Owner & Name
+      env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       run: |
         export OWNER="$(echo "${{ github.repository }}" | awk -F / '{print $1}' | sed -e "s/:refs//")"
         export REPO="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")"
@@ -58,6 +60,7 @@ jobs:
         COMMIT_SHA: ${{ github.sha }}
         REPOSITORY: ${{ env.REPOSITORY_NAME }}
         REPORT_PATH: robot_tests
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
    
   
