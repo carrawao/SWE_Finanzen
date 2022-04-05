@@ -12,7 +12,8 @@ const userRoutes = (app, fs) => {
                 let isPartOf = item.symbol.includes(searchText) || item.name.includes(searchText);
                 return isPartOf;
             });
-            
+
+            res.set('Access-Control-Allow-Origin', '*')
             res.send(arrFound);
             return;
         }
