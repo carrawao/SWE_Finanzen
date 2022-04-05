@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 4.1.3 (Python 3.9.7 on win32)" generated="20220404 23:18:52.790" rpa="true" schemaversion="2">
+<robot generator="Robot 5.0 (Python 3.10.4 on win32)" generated="20220405 09:30:32.764" rpa="true" schemaversion="3">
 <suite id="s1" name="Tasks" source="C:\git\SWE_Finanzen\robot_tests\tasks.robot">
-<test id="s1-t1" name="Insert the sales data for the week and export it as a PDF">
+<test id="s1-t1" name="Insert the sales data for the week and export it as a PDF" line="11">
 <kw name="Open the intranet website">
 <kw name="Open Browser" library="SeleniumLibrary">
 <arg>${LOGIN URL}</arg>
 <arg>${BROWSER}</arg>
-<arg>executable_path=${CHROMEDRIVER_PATH}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20220404 23:18:52.994" level="INFO">Opening browser 'Chrome' to base url 'http://localhost:3000'.</msg>
-<msg timestamp="20220404 23:18:53.005" level="INFO">Cannot capture screenshot because no browser is open.</msg>
-<msg timestamp="20220404 23:18:53.010" level="FAIL">WebDriverException: Message: 'chromedriver' executable needs to be in PATH. Please see https://chromedriver.chromium.org/home
-</msg>
-<status status="FAIL" starttime="20220404 23:18:52.993" endtime="20220404 23:18:53.010"/>
+<msg timestamp="20220405 09:30:33.756" level="INFO">Opening browser 'chrome' to base url 'https://www.youtube.com/'.</msg>
+<status status="PASS" starttime="20220405 09:30:33.756" endtime="20220405 09:30:37.167"/>
 </kw>
-<status status="FAIL" starttime="20220404 23:18:52.993" endtime="20220404 23:18:53.011"/>
+<status status="PASS" starttime="20220405 09:30:33.756" endtime="20220405 09:30:37.167"/>
 </kw>
-<status status="FAIL" starttime="20220404 23:18:52.992" endtime="20220404 23:18:53.012">WebDriverException: Message: 'chromedriver' executable needs to be in PATH. Please see https://chromedriver.chromium.org/home
-</status>
+<status status="PASS" starttime="20220405 09:30:33.755" endtime="20220405 09:30:37.167"/>
 </test>
 <doc>Template robot main suite.</doc>
-<status status="FAIL" starttime="20220404 23:18:52.791" endtime="20220404 23:18:53.014"/>
+<status status="PASS" starttime="20220405 09:30:32.766" endtime="20220405 09:30:37.167"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tasks</stat>
+<stat pass="1" fail="0" skip="0">All Tasks</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Tasks">Tasks</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="Tasks">Tasks</stat>
 </suite>
 </statistics>
 <errors>
