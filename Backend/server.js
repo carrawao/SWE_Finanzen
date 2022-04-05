@@ -376,7 +376,7 @@ async function setApiKey(){
 }
 
 async function updateQuotedUSsharesData(){
-    updateApiKey.updateListOfQuotedUSshares(apiKey);
+    updateDataFromAPI.updateListOfQuotedUSshares(apiKey);
 }
 
 async function updateCompanyOverviewData(){

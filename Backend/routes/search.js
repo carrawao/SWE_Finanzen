@@ -12,7 +12,7 @@ const userRoutes = (app, fs) => {
                 let isPartOf = item.symbol.toLowerCase().includes(searchText.toLowerCase()) || item.name.toLowerCase().includes(searchText.toLowerCase());
                 return isPartOf;
             });
-            
+            res.set('Access-Control-AlLow-Origin','http://localhost:3000');
             res.send(arrFound);
             return;
         }
