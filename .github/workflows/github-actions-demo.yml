@@ -28,5 +28,10 @@ jobs:
       - name: Robot Framework
         working-directory: ./robot_tests
         run: robot tasks.robot  
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "./robot_tests/*.html
    
   
