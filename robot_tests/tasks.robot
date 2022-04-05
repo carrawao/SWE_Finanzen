@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Test page buttons
 Library     SeleniumLibrary    
-#Library     XvfbRobot
+Library     XvfbRobot
 
 *** Variables ***
 ${LOGIN URL}      http://localhost:3000  
