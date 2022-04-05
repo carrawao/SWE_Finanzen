@@ -18,9 +18,11 @@ jobs:
         working-directory: ./Frontend
         run: npm start & npx wait-on http://localhost:3000
       - name: Robot Framework
-        uses: joonvena/robotframework-docker-action@v1.0
-        with:
-          browser: 'chrome'
-      
+        run: pip install robotframework
+      - name: Selenium Libary
+        run: pip install SeleniumLibrary
+      - name: Robot Framework
+        working-directory: ./robot_tests
+        run: robot tasks.robot  
    
   
