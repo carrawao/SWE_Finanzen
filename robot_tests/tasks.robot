@@ -14,7 +14,7 @@ Insert the sales data for the week and export it as a PDF
 
 *** Keywords ***
 Open the intranet website
-    Start Virtual Display   1920 1080
+    Start Virtual Display   1920    1080
     Open Browser    ${LOGIN URL}  
-    Set Window Size    1920 1080
+    Set Window Size    1920     1080
 
