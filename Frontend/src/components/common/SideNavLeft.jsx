@@ -7,14 +7,15 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Container
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import ShutterSpeedIcon from '@mui/icons-material/ShutterSpeed';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-const drawerWidth = 12; // This is the value in rem units, for responsiveness
+const drawerWidth = 14; // This is the value in rem units, for responsiveness
 const routesArray = [
   {routeName: 'Home', path: '/', icon: <HomeIcon/>},
   {routeName: 'Dashboard', path: '/dashboard', icon: <AutoGraphIcon/>},
@@ -36,8 +37,8 @@ const SideNavLeft = (props) => {
   };
 
   const drawer = (routesArray) => (
-    <React.Fragment>
-      <List className='px-3'>
+    <Container className='px-3'>
+      <List className='px-0'>
         <img
           src={`${process.env.PUBLIC_URL}/assets/images/swe-finance-logo.png`}
           alt='Application logo'
@@ -50,11 +51,11 @@ const SideNavLeft = (props) => {
             to={element.path}
             key={element.routeName}
             onClick={() => handleNavLinkClick()}
-            style={{textDecoration: 'none',}}
+            style={{textDecoration: 'none'}}
           >
             <ListItem
               button
-              className='pe-0'
+              className='ps-2'
               sx={{
                 backgroundColor: `${props.selectedNavLinkIndex === index ? 'white' : '#493f35'}`,
                 '&:hover': {
@@ -82,7 +83,7 @@ const SideNavLeft = (props) => {
           </Link>
         ))}
       </List>
-    </React.Fragment>
+    </Container>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -91,8 +92,8 @@ const SideNavLeft = (props) => {
     <Box
       component='nav'
       sx={{
-        width: {md: `${drawerWidth}rem`},
-        flexShrink: {md: 0},
+        width: {lg: `${drawerWidth}rem`},
+        flexShrink: {lg: 0},
         '& .MuiDrawer-paper': {backgroundColor: '#493f35'}
       }}
       aria-label='navigation-menu'
@@ -108,7 +109,7 @@ const SideNavLeft = (props) => {
           keepMounted: true,
         }}
         sx={{
-          display: {xs: 'block', md: 'none'},
+          display: {xs: 'block', lg: 'none'},
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: `${drawerWidth}rem`,
@@ -121,7 +122,7 @@ const SideNavLeft = (props) => {
       <Drawer
         variant='permanent'
         sx={{
-          display: {xs: 'none', md: 'block'},
+          display: {xs: 'none', lg: 'block'},
           '& .MuiDrawer-paper': {boxSizing: 'border-box', width: `${drawerWidth}rem`},
         }}
         open
