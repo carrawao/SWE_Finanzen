@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     Template robot main suite.
-Library     SeleniumLibrary 
+Library     SeleniumLibrary     XvfbRobot
 
 *** Variables ***
 ${LOGIN URL}      http://localhost:3000  
@@ -13,5 +13,7 @@ Insert the sales data for the week and export it as a PDF
 
 *** Keywords ***
 Open the intranet website
-    Open Browser    ${LOGIN URL}    ${BROWSER}  
+    Start Virtual Display   1920 1080
+    Open Browser    ${LOGIN URL}  
+    Set Windwos Size    1920 1080
 

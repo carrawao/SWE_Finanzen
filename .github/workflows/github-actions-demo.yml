@@ -21,6 +21,10 @@ jobs:
         run: pip install robotframework
       - name: Selenium Libary
         run: pip install --upgrade robotframework-seleniumlibrary
+      - name: Selenium Libary
+        run: sudo apt install xvfb
+      - name: Selenium Libary
+        run: pip install robotframework-xvfb 
       - name: Robot Framework
         working-directory: ./robot_tests
         run: robot tasks.robot  
