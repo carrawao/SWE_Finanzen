@@ -17,6 +17,8 @@ jobs:
       - name: Generate build
         working-directory: ./Frontend
         run: npm start & npx wait-on http://localhost:3000
+      ports:
+        - 3000:3000
    
   robot_test:
     needs: react
