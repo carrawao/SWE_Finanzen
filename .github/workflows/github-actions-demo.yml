@@ -5,7 +5,7 @@ jobs:
   react:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repository
+      - name: Clone SWE_Finanzen repository
         uses: actions/checkout@v2
       - name: Use Node.js 16.x
         uses: actions/setup-node@v1
@@ -14,18 +14,18 @@ jobs:
       - name: Install dependencies
         working-directory: ./Frontend
         run: npm install    
-      - name: Generate build
+      - name: Start react in devloper mode
         working-directory: ./Frontend
         run: npm start & npx wait-on http://localhost:3000
-      - name: Robot Framework
+      - name: Install Robot Framework
         run: pip install robotframework
-      - name: Selenium Libary
+      - name: Install Selenium Libary
         run: pip install --upgrade robotframework-seleniumlibrary
-      - name: Selenium Libary
+      - name: Install xVfb for linux
         run: sudo apt install xvfb
-      - name: Selenium Libary
+      - name: Install xVfb for linux
         run: pip install robotframework-xvfb 
-      - name: Robot Framework
+      - name: Robot Framework Tests
         working-directory: ./robot_tests
         run: robot tasks.robot  
       - name: Publish Unit Test Results
@@ -33,5 +33,30 @@ jobs:
         if: always()
         with:
           files: "./robot_tests/*.html"
+
+  generate_report:
+    if: always()
+    needs: [test] 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download reports
+      uses: actions/download-artifact@v1
+      with:
+        name: reports
+    - name: Get Repository Owner & Name
+      run: |
+        export OWNER="$(echo "${{ github.repository }}" | awk -F / '{print $1}' | sed -e "s/:refs//")"
+        export REPO="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")"
+        echo "::set-env name=REPOSITORY_OWNER::$OWNER"
+        echo "::set-env name=REPOSITORY_NAME::$REPO"
+    - name: Send report to commit
+      uses: joonvena/robotframework-reporter-action@v0.1
+      env:
+        GH_ACCESS_TOKEN: ${{ secrets.TOKEN }}
+        REPO_OWNER: ${{ env.REPOSITORY_OWNER }}
+        COMMIT_SHA: ${{ github.sha }}
+        REPOSITORY: ${{ env.REPOSITORY_NAME }}
+        REPORT_PATH: robot_tests
+
    
   
