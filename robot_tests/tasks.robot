@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation     Template robot main suite.
-Library     SeleniumLibrary     XvfbRobot
+Library     SeleniumLibrary    
+Library     XvfbRobot
 
 *** Variables ***
 ${LOGIN URL}      http://localhost:3000  
