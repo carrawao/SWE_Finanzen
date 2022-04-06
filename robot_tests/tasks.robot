@@ -3,7 +3,10 @@ Documentation     Test page buttons
 Library     SeleniumLibrary    
 Library     XvfbRobot
 
+Default Tags    positive
+
 Test Setup      Open the intranet website
+Test Teardown      Close Browser
 
 *** Variables ***
 ${LOGIN URL}      http://localhost:3000  
