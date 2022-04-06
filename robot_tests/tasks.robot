@@ -9,13 +9,13 @@ Test Setup      Open the intranet website
 Test Teardown      Close Browser
 
 *** Variables ***
-${LOGIN URL}      http://localhost:3000  
+${LOGIN URL}      http://localhost:3000/watchlists 
 ${BROWSER}    chrome
 
 ${URL_DASHBOARD}    http://localhost:3000/dashboard
 
 
-${BUTTON_DASHBOARD}     xpath:/html/body/div[1]/div/nav/div/div/ul/a[2]
+${BUTTON_DASHBOARD}     xpath:/html/body/div[1]/div/main/div[2]/div[1]/div/div[1]/button
 
 
 *** Test Cases ***
@@ -33,5 +33,5 @@ Open the intranet website
 #    Open Browser    ${LOGIN URL}    ${BROWSER}  
 
 Navigate to Dashboard
-    Click Link    ${BUTTON_DASHBOARD}
-    Location Should Be    ${URL_DASHBOARD} 
+    Wait Until Element Is Visible   ${BUTTON_DASHBOARD}
+    Click Element    ${BUTTON_DASHBOARD}
