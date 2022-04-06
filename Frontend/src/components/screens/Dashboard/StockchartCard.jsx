@@ -1,14 +1,22 @@
 import React,{useState} from 'react';
 import Stockchart from "./Stockchart";
 import StockchartButtons from "./StockchartButtons";
-import {Card, Divider, CardContent, CardHeader, Typography} from '@mui/material'
-import ShowChartIcon from '@mui/icons-material/ShowChart';
+import Masterdata from './Masterdata';
+import {Card, Divider, CardContent, CardHeader, Collapse, IconButton} from '@mui/material'
+import { ExpandMore, ExpandLess } from '@mui/icons-material';
+
+
 const StockchartCard = (props) =>{
   //Fetch stockdata with share id
   const symbol = props.stockdata['Meta Data']['2. Symbol'];
   const [view, setView] = useState('month');
   const [stockPrice, setStockPrice] = useState(0);
   const [perf, setPerf] = useState(0);
+  const [open, setOpen] = useState(true);
+  const handleClick = () =>{
+    setOpen(!open);
+  }
+
   return (
   <Card sx={{maxWidth: 750, border:3, borderColor: 'primary.main', borderRadius: 3}} raised {...props}>
     <CardHeader
@@ -21,7 +29,13 @@ const StockchartCard = (props) =>{
     <CardContent>        
       <Stockchart stockdata={props.stockdata} symbol={symbol} view={view} setStockPrice={setStockPrice} setPerf={setPerf}></Stockchart>        
     </CardContent>
-    <Divider />      
+    <Divider />
+    <IconButton onClick={handleClick}>
+      {open ? <ExpandLess/> : <ExpandMore/>}
+    </IconButton>
+    <Collapse in={open}>
+      <Masterdata masterdata={props.masterdata}/>
+    </Collapse>
   </Card>
   );
 }
