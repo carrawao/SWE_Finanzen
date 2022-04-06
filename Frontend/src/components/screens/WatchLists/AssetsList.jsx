@@ -102,7 +102,7 @@ const AssetsList = (props) => {
   return props.watchListsArray.length > 0 && (
     <Container className='pe-2 pe-xl-5'>
       <Stack
-        className='d-none d-md-flex mb-3 justify-content-between'
+        className='d-none d-lg-flex mb-3 justify-content-between'
         direction='row'
         alignItems='center'
         gap={1}
@@ -118,7 +118,7 @@ const AssetsList = (props) => {
         </IconButton>
       </Stack>
 
-      <Container className='d-flex d-md-none col-12 justify-content-end pe-2'>
+      <Container className='d-flex d-lg-none col-12 justify-content-end pe-2'>
         <IconButton
           onClick={() => setShowAssetModal(true)}
           className='pe-0'
