@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import SideNavLeft from './common/SideNavLeft';
 
-const drawerWidth = 12; // This is the value in rem units, for responsiveness
+const drawerWidth = 14; // This is the value in rem units, for responsiveness
 /**
  * Drawer navigation menu throughout the app
  * @param props
@@ -29,8 +29,8 @@ const ScreensTemplate = (props) => {
         className={`position-fixed ${props.searchBar ? 'bg-white' : ''}`}
         elevation={0}
         sx={{
-          width: {md: `calc(100% - ${drawerWidth}rem)`},
-          marginLeft: {md: `${drawerWidth}rem`},
+          width: {lg: `calc(100% - ${drawerWidth}rem)`},
+          marginLeft: {lg: `${drawerWidth}rem`},
         }}
       >
         <Toolbar>
@@ -39,7 +39,7 @@ const ScreensTemplate = (props) => {
             size='medium'
             onClick={handleDrawerToggle}
             sx={{
-              display: {md: 'none'},
+              display: {lg: 'none'},
               color: '#493f35',
               border: '1px solid #493f35',
               borderRadius: 0,
@@ -63,7 +63,7 @@ const ScreensTemplate = (props) => {
 
       <Box
         component='main'
-        sx={{flexGrow: 1, padding: '1rem', width: {md: `calc(100% - ${drawerWidth}rem)`}}}
+        sx={{flexGrow: 1, padding: '1rem', width: {lg: `calc(100% - ${drawerWidth}rem)`}}}
       >
         <Toolbar style={{minHeight: '3rem'}}/>
         {props.bodyComponent()}

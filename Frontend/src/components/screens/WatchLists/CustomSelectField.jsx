@@ -23,8 +23,8 @@ const CustomSelectField = props => {
     }
   })
   return (
-    <Grid container direction='row' alignItems='center' className='d-md-none'>
-      <Grid item xs={10} className='d-flex'>
+    <Grid className='d-flex flex-row align-items-center d-lg-none col-12'>
+      <Grid item className='d-flex col-5 col-sm-4 col-md-3'>
       <FormControl
         className={props.className}
       >
@@ -42,6 +42,7 @@ const CustomSelectField = props => {
               '& ul': {paddingTop: 0, paddingBottom: 0},
               '&& .MuiMenuItem-root': {
                 '&.Mui-selected': {
+                  color: 'white',
                   backgroundColor: '#493f35'
                 }
               },
@@ -72,7 +73,8 @@ const CustomSelectField = props => {
         </Select>
       </FormControl>
       </Grid>
-      <Grid item xs={2}>
+
+      <Grid item className='col-3 justify-content-start'>
         <DropdownMenu
           selectedListIndex={props.selectedListIndex}
           listName={props.watchListsArray[props.selectedListIndex]}
