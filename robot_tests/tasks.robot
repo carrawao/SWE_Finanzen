@@ -3,6 +3,8 @@ Documentation     Test page buttons
 Library     SeleniumLibrary    
 Library     XvfbRobot
 
+Test Setup      Open the intranet website
+
 *** Variables ***
 ${LOGIN URL}      http://localhost:3000  
 ${BROWSER}    chrome
@@ -14,9 +16,6 @@ ${BUTTON_DASHBOARD}     xpath:/html/body/div[1]/div/nav/div/div/ul/a[2]
 
 
 *** Test Cases ***
-Open Localhost
-    Open the intranet website
-
 Open Dashboard 
     Navigate to Dashboard
 
