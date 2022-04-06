@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Test page buttons
 Library     SeleniumLibrary    
-Library     XvfbRobot
+#Library     XvfbRobot
 
 *** Variables ***
 ${LOGIN URL}      http://localhost:3000  
@@ -22,13 +22,13 @@ Open Dashboard
 
 
 *** Keywords ***
-Open the intranet website
-    Start Virtual Display   1920    1080
-    Open Browser    ${LOGIN URL}  
-    Set Window Size    1920     1080
-
 #Open the intranet website
-#    Open Browser    ${LOGIN URL}    ${BROWSER}  
+#    Start Virtual Display   1920    1080
+#    Open Browser    ${LOGIN URL}  
+#    Set Window Size    1920     1080
+
+Open the intranet website
+    Open Browser    ${LOGIN URL}    ${BROWSER}  
 
 Navigate to Dashboard
     Click Link    ${BUTTON_DASHBOARD}
