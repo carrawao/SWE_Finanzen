@@ -58,8 +58,7 @@ const CustomTable = (props) => {
                 sx={{
                   width: {
                     xs: '35vw',
-                    sm: '25vw',
-                    md: '15vw',
+                    lg: '15vw',
                   }
                 }}
               >
@@ -73,8 +72,7 @@ const CustomTable = (props) => {
                 sx={{
                   width: {
                     xs: '15vw',
-                    sm: '20vw',
-                    md: '15vw',
+                    lg: '15vw'
                   }
                 }}
               >
@@ -88,9 +86,7 @@ const CustomTable = (props) => {
                 sx={{
                   width: {
                     xs: '20vw',
-                    sm: '10vw',
-                    md: '15vw',
-                    lg: '10vw'
+                    lg: '15vw'
                   }
                 }}
               >
@@ -104,8 +100,7 @@ const CustomTable = (props) => {
                 sx={{
                   width: {
                     xs: '20vw',
-                    sm: '10vw',
-                    lg: '10vw'
+                    lg: '15vw'
                   }
                 }}
               >

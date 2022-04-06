@@ -197,9 +197,9 @@ const WatchLists = (props) => {
   }
 
   return (
-    <Container className='ps-2 ps-xl-5'>
+    <Container className='ps-2 ps-xl-5 col-12'>
       <Stack
-        className='d-none d-md-flex'
+        className='d-none d-lg-flex'
         direction='row'
         alignItems='center'
       >
@@ -215,7 +215,7 @@ const WatchLists = (props) => {
       </Stack>
 
       <CustomSelectField
-        className='d-flex d-md-none col-12 col-md-8 my-3'
+        className='d-flex d-lg-none col-12 col-lg-8 my-3'
         watchListsArray={props.watchListsArray}
         selectedListIndex={props.selectedListIndex}
         setSelectedListIndex={index => props.setSelectedListIndex(index)}
@@ -227,7 +227,7 @@ const WatchLists = (props) => {
         setAddListModal={() => setAddListModal(true)}
       />
 
-      <Box className='d-none d-md-flex'>
+      <Box className='d-none d-lg-flex'>
         <List>
           {props.watchListsArray.map((element, index) => (
             <ListItem
