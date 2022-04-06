@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Grid, List, ListItem, Typography, Avatar, Button} from '@mui/material';
+import {Grid, List, ListItem, Typography, Avatar, Button, ListItemButton} from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AddIcon from '@mui/icons-material/Add';
@@ -71,9 +71,9 @@ const WatchListsScreen = (props) => {
                   />
                 </Grid>
 
-                <Grid item className='d-flex flex-column flex-lg-row flex-grow-lg-1 col-7 col-lg-8 pe-2 me-sm-2'>
+                <Grid item className='d-flex flex-column flex-xl-row flex-grow-xl-1 col-7 col-md-9 pe-3'>
                   <Typography
-                    className='col-lg-7 me-lg-5'
+                    className='col-12 col-md-9 col-xl-9 me-md-5'
                     noWrap
                     fontSize={{
                       lg: 16,
@@ -85,7 +85,8 @@ const WatchListsScreen = (props) => {
                   </Typography>
 
                   <Typography
-                    className='ms-lg-5'
+                    className='fw-bold ms-xl-3'
+                    color='#493f35'
                     fontSize={{
                       lg: 16,
                       md: 15,
@@ -98,22 +99,26 @@ const WatchListsScreen = (props) => {
 
                 <Grid item className='d-flex flex-row flex-grow-1 justify-content-end'>
                   <Avatar
+                    className='ms-4 ms-sm-5 ms-md-0'
                     sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
                   >
-                    <DoneIcon sx={{color: 'green'}} fontSize='small' />
+                    <DoneIcon sx={{color: 'green', fontSize: '20px'}} />
                   </Avatar>
-                  <Avatar
-                    className='ms-2 ms-sm-3'
-                    sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
-                  >
-                    <BookmarkBorderIcon sx={{color: '#493f35'}} fontSize='small' />
-                  </Avatar>
-                  <Avatar
-                    className='ms-2 ms-sm-3 me-2'
-                    sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
-                  >
-                    <AddIcon sx={{color: '#493f35'}} fontSize='small' />
-                  </Avatar>
+                  <ListItemButton className='p-0 ms-3 flex-grow-0 justify-content-end'>
+                    <Avatar
+                      sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                    >
+                      <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}} />
+                    </Avatar>
+                  </ListItemButton>
+                  <ListItemButton className='p-0 ms-3 flex-grow-0 justify-content-end'>
+                    <Avatar
+                      className='me-2'
+                      sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                    >
+                      <AddIcon sx={{color: '#493f35', fontSize: '20px'}} />
+                    </Avatar>
+                  </ListItemButton>
                 </Grid>
               </Grid>
             </ListItem>
