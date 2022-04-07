@@ -1,5 +1,17 @@
 import React, {useState} from 'react';
-import {Grid, List, ListItem, Typography, Avatar, Button, ListItemButton} from '@mui/material';
+import {
+  Grid,
+  List,
+  ListItem,
+  Typography,
+  Avatar,
+  Button,
+  ListItemButton,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl
+} from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AddIcon from '@mui/icons-material/Add';
@@ -8,7 +20,7 @@ import PropTypes from 'prop-types';
 import WatchLists from './WatchLists';
 import AssetsList from './AssetsList';
 import ScreensTemplate from '../../ScreensTemplate';
-import {SearchField} from '../../common';
+import {CustomModal, SearchField} from '../../common';
 
 /**
  * Component related to the watchLists page
@@ -19,7 +31,9 @@ import {SearchField} from '../../common';
 const WatchListsScreen = (props) => {
   const [selectedListIndex, setSelectedListIndex] = useState(0);
   const [searchResult, setSearchResult] = useState([]);
+  const [searchResultIndex, setSearchResultIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [addToWatchlistModal, setAddToWatchlistModal] = useState(false);
 
   const renderHeader = () => (
       <SearchField
@@ -104,14 +118,23 @@ const WatchListsScreen = (props) => {
                   >
                     <DoneIcon sx={{color: 'green', fontSize: '20px'}} />
                   </Avatar>
-                  <ListItemButton className='p-0 ms-3 flex-grow-0 justify-content-end'>
+                  <ListItemButton
+                    className='p-0 ms-3 flex-grow-0 justify-content-end'
+                    onClick={() => {
+                      setAddToWatchlistModal(true);
+                      setSearchResultIndex(index);
+                    }}
+                  >
                     <Avatar
                       sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
                     >
                       <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}} />
                     </Avatar>
                   </ListItemButton>
-                  <ListItemButton className='p-0 ms-3 flex-grow-0 justify-content-end'>
+                  <ListItemButton
+                    className='p-0 ms-3 flex-grow-0 justify-content-end'
+                    onClick={() => {}}
+                  >
                     <Avatar
                       className='me-2'
                       sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
@@ -149,6 +172,8 @@ const WatchListsScreen = (props) => {
           <WatchLists
             watchListsArray={props.watchListsArray}
             setWatchListsArray={props.setWatchListsArray}
+            assetsListArray={props.assetsListArray}
+            setAssetsListArray={props.setAssetsListArray}
             selectedListIndex={selectedListIndex}
             setSelectedListIndex={setSelectedListIndex}
           />
@@ -157,11 +182,116 @@ const WatchListsScreen = (props) => {
           <AssetsList
             watchListsArray={props.watchListsArray}
             selectedListIndex={selectedListIndex}
+            assetsListArray={props.assetsListArray}
+            setAssetsListArray={props.setAssetsListArray}
           />
         </Grid>
       </React.Fragment>
       }
     </Grid>
+  );
+
+  const handleChange = (event) => {
+    if (props.watchListsArray.includes(event.target.value)) {
+      const index = props.watchListsArray.map(item => item).indexOf(event.target.value);
+      setSelectedListIndex(index);
+      //console.log("index of the selection = ", index);
+    }
+  };
+
+  const addAssetToWatchlist = async () => {
+    const symbol = searchResult[searchResultIndex].symbol;
+    try {
+      return await fetch(`http://localhost:3001/intradayShare?symbol=${symbol}`, {mode:'cors'})
+        .then(response => response.json())
+        .then(data => {
+          props.setAssetsListArray(prevAssetsListArray => {
+            const assetsListArray = [...prevAssetsListArray];
+            assetsListArray[selectedListIndex] = [
+              ...assetsListArray[selectedListIndex],
+              {
+                name: 'Allianz',
+                price: '212.25$',
+                change: '-1.80%'
+              }
+            ];
+            return assetsListArray;
+          })
+          setSearchResult([]);
+          setAddToWatchlistModal(false);
+        });
+    }
+    catch (e) {
+      console.log('fetching failed === ', e);
+    }
+  };
+
+  const renderAddToWatchlistModal = () => (
+    <CustomModal
+      open={addToWatchlistModal}
+      handleClose={() => setAddToWatchlistModal(false)}
+      labelledby='add_to_watchlist-modal-title'
+      describedby='add_to_watchlist-modal-description'
+      modalTitle='Add to watchlist:'
+      modalBody={() => (
+        <FormControl
+          className='pb-3'
+        >
+          <InputLabel id='select_watchlist' className='d-flex'>Watchlist</InputLabel>
+          <Select
+            className='py-0'
+            label='Watchlist'
+            labelId='select_watchlist'
+            value={props.watchListsArray.length > 0 ? props.watchListsArray[selectedListIndex] : 'Select watchlist'}
+            onChange={(event) => handleChange(event)}
+            renderValue={(value) => `${value}`}
+            MenuProps={{
+              sx: {
+                paddingBottom: '10px',
+                '& ul': {paddingTop: 0, paddingBottom: 0},
+                '&& .MuiMenuItem-root': {
+                  '&.Mui-selected': {
+                    color: 'white',
+                    backgroundColor: '#493f35'
+                  }
+                },
+                '&& .Mui-selected': {
+                  color: 'white',
+                  backgroundColor: '#493f35'
+                }
+              }
+            }}
+          >
+            {props.watchListsArray.map((element, index) => (
+              <MenuItem
+                key={`watchlist_${index}`}
+                className='py-3'
+                value={element}
+                divider
+              >
+                {element}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+      modalButton={() => (
+        <Button
+          variant='outlined'
+          onClick={() => addAssetToWatchlist()}
+          sx={{
+            color: 'white',
+            width: '5rem',
+            backgroundColor: '#493f35',
+            '&:hover': {
+              backgroundColor: '#493f35',
+            }
+          }}
+        >
+          Add
+        </Button>
+      )}
+    />
   );
 
   return (
@@ -172,15 +302,17 @@ const WatchListsScreen = (props) => {
         searchBar
         selectedNavLinkIndex={2}
       />
+      {renderAddToWatchlistModal()}
     </React.Fragment>
 
   );
 }
 
 ScreensTemplate.propTypes = {
-  usePersistedState: PropTypes.func,
   watchListsArray: PropTypes.array,
   setWatchListsArray: PropTypes.func,
+  assetsListArray: PropTypes.array,
+  setAssetsListArray: PropTypes.func,
 };
 
 export default WatchListsScreen;

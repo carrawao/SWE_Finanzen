@@ -39,12 +39,10 @@ const assetsArrayTest = [
  * @constructor
  */
 const AssetsList = (props) => {
-  //const [assetsArray, setAssetsArray] = useState([]);
   //const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [showAssetModal, setShowAssetModal] = useState(false);
   const [asset, setAsset] = useState('');
   const [errorModal, setErrorModal] = useState(false);
-
 
   const handleClose = () => {
     setErrorModal(false);
@@ -141,6 +139,8 @@ const AssetsList = (props) => {
 AssetsList.propTypes = {
   watchListsArray: PropTypes.array,
   selectedListIndex: PropTypes.number,
+  assetsListArray: PropTypes.array,
+  setAssetsListArray: PropTypes.func,
 };
 
 export default AssetsList;

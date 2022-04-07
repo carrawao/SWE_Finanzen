@@ -55,6 +55,7 @@ const WatchLists = (props) => {
   const addWatchlist = () => {
     if (watchlist !== '') {
       props.setWatchListsArray([...props.watchListsArray, watchlist]);
+      props.setAssetsListArray([...props.assetsListArray, []])
       setAddListModal(false);
       setErrorModal(false);
       setWatchlist('');
@@ -278,6 +279,8 @@ WatchLists.propTypes = {
   setWatchListsArray: PropTypes.func,
   selectedListIndex: PropTypes.number,
   setSelectedListIndex: PropTypes.func,
+  assetsListArray: PropTypes.array,
+  setAssetsListArray: PropTypes.func,
 };
 
 export default WatchLists;
