@@ -6,7 +6,7 @@ const schedule = require('node-schedule');
 const readline = require('readline');
 
 const updateDataFromAPI = require('./module/updateDataFromAPI');
-
+const updateCurrencyFromAPI = require('./module/updateCurrencyFromAPI');
 
 const apiKeys =[
     'ZSQ57OXG4YKUA0B8', //API Key Hakan;
@@ -18,7 +18,7 @@ const apiKeys =[
 ]
 let apiKeyIndex = 0;
 let apiKey;
-
+const currencyAPIKey = '8M63hm29skLS4WL2ET8NX3rua6ZMalqUZFy09CMx';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +28,7 @@ const routes = require('./routes/routes.js')(app, fs, apiKey);
 // launch server on Port 3001
 const server = app.listen(3001, () => {
     setApiKey();
-    console.log('listening on port %s...', server.address().port);
+    console.log('listening on port %s...', server.address().port); 
 });
 
 //INFO WICHTIGER LINK für schedule
@@ -46,7 +46,7 @@ const updateCompanyOverview = schedule.scheduleJob('30 23 * */1 *', updateCompan
 // //Every 3 hours the API key is updated
 const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
 
-
+const updateCurrentCurrency = schedule.scheduleJob('*/10 * * * *',updateCurrentCurrencyDate);
 
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 //      Shares
@@ -411,4 +411,8 @@ async function updateFiveCompanyOverviewData(symbols, minutes){
             updateDataFromAPI.updateCompanyOverview(symbol, apiKey);
         }
     },90000 * minutes);
+}
+
+async function updateCurrentCurrencyDate(){
+    updateCurrencyFromAPI.updateCurrentCurrency(currencyAPIKey);
 }

@@ -42,11 +42,13 @@ const userRoutes = (app, fs) => {
 
             const setDataIntervall = setInterval(() => {
                 if(shareFinished && companyOverviewFinished){
+                    const rawCurreny = fs.readFileSync('./data/Currency/currentCurrency.json');
+                    const currency = JSON.parse(rawCurreny);
                     clearInterval(setDataIntervall);
                     const rawDailyData = fs.readFileSync(dataPathOne);
                     const rawCompanyOverview = fs.readFileSync(dataPathTwo);
                     const dailyJson_data = JSON.parse(rawDailyData);  
-                    const rawCompanyOverviewData = JSON.parse(rawCompanyOverview);
+                    const companyOverviewData = JSON.parse(rawCompanyOverview);
                     
                     
                     let dayOne = new Date();
@@ -79,13 +81,14 @@ const userRoutes = (app, fs) => {
                     percentChange = percentChange.toFixed(4);
                     }
                     
-                    const name = rawCompanyOverviewData['Name'];
+                    const name = companyOverviewData['Name'];
+                    let value = closeValue * currency['data']['EUR']['value'];
+                    value = value.toFixed(4);
                     
-                    
-                    const value = { "name": name, "symbol": symbol, "value": closeValue, "percentChange": percentChange };
+                    const back = { "name": name, "symbol": symbol, "value": value, "percentChange": percentChange };
                     
                     res.set('Access-Control-AlLow-Origin','http://localhost:3000');
-                    res.send(JSON.parse(JSON.stringify(value)));
+                    res.send(JSON.parse(JSON.stringify(back)));
                 }
             }, 100);
 
