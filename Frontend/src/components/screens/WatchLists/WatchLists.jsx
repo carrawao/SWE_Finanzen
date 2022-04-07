@@ -59,6 +59,7 @@ const WatchLists = (props) => {
       setAddListModal(false);
       setErrorModal(false);
       setWatchlist('');
+      props.setSelectedListIndex(props.watchListsArray.length);
     } else {
       setErrorModal(true);
     }
@@ -82,8 +83,11 @@ const WatchLists = (props) => {
   }
 
   const removeWatchList = () => {
-    if (props.watchListsArray.length !== 0) {
+    if (props.watchListsArray.length > 0) {
       props.setWatchListsArray(props.watchListsArray.filter(
+        (element, index) => index !== listDropdownIndex
+      ));
+      props.assetsListArray.length > 0 && props.setAssetsListArray(props.assetsListArray.filter(
         (element, index) => index !== listDropdownIndex
       ));
       setRemoveListModal(false);
@@ -176,7 +180,7 @@ const WatchLists = (props) => {
         handleClose={() => handleClose()}
         labelledby='remove_list-modal-title'
         describedby='remove_list-modal-description'
-        modalTitle='Watchlist will be removed:'
+        modalTitle='Remove watchlist?'
         modalButton={() => (
           <Button
             variant='outlined'

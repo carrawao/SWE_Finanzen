@@ -85,9 +85,9 @@ const WatchListsScreen = (props) => {
                   />
                 </Grid>
 
-                <Grid item className='d-flex flex-column flex-xl-row flex-grow-xl-1 col-7 col-md-9 pe-3'>
+                <Grid item className='d-flex flex-column flex-xl-row flex-grow-xl-1 col-7 col-sm-7 col-md-9 pe-3'>
                   <Typography
-                    className='col-12 col-md-9 col-xl-9 me-md-5'
+                    className='col-12 col-sm-10 col-md-9 col-xl-9 me-md-5'
                     noWrap
                     fontSize={{
                       lg: 16,
@@ -113,7 +113,7 @@ const WatchListsScreen = (props) => {
 
                 <Grid item className='d-flex flex-row flex-grow-1 justify-content-end'>
                   <Avatar
-                    className='ms-4 ms-sm-5 ms-md-0'
+                    className='ms-4 ms-sm-0 ms-md-0'
                     sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
                   >
                     <DoneIcon sx={{color: 'green', fontSize: '20px'}} />
@@ -202,7 +202,7 @@ const WatchListsScreen = (props) => {
   const addAssetToWatchlist = async () => {
     const symbol = searchResult[searchResultIndex].symbol;
     try {
-      return await fetch(`http://localhost:3001/intradayShare?symbol=${symbol}`, {mode:'cors'})
+      return await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'})
         .then(response => response.json())
         .then(data => {
           props.setAssetsListArray(prevAssetsListArray => {
@@ -210,9 +210,9 @@ const WatchListsScreen = (props) => {
             assetsListArray[selectedListIndex] = [
               ...assetsListArray[selectedListIndex],
               {
-                name: 'Allianz',
-                price: '212.25$',
-                change: '-1.80%'
+                name: data.name,
+                price: `${data.value}$`,
+                change: `${data.percentChange}%`
               }
             ];
             return assetsListArray;

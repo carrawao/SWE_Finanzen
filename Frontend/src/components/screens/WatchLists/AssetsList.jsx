@@ -12,26 +12,6 @@ import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 import {CustomTable} from '../../common/index';
 
-
-const createData = (name, price, change) => {
-  return { name, price, change };
-}
-
-const assetsArrayTest = [
-  [
-    createData('Allianz', '212.25$', '-1.80%'),
-    createData('Fuijitsu', '212.25$', '-1.80%'),
-    createData('Capgemini', '212.25$', '-1.80%'),
-    createData('IBM', '212.25$', '-1.80%'),
-  ],
-  [
-    createData('Thales', '212.25$', '-1.80%'),
-    createData('WW', '212.25$', '-1.80%'),
-    createData('DHBW', '212.25$', '-1.80%'),
-    createData('Netto', '212.25$', '-1.80%'),
-  ]
-];
-
 /**
  * Show all the assets corresponding a watchlist
  * @param props
@@ -39,14 +19,16 @@ const assetsArrayTest = [
  * @constructor
  */
 const AssetsList = (props) => {
-  //const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [showAssetModal, setShowAssetModal] = useState(false);
+  const [removeAssetModal, setRemoveAssetModal] = useState(false);
   const [asset, setAsset] = useState('');
+  const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [errorModal, setErrorModal] = useState(false);
 
   const handleClose = () => {
     setErrorModal(false);
     setShowAssetModal(false);
+    setRemoveAssetModal(false);
   }
 
   const addAsset = () => {
@@ -58,6 +40,20 @@ const AssetsList = (props) => {
       setErrorModal(true);
     }
   }
+
+  const removeAsset = () => {
+    const selectedAssetsList = props.assetsListArray[props.selectedListIndex];
+    if (selectedAssetsList.length !== 0) {
+      props.setAssetsListArray(prevAssetsListArray => {
+        const assetsListArray = [...prevAssetsListArray];
+        assetsListArray[props.selectedListIndex].filter(
+          (element, index) => index !== selectedAssetIndex
+        );
+        return assetsListArray;
+      })
+      setRemoveAssetModal(false);
+    }
+  };
 
   const renderAddAssetModal = () => (
     <CustomModal
@@ -97,6 +93,34 @@ const AssetsList = (props) => {
     />
   );
 
+  const renderRemoveAssetModal = () => {
+    return (
+      <CustomModal
+        open={removeAssetModal}
+        handleClose={() => handleClose()}
+        labelledby='remove_asset-modal-title'
+        describedby='remove_asset-modal-description'
+        modalTitle='Remove asset?'
+        modalButton={() => (
+          <Button
+            variant='outlined'
+            onClick={() => removeAsset()}
+            sx={{
+              color: 'white',
+              width: '5rem',
+              backgroundColor: '#493f35',
+              '&:hover': {
+                backgroundColor: '#493f35',
+              }
+            }}
+          >
+            Remove
+          </Button>
+        )}
+      />
+    );
+  }
+
   return props.watchListsArray.length > 0 && (
     <Container className='pe-2 pe-xl-5'>
       <Stack
@@ -126,12 +150,15 @@ const AssetsList = (props) => {
       </Container>
 
       <CustomTable
-        assetsArray={assetsArrayTest}
+        assetsListArray={props.assetsListArray}
         selectedListIndex={props.selectedListIndex}
         watchListsArray={props.watchListsArray}
+        setSelectedAssetIndex={setSelectedAssetIndex}
+        setRemoveAssetModal={setRemoveAssetModal}
       />
 
       {renderAddAssetModal()}
+      {renderRemoveAssetModal()}
     </Container>
   );
 }

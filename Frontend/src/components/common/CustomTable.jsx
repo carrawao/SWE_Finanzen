@@ -31,7 +31,10 @@ const CustomTable = (props) => {
     >
       <Table aria-label='assets-table'>
         <TableBody>
-          {props.assetsArray[props.selectedListIndex].map((row, index) => (
+          {
+            props.assetsListArray[props.selectedListIndex] &&
+            props.assetsListArray[props.selectedListIndex].length > 0 &&
+            props.assetsListArray[props.selectedListIndex].map((row, index) => (
             <TableRow
               key={index}
               sx={{
@@ -111,7 +114,10 @@ const CustomTable = (props) => {
                   menuOptions={['Delete']}
                   iconOptions={[<DeleteIcon />]}
                   functionOptions={[
-                    () => {}
+                    () => {
+                    props.setRemoveAssetModal(true);
+                    props.setSelectedAssetIndex(index);
+                    }
                   ]}
                 />
               </TableCell>
@@ -124,10 +130,12 @@ const CustomTable = (props) => {
 }
 
 CustomTable.propTypes = {
-  assetsArray: PropTypes.array,
+  assetsListArray: PropTypes.array,
   selectedListIndex: PropTypes.number,
   watchListsArray: PropTypes.array,
   setWatchListsArray: PropTypes.func,
+  setRemoveAssetModal: PropTypes.func,
+  setSelectedAssetIndex: PropTypes.func
 };
 
 export default CustomTable;
