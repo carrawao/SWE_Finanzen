@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FormControl, InputLabel, Select, MenuItem, Grid} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -6,8 +6,17 @@ import DropdownMenu from './DropdownMenu';
 import PropTypes from 'prop-types';
 
 const CustomSelectField = props => {
-  const [selectedItem, setSelectedItem] = React.useState(props.watchListsArray[props.selectedListIndex]);
+  const [selectedItem, setSelectedItem] = useState(props.watchListsArray[props.selectedListIndex]);
 
+  useEffect(() => {
+    setSelectedItem(props.watchListsArray.length);
+
+    if (selectedItem === 'Add Watchlist') {
+      props.setAddListModal();
+    }
+  }, [props, props.watchListsArray, selectedItem]);
+
+  // Selects the index of the current watchlist
   const handleChange = (event) => {
     if (props.watchListsArray.includes(event.target.value)) {
       const index = props.watchListsArray.map(item => item).indexOf(event.target.value);
@@ -16,15 +25,9 @@ const CustomSelectField = props => {
     setSelectedItem(event.target.value);
   };
 
-  useEffect(() => {
-    if (selectedItem === 'Add watchlist') {
-      props.setAddListModal();
-      setSelectedItem(props.watchListsArray[props.selectedListIndex]);
-    }
-  })
   return (
-    <Grid container direction='row' alignItems='center' className='d-md-none'>
-      <Grid item xs={10} className='d-flex'>
+    <Grid className='d-flex flex-row align-items-center d-lg-none col-12'>
+      <Grid item className='d-flex col-5 col-sm-4 col-md-3'>
       <FormControl
         className={props.className}
       >
@@ -33,7 +36,7 @@ const CustomSelectField = props => {
           className='py-0'
           label='Watchlist'
           labelId='select_watchlist'
-          value={props.watchListsArray.length > 0 ? props.watchListsArray[props.selectedListIndex] : 'Add watchlist'}
+          value={props.watchListsArray.length > 0 ? props.watchListsArray[props.selectedListIndex] : ''}
           onChange={(event) => handleChange(event)}
           renderValue={(value) => `${value}`}
           MenuProps={{
@@ -42,6 +45,7 @@ const CustomSelectField = props => {
               '& ul': {paddingTop: 0, paddingBottom: 0},
               '&& .MuiMenuItem-root': {
                 '&.Mui-selected': {
+                  color: 'white',
                   backgroundColor: '#493f35'
                 }
               },
@@ -63,7 +67,7 @@ const CustomSelectField = props => {
             </MenuItem>
           ))}
           <MenuItem
-            value='Add watchlist'
+            value='Add Watchlist'
             className='py-3'
             sx={{color: '#493f35'}}
           >
@@ -72,7 +76,8 @@ const CustomSelectField = props => {
         </Select>
       </FormControl>
       </Grid>
-      <Grid item xs={2}>
+
+      <Grid item className='col-3 justify-content-start'>
         <DropdownMenu
           selectedListIndex={props.selectedListIndex}
           listName={props.watchListsArray[props.selectedListIndex]}
