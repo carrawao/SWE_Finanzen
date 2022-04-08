@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
-import {CustomModal} from '../../common/index';
 import {
   Container,
   Typography,
   Stack,
-  Button,
   IconButton,
-  TextField
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 import {CustomTable} from '../../common/index';
+import {renderRemoveAssetModal, renderAddAssetModal} from './Modals/assetModals';
 
 /**
  * Show all the assets corresponding a watchlist
@@ -25,6 +23,7 @@ const AssetsList = (props) => {
   const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [errorModal, setErrorModal] = useState(false);
 
+  // Function to close the modals
   const handleClose = () => {
     setErrorModal(false);
     setShowAssetModal(false);
@@ -42,87 +41,22 @@ const AssetsList = (props) => {
   }
 
   const removeAsset = () => {
-    const selectedAssetsList = props.assetsListArray[props.selectedListIndex];
-    if (selectedAssetsList.length !== 0) {
+    if (props.assetsListArray.length > 0) {
       props.setAssetsListArray(prevAssetsListArray => {
         const assetsListArray = [...prevAssetsListArray];
-        assetsListArray[props.selectedListIndex].filter(
-          (element, index) => index !== selectedAssetIndex
-        );
+        assetsListArray[props.selectedListIndex] =
+          assetsListArray[props.selectedListIndex].filter(
+            (element, index) => index !== selectedAssetIndex
+          );
         return assetsListArray;
-      })
+      });
       setRemoveAssetModal(false);
+      setSelectedAssetIndex(0);
     }
   };
 
-  const renderAddAssetModal = () => (
-    <CustomModal
-      open={showAssetModal}
-      handleClose={() => handleClose()}
-      labelledby='add_asset-modal-title'
-      describedby='add_asset-modal-description'
-      modalTitle='New asset'
-      modalBody={() => (
-        <TextField
-          variant='outlined'
-          className='pb-3'
-          label='Enter name'
-          error={errorModal}
-          helperText={errorModal ? '*Name cannot be empty' : false}
-          defaultValue=''
-          sx={{display: 'flex', flexGrow: 2}}
-          onChange={data => setAsset(data.target.value)}
-        />
-      )}
-      modalButton={() => (
-        <Button
-          variant='outlined'
-          onClick={() => addAsset()}
-          sx={{
-            color: 'white',
-            width: '5rem',
-            backgroundColor: '#493f35',
-            '&:hover': {
-              backgroundColor: '#493f35',
-            }
-          }}
-        >
-          Add
-        </Button>
-      )}
-    />
-  );
-
-  const renderRemoveAssetModal = () => {
-    return (
-      <CustomModal
-        open={removeAssetModal}
-        handleClose={() => handleClose()}
-        labelledby='remove_asset-modal-title'
-        describedby='remove_asset-modal-description'
-        modalTitle='Remove asset?'
-        modalButton={() => (
-          <Button
-            variant='outlined'
-            onClick={() => removeAsset()}
-            sx={{
-              color: 'white',
-              width: '5rem',
-              backgroundColor: '#493f35',
-              '&:hover': {
-                backgroundColor: '#493f35',
-              }
-            }}
-          >
-            Remove
-          </Button>
-        )}
-      />
-    );
-  }
-
   return props.watchListsArray.length > 0 && (
-    <Container className='pe-2 pe-xl-5'>
+    <Container className='px-1 px-sm-3 px-md-5 px-lg-2 pe-xl-3'>
       <Stack
         className='d-none d-lg-flex mb-3 justify-content-between'
         direction='row'
@@ -157,17 +91,19 @@ const AssetsList = (props) => {
         setRemoveAssetModal={setRemoveAssetModal}
       />
 
-      {renderAddAssetModal()}
-      {renderRemoveAssetModal()}
+      {renderAddAssetModal(showAssetModal, handleClose, errorModal, setAsset, addAsset)}
+      {renderRemoveAssetModal(removeAssetModal, handleClose, removeAsset)}
     </Container>
   );
 }
 
 AssetsList.propTypes = {
   watchListsArray: PropTypes.array,
-  selectedListIndex: PropTypes.number,
+  setWatchListsArray: PropTypes.func,
   assetsListArray: PropTypes.array,
   setAssetsListArray: PropTypes.func,
+  selectedListIndex: PropTypes.number,
+  setSelectedListIndex: PropTypes.func
 };
 
 export default AssetsList;
