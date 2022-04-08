@@ -1,28 +1,27 @@
-const updateDataFromAPI = require('../module/updateDataFromAPI');
-const safeNewSymbol = require('../module/safeNewSymbol');
+const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
+const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
 const userRoutes = (app, fs) => {
 
-    app.get('/getCryptoForWatchlist', (req, res, apiKey) => {
+    app.get('/getShareForWatchlist', (req, res, apiKey) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
-            const dataPathDailyShare = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
-            const dataPathQuotedUSshares = './data/quotedCrypto.json';
+            const dataPathDailyShare = './data/Shares/Daily/dailyShare_' + symbol + '.json';
+            const dataPathQuotedUSshares = './data/quotedUSshares.json';
             const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
 
 
             fs.access(dataPathDailyShare, fs.F_OK, (err) => {
                 if (err) {
                     updateDataFromAPI.updateDailySeriesShare(symbol, apiKey).then(() => {
-                        safeNewSymbol.saveCryptoSymbol(symbol);
+                        safeNewSymbol.saveShareSymbol(symbol);
                     }).then(() => {
                         setData();
                     });
                     return;
                 }else{
                     setData();
-                    console.log("Daily File exists");
                 }
             });
             const setData = () => {
@@ -49,8 +48,8 @@ const userRoutes = (app, fs) => {
                     dayOneSearchText = dayOneSearchText + dayOne.getDate();
                 }
 
-                let openValue = dailyJson_data['Time Series (Digital Currency Daily)'][dayOneSearchText]['1a. open (EUR)'];
-                let closeValue = dailyJson_data['Time Series (Digital Currency Daily)'][dayOneSearchText]['4a. close (EUR)'];
+                let openValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['1. open'];
+                let closeValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['4. close'];
 
                 let change = (closeValue - openValue) / closeValue;
                 change = change * 100;
@@ -59,12 +58,12 @@ const userRoutes = (app, fs) => {
                 let name;
                 for(let share of quotedUSsharesData){
                     if(share['symbol'] === symbol){
-                        console.log(share['symbol']);
                         name = share['name'];
                         break;
                     }
                 }
-                let value = closeValue;
+                let value = closeValue * currency['data']['EUR']['value'];
+                value = value.toFixed(2);
                 
                 const back = { "name": name, "symbol": symbol, "value": value, "percentChange": change };
                 
