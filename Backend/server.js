@@ -6,7 +6,7 @@ const schedule = require('node-schedule');
 const readline = require('readline');
 
 const updateDataFromAPI = require('./module/updateDataFromAPI');
-
+const updateCurrencyFromAPI = require('./module/updateCurrencyFromAPI');
 
 const apiKeys =[
     'ZSQ57OXG4YKUA0B8', //API Key Hakan;
@@ -18,7 +18,7 @@ const apiKeys =[
 ]
 let apiKeyIndex = 0;
 let apiKey;
-
+const currencyAPIKey = '8M63hm29skLS4WL2ET8NX3rua6ZMalqUZFy09CMx';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +28,13 @@ const routes = require('./routes/routes.js')(app, fs, apiKey);
 // launch server on Port 3001
 const server = app.listen(3001, () => {
     setApiKey();
-    console.log('listening on port %s...', server.address().port);
+    console.log('listening on port %s...', server.address().port); 
+    // Wird benötigt falls beim Entwickeln mit getShareForWatchlist gearbeitet wird.
+    // Nur ein mal am tag nötig
+    // Dauert ca 2 minuten
+    // updateDailyShareData();
+    updateDailyCryptoData();
+    // updateIntradayShareData();
 });
 
 //INFO WICHTIGER LINK für schedule
@@ -46,7 +52,7 @@ const updateCompanyOverview = schedule.scheduleJob('30 23 * */1 *', updateCompan
 // //Every 3 hours the API key is updated
 const updateApiKey = schedule.scheduleJob('0 */3 * * *', setApiKey);
 
-
+const updateCurrentCurrency = schedule.scheduleJob('25 0 * * *',updateCurrentCurrencyDate);
 
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 //      Shares
@@ -114,7 +120,7 @@ async function updateFiveIntradayShareFromAPI(symbols, minutes){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {
-            updateDataFromAPI.updateIntradaySeriesShare(symbol,30, apiKey);
+            updateDataFromAPI.updateIntradaySeriesShare(symbol,60, apiKey);
         }
     },90000 * minutes);
 }
@@ -255,7 +261,7 @@ async function updateFiveIntradayCryptoFromAPI(symbols, minutes){
 //Every 1.5 Minutes start update 5 Symbols
 setTimeout(() => {
     for (const symbol of symbols) {
-        updateDataFromAPI.updateIntradaySeriesCrypto(symbol,30,apiKey);
+        updateDataFromAPI.updateIntradaySeriesCrypto(symbol,60,apiKey);
     }
 },90000 * minutes);
 }
@@ -411,4 +417,8 @@ async function updateFiveCompanyOverviewData(symbols, minutes){
             updateDataFromAPI.updateCompanyOverview(symbol, apiKey);
         }
     },90000 * minutes);
+}
+
+async function updateCurrentCurrencyDate(){
+    updateCurrencyFromAPI.updateCurrentCurrency(currencyAPIKey);
 }

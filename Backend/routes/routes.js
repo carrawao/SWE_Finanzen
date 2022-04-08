@@ -17,6 +17,7 @@ const search = require('./search');
 
 //Watchlist
 const getShareForWatchlist = require('./getShareForWatchlist');
+const getCryptoForWatchlist = require('./getCryptoForWatchlist');
 
 const appRouter = (app, fs, apiKey) => {
   app.get('/', (req, res) => {
@@ -41,6 +42,7 @@ const appRouter = (app, fs, apiKey) => {
 
   //Watchlist
   getShareForWatchlist(app,fs,apiKey);
+  getCryptoForWatchlist(app,fs,apiKey);
 };
 
 module.exports = appRouter;

@@ -36,7 +36,7 @@ const updateCompanyOverview = async (symbol, apiKey) => {
 const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
     console.log("update Intraday Share Series from " + symbol);
 
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}min&apikey=${apiKey}`;
+    url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol=${symbol}&interval=${interval}min&slice=year1month1&apikey=${apiKey}`;
     let path = 'data/Shares/Intraday/intradayShare_' + symbol + '.json';
 
     const res = await axios.get(url)
@@ -51,7 +51,7 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
 const updateDailySeriesShare = async (symbol, apiKey) => {
     console.log("update Daily Share Series from " + symbol);
 
-    url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`;
+    url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${apiKey}`;
     let path = 'data/Shares/Daily/dailyShare_' + symbol + '.json';
 
     const res = await axios.get(url)
@@ -97,7 +97,7 @@ const updateMonthlySeriesShare = async (symbol, apiKey) => {
 //----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 //Crypto
-const updateIntradaySeriesCrypto = async (symbol, interval = 30, apiKey) => {
+const updateIntradaySeriesCrypto = async (symbol, interval = 60, apiKey) => {
     console.log("update Intraday Crypto Series from " + symbol);
 
     url = `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${symbol}&market=EUR&interval=${interval}min&apikey=${apiKey}`
