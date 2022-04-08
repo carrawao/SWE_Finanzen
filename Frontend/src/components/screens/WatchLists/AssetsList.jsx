@@ -1,36 +1,14 @@
 import React, {useState} from 'react';
-import {CustomModal} from '../../common/index';
 import {
   Container,
   Typography,
   Stack,
-  Button,
   IconButton,
-  TextField
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 import {CustomTable} from '../../common/index';
-
-
-const createData = (name, price, change) => {
-  return { name, price, change };
-}
-
-const assetsArrayTest = [
-  [
-    createData('Allianz', '212.25$', '-1.80%'),
-    createData('Fuijitsu', '212.25$', '-1.80%'),
-    createData('Capgemini', '212.25$', '-1.80%'),
-    createData('IBM', '212.25$', '-1.80%'),
-  ],
-  [
-    createData('Thales', '212.25$', '-1.80%'),
-    createData('WW', '212.25$', '-1.80%'),
-    createData('DHBW', '212.25$', '-1.80%'),
-    createData('Netto', '212.25$', '-1.80%'),
-  ]
-];
+import {renderRemoveAssetModal, renderAddAssetModal} from './Modals/assetModals';
 
 /**
  * Show all the assets corresponding a watchlist
@@ -39,16 +17,17 @@ const assetsArrayTest = [
  * @constructor
  */
 const AssetsList = (props) => {
-  //const [assetsArray, setAssetsArray] = useState([]);
-  //const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [showAssetModal, setShowAssetModal] = useState(false);
+  const [removeAssetModal, setRemoveAssetModal] = useState(false);
   const [asset, setAsset] = useState('');
+  const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [errorModal, setErrorModal] = useState(false);
 
-
+  // Function to close the modals
   const handleClose = () => {
     setErrorModal(false);
     setShowAssetModal(false);
+    setRemoveAssetModal(false);
   }
 
   const addAsset = () => {
@@ -61,46 +40,23 @@ const AssetsList = (props) => {
     }
   }
 
-  const renderAddAssetModal = () => (
-    <CustomModal
-      open={showAssetModal}
-      handleClose={() => handleClose()}
-      labelledby='add_asset-modal-title'
-      describedby='add_asset-modal-description'
-      modalTitle='New asset'
-      modalBody={() => (
-        <TextField
-          variant='outlined'
-          className='pb-3'
-          label='Enter name'
-          error={errorModal}
-          helperText={errorModal ? '*Name cannot be empty' : false}
-          defaultValue=''
-          sx={{display: 'flex', flexGrow: 2}}
-          onChange={data => setAsset(data.target.value)}
-        />
-      )}
-      modalButton={() => (
-        <Button
-          variant='outlined'
-          onClick={() => addAsset()}
-          sx={{
-            color: 'white',
-            width: '5rem',
-            backgroundColor: '#493f35',
-            '&:hover': {
-              backgroundColor: '#493f35',
-            }
-          }}
-        >
-          Add
-        </Button>
-      )}
-    />
-  );
+  const removeAsset = () => {
+    if (props.assetsListArray.length > 0) {
+      props.setAssetsListArray(prevAssetsListArray => {
+        const assetsListArray = [...prevAssetsListArray];
+        assetsListArray[props.selectedListIndex] =
+          assetsListArray[props.selectedListIndex].filter(
+            (element, index) => index !== selectedAssetIndex
+          );
+        return assetsListArray;
+      });
+      setRemoveAssetModal(false);
+      setSelectedAssetIndex(0);
+    }
+  };
 
   return props.watchListsArray.length > 0 && (
-    <Container className='pe-2 pe-xl-5'>
+    <Container className='px-1 px-sm-3 px-md-5 px-lg-2 pe-xl-3'>
       <Stack
         className='d-none d-lg-flex mb-3 justify-content-between'
         direction='row'
@@ -128,19 +84,26 @@ const AssetsList = (props) => {
       </Container>
 
       <CustomTable
-        assetsArray={assetsArrayTest}
+        assetsListArray={props.assetsListArray}
         selectedListIndex={props.selectedListIndex}
         watchListsArray={props.watchListsArray}
+        setSelectedAssetIndex={setSelectedAssetIndex}
+        setRemoveAssetModal={setRemoveAssetModal}
       />
 
-      {renderAddAssetModal()}
+      {renderAddAssetModal(showAssetModal, handleClose, errorModal, setAsset, addAsset)}
+      {renderRemoveAssetModal(removeAssetModal, handleClose, removeAsset)}
     </Container>
   );
 }
 
 AssetsList.propTypes = {
   watchListsArray: PropTypes.array,
+  setWatchListsArray: PropTypes.func,
+  assetsListArray: PropTypes.array,
+  setAssetsListArray: PropTypes.func,
   selectedListIndex: PropTypes.number,
+  setSelectedListIndex: PropTypes.func
 };
 
 export default AssetsList;

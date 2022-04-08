@@ -23,7 +23,7 @@ const ScreensTemplate = (props) => {
   };
 
   return (
-    <Box className='d-flex'>
+    <Box className='d-flex w-100'>
       <CssBaseline/>
       <AppBar
         className={`position-fixed ${props.searchBar ? 'bg-white' : ''}`}
@@ -63,7 +63,14 @@ const ScreensTemplate = (props) => {
 
       <Box
         component='main'
-        sx={{flexGrow: 1, padding: '1rem', width: {lg: `calc(100% - ${drawerWidth}rem)`}}}
+        sx={{
+          flexGrow: 1,
+          padding: '1rem',
+          width: {
+            lg: `calc(100% - ${drawerWidth}rem)`
+          },
+          maxWidth: '100%'
+        }}
       >
         <Toolbar style={{minHeight: '3rem'}}/>
         {props.bodyComponent()}

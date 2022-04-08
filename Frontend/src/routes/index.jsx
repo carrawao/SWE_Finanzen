@@ -27,10 +27,12 @@ const persistState = (keyName, defaultValue) => {
  */
 const AppRoutes = () => {
   const [watchListsArray, setWatchListsArray] = useState(() => persistState('watchListsArray', []));
+  const [assetsListArray, setAssetsListArray] = useState(() => persistState('assetsListsArray', []));
 
   useEffect(() => {
     localStorage.setItem('watchListsArray', JSON.stringify(watchListsArray));
-  }, [watchListsArray]);
+    localStorage.setItem('assetsListsArray', JSON.stringify(assetsListArray));
+  }, [watchListsArray, assetsListArray]);
 
   return (
     <Routes>
@@ -42,6 +44,8 @@ const AppRoutes = () => {
         <WatchListsScreen
           watchListsArray={watchListsArray}
           setWatchListsArray={setWatchListsArray}
+          assetsListArray={assetsListArray}
+          setAssetsListArray={setAssetsListArray}
           />
         }
       />
