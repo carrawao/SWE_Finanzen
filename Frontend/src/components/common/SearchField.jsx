@@ -61,7 +61,7 @@ const SearchField = props => {
       InputProps={{
         startAdornment: (
           <InputAdornment position='start'>
-            <IconButton onClick={event => search(event)} className='pe-0'>
+            <IconButton className='pe-0'>
               <SearchIcon style={{color: '#493f35'}}/>
             </IconButton>
           </InputAdornment>

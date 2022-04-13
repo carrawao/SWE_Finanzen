@@ -178,7 +178,7 @@ const ActivitiesScreen = (props) => {
         headerComponent={renderHeader}
         bodyComponent={renderBody}
         searchBar
-        selectedNavLinkIndex={2}
+        selectedNavLinkIndex={3}
       />
     </React.Fragment>
   );
