@@ -16,4 +16,5 @@ jobs:
         working-directory: ./Frontend
         run: |
           npm ci
-          npm test      
+          CI=false npm run build
+          npm test     
