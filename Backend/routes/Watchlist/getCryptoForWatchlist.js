@@ -1,4 +1,4 @@
-const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
+const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
@@ -8,8 +8,7 @@ const userRoutes = (app, fs) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
             const dataPathDailyShare = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
-            const dataPathQuotedUSshares = './data/quotedCrypto.json';
-            const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
+            const dataPathQuotedCrypto = './data/quotedCrypto.json';
 
 
             fs.access(dataPathDailyShare, fs.F_OK, (err) => {
@@ -25,12 +24,10 @@ const userRoutes = (app, fs) => {
                 }
             });
             const setData = () => {
-                const rawCurreny = fs.readFileSync(dataPathCurrentCurrency);
                 const rawDailyData = fs.readFileSync(dataPathDailyShare);
-                const rawQuotedUSshares = fs.readFileSync(dataPathQuotedUSshares);
-                const currency = JSON.parse(rawCurreny);
+                const rawQuotedCrypto = fs.readFileSync(dataPathQuotedCrypto);
                 const dailyJson_data = JSON.parse(rawDailyData);  
-                const quotedUSsharesData = JSON.parse(rawQuotedUSshares);
+                const quotedCryptoData = JSON.parse(rawQuotedCrypto);
 
                 let dayOne = new Date();
                 dayOne.setDate(dayOne.getDate() - 1);
@@ -56,7 +53,7 @@ const userRoutes = (app, fs) => {
                 change = change.toFixed(2);
 
                 let name;
-                for(let share of quotedUSsharesData){
+                for(let share of quotedCryptoData){
                     if(share['symbol'] === symbol){
                         name = share['name'];
                         break;

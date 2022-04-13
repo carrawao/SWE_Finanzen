@@ -1,4 +1,4 @@
-const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
+const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
@@ -62,6 +62,7 @@ const userRoutes = (app, fs) => {
                         break;
                     }
                 }
+
                 let value = closeValue * currency['data']['EUR']['value'];
                 value = value.toFixed(2);
                 
