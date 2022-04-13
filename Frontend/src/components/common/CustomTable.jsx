@@ -31,7 +31,10 @@ const CustomTable = (props) => {
     >
       <Table aria-label='assets-table'>
         <TableBody>
-          {props.assetsArray[props.selectedListIndex].map((row, index) => (
+          {
+            props.assetsListArray[props.selectedListIndex] &&
+            props.assetsListArray[props.selectedListIndex].length > 0 &&
+            props.assetsListArray[props.selectedListIndex].map((row, index) => (
             <TableRow
               key={index}
               sx={{
@@ -42,12 +45,15 @@ const CustomTable = (props) => {
                 className='p-0'
                 sx={{
                   width: {
-                    xs: '8vw',
-                    md: '5vw'
+                    xs: '9vw',
+                    sm: '7vw',
+                    md: '1vw',
+                    lg: '5vw'
                   }
                 }}
               >
                 <Avatar
+                  className='me-xs-2 me-md-0'
                   alt={`${row.name}-logo`}
                   src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`}
                   sx={{width: '2rem', height: '2rem'}}
@@ -58,12 +64,13 @@ const CustomTable = (props) => {
                 sx={{
                   width: {
                     xs: '35vw',
-                    sm: '25vw',
-                    md: '15vw',
+                    md: '10vw',
+                    lg: '30vw',
+                    xl: '20vw'
                   }
                 }}
               >
-                <Typography variant='body2' noWrap>
+                <Typography className='ms-xs-2' variant='body2' noWrap>
                   {row.name}
                 </Typography>
               </TableCell>
@@ -73,29 +80,13 @@ const CustomTable = (props) => {
                 sx={{
                   width: {
                     xs: '15vw',
-                    sm: '20vw',
-                    md: '15vw',
-                  }
-                }}
-              >
-                <Typography variant='body2' noWrap>
-                  {row.price}
-                </Typography>
-              </TableCell>
-              <TableCell
-                className='p-0'
-                align='right'
-                sx={{
-                  width: {
-                    xs: '20vw',
-                    sm: '10vw',
-                    md: '15vw',
+                    md: '10vw',
                     lg: '10vw'
                   }
                 }}
               >
                 <Typography variant='body2' noWrap>
-                  {row.change}
+                  {`${row.price} $`}
                 </Typography>
               </TableCell>
               <TableCell
@@ -104,7 +95,28 @@ const CustomTable = (props) => {
                 sx={{
                   width: {
                     xs: '20vw',
-                    sm: '10vw',
+                    md: '10vw',
+                    lg: '10vw'
+                  }
+                }}
+              >
+                <Typography
+                  variant='body2'
+                  noWrap
+                  sx={{
+                    color: row.change < 0 ? 'red' : 'green'
+                  }}
+                >
+                  {`${row.change}%`}
+                </Typography>
+              </TableCell>
+              <TableCell
+                className='p-0'
+                align='right'
+                sx={{
+                  width: {
+                    xs: '20vw',
+                    md: '10vw',
                     lg: '10vw'
                   }
                 }}
@@ -116,7 +128,10 @@ const CustomTable = (props) => {
                   menuOptions={['Delete']}
                   iconOptions={[<DeleteIcon />]}
                   functionOptions={[
-                    () => {}
+                    () => {
+                    props.setRemoveAssetModal(true);
+                    props.setSelectedAssetIndex(index);
+                    }
                   ]}
                 />
               </TableCell>
@@ -129,10 +144,12 @@ const CustomTable = (props) => {
 }
 
 CustomTable.propTypes = {
-  assetsArray: PropTypes.array,
+  assetsListArray: PropTypes.array,
   selectedListIndex: PropTypes.number,
   watchListsArray: PropTypes.array,
   setWatchListsArray: PropTypes.func,
+  setRemoveAssetModal: PropTypes.func,
+  setSelectedAssetIndex: PropTypes.func
 };
 
 export default CustomTable;
