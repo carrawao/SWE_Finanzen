@@ -19,7 +19,7 @@ const SettingsScreen = () => {
       <ScreensTemplate
         headerComponent={renderHeader}
         bodyComponent={renderBody}
-        selectedNavLinkIndex={3}
+        selectedNavLinkIndex={4}
       />
     </React.Fragment>
 
