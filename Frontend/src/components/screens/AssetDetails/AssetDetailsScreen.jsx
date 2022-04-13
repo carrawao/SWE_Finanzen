@@ -1,17 +1,19 @@
 import React from 'react';
+import {useParams} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
-import Typography from '@mui/material/Typography';
-import { Button } from '@mui/material';
+import Typography from "@mui/material/Typography";
 
-const SettingsScreen = () => {
+const AssetDetailsScreen = () => {
+  let {asset} = useParams();
+
   const renderHeader = () => (
     <Typography variant='h6' noWrap component='div'>
-      Header of Settings Page
+      Asset Details Screen
     </Typography>
   );
 
   const renderBody = () => (
-    <Button>Export Data (noch ohne Funktion)</Button>
+    <h1>Details of asset: {asset}</h1>
   );
 
   return (
@@ -19,11 +21,10 @@ const SettingsScreen = () => {
       <ScreensTemplate
         headerComponent={renderHeader}
         bodyComponent={renderBody}
-        selectedNavLinkIndex={4}
+        selectedNavLinkIndex={2}
       />
     </React.Fragment>
-
   );
 }
 
-export default SettingsScreen;
+export default AssetDetailsScreen;

@@ -4,5 +4,3 @@ ABT
 ACA
 AAC
 IBM
-HHH
-URTH

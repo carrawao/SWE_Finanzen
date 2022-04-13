@@ -11,7 +11,7 @@ const userRoutes = (app, fs) => {
 
             fs.access(dataPath, fs.F_OK, (err) => {
                 if (err) {
-                  updateDataFromAPI.updateIntradaySeriesShare(symbol,60, apiKey).then(() => {
+                  updateDataFromAPI.updateIntradaySeriesShare(symbol,30, apiKey).then(() => {
                     safeNewSymbol.saveShareSymbol(symbol);
                     fs.readFile(dataPath, 'utf8', (err, data) => {
                       if (err) {

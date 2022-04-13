@@ -28,7 +28,7 @@ const WatchLists = (props) => {
   const [addListModal, setAddListModal] = useState(false);
   const [editListModal, setEditListModal] = useState(false);
   const [removeListModal, setRemoveListModal] = useState(false);
-  const [watchlist, setWatchlist] = useState('');
+  const [watchlist, setWatchlist] = useState(undefined);
   const [errorModal, setErrorModal] = useState(false);
   const [listDropdownIndex, setListDropdownIndex] = useState(0);
 
@@ -52,7 +52,7 @@ const WatchLists = (props) => {
   }
 
   const addWatchlist = () => {
-    if (watchlist !== '') {
+    if (watchlist !== undefined && watchlist !== '') {
       props.setWatchListsArray([...props.watchListsArray, watchlist]);
       props.setAssetsListArray([...props.assetsListArray, []])
       setAddListModal(false);
@@ -66,8 +66,8 @@ const WatchLists = (props) => {
 
   const editWatchList = () => {
     let tempArray = [...props.watchListsArray];
-    if (watchlist !== '') {
-      if (watchlist !== props.watchListsArray[listDropdownIndex]) {
+    if (watchlist !== undefined) {
+      if (watchlist !== '' && watchlist !== props.watchListsArray[listDropdownIndex]) {
         tempArray[listDropdownIndex] = watchlist;
         props.setWatchListsArray(tempArray);
         setEditListModal(false);
@@ -77,7 +77,8 @@ const WatchLists = (props) => {
         setErrorModal(true);
       }
     } else {
-      setErrorModal(true);
+      setErrorModal(false);
+      setEditListModal(false);
     }
   }
 
@@ -169,7 +170,14 @@ const WatchLists = (props) => {
       </Box>
 
       {renderAddWatchlistModal(addListModal, handleClose, errorModal, onTextChange, addWatchlist)}
-      {renderEditListModal(editListModal, handleClose, errorModal, onTextChange, props.watchListsArray[listDropdownIndex], editWatchList)}
+      {
+        renderEditListModal(
+        editListModal,
+        handleClose,
+        errorModal,
+        onTextChange,
+        props.watchListsArray[listDropdownIndex],
+        editWatchList)}
       {renderRemoveListModal(removeListModal, handleClose, removeWatchList)}
     </Container>
   );

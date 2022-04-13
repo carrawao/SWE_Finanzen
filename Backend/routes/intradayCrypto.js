@@ -12,7 +12,7 @@ const userRoutes = (app, fs) => {
 
         fs.access(dataPath, fs.F_OK, (err) => {
           if (err) {
-            updateDataFromAPI.updateIntradaySeriesCrypto(symbol,60, apiKey).then(() => {
+            updateDataFromAPI.updateIntradaySeriesCrypto(symbol,30, apiKey).then(() => {
               safeNewSymbol.saveCryptoSymbol(symbol);
               fs.readFile(dataPath, 'utf8', (err, data) => {
                 if (err) {

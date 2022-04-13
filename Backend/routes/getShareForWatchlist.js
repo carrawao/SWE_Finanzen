@@ -7,77 +7,94 @@ const userRoutes = (app, fs) => {
     app.get('/getShareForWatchlist', (req, res, apiKey) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
-            const dataPathDailyShare = './data/Shares/Daily/dailyShare_' + symbol + '.json';
-            const dataPathQuotedUSshares = './data/quotedUSshares.json';
-            const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
+            const dataPathOne = './data/Shares/Daily/dailyShare_' + symbol + '.json';
+            const dataPathTwo = './data/CompanyOverview/companyOverview_' + symbol + '.json';
 
+            let shareFinished = false;
+            let companyOverviewFinished = false;
 
-            fs.access(dataPathDailyShare, fs.F_OK, (err) => {
+            fs.access(dataPathOne, fs.F_OK, (err) => {
                 if (err) {
                     updateDataFromAPI.updateDailySeriesShare(symbol, apiKey).then(() => {
                         safeNewSymbol.saveShareSymbol(symbol);
                     }).then(() => {
-                        setData();
+                        shareFinished = true;
                     });
                     return;
                 }else{
-                    setData();
+                    shareFinished = true;
                     console.log("Daily File exists");
                 }
             });
-            const setData = () => {
-                const rawCurreny = fs.readFileSync(dataPathCurrentCurrency);
-                const rawDailyData = fs.readFileSync(dataPathDailyShare);
-                const rawQuotedUSshares = fs.readFileSync(dataPathQuotedUSshares);
-                const currency = JSON.parse(rawCurreny);
-                const dailyJson_data = JSON.parse(rawDailyData);  
-                const quotedUSsharesData = JSON.parse(rawQuotedUSshares);
+            fs.access(dataPathTwo, fs.F_OK, (err) => {
+                if (err) {
+                  updateDataFromAPI.updateCompanyOverview(symbol, apiKey).then(() => {
+                        safeNewSymbol.saveShareSymbol(symbol);
+                  }).then(() => {
+                    companyOverviewFinished = true;
+                });
+                    return;
+                }else{
+                    companyOverviewFinished = true;
+                    console.log("Company Overview File exists");
+                }
+            });
 
-                let dayOne = new Date();
-                dayOne.setDate(dayOne.getDate() - 1);
+            const setDataIntervall = setInterval(() => {
+                if(shareFinished && companyOverviewFinished){
+                    clearInterval(setDataIntervall);
+                    const rawDailyData = fs.readFileSync(dataPathOne);
+                    const rawCompanyOverview = fs.readFileSync(dataPathTwo);
+                    const dailyJson_data = JSON.parse(rawDailyData);  
+                    const rawCompanyOverviewData = JSON.parse(rawCompanyOverview);
                     
-                let dayOneSearchText = dayOne.getFullYear() + '-';
                     
-                if((dayOne.getMonth() + 1) < 10){
+                    let dayOne = new Date();
+                    dayOne.setDate(dayOne.getDate() - 1);
+                    
+                    let dayOneSearchText = dayOne.getFullYear() + '-';
+                    
+                    if((dayOne.getMonth() + 1) < 10){
                     dayOneSearchText = dayOneSearchText + '0' + (dayOne.getMonth() + 1) + '-';
-                }else{
+                    }else{
                     dayOneSearchText = dayOneSearchText + (dayOne.getMonth() + 1) + '-';
-                }
-                if(dayOne.getDate() < 10){
-                    dayOneSearchText = dayOneSearchText + '0' + dayOne.getDate();
-                }else{
-                    dayOneSearchText = dayOneSearchText + dayOne.getDate();
-                }
-
-                let openValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['1. open'];
-                let closeValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['4. close'];
-
-                let change = (closeValue - openValue) / closeValue;
-                change = change * 100;
-                change = change.toFixed(2);
-
-                let name;
-                for(let share of quotedUSsharesData){
-                    //  console.log(JSON.stringify(share['symbol']));
-                    if(share['symbol'] === symbol){
-                        console.log(share['symbol']);
-                        name = share['name'];
-                        break;
                     }
+                    if(dayOne.getDate() < 10){
+                    dayOneSearchText = dayOneSearchText + '0' + dayOne.getDate();
+                    }else{
+                    dayOneSearchText = dayOneSearchText + dayOne.getDate();
+                    }
+                    
+                    let openValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['1. open'];
+                    let closeValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['4. close'];
+                    
+                    let change = (closeValue - openValue) / closeValue;
+                    let percentChange;
+                    
+                    if(change > 0){
+                    percentChange = change * 100 * - 1;
+                    percentChange = percentChange.toFixed(4);
+                    }else{
+                    percentChange = change * -100;
+                    percentChange = percentChange.toFixed(4);
+                    }
+                    
+                    const name = rawCompanyOverviewData['Name'];
+                    
+                    
+                    const value = { "name": name, "symbol": symbol, "value": closeValue, "percentChange": percentChange };
+                    
+                    res.set('Access-Control-AlLow-Origin','http://localhost:3000');
+                    res.send(JSON.parse(JSON.stringify(value)));
                 }
-                let value = closeValue * currency['data']['EUR']['value'];
-                value = value.toFixed(2);
-                
-                const back = { "name": name, "symbol": symbol, "value": value, "percentChange": change };
-                
-                res.set('Access-Control-AlLow-Origin','http://localhost:3000');
-                res.send(JSON.parse(JSON.stringify(back)));
-            }
+            }, 100);
 
-        }else
-        { 
-            res.send("NO Symbol");
-        }
+
+      }else
+      {
+        res.send("NO Symbol");
+      }
+      
     });
   };
 

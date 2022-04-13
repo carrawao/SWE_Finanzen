@@ -39,43 +39,45 @@ export const renderAddWatchlistModal = (open, handleClose, errorModal, onChange,
   />
 );
 
-export const renderEditListModal = (open, handleClose, errorModal, onChange, defaultValue, onCLick) => (
-  <CustomModal
-    open={open}
-    handleClose={() => handleClose()}
-    labelledby='edit_list-modal-title'
-    describedby='edit_list-modal-description'
-    modalTitle='Rename watchlist:'
-    modalBody={() => (
-      <TextField
-        id='outlined-basic'
-        variant='outlined'
-        className='d-flex flex-grow-2 pb-3'
-        label='Rename'
-        onChange={data => onChange(data)}
-        error={errorModal}
-        helperText={errorModal ? '*Name is the same or empty' : false}
-        defaultValue={defaultValue}
-      />
-    )}
-    modalButton={() => (
-      <Button
-        variant='outlined'
-        onClick={() => onCLick()}
-        sx={{
-          color: 'white',
-          width: '5rem',
-          backgroundColor: '#493f35',
-          '&:hover': {
+export const renderEditListModal = (open, handleClose, errorModal, onChange, defaultValue, onCLick) => {
+  return (
+    <CustomModal
+      open={open}
+      handleClose={() => handleClose()}
+      labelledby='edit_list-modal-title'
+      describedby='edit_list-modal-description'
+      modalTitle='Rename watchlist:'
+      modalBody={() => (
+        <TextField
+          id='outlined-basic'
+          variant='outlined'
+          className='d-flex flex-grow-2 pb-3'
+          label='Rename'
+          onChange={data => onChange(data)}
+          error={errorModal}
+          helperText={errorModal ? '*Name cannot be empty' : false}
+          defaultValue={defaultValue}
+        />
+      )}
+      modalButton={() => (
+        <Button
+          variant='outlined'
+          onClick={() => onCLick()}
+          sx={{
+            color: 'white',
+            width: '5rem',
             backgroundColor: '#493f35',
-          }
-        }}
-      >
-        Rename
-      </Button>
-    )}
-  />
-);
+            '&:hover': {
+              backgroundColor: '#493f35',
+            }
+          }}
+        >
+          Rename
+        </Button>
+      )}
+    />
+  );
+}
 
 export const renderRemoveListModal = (open, handleClose, onClick) => (
   <CustomModal

@@ -1,29 +1,19 @@
 const userRoutes = (app, fs) => {
     // variables
-    const shareDataPath = './data/quotedUSshares.json';
-    const cryptoDataPath = './data/quotedCrypto.json';
+    const dataPath = './data/quotedUSshares.json';
   
     // READ
     app.get('/search', (req, res) => {
         if(req.query.text){
             const searchText = req.query.text;
-            const shareRawData = fs.readFileSync(shareDataPath);
-            const cryptoRawData = fs.readFileSync(cryptoDataPath);
-            const shareData = JSON.parse(shareRawData);
-            const cryptoData = JSON.parse(cryptoRawData);
-
-            let shareArrFound = shareData.filter(function(item) {
+            const rawData = fs.readFileSync(dataPath);
+            let result = JSON.parse(rawData);  
+            let arrFound = result.filter(function(item) {
                 let isPartOf = item.symbol.toLowerCase().includes(searchText.toLowerCase()) || item.name.toLowerCase().includes(searchText.toLowerCase());
                 return isPartOf;
             });
-            let cryptoArrFound = cryptoData.filter(function(item) {
-                let isPartOf = item.symbol.toLowerCase().includes(searchText.toLowerCase()) || item.name.toLowerCase().includes(searchText.toLowerCase());
-                return isPartOf;
-            });
-
-            let result = [...shareArrFound, ...cryptoArrFound];
             res.set('Access-Control-AlLow-Origin','http://localhost:3000');
-            res.send(result);
+            res.send(arrFound);
             return;
         }
         res.send("NO search Text");
