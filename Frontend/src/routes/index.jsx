@@ -9,6 +9,7 @@ const Home = lazy(() => import('../components/screens/Home'));
 const DashboardScreen = lazy(() => import('../components/screens/Dashboard/DashboardScreen'));
 const WatchListsScreen = lazy(() => import('../components/screens/WatchLists/WatchListsScreen'));
 const SettingsScreen = lazy(() => import('../components/screens/Settings/SettingsScreen'));
+const AssetDetailsScreen = lazy(() => import('../components/screens/AssetDetails/AssetDetailsScreen'));
 
 /**
  * Get value from key in local storage
@@ -50,6 +51,7 @@ const AppRoutes = () => {
         }
       />
       <Route path='/settings' element={<SettingsScreen/>}/>
+      <Route path='/watchlists/:asset' element={<AssetDetailsScreen/>}/>
     </Routes>
   );
 }

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {
   TableContainer,
   Paper,
@@ -10,6 +11,7 @@ import {
   Typography
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import InfoIcon from '@mui/icons-material/Info';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DropdownMenu from '../screens/WatchLists/DropdownMenu';
 
@@ -21,6 +23,7 @@ import DropdownMenu from '../screens/WatchLists/DropdownMenu';
  */
 const CustomTable = (props) => {
   const [listDropdownIndex, setListDropdownIndex] = useState(0);
+  const navigate = useNavigate();
 
   return (
     <TableContainer
@@ -125,9 +128,10 @@ const CustomTable = (props) => {
                   selectedListIndex={props.selectedListIndex}
                   listName={props.watchListsArray[index]}
                   setListDropdownIndex={setListDropdownIndex}
-                  menuOptions={['Delete']}
-                  iconOptions={[<DeleteIcon />]}
+                  menuOptions={['Details', 'Delete']}
+                  iconOptions={[<InfoIcon />, <DeleteIcon />]}
                   functionOptions={[
+                    () => navigate(`/watchlists/${row.name}`),
                     () => {
                     props.setRemoveAssetModal(true);
                     props.setSelectedAssetIndex(index);
