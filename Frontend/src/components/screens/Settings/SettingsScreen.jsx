@@ -1,6 +1,7 @@
 import React from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
 import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 
 const SettingsScreen = () => {
   const renderHeader = () => (
@@ -10,7 +11,7 @@ const SettingsScreen = () => {
   );
 
   const renderBody = () => (
-    <h1>Welcome to Settings!</h1>
+    <Button>Export Data (noch ohne Funktion)</Button>
   );
 
   return (
