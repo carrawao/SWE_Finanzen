@@ -1,19 +1,18 @@
-const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
-const safeNewSymbol = require('../../module/safeNewSymbol');
+const updateDataFromAPI = require('../module/updateDataFromAPI');
+const safeNewSymbol = require('../module/safeNewSymbol');
 
 
 const userRoutes = (app, fs) => {
 
-    app.get('/intradayCrypto', (req, res, apiKey) => {
+    app.get('/monthlyShare', (req, res, apiKey) => {
       if(req.query.symbol){
         const symbol = req.query.symbol;
-        const dataPath = './data/Crypto/Intraday/intradayCrypto_' + symbol + '.json';
+        const dataPath = './data/Shares/Monthly/monthlyShare_' + symbol + '.json';
         
-
         fs.access(dataPath, fs.F_OK, (err) => {
           if (err) {
-            updateDataFromAPI.updateIntradaySeriesCrypto(symbol,60, apiKey).then(() => {
-              safeNewSymbol.saveCryptoSymbol(symbol);
+            updateDataFromAPI.updateMonthlySeriesShare(symbol,apiKey).then(() => {
+              safeNewSymbol.saveShareSymbol(symbol);
               fs.readFile(dataPath, 'utf8', (err, data) => {
                 if (err) {
                     throw err;
@@ -24,6 +23,8 @@ const userRoutes = (app, fs) => {
             });
             
             return;
+          }else{
+            console.log("File exists");
           }
           
           fs.readFile(dataPath, 'utf8', (err, data) => {
@@ -39,7 +40,7 @@ const userRoutes = (app, fs) => {
         res.send("NO Symbol");
       }
       
-    });
+      });
   };
-
+  
   module.exports = userRoutes;

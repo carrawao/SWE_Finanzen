@@ -37,6 +37,7 @@ const WatchListsScreen = (props) => {
         <SearchResultsTable
           searchResult={searchResult}
           selectedListIndex={props.selectedListIndex}
+          assetsListArray={props.assetsListArray}
           addToWatchList={index => {
             setAddToWatchlistModal(true);
             setSearchResultIndex(index);

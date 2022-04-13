@@ -397,7 +397,7 @@
  },
  {
   "symbol": "ABEQ",
-  "name": "Absolute Core Strategy ETF",
+  "name": "ABSOLUTE CORE STRATEGY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-01-22",
@@ -1404,6 +1404,15 @@
   "status": "Active"
  },
  {
+  "symbol": "ACY",
+  "name": "Aerocentury Corp",
+  "exchange": "NYSE MKT",
+  "assetType": "Stock",
+  "ipoDate": "1998-01-20",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "ADAG",
   "name": "Adagene Inc",
   "exchange": "NASDAQ",
@@ -1760,6 +1769,15 @@
   "exchange": "NYSE MKT",
   "assetType": "Stock",
   "ipoDate": "2022-02-08",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "ADS",
+  "name": "Bread Financial Holdings Inc",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2001-06-15",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -2205,6 +2223,15 @@
   "status": "Active"
  },
  {
+  "symbol": "AESE",
+  "name": "Allied Esports Entertainment Inc",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2017-10-25",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "AESR",
   "name": "Anfield U.S. Equity Sector Rotation ETF",
   "exchange": "BATS",
@@ -2512,7 +2539,7 @@
  },
  {
   "symbol": "AFTY",
-  "name": "Pacer CSOP FTSE China A50 ETF",
+  "name": "PACER CSOP FTSE CHINA A50 ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2015-03-12",
@@ -5517,15 +5544,6 @@
   "status": "Active"
  },
  {
-  "symbol": "ANTX",
-  "name": "AN2 Therapeutics Inc",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "ANVS",
   "name": "Annovis Bio Inc",
   "exchange": "NYSE",
@@ -6670,7 +6688,7 @@
  },
  {
   "symbol": "ARGT",
-  "name": "Global X MSCI Argentina ETF",
+  "name": "GLOBAL X MSCI ARGENTINA ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2011-03-03",
@@ -8082,6 +8100,15 @@
   "status": "Active"
  },
  {
+  "symbol": "ATH-P-B",
+  "name": "Athene Holding Ltd",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2019-09-17",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "ATH-P-C",
   "name": "Athene Holding Ltd",
   "exchange": "NYSE",
@@ -9180,15 +9207,6 @@
   "status": "Active"
  },
  {
-  "symbol": "AVSE",
-  "name": "Avantis Responsible Emerging Markets Equity ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-30",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "AVSF",
   "name": "Avantis Short-Term Fixed Income ETF",
   "exchange": "NYSE ARCA",
@@ -9307,7 +9325,7 @@
  },
  {
   "symbol": "AWF",
-  "name": "AllianceBernstein Global High Income Fund Inc",
+  "name": "AllianceBernstein Global High Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1993-07-29",
@@ -9370,7 +9388,7 @@
  },
  {
   "symbol": "AWTM",
-  "name": "NATIONAL INVESTMENT SERVICES ULTRA-SHORT DURATION ENHANCED INCOME ETF ",
+  "name": "AWARE ULTRA-SHORT DURATION ENHANCED INCOME ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2019-01-29",
@@ -9405,29 +9423,11 @@
   "status": "Active"
  },
  {
-  "symbol": "AXAC",
-  "name": "AXIOS Sustainable Growth Acquisition Corp - Class A",
+  "symbol": "AXAC-U",
+  "name": "AXIOS Sustainable Growth Acquisition Corp - Units (1 Ord Class A 1 Right & 1 War)",
   "exchange": "NYSE",
   "assetType": "Stock",
-  "ipoDate": "2022-03-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "AXAC-R",
-  "name": "AXIOS Sustainable Growth Acquisition Corporation Rights to receive onetenth 110 of one Class A ordinary share",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "AXAC-WS",
-  "name": "AXIOS Sustainable Growth Acquisition Corp - Warrants(01/01/9999)",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-25",
+  "ipoDate": "2022-02-16",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -11088,6 +11088,15 @@
   "status": "Active"
  },
  {
+  "symbol": "BDSI",
+  "name": "Biodelivery Sciences International",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2002-07-25",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "BDSX",
   "name": "Biodesix Inc",
   "exchange": "NASDAQ",
@@ -11475,15 +11484,6 @@
   "status": "Active"
  },
  {
-  "symbol": "BFH",
-  "name": "Bread Financial Holdings Inc",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2001-06-15",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "BFI",
   "name": "BurgerFi International Inc",
   "exchange": "NASDAQ",
@@ -11755,7 +11755,7 @@
  },
  {
   "symbol": "BGR",
-  "name": "Blackrock Energy & Resources Trust",
+  "name": "BlackRock Global Energy Resources Trus",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2004-12-23",
@@ -12106,7 +12106,7 @@
  },
  {
   "symbol": "BHV",
-  "name": "BlackRock Virginia Municipal Bond Trust.",
+  "name": "BlackRock Virginia Municipal Bond Trust",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2002-04-26",
@@ -12133,7 +12133,7 @@
  },
  {
   "symbol": "BIBL",
-  "name": "Inspire 100 ESG ETF",
+  "name": "Inspire 100 ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-10-31",
@@ -13051,7 +13051,7 @@
  },
  {
   "symbol": "BLES",
-  "name": "INSPIRE GLOBAL HOPE ETF ",
+  "name": "Inspire Global Hope ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-02-28",
@@ -14599,7 +14599,7 @@
  },
  {
   "symbol": "BRF",
-  "name": "VanEck Brazil Small-Cap ETF",
+  "name": "VANECK BRAZIL SMALL-CAP ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2009-05-14",
@@ -14927,15 +14927,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2007-07-27",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "BRW",
-  "name": "Saba Capital Income & Opportunities Fund",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2021-05-05",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -15571,7 +15562,7 @@
  },
  {
   "symbol": "BTA",
-  "name": "BlackRock Long-Term Municipal Advantage Trust",
+  "name": "BlackRock LongTerm Municipal Advantage Trust",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2006-02-27",
@@ -15728,6 +15719,15 @@
   "exchange": "NYSE MKT",
   "assetType": "Stock",
   "ipoDate": "2000-12-19",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "BTNB",
+  "name": "Bridgetown 2 Holdings Ltd - Class A",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2021-01-26",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -16318,7 +16318,7 @@
  },
  {
   "symbol": "BXMX",
-  "name": "Nuveen S&P 500 Buy-Write Income Fund",
+  "name": "Nuveen SP 500 BuyWrite Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2004-10-27",
@@ -16443,29 +16443,11 @@
   "status": "Active"
  },
  {
-  "symbol": "BYNO",
-  "name": "byNordic Acquisition Corporation - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "BYNOU",
   "name": "byNordic Acquisition Corporation - Units (1 Ord Share Class A & 1/2 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-09",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "BYNOW",
-  "name": "byNordic Acquisition Corporation - Warrants (01/07/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -16862,15 +16844,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2019-11-20",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "CANB",
-  "name": "Can B Corp",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2011-04-29",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -18810,6 +18783,15 @@
   "status": "Active"
  },
  {
+  "symbol": "CFX",
+  "name": "Colfax Corp",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2008-05-08",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "CG",
   "name": "Carlyle Group Inc (The)",
   "exchange": "NASDAQ",
@@ -19621,7 +19603,7 @@
  },
  {
   "symbol": "CHY",
-  "name": "Calamos Convertible and High Income Fund",
+  "name": "Calamos Convertible Hi Income Fund",
   "exchange": "NASDAQ",
   "assetType": "ETF",
   "ipoDate": "2003-05-29",
@@ -19765,7 +19747,7 @@
  },
  {
   "symbol": "CII",
-  "name": "BlackRock Enhanced Capital and Income Fund Inc",
+  "name": "BlackRock Enhanced Capital and Income Fd",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2004-05-26",
@@ -22527,29 +22509,11 @@
   "status": "Active"
  },
  {
-  "symbol": "CPAQ",
-  "name": "Counter Press Acquisition Corp - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "CPAQU",
   "name": "Counter Press Acquisition Corp - Units (1 Ord Class A & 1/2 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-09",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "CPAQW",
-  "name": "Counter Press Acquisition Corp - Warrants (07/02/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -23085,15 +23049,6 @@
   "status": "Active"
  },
  {
-  "symbol": "CRGE",
-  "name": "Charge Enterprises Inc",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2017-10-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "CRGY",
   "name": "Crescent Energy Company - Class A",
   "exchange": "NYSE",
@@ -23153,15 +23108,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2000-08-01",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "CRIT",
-  "name": "Optica Rare Earths & Critical Materials ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-29",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -24750,6 +24696,15 @@
   "status": "Active"
  },
  {
+  "symbol": "CWC",
+  "name": "Clockwise Capital Innovation ETF",
+  "exchange": "NYSE ARCA",
+  "assetType": "ETF",
+  "ipoDate": "2022-01-28",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "CWCO",
   "name": "Consolidated Water Co. Ltd",
   "exchange": "NASDAQ",
@@ -25534,7 +25489,7 @@
  },
  {
   "symbol": "DBEH",
-  "name": "iMGP DBi Hedge Strategy ETF",
+  "name": "IM DBI HEDGE STRATEGY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2019-12-18",
@@ -25642,19 +25597,10 @@
  },
  {
   "symbol": "DBMF",
-  "name": "iMGP DBi Managed Futures Strategy ETF",
+  "name": "IM DBI MANAGED FUTURES STRATEGY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2019-05-08",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "DBND",
-  "name": "DoubleLine Opportunistic Bond ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-04-05",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -25776,15 +25722,6 @@
   "status": "Active"
  },
  {
-  "symbol": "DC",
-  "name": "Dakota Gold Corp",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "DCBO",
   "name": "Docebo Inc",
   "exchange": "NASDAQ",
@@ -25898,15 +25835,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2018-10-03",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "DCPE",
-  "name": "DoubleLine Shiller CAPE U.S. Equities ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-04-05",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -26127,15 +26055,6 @@
   "status": "Active"
  },
  {
-  "symbol": "DECAU",
-  "name": "Denali Capital Acquisition Corp - Units (1 Ord Class A & 1 War)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-07",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "DECK",
   "name": "Deckers Outdoor Corp",
   "exchange": "NYSE",
@@ -26317,7 +26236,7 @@
  },
  {
   "symbol": "DEX",
-  "name": "Delaware Enhanced Global Dividend & Income Fund",
+  "name": "Delaware Enhanced Global Dividend Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2007-07-26",
@@ -26902,7 +26821,7 @@
  },
  {
   "symbol": "DHF",
-  "name": "BNY Mellon High Yield Strategies Fund",
+  "name": "Dreyfus High Yield Strategies Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1998-04-27",
@@ -27199,10 +27118,10 @@
  },
  {
   "symbol": "DISCA",
-  "name": "",
+  "name": "Discovery Inc - Class A",
   "exchange": "NASDAQ",
   "assetType": "Stock",
-  "ipoDate": "2022-04-06",
+  "ipoDate": "2005-07-08",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -27784,7 +27703,7 @@
  },
  {
   "symbol": "DMO",
-  "name": "Western Asset Mortgage Opportunity Fund Inc",
+  "name": "Western Asset Mrtg Defined Oppn Fund Inc",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2010-02-24",
@@ -28103,15 +28022,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2021-03-18",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "DO",
-  "name": "Diamond Offshore Drilling Inc",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "1995-10-11",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -28576,7 +28486,7 @@
  },
  {
   "symbol": "DRTS",
-  "name": "Alpha Tau Medical Ltd",
+  "name": "Alpha Tau Medical Ltd - Class A",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2021-03-08",
@@ -28999,7 +28909,7 @@
  },
  {
   "symbol": "DTEC",
-  "name": "ALPS DISRUPTIVE TECHNOLOGIES ETF ",
+  "name": "ALPS Disruptive Technologies ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-12-29",
@@ -29611,7 +29521,7 @@
  },
  {
   "symbol": "DWUS",
-  "name": "AdvisorShares Dorsey Wright FSM US Core ETF",
+  "name": "ADVISORSHARES DORSEY WRIGHT FSM US CORE ETF ",
   "exchange": "NASDAQ",
   "assetType": "ETF",
   "ipoDate": "2019-12-27",
@@ -30178,7 +30088,7 @@
  },
  {
   "symbol": "EBLU",
-  "name": "ECOFIN GLOBAL WATER ESG FUND ",
+  "name": "Ecofin Global Water ESG Fund",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-02-15",
@@ -30277,7 +30187,7 @@
  },
  {
   "symbol": "ECC-P-D",
-  "name": "Eagle Point Credit Company Inc",
+  "name": "Eagle Point Credit Company Inc 6.75 Series D Preferred Stock",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2021-11-22",
@@ -30340,7 +30250,7 @@
  },
  {
   "symbol": "ECCX",
-  "name": "Eagle Point Credit Company Inc",
+  "name": "Eagle Point Credit Company Inc 66875 Notes due 2028",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2018-04-30",
@@ -30808,7 +30718,7 @@
  },
  {
   "symbol": "EEM",
-  "name": "iShares MSCI Emerging Markets ETF",
+  "name": "ISHARES MSCI EMERGING MARKETS ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2003-04-14",
@@ -30862,7 +30772,7 @@
  },
  {
   "symbol": "EEMX",
-  "name": "SPDR MSCI Emerging Markets Fossil Fuel Reserves Free ETF",
+  "name": "SPDR MSCI EMERGING MARKETS FOSSIL FUEL RESERVES FREE ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2016-10-25",
@@ -31060,7 +30970,7 @@
  },
  {
   "symbol": "EFR",
-  "name": "Eaton Vance Senior Floating-Rate Trust",
+  "name": "Eaton Vance Senior FloatingRate Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2003-11-25",
@@ -31483,7 +31393,7 @@
  },
  {
   "symbol": "EKAR",
-  "name": "CAPITAL LINK GLOBAL GREEN ENERGY TRANSPORT AND TECHNOLOGY LEADERS ETF ",
+  "name": "CAPITAL LINK NEXTGEN VEHICLES & TECHNOLOGY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2018-02-13",
@@ -31743,15 +31653,6 @@
   "status": "Active"
  },
  {
-  "symbol": "EMBC",
-  "name": "Embecta Corp",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "EMBCV",
   "name": "Embecta Corp",
   "exchange": "NASDAQ",
@@ -31771,7 +31672,7 @@
  },
  {
   "symbol": "EMBH",
-  "name": "iShares Interest Rate Hedged Emerging Markets Bond ETF",
+  "name": "ISHARES INTEREST RATE HEDGED EMERGING MARKETS BOND ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2015-07-30",
@@ -31825,7 +31726,7 @@
  },
  {
   "symbol": "EMD",
-  "name": "Western Asset Emerging Markets Debt Fund Inc",
+  "name": "Wstrn Asst Emrgng Mrkts Incm Fnd Inc",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2003-12-02",
@@ -32315,15 +32216,6 @@
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2012-01-24",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "ENOV",
-  "name": "Enovis Corp",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2008-05-08",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -33310,7 +33202,7 @@
  },
  {
   "symbol": "ERTH",
-  "name": "Invesco MSCI Sustainable Future ETF",
+  "name": "INVESCO MSCI SUSTAINABLE FUTURE ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2006-10-24",
@@ -33359,24 +33251,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "1984-08-29",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "ESAB",
-  "name": "ESAB Corporation",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "ESAB-W",
-  "name": "ESAB Corporation WhenIssued",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-29",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -33922,7 +33796,7 @@
  },
  {
   "symbol": "ETG",
-  "name": "Eaton Vance Tax-Advantaged Global Dividend Income Fund",
+  "name": "Eaton Vance TaxAdvantaged Global Dividend Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2004-01-29",
@@ -34075,7 +33949,7 @@
  },
  {
   "symbol": "ETY",
-  "name": "Eaton Vance Tax-Managed Diversified Equity Income Fund",
+  "name": "Eaton Vance Tax Managed Diversified Eq",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2006-11-28",
@@ -34084,7 +33958,7 @@
  },
  {
   "symbol": "EUCG",
-  "name": "EUCLID CAPITAL GROWTH ETF ",
+  "name": "Euclid Capital Growth ETF",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2021-01-05",
@@ -34120,7 +33994,7 @@
  },
  {
   "symbol": "EUDG",
-  "name": "WisdomTree Europe Quality Dividend Growth Fund",
+  "name": "WISDOMTREE EUROPE QUALITY DIVIDEND GROWTH FUND N/A",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2014-05-07",
@@ -34371,29 +34245,11 @@
   "status": "Active"
  },
  {
-  "symbol": "EVGR",
-  "name": "Evergreen Corp - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "EVGRU",
   "name": "Evergreen Corp - Units (1 Ord Class A & 1 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-09",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "EVGRW",
-  "name": "Evergreen Corp - Warrants(08/02/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -34579,7 +34435,7 @@
  },
  {
   "symbol": "EVT",
-  "name": "Eaton Vance Tax Advantaged Dividend Income Fund",
+  "name": "Eaton VTaxAdvantaged Dividend Inc Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2003-09-26",
@@ -35002,7 +34858,7 @@
  },
  {
   "symbol": "EXD",
-  "name": "Eaton Vance Tax-Managed Buy-Write Strategy Fund",
+  "name": "Eaton Vance TaxAdv Bnd Optn Strtgs Fd",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2010-06-25",
@@ -35029,7 +34885,7 @@
  },
  {
   "symbol": "EXG",
-  "name": "Eaton Vance Tax-Managed Global Diversified Equity Income Fund",
+  "name": "Eaton Vance TaxManaged Global Dive Eq",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2007-04-23",
@@ -35254,7 +35110,7 @@
  },
  {
   "symbol": "EZM",
-  "name": "WisdomTree U.S. MidCap Fund",
+  "name": "WISDOMTREE U.S. MIDCAP FUND N/A",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2007-02-23",
@@ -36415,7 +36271,7 @@
  },
  {
   "symbol": "FEIG",
-  "name": "FlexShares ESG & Climate Investment Grade Corporate Core Index Fund",
+  "name": "FLEXSHARES ESG & CLIMATE INVESTMENT GRADE CORPORATE CORE INDEX FUND ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-09-21",
@@ -37738,7 +37594,7 @@
  },
  {
   "symbol": "FLDZ",
-  "name": "RiverNorth Patriot ETF",
+  "name": "RiverNorth Volition America Patriot ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2022-01-03",
@@ -37882,7 +37738,7 @@
  },
  {
   "symbol": "FLJH",
-  "name": "Franklin FTSE Japan Hedged ETF",
+  "name": "FRANKLIN FTSE JAPAN HEDGED ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-11-06",
@@ -38066,6 +37922,15 @@
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2011-06-17",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "FLOW",
+  "name": "SPX FLOW Inc",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2015-09-28",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -38350,7 +38215,7 @@
  },
  {
   "symbol": "FM",
-  "name": "iShares MSCI Frontier and Select EM ETF",
+  "name": "ISHARES MSCI FRONTIER 100 ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2012-09-13",
@@ -38358,8 +38223,26 @@
   "status": "Active"
  },
  {
+  "symbol": "FMAC",
+  "name": "FirstMark Horizon Acquisition Corp - Class A",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2020-11-27",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "FMAC-U",
+  "name": "FirstMark Horizon Acquisition Corp - Units (1 Ord Share Class A & 1/3 War)",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2020-10-06",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "FMAC-WS",
-  "name": "Starry Group Holdings Inc - Warrants (26/09/2025)",
+  "name": "FirstMark Horizon Acquisition Corp - Warrants (26/09/2025)",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2020-11-27",
@@ -38566,7 +38449,7 @@
  },
  {
   "symbol": "FMY",
-  "name": "First Trust Mortgage Income Fund",
+  "name": "First TrustFIDAC Mortgage Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2005-05-26",
@@ -39573,15 +39456,6 @@
   "status": "Active"
  },
  {
-  "symbol": "FRGE-WS",
-  "name": "Forge Global Holdings Inc - Warrants (31/12/2027)",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2021-02-01",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "FRGI",
   "name": "Fiesta Restaurant Group Inc",
   "exchange": "NASDAQ",
@@ -39650,15 +39524,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "1992-02-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "FRMEP",
-  "name": "First Merchants Corp",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -39803,6 +39668,15 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2017-09-26",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "FRTA",
+  "name": "Forterra Inc",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2016-10-20",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -40681,7 +40555,7 @@
  },
  {
   "symbol": "FTXH",
-  "name": "First Trust Nasdaq Pharmaceuticals ETF",
+  "name": "FIRST TRUST NASDAQ PHARMACEUTICALS ETF ",
   "exchange": "NASDAQ",
   "assetType": "ETF",
   "ipoDate": "2016-09-22",
@@ -41356,7 +41230,7 @@
  },
  {
   "symbol": "GAA",
-  "name": "Cambria Global Asset Allocation ETF",
+  "name": "CAMBRIA GLOBAL ASSET ALLOCATION ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2014-12-10",
@@ -41392,7 +41266,7 @@
  },
  {
   "symbol": "GAB-P-H",
-  "name": "Gabelli Equity Trust Inc",
+  "name": "Gabelli Equity Trust Inc The Pfd Ser H",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2014-09-22",
@@ -41518,7 +41392,7 @@
  },
  {
   "symbol": "GAM-P-B",
-  "name": "General American Investors Co. Inc",
+  "name": "General American Investors Company Inc Cumulative Preferred Stock",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2003-10-06",
@@ -41788,7 +41662,7 @@
  },
  {
   "symbol": "GBDV",
-  "name": "GLOBAL BETA SMART INCOME ETF ",
+  "name": "Global Beta Smart Income ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2019-12-27",
@@ -41797,7 +41671,7 @@
  },
  {
   "symbol": "GBF",
-  "name": "iShares Barclays Government/Credit Bond Fund",
+  "name": "ISHARES GOVERNMENT/CREDIT BOND ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2007-01-11",
@@ -41806,7 +41680,7 @@
  },
  {
   "symbol": "GBGR",
-  "name": "GLOBAL BETA RISING STARS ETF ",
+  "name": "GLOBAL BETA MOMENTUM-GROWTH ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-07-24",
@@ -41860,7 +41734,7 @@
  },
  {
   "symbol": "GBLO",
-  "name": "GLOBAL BETA LOW BETA ETF ",
+  "name": "Global Beta Low Beta ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-07-24",
@@ -42103,7 +41977,7 @@
  },
  {
   "symbol": "GCV",
-  "name": "Gabelli Convertible and Income Securities Fund Inc",
+  "name": "Gabelli Convertible Income Securities",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1995-03-31",
@@ -42175,7 +42049,7 @@
  },
  {
   "symbol": "GDL-P-C",
-  "name": "GDL Fund",
+  "name": "The GDL Fund Series C Cumulative Puttable and Callable Preferred Shares",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2018-03-27",
@@ -42238,7 +42112,7 @@
  },
  {
   "symbol": "GDOC",
-  "name": "Goldman Sachs Future Health Care Equity ETF",
+  "name": "GOLDMAN SACHS FUTURE HEALTH CARE EQUITY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-11-11",
@@ -42314,15 +42188,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2021-10-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "GDVD",
-  "name": "R3 Global Dividend Growth ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-31",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -42543,29 +42408,11 @@
   "status": "Active"
  },
  {
-  "symbol": "GENQ",
-  "name": "Genesis Unicorn Capital Corp - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-07",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "GENQU",
   "name": "Genesis Unicorn Capital Corp - Units (1 Ord Share Class A & 1 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-15",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "GENQW",
-  "name": "Genesis Unicorn Capital Corp - Warrants (30/06/2026)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-07",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -42994,7 +42841,7 @@
  },
  {
   "symbol": "GGN-P-B",
-  "name": "GAMCO Global Gold Natural Resources & Income Trust",
+  "name": "GAMCO Global Gold Natural Reources Income Trust 500 Series B Cumulative 2500 Liquidation Preference",
   "exchange": "NYSE MKT",
   "assetType": "Stock",
   "ipoDate": "2014-09-22",
@@ -43034,24 +42881,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2021-05-17",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "GGR",
-  "name": "Gogoro Inc",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "GGROW",
-  "name": "Gogoro Inc Warrant",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -43390,7 +43219,7 @@
  },
  {
   "symbol": "GII",
-  "name": "SPDR S&P Global Infrastructure ETF",
+  "name": "SPDR(R) S&P GLOBAL INFRASTRUCTURE ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2007-01-31",
@@ -43777,7 +43606,7 @@
  },
  {
   "symbol": "GLDB",
-  "name": "Strategy Shares Gold-Hedged Bond ETF",
+  "name": "STRATEGY SHARES GOLD-HEDGED BOND ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2021-05-18",
@@ -44119,7 +43948,7 @@
  },
  {
   "symbol": "GLRY",
-  "name": "INSPIRE FAITHWARD MID CAP MOMENTUM ESG ETF ",
+  "name": "Inspire Faithward Mid Cap Momentum ESG ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-12-08",
@@ -44227,7 +44056,7 @@
  },
  {
   "symbol": "GLTR",
-  "name": "abrdn Physical Precious Metals Basket Shares ETF",
+  "name": "Aberdeen Standard Physical Precious Metals Basket Shares ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2010-10-22",
@@ -44254,7 +44083,7 @@
  },
  {
   "symbol": "GLU-P-B",
-  "name": "Gabelli Global Utility & Income Trust.",
+  "name": "The Gabelli Global Utility and Income Trust Series B Cumulative Puttable and Callable Preferred Shares",
   "exchange": "NYSE MKT",
   "assetType": "Stock",
   "ipoDate": "2018-12-20",
@@ -44272,7 +44101,7 @@
  },
  {
   "symbol": "GLV",
-  "name": "Clough Global Dividend and Income Fund",
+  "name": "Clough Global Allocation Fund",
   "exchange": "NYSE MKT",
   "assetType": "ETF",
   "ipoDate": "2004-07-28",
@@ -44353,7 +44182,7 @@
  },
  {
   "symbol": "GMBT",
-  "name": "Pivotal Holdings Corp - Class A",
+  "name": "Queens Gambit Growth Capital - Class A",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2021-03-15",
@@ -44362,7 +44191,7 @@
  },
  {
   "symbol": "GMBTU",
-  "name": "Pivotal Holdings Corp - Units (1 Ord Class A & 1/3 War)",
+  "name": "Queens Gambit Growth Capital - Units (1 Ord Class A & 1/3 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2021-01-20",
@@ -44371,7 +44200,7 @@
  },
  {
   "symbol": "GMBTW",
-  "name": "Pivotal Holdings Corp - Warrants (19/01/2026)",
+  "name": "Queens Gambit Growth Capital - Warrants (19/01/2026)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2021-03-15",
@@ -44740,7 +44569,7 @@
  },
  {
   "symbol": "GNT-P-A",
-  "name": "GAMCO Natural Resources Gold & Income Trust",
+  "name": "GAMCO Natural Resources Gold Income Tust 520 Series A Cumulative Preferred Shares Liquidation Preference 2500 per share",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2017-10-24",
@@ -45442,7 +45271,7 @@
  },
  {
   "symbol": "GREI",
-  "name": "Goldman Sachs Future Real Estate and Infrastructure Equity ETF",
+  "name": "GOLDMAN SACHS FUTURE REAL ESTATE AND INFRASTRUCTURE EQUITY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-11-11",
@@ -45955,7 +45784,7 @@
  },
  {
   "symbol": "GSIG",
-  "name": "Goldman Sachs Access Investment Grade Corporate 1-5 Year Bond ETF",
+  "name": "GOLDMAN SACHS ACCESS INVESTMENT GRADE CORPORATE 1-5 YEAR BOND ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-07-09",
@@ -46009,7 +45838,7 @@
  },
  {
   "symbol": "GSL-P-B",
-  "name": "Global Ship Lease Inc",
+  "name": "Global Ship Lease Inc Depository Shares Series B",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2014-09-22",
@@ -46513,7 +46342,7 @@
  },
  {
   "symbol": "GUT-P-C",
-  "name": "Gabelli Utility Trust",
+  "name": "Gabelli Utility Trust The 5375 Series C Cumulative Preferred Shares",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2016-06-02",
@@ -48357,15 +48186,6 @@
   "status": "Active"
  },
  {
-  "symbol": "HIX-R-W",
-  "name": "Western Asset High Income Fund II Inc Rights expiring May 6 2022 Rights when issued",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-07",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "HJEN",
   "name": "Direxion Hydrogen ETF",
   "exchange": "NYSE ARCA",
@@ -48830,15 +48650,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "1994-10-06",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "HNRA",
-  "name": "HNR Acquisition Corp",
-  "exchange": "NYSE MKT",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-06",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -49816,7 +49627,7 @@
  },
  {
   "symbol": "HTY",
-  "name": "John Hancock Tax-Advantaged Global Shareholder Yield Fund",
+  "name": "John Hancock TaxAdvantaged Global Shareholder Yield Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2007-09-26",
@@ -50680,7 +50491,7 @@
  },
  {
   "symbol": "IAE",
-  "name": "Voya Asia Pacific High Dividend Equity Income Fund",
+  "name": "ING Asia Pacific High Divid Eq Inco Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2007-03-28",
@@ -50779,7 +50590,7 @@
  },
  {
   "symbol": "IAUF",
-  "name": "iShares Gold Strategy ETF",
+  "name": "ISHARES GOLD STRATEGY ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2018-06-08",
@@ -50842,7 +50653,7 @@
  },
  {
   "symbol": "IBD",
-  "name": "INSPIRE CORPORATE BOND IMPACT ETF ",
+  "name": "Inspire Corporate Bond Impact ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-07-11",
@@ -50914,7 +50725,7 @@
  },
  {
   "symbol": "IBDT",
-  "name": "iShares iBonds Dec 2028 Term Corporate ETF",
+  "name": "ISHARES IBONDS DEC 2028 TERM CORPORATE ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2018-09-20",
@@ -50995,7 +50806,7 @@
  },
  {
   "symbol": "IBHB",
-  "name": "iShares iBonds 2022 Term High Yield and Income ETF",
+  "name": "ISHARES IBONDS 2022 TERM HIGH YIELD AND INCOME ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2019-05-09",
@@ -51004,7 +50815,7 @@
  },
  {
   "symbol": "IBHC",
-  "name": "iShares iBonds 2023 Term High Yield and Income ETF",
+  "name": "ISHARES IBONDS 2023 TERM HIGH YIELD AND INCOME ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2019-05-09",
@@ -51283,7 +51094,7 @@
  },
  {
   "symbol": "IBTH",
-  "name": "iShares iBonds Dec 2027 Term Treasury ETF",
+  "name": "ISHARES IBONDS DEC 2027 TERM TREASURY ETF ",
   "exchange": "NASDAQ",
   "assetType": "ETF",
   "ipoDate": "2020-02-28",
@@ -51742,7 +51553,7 @@
  },
  {
   "symbol": "IDOG",
-  "name": "ALPS INTERNATIONAL SECTOR DIVIDEND DOGS ETF ",
+  "name": "ALPS International Sector Dividend Dogs ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2013-06-28",
@@ -51931,7 +51742,7 @@
  },
  {
   "symbol": "IEME",
-  "name": "iShares Evolved U.S. Media and Entertainment ETF",
+  "name": "ISHARES EVOLVED U.S. MEDIA AND ENTERTAINMENT ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2018-03-23",
@@ -52102,7 +51913,7 @@
  },
  {
   "symbol": "IFN",
-  "name": "India Fund Inc",
+  "name": "The India Fund Inc",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1994-02-15",
@@ -52228,7 +52039,7 @@
  },
  {
   "symbol": "IGEB",
-  "name": "iShares Investment Grade Bond Factor ETF",
+  "name": "ISHARES EDGE INVESTMENT GRADE ENHANCED BOND ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2017-07-13",
@@ -52534,7 +52345,7 @@
  },
  {
   "symbol": "IHIT",
-  "name": "Invesco High Income 2023 Target Term Fund",
+  "name": "Invesco High Income 2023 Target Term Fund of Beneficial Interest",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2016-11-23",
@@ -53775,15 +53586,6 @@
   "status": "Active"
  },
  {
-  "symbol": "INQQ",
-  "name": "India Internet & Ecommerce ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-04-06",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "INSE",
   "name": "Inspired Entertainment Inc",
   "exchange": "NASDAQ",
@@ -54973,7 +54775,7 @@
  },
  {
   "symbol": "ISEM",
-  "name": "Invesco RAFI Strategic Emerging Markets ETF",
+  "name": "INVESCO RAFI(TM) STRATEGIC EMERGING MARKETS ETF ",
   "exchange": "NASDAQ",
   "assetType": "ETF",
   "ipoDate": "2018-09-13",
@@ -55045,7 +54847,7 @@
  },
  {
   "symbol": "ISMD",
-  "name": "Inspire Small/Mid Cap ESG ETF",
+  "name": "Inspire Small/Mid Cap Impact ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-02-28",
@@ -55607,24 +55409,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-14",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "IVDA",
-  "name": "Iveda Solutions Inc",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2015-10-15",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "IVDAW",
-  "name": "Iveda Solutions Inc - Warrants (01/04/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -56515,7 +56299,7 @@
   "name": "Johnson Controls International plc",
   "exchange": "NYSE",
   "assetType": "Stock",
-  "ipoDate": "1985-03-27",
+  "ipoDate": "2022-03-22",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -56561,6 +56345,15 @@
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2019-01-30",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "JCS",
+  "name": "Communications Systems Inc",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "1990-03-26",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -56727,38 +56520,11 @@
   "status": "Active"
  },
  {
-  "symbol": "JGGC",
-  "name": "Jaguar Global Growth Corp I - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "JGGCR",
-  "name": "Jaguar Global Growth Corp I",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "JGGCU",
   "name": "Jaguar Global Growth Corp I - Units (1 Ord Class A 1 Right & 1/2 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-11",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "JGGCW",
-  "name": "Jaguar Global Growth Corp I - Warrants (01/01/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -57178,7 +56944,7 @@
  },
  {
   "symbol": "JLS",
-  "name": "Nuveen Mortgage and Income Fund",
+  "name": "Nuveen Mortgage Opportunity Term Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2009-11-27",
@@ -57691,7 +57457,7 @@
  },
  {
   "symbol": "JQC",
-  "name": "Nuveen Credit Strategies Income Fund",
+  "name": "Nuveen Credit Strategies Incom",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2003-06-26",
@@ -57709,7 +57475,7 @@
  },
  {
   "symbol": "JRE",
-  "name": "Janus Henderson U.S. Real Estate ETF",
+  "name": "JANUS HENDERSON U.S. REAL ESTATE ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-06-23",
@@ -57745,7 +57511,7 @@
  },
  {
   "symbol": "JRS",
-  "name": "Nuveen Real Estate Income Fund.",
+  "name": "Nuveen Real Estate Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2001-11-19",
@@ -57992,6 +57758,24 @@
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2017-11-09",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "JW-A",
+  "name": "John Wiley & Sons Inc - Class A",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "1990-03-26",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "JW-B",
+  "name": "John Wiley & Sons Inc - Class B",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "1995-10-19",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -58627,7 +58411,7 @@
  },
  {
   "symbol": "KEJI",
-  "name": "Global X China Innovation ETF",
+  "name": "GLOBAL X CHINA DISRUPTION ETF ",
   "exchange": "NASDAQ",
   "assetType": "ETF",
   "ipoDate": "2021-02-24",
@@ -59140,7 +58924,7 @@
  },
  {
   "symbol": "KLCD",
-  "name": "KFA Large Cap Quality Dividend Index ETF",
+  "name": "KFA LARGE CAP QUALITY DIVIDEND INDEX ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2019-06-12",
@@ -59500,7 +59284,7 @@
  },
  {
   "symbol": "KOIN",
-  "name": "CAPITAL LINK GLOBAL FINTECH LEADERS ETF ",
+  "name": "Capital Link Global Fintech Leaders ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2018-01-30",
@@ -60354,15 +60138,6 @@
   "status": "Active"
  },
  {
-  "symbol": "LAB",
-  "name": "LABRANCHE & CO INC",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2003-07-29",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "LABD",
   "name": "Direxion Daily S&P Biotech Bear 3X Shares",
   "exchange": "NYSE ARCA",
@@ -60831,26 +60606,8 @@
   "status": "Active"
  },
  {
-  "symbol": "LCFY",
-  "name": "Locafy Ltd",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "LCFYW",
-  "name": "Locafy Ltd - Warrants (23/03/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "LCG",
-  "name": "Sterling Capital Focus Equity ETF",
+  "name": "STERLING CAPITAL FOCUS EQUITY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-08-27",
@@ -62361,15 +62118,6 @@
   "status": "Active"
  },
  {
-  "symbol": "LLAP",
-  "name": "Terran Orbital Corp - Class A",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2021-04-26",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "LLL",
   "name": "JX Luxventure Ltd",
   "exchange": "NASDAQ",
@@ -63370,10 +63118,10 @@
  },
  {
   "symbol": "LTRY",
-  "name": "Lottery.com Inc",
+  "name": "MDI ENTERTAINMENT INC",
   "exchange": "NASDAQ",
   "assetType": "Stock",
-  "ipoDate": "2018-06-13",
+  "ipoDate": "2021-10-29",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -64054,7 +63802,7 @@
  },
  {
   "symbol": "MAGA",
-  "name": "Point Bridge GOP Stock Tracker ETF",
+  "name": "POINT BRIDGE GOP STOCK TRACKER ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2017-09-07",
@@ -64603,7 +64351,7 @@
  },
  {
   "symbol": "MCA",
-  "name": "BlackRock MuniYield California Quality Fund Inc",
+  "name": "BlackRock MuniYield CA Quality Common",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1994-10-27",
@@ -65584,7 +65332,7 @@
  },
  {
   "symbol": "MFD",
-  "name": "Macquarie-First Tr. Global Inf. Utilities Div. & Income Fund",
+  "name": "MacquarieFirst Trust Global Infrstrctre",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2004-05-06",
@@ -66816,15 +66564,6 @@
   "status": "Active"
  },
  {
-  "symbol": "MLTX",
-  "name": "MULTEX COM INC",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-05",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "MLVF",
   "name": "Malvern Bancorp Inc",
   "exchange": "NASDAQ",
@@ -66862,7 +66601,7 @@
  },
  {
   "symbol": "MMD",
-  "name": "MainStay MacKay DefinedTerm Municipal Opportunities Fund",
+  "name": "Mainstay Definedterm Municipal Opptys Fd",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2012-08-03",
@@ -67577,6 +67316,15 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2020-12-14",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "MOTV-WS",
+  "name": "Forge Global Holdings Inc - Warrants (31/12/2027)",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2021-02-01",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -68310,6 +68058,15 @@
   "status": "Active"
  },
  {
+  "symbol": "MSON",
+  "name": "Misonix Inc",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "1993-03-25",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "MSOS",
   "name": "AdvisorShares Pure US Cannabis ETF",
   "exchange": "NYSE ARCA",
@@ -68324,15 +68081,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2020-10-21",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "MSSAU",
-  "name": "Metal Sky Star Acquisition Corp - Units (1 Ord 1 Rts & 1 War)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -68374,7 +68122,7 @@
  },
  {
   "symbol": "MSVX",
-  "name": "LHA Market State Alpha Seeker ETF",
+  "name": "LHA MARKET STATE ALPHA SEEKER ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2020-05-14",
@@ -68459,15 +68207,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "1991-10-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "MTB-P-H",
-  "name": "M & T Bank Corp",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -68657,15 +68396,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2014-06-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "MTMT",
-  "name": "Mega Matrix Corp",
-  "exchange": "NYSE MKT",
-  "assetType": "Stock",
-  "ipoDate": "1998-01-20",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -69003,29 +68733,11 @@
   "status": "Active"
  },
  {
-  "symbol": "MURF",
-  "name": "Murphy Canyon Acquisition Corp - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-28",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "MURFU",
   "name": "Murphy Canyon Acquisition Corp - Units (1 Ord Class A & 1 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-03",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "MURFW",
-  "name": "Murphy Canyon Acquisition Corp - Warrants (25/01/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-31",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -69107,6 +68819,15 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2007-01-19",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "MVP",
+  "name": "Roundhill Pro Sports Media & Apparel ETF",
+  "exchange": "NYSE ARCA",
+  "assetType": "ETF",
+  "ipoDate": "2021-03-17",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -69508,7 +69229,7 @@
  },
  {
   "symbol": "NAD",
-  "name": "Nuveen Quality Municipal Income Fund",
+  "name": "Nuveen Dividend Advantage Municipal Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1999-05-26",
@@ -69544,7 +69265,7 @@
  },
  {
   "symbol": "NAN",
-  "name": "Nuveen New York Quality Municipal Income Fund",
+  "name": "Nuveen New York Dividend Advantage Municipal Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1999-05-26",
@@ -69679,37 +69400,10 @@
  },
  {
   "symbol": "NBB",
-  "name": "Nuveen Taxable Municipal Income Fund",
+  "name": "Nuveen Build America Bond Fund Common Shares of Beneficial Interest",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2010-04-28",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "NBCC",
-  "name": "Neuberger Berman Next Generation Connected Consumer ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-04-07",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "NBCT",
-  "name": "Neuberger Berman Carbon Transition Infrastructure ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-04-07",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "NBDS",
-  "name": "Neuberger Berman Disrupters ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-04-07",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -69841,7 +69535,7 @@
  },
  {
   "symbol": "NBW",
-  "name": "Neuberger Berman California Municipal Fund Inc",
+  "name": "Neuberger Ber CA Intermediate Muni Fund",
   "exchange": "NYSE MKT",
   "assetType": "ETF",
   "ipoDate": "2002-10-22",
@@ -70426,7 +70120,7 @@
  },
  {
   "symbol": "NEV",
-  "name": "Nuveen Enhanced Municipal Value Fund",
+  "name": "Nuveen Enhanced Municipal Value Fund Common Shares of Beneficial Interest",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2009-09-25",
@@ -71371,7 +71065,7 @@
  },
  {
   "symbol": "NML",
-  "name": "Neuberger Berman MLP and Energy Income Fund Inc",
+  "name": "Neuberger Berman MLP Income Fund Inc",
   "exchange": "NYSE MKT",
   "assetType": "ETF",
   "ipoDate": "2013-03-26",
@@ -72360,6 +72054,15 @@
   "status": "Active"
  },
  {
+  "symbol": "NSPR-WSB",
+  "name": "InspireMD Inc - Warrants - Class B (14/03/2022)",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2017-04-10",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "NSR",
   "name": "Nomad Royalty Company Ltd",
   "exchange": "NYSE",
@@ -73125,15 +72828,6 @@
   "status": "Active"
  },
  {
-  "symbol": "NUTX",
-  "name": "Nutex Health Inc",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "NUV",
   "name": "Nuveen Municipal Value Fund Inc",
   "exchange": "NYSE",
@@ -73649,7 +73343,7 @@
  {
   "symbol": "NXE",
   "name": "NexGen Energy Ltd",
-  "exchange": "NYSE",
+  "exchange": "NYSE MKT",
   "assetType": "Stock",
   "ipoDate": "2016-01-04",
   "delistingDate": "null",
@@ -74007,15 +73701,6 @@
   "status": "Active"
  },
  {
-  "symbol": "OACP",
-  "name": "OneAscent Core Plus Bond ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-31",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "OAK-P-A",
   "name": "Oaktree Capital Group LLC",
   "exchange": "NYSE",
@@ -74057,6 +73742,15 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2021-07-23",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "OBAS",
+  "name": "Optibase",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "1999-04-07",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -75762,6 +75456,15 @@
   "status": "Active"
  },
  {
+  "symbol": "ORPH",
+  "name": "Orphazyme A/S",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2020-09-29",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "ORRF",
   "name": "Orrstown Financial Services Inc",
   "exchange": "NASDAQ",
@@ -76204,7 +75907,7 @@
  },
  {
   "symbol": "OVLH",
-  "name": "Overlay Shares Hedged Large Cap Equity ETF",
+  "name": "OVERLAY SHARES HEDGED LARGE CAP EQUITY ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-01-15",
@@ -76798,7 +76501,7 @@
  },
  {
   "symbol": "PALL",
-  "name": "abrdn Physical Palladium Shares ETF",
+  "name": "Aberdeen Standard Physical Palladium Shares ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2010-01-14",
@@ -78156,15 +77859,6 @@
   "status": "Active"
  },
  {
-  "symbol": "PEGY",
-  "name": "Pineapple Holdings Inc",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "1990-03-26",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "PEI",
   "name": "Pennsylvania Real Estate Investment Trust",
   "exchange": "NYSE",
@@ -78617,7 +78311,7 @@
  {
   "symbol": "PFLT",
   "name": "PennantPark Floating Rate Capital Ltd",
-  "exchange": "NYSE",
+  "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2011-04-08",
   "delistingDate": "null",
@@ -78769,7 +78463,7 @@
  },
  {
   "symbol": "PGAL",
-  "name": "Global X MSCI Portugal ETF",
+  "name": "GLOBAL X MSCI PORTUGAL ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2013-11-13",
@@ -78841,7 +78535,7 @@
  },
  {
   "symbol": "PGP",
-  "name": "Pimco Global StocksPLUS & Income Fund",
+  "name": "PIMCO Global StocksPLUS Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2005-05-26",
@@ -80318,7 +80012,7 @@
  {
   "symbol": "PNNT",
   "name": "PennantPark Investment Corporation",
-  "exchange": "NYSE",
+  "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2007-04-19",
   "delistingDate": "null",
@@ -80830,7 +80524,7 @@
  },
  {
   "symbol": "PPLT",
-  "name": "abrdn Physical Platinum Shares ETF",
+  "name": "Aberdeen Standard Physical Platinum Shares ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2010-01-08",
@@ -81946,7 +81640,7 @@
  },
  {
   "symbol": "PSCQ",
-  "name": "Pacer Swan SOS Conservative (October) ETF",
+  "name": "PACER SWAN SOS CONSERVATIVE (OCTOBER) ETF ",
   "exchange": "BATS",
   "assetType": "ETF",
   "ipoDate": "2021-10-01",
@@ -82423,7 +82117,7 @@
  },
  {
   "symbol": "PSY",
-  "name": "Defiance Next Gen Altered Experience ETF",
+  "name": "DEFIANCE NEXT GEN ALTERED EXPERIENCE ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-05-28",
@@ -84519,29 +84213,11 @@
   "status": "Active"
  },
  {
-  "symbol": "RACY",
-  "name": "Relativity Acquisition Corp - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "RACYU",
   "name": "Relativity Acquisition Corp - Units (1 Ord Class A & 1 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-11",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "RACYW",
-  "name": "Relativity Acquisition Corp - Warrants(10/02/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -85752,6 +85428,15 @@
   "status": "Active"
  },
  {
+  "symbol": "RESN",
+  "name": "Resonant Inc",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2014-05-29",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "RESP",
   "name": "WisdomTree U.S. ESG Fund",
   "exchange": "NYSE ARCA",
@@ -86005,7 +85690,7 @@
  },
  {
   "symbol": "RFACU",
-  "name": "RF Acquisition Corp - Units (1 Ord Class A & 1 War & 1 Right )",
+  "name": "RF Acquisition Corp - Units (1 Ord Class A & 1/2 War & 1 Right )",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-03-24",
@@ -86014,7 +85699,7 @@
  },
  {
   "symbol": "RFCI",
-  "name": "RIVERFRONT DYNAMIC CORE INCOME ETF ",
+  "name": "RiverFront Dynamic Core Income ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2016-06-17",
@@ -86023,7 +85708,7 @@
  },
  {
   "symbol": "RFDA",
-  "name": "RIVERFRONT DYNAMIC US DIVIDEND ADVANTAGE ETF ",
+  "name": "RiverFront Dynamic US Dividend Advantage ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2016-06-07",
@@ -86437,7 +86122,7 @@
  },
  {
   "symbol": "RIGS",
-  "name": "RIVERFRONT STRATEGIC INCOME FUND ",
+  "name": "RiverFront Strategic Income Fund",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2013-10-09",
@@ -87067,7 +86752,7 @@
  },
  {
   "symbol": "RMT",
-  "name": "Royce Micro-Cap Trust Inc",
+  "name": "Royce Micro Capital Trust Inc",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1993-12-15",
@@ -87813,15 +87498,6 @@
   "status": "Active"
  },
  {
-  "symbol": "RPHS",
-  "name": "Regents Park Hedged Market Strategy ETF",
-  "exchange": "BATS",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-31",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "RPID",
   "name": "Rapid Micro Biosystems Inc - Class A",
   "exchange": "NASDAQ",
@@ -88308,6 +87984,15 @@
   "status": "Active"
  },
  {
+  "symbol": "RVI",
+  "name": "Retail Value Inc",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2018-06-26",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "RVLP",
   "name": "RVL Pharmaceuticals plc",
   "exchange": "NASDAQ",
@@ -88385,24 +88070,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "1993-10-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "RVSN",
-  "name": "Rail Vision Ltd",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-31",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "RVSNW",
-  "name": "Rail Vision Ltd - Warrants (27/03/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-31",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -88493,15 +88160,6 @@
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2008-05-22",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "RWODU",
-  "name": "Redwoods Acquisition Corp - Units (1 Ord 1 War & 1 Right )",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-31",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -89317,7 +88975,7 @@
  },
  {
   "symbol": "SAVN",
-  "name": "LifeGoal Conservative Wealth Builder ETF",
+  "name": "LIFEGOAL GENERAL CONSERVATIVE INVESTMENT ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-09-09",
@@ -89335,7 +88993,7 @@
  },
  {
   "symbol": "SB-P-C",
-  "name": "Safe Bulkers Inc",
+  "name": "Safe Bulkers Inc Cumulative Redeemable Perpetual Preferred Series C Marshall Islands",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2014-09-22",
@@ -89344,7 +89002,7 @@
  },
  {
   "symbol": "SB-P-D",
-  "name": "Safe Bulkers Inc",
+  "name": "Safe Bulkers Inc Perpetual Preferred Series D Marshall Islands",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2014-09-22",
@@ -90460,7 +90118,7 @@
  },
  {
   "symbol": "SDEI",
-  "name": "SOUND EQUITY INCOME ETF ",
+  "name": "Sound Equity Income ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-12-31",
@@ -90541,7 +90199,7 @@
  },
  {
   "symbol": "SDOG",
-  "name": "ALPS SECTOR DIVIDEND DOGS ETF ",
+  "name": "ALPS Sector Dividend Dogs ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2012-07-16",
@@ -90703,10 +90361,10 @@
  },
  {
   "symbol": "SEDA-U",
-  "name": "SDCL EDGE Acquisition Corp - Units (1 Ord Share Class A & 1/2 War)",
+  "name": "SDCL EDGE Acquisition Corporation Units each consisting of one Class A ordinary share and onehalf of one redeemable warrant",
   "exchange": "NYSE",
   "assetType": "Stock",
-  "ipoDate": "2021-11-03",
+  "ipoDate": "2021-10-29",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -90815,15 +90473,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2009-09-25",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "SEMI",
-  "name": "Columbia Seligman Semiconductor and Technology ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-30",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -91251,29 +90900,11 @@
   "status": "Active"
  },
  {
-  "symbol": "SGHL",
-  "name": "Signal Hill Acquisition Corp - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-28",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "SGHLU",
   "name": "Signal Hill Acquisition Corp - Units (1 Ord Class A & 1/2 War)",
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2022-02-11",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "SGHLW",
-  "name": "Signal Hill Acquisition Corp - Warrants (10/02/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-29",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -91369,7 +91000,7 @@
  },
  {
   "symbol": "SGOL",
-  "name": "abrdn Physical Gold Shares ETF",
+  "name": "Aberdeen Standard Physical Gold Shares ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2009-09-09",
@@ -92242,7 +91873,7 @@
  },
  {
   "symbol": "SIVR",
-  "name": "abrdn Physical Silver Shares ETF",
+  "name": "Aberdeen Standard Physical Silver Shares ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2009-07-24",
@@ -92260,7 +91891,7 @@
  },
  {
   "symbol": "SIXA",
-  "name": "ETC 6 MERIDIAN MEGA CAP EQUITY ETF ",
+  "name": "ETC 6 Meridian Mega Cap Equity ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-05-11",
@@ -92269,7 +91900,7 @@
  },
  {
   "symbol": "SIXH",
-  "name": "ETC 6 MERIDIAN HEDGED EQUITY-INDEX OPTION STRATEGY ETF ",
+  "name": "ETC 6 Meridian Hedged Equity Index Option ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-05-11",
@@ -92305,7 +91936,7 @@
  },
  {
   "symbol": "SIXS",
-  "name": "ETC 6 MERIDIAN SMALL CAP EQUITY ETF ",
+  "name": "ETC 6 Meridian Small Cap Equity ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2020-05-11",
@@ -93466,8 +93097,8 @@
  },
  {
   "symbol": "SMRT",
-  "name": "SmartRent Inc - Class A",
-  "exchange": "NYSE",
+  "name": "SmartRent Inc",
+  "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2021-02-05",
   "delistingDate": "null",
@@ -94924,7 +94555,7 @@
  },
  {
   "symbol": "SPSK",
-  "name": "SP FUNDS DOW JONES GLOBAL SUKUK ETF ",
+  "name": "SP Funds Dow Jones Global Sukuk ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2019-12-30",
@@ -96174,15 +95805,6 @@
   "status": "Active"
  },
  {
-  "symbol": "STEW",
-  "name": "SRH Total Return Fund Inc",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "STG",
   "name": "Sunlands Technology Group",
   "exchange": "NYSE",
@@ -96516,15 +96138,6 @@
   "status": "Active"
  },
  {
-  "symbol": "STRY",
-  "name": "Starry Group Holdings Inc - Class A",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2020-11-27",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "STSA",
   "name": "Satsuma Pharmaceuticals Inc",
   "exchange": "NASDAQ",
@@ -96714,6 +96327,15 @@
   "status": "Active"
  },
  {
+  "symbol": "SUBZ",
+  "name": "Roundhill Streaming Services & Technology ETF",
+  "exchange": "NYSE ARCA",
+  "assetType": "ETF",
+  "ipoDate": "2021-02-10",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
   "symbol": "SUI",
   "name": "Sun Communities Inc",
   "exchange": "NYSE",
@@ -96800,15 +96422,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "1985-07-03",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "SUPL",
-  "name": "ProShares Supply Chain Logistics ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-04-07",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -96989,15 +96602,6 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2017-10-18",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "SVIX",
-  "name": "1x Short VIX Futures ETF",
-  "exchange": "BATS",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-30",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -97362,24 +96966,6 @@
   "status": "Active"
  },
  {
-  "symbol": "SWVL",
-  "name": "Swvl Holdings Corp - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-31",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "SWVLW",
-  "name": "Swvl Holdings Corp - Warrants (31/03/2027)",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "SWX",
   "name": "Southwest Gas Holdings Inc",
   "exchange": "NYSE",
@@ -97417,7 +97003,7 @@
  },
  {
   "symbol": "SXQG",
-  "name": "ETC 6 MERIDIAN QUALITY GROWTH ETF ",
+  "name": "ETC 6 Meridian Quality Growth ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-05-11",
@@ -97624,7 +97210,7 @@
  },
  {
   "symbol": "SZNE",
-  "name": "Pacer CFRA Stovall Equal Weight Seasonal Rotation ETF",
+  "name": "PACER CFRA-STOVALL EQUAL WEIGHT SEASONAL ROTATION ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2018-07-24",
@@ -98803,7 +98389,7 @@
  },
  {
   "symbol": "TEI",
-  "name": "Templeton Emerging Markets Income Fund Inc",
+  "name": "Templeton Emerging Markets Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1994-10-27",
@@ -99270,29 +98856,11 @@
   "status": "Active"
  },
  {
-  "symbol": "TGR",
-  "name": "Kimbell Tiger Acquisition Corp - Class A",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-28",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "TGR-U",
   "name": "Kimbell Tiger Acquisition Corp - Units (1 Ord Class A & 1/2 War)",
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2022-02-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "TGR-WS",
-  "name": "Kimbell Tiger Acquisition Corporation Warrants each whole warrant exercisable for one share of Class A common stock at an exercise price of 11.50 per share",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "2022-03-28",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -99716,15 +99284,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2020-10-13",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "TIME",
-  "name": "Clockwise Capital Innovation ETF",
-  "exchange": "NYSE ARCA",
-  "assetType": "ETF",
-  "ipoDate": "2022-01-28",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -100936,7 +100495,7 @@
  },
  {
   "symbol": "TPYP",
-  "name": "TORTOISE NORTH AMERICAN PIPELINE FUND ",
+  "name": "Tortoise North American Pipeline Fund ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2015-06-30",
@@ -100945,7 +100504,7 @@
  },
  {
   "symbol": "TPZ",
-  "name": "Tortoise Power and Energy Infrastructure Fund Inc",
+  "name": "Tortoise Power Energy Infrstrct Fd Inc",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2009-07-29",
@@ -102070,7 +101629,7 @@
  },
  {
   "symbol": "TUSA",
-  "name": "First Trust Total US Market AlphaDEX ETF",
+  "name": "FIRST TRUST TOTAL US MARKET ALPHADEX ETF ",
   "exchange": "NASDAQ",
   "assetType": "ETF",
   "ipoDate": "2004-04-28",
@@ -102326,6 +101885,24 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2015-11-30",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "TWNT",
+  "name": "Tailwind Two Acquisition Corp - Class A",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2021-04-26",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "TWNT-U",
+  "name": "Tailwind Two Acquisition Corp - Units (1 Ord Share Class A & 1/3 War)",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2021-03-05",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -103240,7 +102817,7 @@
  },
  {
   "symbol": "UJB",
-  "name": "ProShares Ultra High Yield",
+  "name": "PROSHARES ULTRA HIGH YIELD ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2011-04-14",
@@ -104329,7 +103906,7 @@
  },
  {
   "symbol": "USVT",
-  "name": "US Value ETF",
+  "name": "US VALUE ETF ",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-09-14",
@@ -104567,15 +104144,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2003-06-06",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "UVIX",
-  "name": "2x Long VIX Futures ETF",
-  "exchange": "BATS",
-  "assetType": "ETF",
-  "ipoDate": "2022-03-30",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -105580,7 +105148,7 @@
  },
  {
   "symbol": "VFL",
-  "name": "Delaware Investments National Municipal Income Fund",
+  "name": "Delaware Investments Natnl Mncpl Incm Fd",
   "exchange": "NYSE MKT",
   "assetType": "ETF",
   "ipoDate": "1995-08-18",
@@ -105652,7 +105220,7 @@
  },
  {
   "symbol": "VGI",
-  "name": "Virtus Global Multi-Sector Income Fund",
+  "name": "Virtus Global MultiSector Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2012-02-24",
@@ -106246,7 +105814,7 @@
  },
  {
   "symbol": "VKQ",
-  "name": "Invesco Municipal Trust",
+  "name": "Invesco Municipal Trust Common",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "1991-11-21",
@@ -106628,6 +106196,15 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2006-04-12",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "VNE",
+  "name": "Veoneer Inc",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2018-06-11",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -107222,6 +106799,15 @@
   "exchange": "NASDAQ",
   "assetType": "Stock",
   "ipoDate": "2017-03-24",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "VRS",
+  "name": "Verso Corp - Class A",
+  "exchange": "NYSE",
+  "assetType": "Stock",
+  "ipoDate": "2016-07-19",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -108288,24 +107874,6 @@
   "status": "Active"
  },
  {
-  "symbol": "WBDW-V",
-  "name": "Warner Bros.Discovery Inc - Class A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2005-07-08",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "WBDWV",
-  "name": "Warner Bros Discovery Inc Com Ser A",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-04",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
   "symbol": "WBEV",
   "name": "Winc Inc",
   "exchange": "NYSE MKT",
@@ -109198,7 +108766,7 @@
  },
  {
   "symbol": "WIW",
-  "name": "Western Asset Inflation-Linked Opportunities & Income Fund",
+  "name": "Western AssetClaymore InfLkd Opp Income Fund",
   "exchange": "NYSE",
   "assetType": "ETF",
   "ipoDate": "2004-02-25",
@@ -109364,24 +108932,6 @@
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2021-09-09",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "WLY",
-  "name": "John Wiley & Sons Inc - Class A",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "1990-03-26",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "WLYB",
-  "name": "John Wiley & Sons Inc - Class B",
-  "exchange": "NYSE",
-  "assetType": "Stock",
-  "ipoDate": "1995-10-19",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -110278,7 +109828,7 @@
  },
  {
   "symbol": "WWJD",
-  "name": "INSPIRE INTERNATIONAL ESG ETF ",
+  "name": "Inspire International ESG ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2019-10-01",
@@ -110737,7 +110287,7 @@
  },
  {
   "symbol": "XHYC",
-  "name": "BONDBLOXX USD HIGH YIELD BOND CONSUMER CYCLICALS SECTOR ETF ",
+  "name": "BondBloxx USD High Yield Bond Consumer Cyclicals Sector ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2022-02-17",
@@ -110746,7 +110296,7 @@
  },
  {
   "symbol": "XHYD",
-  "name": "BONDBLOXX USD HIGH YIELD BOND CONSUMER NON-CYCLICALS SECTOR ETF ",
+  "name": "BondBloxx USD High Yield Bond Consumer Non-Cyclicals Sector ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2022-02-17",
@@ -110755,7 +110305,7 @@
  },
  {
   "symbol": "XHYE",
-  "name": "BONDBLOXX USD HIGH YIELD BOND ENERGY SECTOR ETF ",
+  "name": "BondBloxx USD High Yield Bond Energy Sector ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2022-02-17",
@@ -110764,7 +110314,7 @@
  },
  {
   "symbol": "XHYF",
-  "name": "BONDBLOXX USD HIGH YIELD BOND FINANCIAL & REIT SECTOR ETF ",
+  "name": "BondBloxx USD High Yield Bond Financial & REIT Sector ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2022-02-17",
@@ -110773,7 +110323,7 @@
  },
  {
   "symbol": "XHYH",
-  "name": "BONDBLOXX USD HIGH YIELD BOND HEALTHCARE SECTOR ETF ",
+  "name": "BondBloxx USD High Yield Bond Healthcare Sector ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2022-02-17",
@@ -110782,7 +110332,16 @@
  },
  {
   "symbol": "XHYI",
-  "name": "BONDBLOXX USD HIGH YIELD BOND INDUSTRIAL SECTOR ETF ",
+  "name": "BondBloxx USD High Yield Bond Industrial Sector ETF",
+  "exchange": "NYSE ARCA",
+  "assetType": "ETF",
+  "ipoDate": "2022-02-17",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "XHYT",
+  "name": "BondBloxx USD High Yield Bond Telecom Media & Technology Sector ETF",
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2022-02-17",
@@ -111317,15 +110876,6 @@
   "exchange": "NYSE",
   "assetType": "Stock",
   "ipoDate": "2021-07-23",
-  "delistingDate": "null",
-  "status": "Active"
- },
- {
-  "symbol": "XPON",
-  "name": "Expion360 Inc",
-  "exchange": "NASDAQ",
-  "assetType": "Stock",
-  "ipoDate": "2022-04-01",
   "delistingDate": "null",
   "status": "Active"
  },
@@ -112028,6 +111578,15 @@
   "exchange": "NYSE ARCA",
   "assetType": "ETF",
   "ipoDate": "2010-03-18",
+  "delistingDate": "null",
+  "status": "Active"
+ },
+ {
+  "symbol": "YY",
+  "name": "JOYY Inc",
+  "exchange": "NASDAQ",
+  "assetType": "Stock",
+  "ipoDate": "2012-11-21",
   "delistingDate": "null",
   "status": "Active"
  },

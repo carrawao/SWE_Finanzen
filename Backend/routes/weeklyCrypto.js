@@ -1,19 +1,19 @@
-const updateDataFromAPI = require('../../module/updateGeneralDataFromAPI');
-const safeNewSymbol = require('../../module/safeNewSymbol');
+const updateDataFromAPI = require('../module/updateDataFromAPI');
+const safeNewSymbol = require('../module/safeNewSymbol');
 
 
 const userRoutes = (app, fs) => {
 
-    app.get('/companyOverview', (req, res, apiKey) => {
+    app.get('/weeklyCrypto', (req, res, apiKey) => {
       if(req.query.symbol){
         const symbol = req.query.symbol;
-        const dataPath = './data/CompanyOverview/companyOverview_' + symbol + '.json';
+        const dataPath = './data/Crypto/Weekly/weeklyCrypto_' + symbol + '.json';
         
-
+        
         fs.access(dataPath, fs.F_OK, (err) => {
           if (err) {
-            updateDataFromAPI.updateCompanyOverview(symbol, apiKey).then(() => {
-              safeNewSymbol.saveShareSymbol(symbol);
+            updateDataFromAPI.updateWeeklySeriesCrypto(symbol, apiKey).then(() => {
+              safeNewSymbol.saveCryptoSymbol(symbol);
               fs.readFile(dataPath, 'utf8', (err, data) => {
                 if (err) {
                     throw err;
@@ -24,6 +24,8 @@ const userRoutes = (app, fs) => {
             });
             
             return;
+          }else{
+            console.log("File exists");
           }
           
           fs.readFile(dataPath, 'utf8', (err, data) => {
@@ -31,17 +33,14 @@ const userRoutes = (app, fs) => {
                 throw err;
             }
             res.set('Access-Control-AlLow-Origin','http://localhost:3000');
-            if(data == "{}"){
-              res.send("NO Company Overview for this");
-            }else{
-              res.send(JSON.parse(data));
-            }            
+            res.send(JSON.parse(data));
           });
         });  
       }else
       {
         res.send("NO Symbol");
       }
+      
     });
   };
 

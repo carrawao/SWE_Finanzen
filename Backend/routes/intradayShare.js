@@ -1,5 +1,5 @@
-const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
-const safeNewSymbol = require('../../module/safeNewSymbol');
+const updateDataFromAPI = require('../module/updateDataFromAPI');
+const safeNewSymbol = require('../module/safeNewSymbol');
 
 
 const userRoutes = (app, fs) => {
@@ -11,7 +11,7 @@ const userRoutes = (app, fs) => {
 
             fs.access(dataPath, fs.F_OK, (err) => {
                 if (err) {
-                  updateDataFromAPI.updateIntradaySeriesShare(symbol,60, apiKey).then(() => {
+                  updateDataFromAPI.updateIntradaySeriesShare(symbol,30, apiKey).then(() => {
                     safeNewSymbol.saveShareSymbol(symbol);
                     fs.readFile(dataPath, 'utf8', (err, data) => {
                       if (err) {
@@ -23,6 +23,8 @@ const userRoutes = (app, fs) => {
                   });
                   
                   return;
+                }else{
+                  console.log("File exists");
                 }
                 
                 fs.readFile(dataPath, 'utf8', (err, data) => {

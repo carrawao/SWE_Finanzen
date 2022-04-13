@@ -1,48 +1,46 @@
 // Shares
-const dailyShareRoute = require('./Shares/dailyShare');
-const intradayShareRoute = require('./Shares/intradayShare');
-const monthlyShareRoute = require('./Shares/monthlyShare');
-const weeklyShareRoute = require('./Shares/weeklyShare');
+const dailyShareRoute = require('./dailyShare');
+const intradayShareRoute = require('./intradayShare');
+const monthlyShareRoute = require('./monthlyShare');
+const weeklyShareRoute = require('./weeklyShare');
 
 //Crypto
-const dailyCryptoRoute = require('./Cryptos/dailyCrypto');
-const intradayCryptoRoute = require('./Cryptos/intradayCrypto');
-const monthlyCryptoRoute = require('./Cryptos/monthlyCrypto');
-const weeklyCryptoRoute = require('./Cryptos/weeklyCrypto');
+const dailyCryptoRoute = require('./dailyCrypto');
+const intradayCryptoRoute = require('./intradayCrypto');
+const monthlyCryptoRoute = require('./monthlyCrypto');
+const weeklyCryptoRoute = require('./weeklyCrypto');
 
 //Allgemein
-const quotedUSshares = require('./Generals/quotedUSshares');
-const companyOverviewRoute = require('./Generals/companyOverview');
-const search = require('./Generals/search');
+const quotedUSshares = require('./quotedUSshares');
+const companyOverviewRoute = require('./companyOverview');
+const search = require('./search');
 
 //Watchlist
-const getShareForWatchlist = require('./Watchlist/getShareForWatchlist');
-const getCryptoForWatchlist = require('./Watchlist/getCryptoForWatchlist');
+const getShareForWatchlist = require('./getShareForWatchlist');
 
-const appRouter = (app, fs, apiKeys) => {
+const appRouter = (app, fs, apiKey) => {
   app.get('/', (req, res) => {
     res.send('welcome to the api-server');
   });
   //Shares
-  dailyShareRoute(app, fs, apiKeys[0]);
-  intradayShareRoute(app, fs, apiKeys[0]);
-  monthlyShareRoute(app, fs, apiKeys[0]);
-  weeklyShareRoute(app, fs, apiKeys[0]);
+  dailyShareRoute(app, fs, apiKey);
+  intradayShareRoute(app, fs, apiKey);
+  monthlyShareRoute(app, fs, apiKey);
+  weeklyShareRoute(app, fs, apiKey);
 
   //Crypto
-  dailyCryptoRoute(app, fs, apiKeys[0]);
-  intradayCryptoRoute(app, fs, apiKeys[0]);
-  monthlyCryptoRoute(app, fs, apiKeys[0]);
-  weeklyCryptoRoute(app, fs, apiKeys[0]);
+  dailyCryptoRoute(app, fs, apiKey);
+  intradayCryptoRoute(app, fs, apiKey);
+  monthlyCryptoRoute(app, fs, apiKey);
+  weeklyCryptoRoute(app, fs, apiKey);
   
   //Allgemein
-  quotedUSshares(app, fs, apiKeys[0]);
-  companyOverviewRoute(app, fs, apiKeys[1]);
+  quotedUSshares(app, fs, apiKey);
+  companyOverviewRoute(app, fs, apiKey);
   search(app, fs);
 
   //Watchlist
-  getShareForWatchlist(app,fs,apiKeys[0]);
-  getCryptoForWatchlist(app,fs,apiKeys[0]);
+  getShareForWatchlist(app,fs,apiKey);
 };
 
 module.exports = appRouter;

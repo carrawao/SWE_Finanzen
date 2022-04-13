@@ -1,19 +1,19 @@
-const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
-const safeNewSymbol = require('../../module/safeNewSymbol');
+const updateDataFromAPI = require('../module/updateDataFromAPI');
+const safeNewSymbol = require('../module/safeNewSymbol');
 
 
 const userRoutes = (app, fs) => {
 
-    app.get('/dailyCrypto', (req, res, apiKey) => {
+    app.get('/companyOverview', (req, res, apiKey) => {
       if(req.query.symbol){
         const symbol = req.query.symbol;
-        const dataPath = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
+        const dataPath = './data/CompanyOverview/companyOverview_' + symbol + '.json';
         
-        
+
         fs.access(dataPath, fs.F_OK, (err) => {
           if (err) {
-            updateDataFromAPI.updateDailySeriesCrypto(symbol, apiKey).then(() => {
-              safeNewSymbol.saveCryptoSymbol(symbol);
+            updateDataFromAPI.updateCompanyOverview(symbol, apiKey).then(() => {
+              safeNewSymbol.saveShareSymbol(symbol);
               fs.readFile(dataPath, 'utf8', (err, data) => {
                 if (err) {
                     throw err;
@@ -24,6 +24,8 @@ const userRoutes = (app, fs) => {
             });
             
             return;
+          }else{
+            console.log("File exists");
           }
           
           fs.readFile(dataPath, 'utf8', (err, data) => {

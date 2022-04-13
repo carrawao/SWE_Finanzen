@@ -10,6 +10,7 @@ const DashboardScreen = lazy(() => import('../components/screens/Dashboard/Dashb
 const ActivitiesScreen = lazy(() => import('../components/screens/Activities/ActivitiesScreen'));
 const WatchListsScreen = lazy(() => import('../components/screens/WatchLists/WatchListsScreen'));
 const SettingsScreen = lazy(() => import('../components/screens/Settings/SettingsScreen'));
+const AssetDetailsScreen = lazy(() => import('../components/screens/AssetDetails/AssetDetailsScreen'));
 
 const emptyPortfolioData = {
   "Portfolio": {
@@ -99,6 +100,7 @@ const AppRoutes = () => {
         }
       />
       <Route path='/settings' element={<SettingsScreen/>}/>
+      <Route path='/watchlists/:asset' element={<AssetDetailsScreen/>}/>
     </Routes>
   );
 }
