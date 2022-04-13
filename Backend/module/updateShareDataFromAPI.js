@@ -7,14 +7,14 @@ const pathShareSymbol = './data/shareSymbols.txt'
 let url;
 
 // Start updating all data:
-// -> Intraday
-// -> Daily
-// -> Weekly
-// -> Monthly
+// -> Intraday with the first apiKey
+// -> Daily with the secound apiKey
+// -> Weekly with the third apiKey
+// -> Monthly currently not used therefore no execution
 const startUpdateShareData = async (apiKeys) => {
     updateIntradayShareData(apiKeys[0]);
-    // updateDailyShareData(apiKeys[1]);
-    // updateWeeklyShareData(apiKeys[2]);
+    updateDailyShareData(apiKeys[1]);
+    updateWeeklyShareData(apiKeys[2]);
 
     // Wird erstmal weggelassen wird nicht benötigt
     // updateMonthlyShareData(apiKeys[3]);

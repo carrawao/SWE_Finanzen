@@ -27,10 +27,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const routes = require('./routes/routes.js')(app, fs, apiKeys);
 
-// launch server on Port 3001
-const server = app.listen(3001, () => {
+const PORT = 3001;
+const HOST = '0.0.0.0';
+
+const server = app.listen(PORT,HOST, () => {
     console.log('listening on port %s...', server.address().port); 
-    updateShare.startUpdateShareData(apiKeys);
+    // updateShare.startUpdateShareData(apiKeys);
 });
 
 //INFO WICHTIGER LINK für schedule
@@ -41,12 +43,12 @@ const updateShares = schedule.scheduleJob('0 1 * * *', () => {
     updateShare.startUpdateShareData(apiKeys);
 });
 
-// // 10 minuten pasue (Sicherheit wegen api Keys)
-const updateCryptos = schedule.scheduleJob('10 3 * * *', () => {
+// // 5 minutes break (Sicherheit wegen api Keys)
+const updateCryptos = schedule.scheduleJob('5 3 * * *', () => {
     updateCrypto.startUpdateCryptoData(apiKeys);
 });
 const updateGenerals = schedule.scheduleJob('0 1 * * *', () => {
-    // updateGeneral.updateCompanyOverviewData(apiKeys[4]);
-    // updateGeneral.updateCurrentCurrency(apiKeys[5]);
-    // updateGeneral.updateListOfQuotedUSshares(apiKeys[5 s]);
+    updateGeneral.updateCompanyOverviewData(apiKeys[4]);
+    updateGeneral.updateCurrentCurrency(apiKeys[5]);
+    updateGeneral.updateListOfQuotedUSshares(apiKeys[5]);
 });
