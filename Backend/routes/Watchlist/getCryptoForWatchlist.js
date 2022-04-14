@@ -1,4 +1,4 @@
-const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
+const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
@@ -7,14 +7,14 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
     app.get('/getCryptoForWatchlist', (req, res) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
-            const dataPathDailyShare = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
-            const dataPathQuotedUSshares = './data/quotedCrypto.json';
+            const dataPathDailycrypto = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
+            const dataPathQuotedUScryptos = './data/quotedCrypto.json';
             const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
 
 
-            fs.access(dataPathDailyShare, fs.F_OK, (err) => {
+            fs.access(dataPathDailycrypto, fs.F_OK, (err) => {
                 if (err) {
-                    updateDataFromAPI.updateDailySeriesShare(symbol, apiKey).then(() => {
+                    updateDataFromAPI.updateDailySeriesCrypto(symbol, apiKey).then(() => {
                         safeNewSymbol.saveCryptoSymbol(symbol);
                     }).then(() => {
                         setData();
@@ -26,11 +26,11 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
             });
             const setData = () => {
                 const rawCurreny = fs.readFileSync(dataPathCurrentCurrency);
-                const rawDailyData = fs.readFileSync(dataPathDailyShare);
-                const rawQuotedUSshares = fs.readFileSync(dataPathQuotedUSshares);
+                const rawDailyData = fs.readFileSync(dataPathDailycrypto);
+                const rawQuotedUScryptos = fs.readFileSync(dataPathQuotedUScryptos);
                 const currency = JSON.parse(rawCurreny);
                 const dailyJson_data = JSON.parse(rawDailyData);  
-                const quotedUSsharesData = JSON.parse(rawQuotedUSshares);
+                const quotedUScryptosData = JSON.parse(rawQuotedUScryptos);
 
                 let dayOne = new Date();
                 dayOne.setDate(dayOne.getDate() - 1);
@@ -56,9 +56,9 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                 change = change.toFixed(2);
 
                 let name;
-                for(let share of quotedUSsharesData){
-                    if(share['symbol'] === symbol){
-                        name = share['name'];
+                for(let crypto of quotedUScryptosData){
+                    if(crypto['symbol'] === symbol){
+                        name = crypto['name'];
                         break;
                     }
                 }
