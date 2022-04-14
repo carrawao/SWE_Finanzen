@@ -2,9 +2,9 @@ const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
-const userRoutes = (app, fs) => {
+const userRoutes = (app, fs, apiKey, accessURL) => {
 
-    app.get('/getCryptoForWatchlist', (req, res, apiKey, accessURL) => {
+    app.get('/getCryptoForWatchlist', (req, res) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
             const dataPathDailyShare = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';

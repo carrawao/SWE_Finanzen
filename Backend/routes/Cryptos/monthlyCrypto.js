@@ -2,9 +2,9 @@ const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
-const userRoutes = (app, fs) => {
+const userRoutes = (app, fs, apiKey, accessURL) => {
 
-    app.get('/monthlyCrypto', (req, res, apiKey, accessURL) => {
+    app.get('/monthlyCrypto', (req, res) => {
       if(req.query.symbol){
         const symbol = req.query.symbol;
         const dataPath = './data/Crypto/Monthly/monthlyCrypto_' + symbol + '.json';
