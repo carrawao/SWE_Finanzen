@@ -4,7 +4,7 @@ import DashboardScreen from '../DashboardScreen';
 import { BrowserRouter } from 'react-router-dom';
 
 
-it("Renders without crashing", () => {
+it("Dashboard renders without crashing", () => {
     const div = document.createElement("div");
     ReactDom.render(
         <BrowserRouter>
