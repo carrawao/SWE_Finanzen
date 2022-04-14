@@ -22,7 +22,7 @@ const startUpdateCryptoData = async (apiKeys) => {
 
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
 //Intraday Data
-async function updateIntradayCryptoData(){
+async function updateIntradayCryptoData(apiKey){
     let today = new Date();    
 
     if(today.getHours() >= 6){
@@ -38,7 +38,7 @@ async function updateIntradayCryptoData(){
         let k = 0;
         for await (const symbol of rl) {
             if(i > 4){
-                updateFiveIntradayCryptoFromAPI(fiveSymbols, k);
+                updateFiveIntradayCryptoFromAPI(fiveSymbols, k, apiKey);
                 k++;
                 fiveSymbols = [];
                 i = 0;
@@ -46,12 +46,12 @@ async function updateIntradayCryptoData(){
             fiveSymbols[i] = symbol;
             i++;
         }
-        updateFiveIntradayCryptoFromAPI(fiveSymbols, k);
+        updateFiveIntradayCryptoFromAPI(fiveSymbols, k, apiKey);
         
         rl.close()
     }
 }
-async function updateFiveIntradayCryptoFromAPI(symbols, minutes){
+async function updateFiveIntradayCryptoFromAPI(symbols, minutes, apiKey){
 //Every 1.5 Minutes start update 5 Symbols
 setTimeout(() => {
     for (const symbol of symbols) {
@@ -73,7 +73,7 @@ const updateIntradaySeriesCrypto = async (symbol, interval = 60, apiKey) => {
 
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
 //Daily Data
-async function updateDailyCryptoData(){
+async function updateDailyCryptoData(apiKey){
     const fileStream = fs.createReadStream(pathCryptoSymbol);
 
     const rl = readline.createInterface({
@@ -86,7 +86,7 @@ async function updateDailyCryptoData(){
     let k = 0;
     for await (const symbol of rl) {
         if(i > 4){
-            updateFiveDailyCryptoFromAPI(fiveSymbols,k);
+            updateFiveDailyCryptoFromAPI(fiveSymbols,k,apiKey);
             k++;
             fiveSymbols = [];
             i = 0;
@@ -94,11 +94,11 @@ async function updateDailyCryptoData(){
         fiveSymbols[i] = symbol;
         i++;
     }
-    updateFiveDailyCryptoFromAPI(fiveSymbols,k);
+    updateFiveDailyCryptoFromAPI(fiveSymbols,k,apiKey);
     
     rl.close()
 }
-async function updateFiveDailyCryptoFromAPI(symbols, minutes){
+async function updateFiveDailyCryptoFromAPI(symbols, minutes, apiKey){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {
@@ -121,7 +121,7 @@ const updateDailySeriesCrypto = async (symbol, apiKey) => {
 
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
 //Weekly Data
-async function updateWeeklyCryptoData(){
+async function updateWeeklyCryptoData(apiKey){
     const fileStream = fs.createReadStream(pathCryptoSymbol);
 
     const rl = readline.createInterface({
@@ -134,7 +134,7 @@ async function updateWeeklyCryptoData(){
     let k = 0;
     for await (const symbol of rl) {
         if(i > 4){
-            updateFiveWeeklyCryptoFromAPI(fiveSymbols,k);
+            updateFiveWeeklyCryptoFromAPI(fiveSymbols,k,apiKey);
             k++;
             fiveSymbols = [];
             i = 0;
@@ -142,11 +142,11 @@ async function updateWeeklyCryptoData(){
         fiveSymbols[i] = symbol;
         i++;
     }
-    updateFiveWeeklyCryptoFromAPI(fiveSymbols,k);
+    updateFiveWeeklyCryptoFromAPI(fiveSymbols,k,apiKey);
     
     rl.close()
 }
-async function updateFiveWeeklyCryptoFromAPI(symbols, minutes){
+async function updateFiveWeeklyCryptoFromAPI(symbols, minutes, apiKey){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {
@@ -168,7 +168,7 @@ const updateWeeklySeriesCrypto = async (symbol, apiKey) => {
 
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
 //Monthly Data
-async function updateMonthlyCryptoData(){
+async function updateMonthlyCryptoData(apiKey){
     const fileStream = fs.createReadStream(pathCryptoSymbol);
 
     const rl = readline.createInterface({
@@ -181,7 +181,7 @@ async function updateMonthlyCryptoData(){
     let k = 0;
     for await (const symbol of rl) {
         if(i > 4){
-            updateFiveMonthlyCryptoFromAPI(fiveSymbols,k);
+            updateFiveMonthlyCryptoFromAPI(fiveSymbols,k,apiKey);
             k++;
             fiveSymbols = [];
             i = 0;
@@ -189,11 +189,11 @@ async function updateMonthlyCryptoData(){
         fiveSymbols[i] = symbol;
         i++;
     }
-    updateFiveMonthlyCryptoFromAPI(fiveSymbols,k);
+    updateFiveMonthlyCryptoFromAPI(fiveSymbols,k,apiKey);
     
     rl.close()
 }
-async function updateFiveMonthlyCryptoFromAPI(symbols, minutes){
+async function updateFiveMonthlyCryptoFromAPI(symbols, minutes, apiKey){
     //Every 1.5 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {

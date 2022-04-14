@@ -1,4 +1,4 @@
-const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
+const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
