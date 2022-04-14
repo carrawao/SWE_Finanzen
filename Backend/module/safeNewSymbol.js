@@ -1,32 +1,44 @@
 const fs = require('fs');
 
+// Check if the stock symbol is already in the list
+// -> If it is listed nothing happens
+// -> If not it will be written into the file
 const saveShareSymbol = (symbol) => {
-    console.log("A new Share symbol will be saved");
     const path = 'data/shareSymbols.txt';
     
-    const contents = fs.readFileSync(path, 'utf-8');
+    const contents = fs.readFileSync(path, 'utf-8').toString().split("\n");
 
-    if(!contents.includes(symbol)){
+    let exists = false;
+    for (const element of contents) {
+        if(element === symbol){
+            exists = true;
+            break;
+        }
+    }
+    if(!exists){
         fs.writeFile(path, "\n" + symbol, { flag: 'a+' }, err => {})
-        console.log("A new Share symbol is saved");
-    }else{
-        console.log("The Share Symbol already exists");
     }
 }
 
+// Check if the Crypto symbol is already in the list.
+// -> If it is listed nothing happens
+// -> If not it will be written into the file
 const saveCryptoSymbol = (symbol) => {
-    console.log("A new Crypto symbol will be saved");
     const path = 'data/cryptoSymbols.txt';
-    
-    const contents = fs.readFileSync(path, 'utf-8');
 
-    if(!contents.includes(symbol)){
-        fs.writeFile(path, "\n" + symbol, { flag: 'a+' }, err => {})
-        console.log("A new Crypto symbol is saved");
-    }else{
-        console.log("The Crypto Symbol already exists");
+    const contents = fs.readFileSync(path, 'utf-8').toString().split("\n");
+
+    let exists = false;
+    for (const element of contents) {
+        if(element === symbol){
+            exists = true;
+            break;
+        }
     }
-        
+    if(!exists){
+        fs.writeFile(path, "\n" + symbol, { flag: 'a+' }, err => {})
+    }
+           
 }
 
 
