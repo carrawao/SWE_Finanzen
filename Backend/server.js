@@ -13,10 +13,12 @@ const { Console } = require('console');
 
 const args = require('minimist')(process.argv.slice(2))
 
+let accessURL = '';
+
 if(JSON.stringify(args).includes('prod')){
-    const accessURL ='http://swe-bench--market.germanywestcentral.cloudapp.azure.com:3000';
+    accessURL = 'http://swe-bench--market.germanywestcentral.cloudapp.azure.com:3000';
 }else{
-    const accessURL ='http://localhost:3000';
+    accessURL = 'http://localhost:3000';
 }
 
 

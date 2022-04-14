@@ -2,9 +2,9 @@ const updateDataFromAPI = require('../../module/updateGeneralDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
-const userRoutes = (app, fs) => {
+const userRoutes = (app, fs, apiKey, accessURL) => {
 
-    app.get('/companyOverview', (req, res, apiKey, accessURL) => {
+    app.get('/companyOverview', (req, res) => {
       if(req.query.symbol){
         const symbol = req.query.symbol;
         const dataPath = './data/CompanyOverview/companyOverview_' + symbol + '.json';

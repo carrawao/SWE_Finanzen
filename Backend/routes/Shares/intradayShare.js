@@ -2,9 +2,9 @@ const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 
-const userRoutes = (app, fs) => {
+const userRoutes = (app, fs, apiKey, accessURL) => {
     
-    app.get('/intradayShare', (req, res, apiKey, accessURL) => {
+    app.get('/intradayShare', (req, res) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
             const dataPath = './data/Shares/Intraday/intradayShare_' + symbol + '.json';

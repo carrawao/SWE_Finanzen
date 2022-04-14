@@ -1,10 +1,10 @@
-const userRoutes = (app, fs) => {
+const userRoutes = (app, fs, accessURL) => {
     // variables
     const shareDataPath = './data/quotedUSshares.json';
     const cryptoDataPath = './data/quotedCrypto.json';
   
     // READ
-    app.get('/search', (req, res, accessURL) => {
+    app.get('/search', (req, res) => {
         if(req.query.text){
             const searchText = req.query.text;
             const shareRawData = fs.readFileSync(shareDataPath);
