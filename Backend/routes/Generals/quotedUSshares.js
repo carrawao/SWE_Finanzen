@@ -3,12 +3,12 @@ const userRoutes = (app, fs) => {
   const dataPath = './data/quotedUSshares.json';
 
   // READ
-  app.get('/quotedUSshares', (req, res) => {
+  app.get('/quotedUSshares', (req, res, allowedRoute) => {
       fs.readFile(dataPath, 'utf8', (err, data) => {
           if (err) {
               throw err;
           }
-          res.set('Access-Control-AlLow-Origin','http://localhost:3000');
+          res.set('Access-Control-AlLow-Origin', allowedRoute);
           res.send(JSON.parse(data));
       });
   });

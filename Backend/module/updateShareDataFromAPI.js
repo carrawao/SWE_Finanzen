@@ -6,6 +6,7 @@ const readline = require('readline');
 const pathShareSymbol = './data/shareSymbols.txt'
 let url;
 
+
 // Start updating all data:
 // -> Intraday with the first apiKey
 // -> Daily with the secound apiKey
@@ -52,7 +53,7 @@ async function updateIntradayShareData(apiKey) {
     }
 }
 async function updateFiveIntradayShareFromAPI(symbols, minutes, apiKey) {
-    //Every 1.5 Minutes start update 5 Symbols
+    //Every 2 Minutes start update 5 Symbols
     setTimeout(() => {
         for (const symbol of symbols) {
             updateIntradaySeriesShare(symbol, 60, apiKey);

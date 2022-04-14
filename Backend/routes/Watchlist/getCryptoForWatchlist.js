@@ -4,7 +4,7 @@ const safeNewSymbol = require('../../module/safeNewSymbol');
 
 const userRoutes = (app, fs) => {
 
-    app.get('/getCryptoForWatchlist', (req, res, apiKey) => {
+    app.get('/getCryptoForWatchlist', (req, res, apiKey, allowedRoute) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
             const dataPathDailyShare = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
@@ -63,7 +63,7 @@ const userRoutes = (app, fs) => {
                 
                 const back = { "name": name, "symbol": symbol, "value": value, "percentChange": change };
                 
-                res.set('Access-Control-AlLow-Origin','http://localhost:3000');
+                res.set('Access-Control-AlLow-Origin', allowedRoute);
                 res.send(JSON.parse(JSON.stringify(back)));
             }
 

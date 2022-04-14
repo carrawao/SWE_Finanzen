@@ -19,30 +19,30 @@ const search = require('./Generals/search');
 const getShareForWatchlist = require('./Watchlist/getShareForWatchlist');
 const getCryptoForWatchlist = require('./Watchlist/getCryptoForWatchlist');
 
-const appRouter = (app, fs, apiKeys) => {
+const appRouter = (app, fs, apiKeys, allowedRoutes) => {
   app.get('/', (req, res) => {
     res.send('welcome to the api-server');
   });
   //Shares
-  dailyShareRoute(app, fs, apiKeys[0]);
-  intradayShareRoute(app, fs, apiKeys[0]);
-  monthlyShareRoute(app, fs, apiKeys[0]);
-  weeklyShareRoute(app, fs, apiKeys[0]);
+  dailyShareRoute(app, fs, apiKeys[0], allowedRoutes);
+  intradayShareRoute(app, fs, apiKeys[0], allowedRoutes);
+  monthlyShareRoute(app, fs, apiKeys[0], allowedRoutes);
+  weeklyShareRoute(app, fs, apiKeys[0], allowedRoutes);
 
   //Crypto
-  dailyCryptoRoute(app, fs, apiKeys[0]);
-  intradayCryptoRoute(app, fs, apiKeys[0]);
-  monthlyCryptoRoute(app, fs, apiKeys[0]);
-  weeklyCryptoRoute(app, fs, apiKeys[0]);
+  dailyCryptoRoute(app, fs, apiKeys[0], allowedRoutes);
+  intradayCryptoRoute(app, fs, apiKeys[0], allowedRoutes);
+  monthlyCryptoRoute(app, fs, apiKeys[0], allowedRoutes);
+  weeklyCryptoRoute(app, fs, apiKeys[0], allowedRoutes);
   
   //Allgemein
-  quotedUSshares(app, fs, apiKeys[0]);
-  companyOverviewRoute(app, fs, apiKeys[1]);
-  search(app, fs);
+  quotedUSshares(app, fs, allowedRoutes);
+  companyOverviewRoute(app, fs, apiKeys[1], allowedRoutes);
+  search(app, fs, allowedRoutes);
 
   //Watchlist
-  getShareForWatchlist(app,fs,apiKeys[0]);
-  getCryptoForWatchlist(app,fs,apiKeys[0]);
+  getShareForWatchlist(app,fs,apiKeys[0], allowedRoutes);
+  getCryptoForWatchlist(app,fs,apiKeys[0], allowedRoutes);
 };
 
 module.exports = appRouter;

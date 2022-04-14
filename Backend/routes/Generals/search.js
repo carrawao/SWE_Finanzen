@@ -4,7 +4,7 @@ const userRoutes = (app, fs) => {
     const cryptoDataPath = './data/quotedCrypto.json';
   
     // READ
-    app.get('/search', (req, res) => {
+    app.get('/search', (req, res, allowedRoute) => {
         if(req.query.text){
             const searchText = req.query.text;
             const shareRawData = fs.readFileSync(shareDataPath);
@@ -22,7 +22,7 @@ const userRoutes = (app, fs) => {
             });
 
             let result = [...shareArrFound, ...cryptoArrFound];
-            res.set('Access-Control-AlLow-Origin','http://localhost:3000');
+            res.set('Access-Control-AlLow-Origin', allowedRoute);
             res.send(result);
             return;
         }

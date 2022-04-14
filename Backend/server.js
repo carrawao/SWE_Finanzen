@@ -5,6 +5,15 @@ const app = express();
 const schedule = require('node-schedule');
 const readline = require('readline');
 
+var argv = require('minimist')(process.argv.slice(2));
+
+
+if(JSON.stringify(argv).includes('prod')){
+    const allowRequestUrl ='market.germanywestcentral.cloudapp.azure.com:3000';
+}else{
+    const allowRequestUrl = 'http://localhost:3000';
+}
+
 
 const updateShare = require('./module/updateShareDataFromAPI');
 const updateCrypto = require('./module/updateCryptoDataFromAPI');
@@ -25,7 +34,7 @@ const currencyAPIKey = '8M63hm29skLS4WL2ET8NX3rua6ZMalqUZFy09CMx';
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const routes = require('./routes/routes.js')(app, fs, apiKeys);
+const routes = require('./routes/routes.js')(app, fs, apiKeys, allowRequestUrl);
 
 const PORT = 3001;
 const HOST = '0.0.0.0';
