@@ -4,6 +4,8 @@ import WatchListsScreen from '../WatchListsScreen';
 import { BrowserRouter } from 'react-router-dom';
 
 const addWatchlist = () => {
+    const [watchlist, setWatchlist] = useState(undefined);
+    
     if (watchlist !== undefined && watchlist !== '') {
       props.setWatchListsArray([...props.watchListsArray, watchlist]);
       props.setAssetsListArray([...props.assetsListArray, []])
