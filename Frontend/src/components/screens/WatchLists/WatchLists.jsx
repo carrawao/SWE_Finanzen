@@ -8,7 +8,13 @@ import {
   List,
   Typography,
   Stack,
-  IconButton
+  IconButton,
+  AvatarGroup,
+  Avatar,
+  FormControl,
+  InputLabel,
+  Select,
+  Button, TextField
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -45,10 +51,8 @@ const WatchLists = (props) => {
   }
 
   const onTextChange = data => {
-    if (addListModal || editListModal) {
-      setWatchlist(data.target.value);
-      data.target.value === '' ? setErrorModal(true) : setErrorModal(false);
-    }
+    setWatchlist(data.target.value);
+    data.target.value === '' ? setErrorModal(true) : setErrorModal(false);
   }
 
   const addWatchlist = () => {
@@ -97,10 +101,44 @@ const WatchLists = (props) => {
     }
   };
 
-  return (
-    <Container className='ps-2 px-xl-0 col-12'>
+  return props.watchListsArray.length === 0 ? (
+    <Container className='d-flex col-10 pe-md-1 justify-content-center'>
+      <FormControl
+        className='d-flex flex-grow-1 p-3 mx-sm-5 mx-md-0'
+        sx={{
+          border: '1px solid ',
+          borderRadius: '0.5rem'
+        }}
+      >
+        <TextField
+          id='outlined-basic'
+          variant='outlined'
+          className='d-flex pb-3'
+          label='Create Watchlist'
+          error={errorModal}
+          helperText={errorModal ? '*Name cannot be empty' : false}
+          onChange={(event) => onTextChange(event)}
+        />
+        <Button
+          className='d-flex'
+          variant='outlined'
+          onClick={() => addWatchlist()}
+          sx={{
+            color: 'white',
+            fontWeight: 'bold',
+            backgroundColor: 'rgb(78 185 111)',
+            '&:hover': {
+              backgroundColor: 'rgb(78 185 111)',
+            }
+          }}
+        >
+          Add
+        </Button>
+      </FormControl>
+    </Container>) : (
+    <Container className='d-flex flex-column ps-2 px-xl-0 col-12'>
       <Stack
-        className='d-none d-lg-flex'
+        className='d-none mb-3 d-md-flex'
         direction='row'
         alignItems='center'
       >
@@ -116,9 +154,10 @@ const WatchLists = (props) => {
       </Stack>
 
       <CustomSelectField
-        className='d-flex d-lg-none col-12 col-lg-8 my-3'
+        className='d-flex d-md-none col-12 col-lg-8 my-3'
         watchListsArray={props.watchListsArray}
         selectedListIndex={props.selectedListIndex}
+        assetsListArray={props.assetsListArray}
         setSelectedListIndex={index => props.setSelectedListIndex(index)}
         setListDropdownIndex={setListDropdownIndex}
         functionOptions={[
@@ -128,27 +167,118 @@ const WatchLists = (props) => {
         setAddListModal={() => setAddListModal(true)}
       />
 
-      <Box className='d-none d-lg-flex'>
-        <List>
+      <Box className='d-none d-md-flex'>
+        <List
+          className='p-0 col-12'
+          sx={{
+            paddingBottom: '10px',
+            '& ul': {paddingTop: 0, paddingBottom: 0},
+            '&& .MuiMenuItem-root': {
+              '&.Mui-selected': {
+                color: 'white',
+                backgroundColor: 'rgb(73, 63, 53)'
+            }},
+            '&& .Mui-selected': {
+              color: 'white',
+              backgroundColor: 'rgb(73, 63, 53)'
+            }
+        }}
+        >
           {props.watchListsArray.map((element, index) => (
             <ListItem
-              className='p-0 mb-3'
+              className='mb-3'
               key={index}
               sx={{
-                border: '2px solid #493f35',
-                backgroundColor: `${index === props.selectedListIndex ? '#493f35' : 'white'}`
+                borderTop: '1px solid lightgrey',
+                borderLeft: `${index === props.selectedListIndex ? '1px solid #493f35' : '1px solid lightgrey'}`,
+                borderRight: '1px solid lightgrey',
+                borderBottom: '1px solid lightgrey',
+                borderRadius: '0.5rem',
+                backgroundColor: `${index === props.selectedListIndex ? '#493f35' : 'white'}`,
+                borderLeftColor: `${index === props.selectedListIndex && '#493f35'}`,
+                boxShadow: `${index === props.selectedListIndex && '0 6px 6px -6px rgb(0 0 0 / 30%)'}`
               }}
             >
               <ListItemButton
-                className='py-0'
+                className='py-2 px-1 col-10'
                 selected={props.selectedListIndex === index}
                 onClick={event => handleWatchListItemClick(event, index)}
 
               >
                 <ListItemText
-                  className='text-start'
-                  primary={element}
-                  sx={{color: props.selectedListIndex === index ? 'white' : '#493f35'}}/>
+                  className='text-start pe-1'
+                  disableTypography
+                  primary={
+                    <Typography
+                      type='body2' noWrap
+                      sx={{
+                        color: `${index === props.selectedListIndex ? 'white' : '#493f35'}`,
+                        fontWeight: props.selectedListIndex === index && 'bold',
+                        fontSize: {
+                          xl: '20px',
+                          lg: '16px'
+                        }
+                      }}
+                    >
+                      {element}
+                    </Typography>
+                  }
+                  sx={{
+                  }}
+                />
+                <AvatarGroup
+                  spacing={5}
+                  appearance='stack'
+                >
+                  {props.assetsListArray[index][0] && <Avatar
+                    alt={`${props.assetsListArray[index][0].name}`}
+                    sx={{
+                      backgroundColor: 'rgb(59 151 210)',
+                      width: {
+                        md: '1.2rem',
+                        xl: '1.5rem'
+                      },
+                      height: {
+                        md: '1.2rem',
+                        xl: '1.5rem'
+                      },
+                    }}
+                  >
+                    ${props.assetsListArray[index][0].name}
+                  </Avatar>}
+                  {props.assetsListArray[index][1] && <Avatar
+                    alt={`${props.assetsListArray[index][1].name}`}
+                    sx={{
+                      backgroundColor: 'rgb(78 185 111)',
+                      width: {
+                        md: '1.2rem',
+                        xl: '1.5rem'
+                      },
+                      height: {
+                        md: '1.2rem',
+                        xl: '1.5rem'
+                      },
+                    }}
+                  >
+                    ${props.assetsListArray[index][1].name}
+                  </Avatar>}
+                  {props.assetsListArray[index][2] && <Avatar
+                    alt={`${props.assetsListArray[index][2].name}`}
+                    sx={{
+                      backgroundColor: 'rgb(228 126 37)',
+                      width: {
+                        md: '1.2rem',
+                        xl: '1.5rem'
+                      },
+                      height: {
+                        md: '1.2rem',
+                        xl: '1.5rem'
+                      },
+                    }}
+                  >
+                    ${props.assetsListArray[index][2].name}
+                  </Avatar>}
+                </AvatarGroup>
               </ListItemButton>
               {props.watchListsArray.length > 0 && (
                 <DropdownMenu

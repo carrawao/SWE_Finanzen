@@ -32,7 +32,7 @@ const CustomModal = (props) => {
             onClick={() => props.handleClose()}
             className='px-0 py-1 align-self-start'
           >
-            <CloseIcon style={{color: '#493f35'}}/>
+            <CloseIcon style={{color: 'rgb(228 126 37)'}}/>
           </IconButton>
         </Container>
 
@@ -59,7 +59,8 @@ const style = {
   flexDirection: 'column',
   justifyContent: 'space-between',
   backgroundColor: 'background.paper',
-  border: '2px solid #000',
+  border: '2px solid white',
+  borderRadius: '0.5rem',
   boxShadow: 24,
   padding: '1.5rem'
 };
