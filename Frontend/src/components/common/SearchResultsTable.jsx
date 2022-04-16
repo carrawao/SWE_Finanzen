@@ -25,8 +25,8 @@ const SearchResultsTable = (props) => {
   }
 
   return (
-    <Grid item className='d-flex flex-column justify-content-center align-items-center flex-lg-grow-1 px-xl-5'>
-      <List className='d-flex flex-column col-12 col-sm-11 col-md-10 col-lg-9 col-xl-11'>
+    <Grid item className='d-flex flex-column justify-content-center align-items-center flex-grow-1 px-xl-5'>
+      <List className='d-flex flex-column col-12 col-sm-10 col-lg-9 col-xl-11'>
         {props.searchResult.map((element, index) => {
           let isAssetInWatchList = checkAssetInWatchLists(element);
           return (
@@ -34,15 +34,19 @@ const SearchResultsTable = (props) => {
               className='col-12 py-2 px-1'
               key={`search_${index}`}
               sx={{
-                borderTop: index === 0 ? '2px solid #493f35' : '1px solid #493f35',
-                borderLeft: '2px solid #493f35',
-                borderRight: '2px solid #493f35',
-                borderBottom: index === props.searchResult.length - 1 ? '2px solid #493f35' : '1px solid #493f35',
+                borderTop: '1px lightgrey',
+                borderLeft: '4px solid rgb(0, 0, 0, .1)',
+                borderRight: '4px solid rgb(0, 0, 0, .1)',
+                borderBottom: '1px solid lightgrey',
                 borderTopLeftRadius: index === 0 && '15px',
                 borderTopRightRadius: index === 0 && '15px',
                 borderBottomLeftRadius: index === props.searchResult.length - 1 && '15px',
                 borderBottomRightRadius: index === props.searchResult.length - 1 && '15px',
-                backgroundColor: `${index === props.selectedListIndex ? '#493f35' : 'white'}`
+                backgroundColor: `${index === props.selectedListIndex ? '#493f35' : 'white'}`,
+                boxShadow: index === 0 ?
+                  'rgb(0 0 0 / 15%) 0px -6px 6px -6px' :
+                  index === props.searchResult.length - 1 ?
+                    '0 6px 6px -6px rgb(0 0 0 / 30%)' : '',
               }}
             >
               <Grid container direction='row' alignItems='center'>
@@ -65,7 +69,7 @@ const SearchResultsTable = (props) => {
                   />
                 </Grid>
 
-                <Grid item className='d-flex flex-column flex-xl-row col-6 col-sm-8 pe-sm-3 ps-lg-0'>
+                <Grid item className='d-flex flex-column flex-xl-row col-6 col-sm-7 pe-sm-3 ps-lg-0'>
                   <Typography
                     className='col-12 col-xl-9 me-md-5'
                     noWrap
@@ -139,9 +143,10 @@ const SearchResultsTable = (props) => {
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          borderColor: 'rgb(228 126 37)',
+          backgroundColor: 'rgb(228 126 37)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(228 126 37)',
           }
         }}
       >

@@ -16,9 +16,10 @@ export const renderRemoveAssetModal = (open, handleClose, onClick ) => (
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          borderColor: 'rgb(228 126 37)',
+          backgroundColor: 'rgb(228 126 37)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(228 126 37)',
           }
         }}
       >
@@ -53,9 +54,9 @@ export const renderAddAssetModal = (open, handleClose, errorModal, onChange, onC
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          backgroundColor: 'rgb(78 185 111)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(78 185 111)',
           }
         }}
       >
