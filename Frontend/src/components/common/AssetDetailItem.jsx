@@ -33,7 +33,7 @@ const AssetDetailItem  = (props) => (
     }}
   >
     <Link className='col-12 text-decoration-none text-black' to={`${props.row.name ? `/watchlists/${props.row.name}` : ''}`}>
-      <Container className='d-flex flex-row col-12 py-3 ps-2 pe-3'>
+      <Container className='d-flex flex-row col-12 py-3 px-3'>
         <Container className='d-flex flex-row p-0 align-items-center'>
           {props.activities && <Box className='d-flex flex-column mt-2 col-2 col-sm-1 me-2'>
             <Typography
