@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-const AllocationGraph = (props: { portfolioData: Array<T>; activePortfolio: string | number; }) => {
+/**
+ * Shows the allocation of the portfolio
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+
+const AllocationGraph = (props) => {
   
   ChartJS.register(ArcElement, Tooltip, Legend);
-
-  const shares = props.portfolioData[props.activePortfolio]["shares"];
   
   const data = {
     labels: ['Allianz', 'MSCI World', 'MSCI Emerging Markets'],
@@ -48,8 +53,8 @@ const AllocationGraph = (props: { portfolioData: Array<T>; activePortfolio: stri
 }
 
 AllocationGraph.propTypes = {
-  activePortfolio: PropTypes.array,
-  portfolioData: PropTypes.array,
+  activePortfolio: PropTypes.string,
+  portfolioData: PropTypes.object,
 };
 
 export default AllocationGraph;

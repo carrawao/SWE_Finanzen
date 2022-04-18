@@ -10,37 +10,6 @@ import PortfolioOverview from './PortfolioOverview';
 const DashboardScreen = (props) => {
     const [searchResult, setSearchResult] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-
-    const updatedDate = new Date(props.portfolioData[props.activePortfolio]["updated"]);
-    const updated = "" + updatedDate.getDay() + updatedDate.getMonth() + updatedDate.getFullYear();
-    const todayDate = new Date();
-    const today = "" + todayDate.getDay() + todayDate.getMonth() + todayDate.getFullYear();
-
-    if (updated !== today) {
-      updatePortfolioData();
-    }
-
-    const updatePortfolioData = async () => {
-      const shares = props.portfolioData[props.activePortfolio]["shares"];
-      shares.forEach((share, index) => {
-        symbol = share["symbol"];
-        try {
-          return await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'})
-            .then(response => response.json())
-            .then(data => {
-              let tempData = {...props.portfolioData};
-              let updatedShare = {...share,
-                "value": `${Number.parseFloat(data.value).toFixed(2)*share["quantity"]}`
-              }
-              tempData[props.activePortfolio]["shares"][index] = updatedShare;
-              props.setPortfolioData(tempData);
-            });
-        }
-        catch (e) {
-          console.log('fetching failed === ', e);
-        }
-      });
-    };
     
     const renderHeader = () => (
         <SearchField
@@ -60,7 +29,7 @@ const DashboardScreen = (props) => {
         <Grid item className='col-12 col-lg-3' xs={4}>
           <AllocationGraph
             portfolioData={props.portfolioData}
-            activePortfolio={props.portfolioData}
+            activePortfolio={props.activePortfolio}
           />
         </Grid>
         <Grid item className='col-12 col-lg-3' xs={8}>
@@ -69,10 +38,14 @@ const DashboardScreen = (props) => {
         </Grid>
         <Grid item className='col-12 col-lg-3' xs={6}>
           <AllocationGraph
+            portfolioData={props.portfolioData}
+            activePortfolio={props.activePortfolio}
           />
         </Grid>
         <Grid item className='col-12 col-lg-3' xs={6}>
           <AllocationGraph
+            portfolioData={props.portfolioData}
+            activePortfolio={props.activePortfolio}
           />
         </Grid>
       </Grid>
