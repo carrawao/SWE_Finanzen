@@ -27,9 +27,9 @@ export const renderAddWatchlistModal = (open, handleClose, errorModal, onChange,
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          backgroundColor: 'rgb(78 185 111)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(78 185 111)',
           }
         }}
       >
@@ -66,9 +66,9 @@ export const renderEditListModal = (open, handleClose, errorModal, onChange, def
           sx={{
             color: 'white',
             width: '5rem',
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(78 185 111)',
             '&:hover': {
-              backgroundColor: '#493f35',
+              backgroundColor: 'rgb(78 185 111)',
             }
           }}
         >
@@ -93,9 +93,10 @@ export const renderRemoveListModal = (open, handleClose, onClick) => (
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          borderColor: 'rgb(228 126 37)',
+          backgroundColor: 'rgb(228 126 37)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(228 126 37)',
           }
         }}
       >
@@ -161,9 +162,9 @@ export const renderAddToWatchlistModal = (open, handleClose, watchListsArray, se
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          backgroundColor: 'rgb(78 185 111)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(78 185 111)',
           }
         }}
       >

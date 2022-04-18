@@ -158,17 +158,15 @@ const ActivitiesScreen = (props) => {
   );
 
   const renderBody = () => (
-    <Grid className='d-lg-flex flex-lg-row justify-content-lg-around px-lg-2 px-xl-5 justify-content-center pt-2'>
-      <React.Fragment>
-        <Container className='px-1 px-sm-3 px-md-5 px-lg-2 pe-xl-3'>
-          <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
-          <ActivitiesList
-            activePortfolio={props.activePortfolio}
-            portfolioData={props.portfolioData}
-            setPortfolioData={props.setPortfolioData}
-          ></ActivitiesList>
-        </Container>
-      </React.Fragment>
+    <Grid className='d-flex justify-content-center pt-2'>
+      <Container className='p-0'>
+        <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
+        <ActivitiesList
+          activePortfolio={props.activePortfolio}
+          portfolioData={props.portfolioData}
+          setPortfolioData={props.setPortfolioData}
+        />
+      </Container>
     </Grid>
   );
 

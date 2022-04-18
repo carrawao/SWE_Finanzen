@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
-import {CustomTable} from '../../common/index';
+import AssetListItem from './AssetListItem';
 import {renderRemoveAssetModal, renderAddAssetModal} from './Modals/assetModals';
 
 /**
@@ -55,10 +55,74 @@ const AssetsList = (props) => {
     }
   };
 
-  return props.watchListsArray.length > 0 && (
-    <Container className='px-1 px-sm-3 px-md-5 px-lg-2 pe-xl-3'>
+  return props.watchListsArray.length === 0 ? (
+    <Container className='mt-4 mt-md-0 px-3 px-sm-5 justify-content-center'>
+      <Typography
+        variant='h6'
+        fontWeight='bold'
+        fontSize={{
+          lg: 24,
+          xs: 18
+        }}
+      >
+        Start off by creating a Watchlist
+      </Typography>
+      <Typography
+        className='mt-2'
+        fontSize={{
+          lg: 20,
+          xs: 16
+        }}
+      >
+        With watchlists you can keep an eye on assets before you make any buying decisions.
+      </Typography>
+      <Typography
+        className='mt-2'
+        fontSize={{
+          lg: 20,
+          xs: 16
+        }}
+      >
+        Group different assets into watchlists like your top 5 US stocks or 10 sustainable ETFs.
+        Create your first watchlist by adding a name on the above form and add later the assets you desire to follow.
+      </Typography>
+    </Container>
+    ) : props.assetsListArray[props.selectedListIndex].length === 0 ? (
+      <Container className='mt-4 mt-md-0 px-3 px-sm-4 justify-content-center'>
+        <Typography
+          variant='h6'
+          fontWeight='bold'
+          fontSize={{
+            lg: 24,
+            xs: 18
+          }}
+        >
+          Continue by adding an Asset to the Watchlist
+        </Typography>
+        <Typography
+          className='mt-2'
+          fontSize={{
+            lg: 20,
+            xs: 16
+          }}
+        >
+          In order to find an asset please type in its name or acronym on the search field above. The search will be limited to 10 assets per attempt,
+          so keep typing until the desired one is on the screen.
+        </Typography>
+        <Typography
+          className='mt-2'
+          fontSize={{
+            lg: 20,
+            xs: 16
+          }}
+        >
+          Once the wanted asset shows up in the list, please click the "bookmark" icon and select the Watchlist you wish to add it to.
+        </Typography>
+      </Container>
+    ) : (
+    <Container className='px-1 px-sm-3 px-md-3 px-lg-2 pe-xl-3'>
       <Stack
-        className='d-none d-lg-flex mb-3 justify-content-between'
+        className='d-none d-md-flex mb-3 justify-content-between'
         direction='row'
         alignItems='center'
         gap={1}
@@ -74,7 +138,7 @@ const AssetsList = (props) => {
         </IconButton>
       </Stack>
 
-      <Container className='d-flex d-lg-none col-12 justify-content-end pe-2'>
+      <Container className='d-flex d-md-none col-12 justify-content-end pe-2'>
         <IconButton
           onClick={() => setShowAssetModal(true)}
           className='pe-0'
@@ -83,7 +147,7 @@ const AssetsList = (props) => {
         </IconButton>
       </Container>
 
-      <CustomTable
+      <AssetListItem
         assetsListArray={props.assetsListArray}
         selectedListIndex={props.selectedListIndex}
         watchListsArray={props.watchListsArray}
