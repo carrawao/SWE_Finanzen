@@ -1,7 +1,6 @@
 const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
-
 const userRoutes = (app, fs, apiKey, accessURL) => {
 
     app.get('/getShareForWatchlist', (req, res) => {
@@ -32,21 +31,9 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                 const dailyJson_data = JSON.parse(rawDailyData);  
                 const quotedUSsharesData = JSON.parse(rawQuotedUSshares);
 
-                let dayOne = new Date();
-                dayOne.setDate(dayOne.getDate() - 1);
-                    
-                let dayOneSearchText = dayOne.getFullYear() + '-';
-                    
-                if((dayOne.getMonth() + 1) < 10){
-                    dayOneSearchText = dayOneSearchText + '0' + (dayOne.getMonth() + 1) + '-';
-                }else{
-                    dayOneSearchText = dayOneSearchText + (dayOne.getMonth() + 1) + '-';
-                }
-                if(dayOne.getDate() < 10){
-                    dayOneSearchText = dayOneSearchText + '0' + dayOne.getDate();
-                }else{
-                    dayOneSearchText = dayOneSearchText + dayOne.getDate();
-                }
+
+                let keys = Object.keys(dailyJson_data['Time Series (Daily)']);
+                dayOneSearchText = keys[0];
 
                 let openValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['1. open'];
                 let closeValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['4. close'];
