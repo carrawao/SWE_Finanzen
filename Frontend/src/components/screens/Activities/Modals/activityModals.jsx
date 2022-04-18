@@ -16,9 +16,9 @@ export const renderRemoveActivityModal = (open, handleClose, onClick ) => (
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          backgroundColor: 'rgb(228 126 37)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(228 126 37)',
           }
         }}
       >
@@ -53,9 +53,9 @@ export const renderAddActivityModal = (open, handleClose, errorModal, onChange, 
         sx={{
           color: 'white',
           width: '5rem',
-          backgroundColor: '#493f35',
+          backgroundColor: 'rgb(78 185 111)',
           '&:hover': {
-            backgroundColor: '#493f35',
+            backgroundColor: 'rgb(78 185 111)',
           }
         }}
       >

@@ -32,7 +32,7 @@ const WatchListsScreen = (props) => {
   );
 
   const renderBody = () => (
-    <Grid className='d-lg-flex flex-lg-row justify-content-lg-around px-lg-2 px-xl-5 justify-content-center pt-2'>
+    <Grid className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
       {searchResult.length > 0 ?
         <SearchResultsTable
           searchResult={searchResult}
@@ -48,7 +48,7 @@ const WatchListsScreen = (props) => {
           }}
         /> :
       <React.Fragment>
-        <Grid item className='col-12 col-lg-3 col-xl-3'>
+        <Grid item className='col-12 col-md-5 col-xl-3'>
           <WatchLists
             watchListsArray={props.watchListsArray}
             setWatchListsArray={props.setWatchListsArray}
@@ -58,7 +58,7 @@ const WatchListsScreen = (props) => {
             setSelectedListIndex={setSelectedListIndex}
           />
         </Grid>
-        <Grid item className='col-12 col-lg-9 col-xl-8 pt-0'>
+        <Grid item className='col-12 col-md-7 col-xl-9 pt-0'>
           <AssetsList
             watchListsArray={props.watchListsArray}
             setWatchListsArray={props.setWatchListsArray}
