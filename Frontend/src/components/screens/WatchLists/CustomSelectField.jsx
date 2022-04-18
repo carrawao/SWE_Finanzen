@@ -26,7 +26,7 @@ const CustomSelectField = props => {
   };
 
   return (
-    <Grid className='d-flex flex-row align-items-center d-lg-none col-12'>
+    <Grid className='d-flex flex-row align-items-center d-md-none col-12'>
       <Grid item className='d-flex col-5 col-sm-4 col-md-3'>
       <FormControl
         className={props.className}
@@ -77,7 +77,7 @@ const CustomSelectField = props => {
       </FormControl>
       </Grid>
 
-      <Grid item className='col-3 justify-content-start'>
+      <Grid item className='col-3 ps-3 justify-content-start'>
         <DropdownMenu
           selectedListIndex={props.selectedListIndex}
           listName={props.watchListsArray[props.selectedListIndex]}
@@ -95,6 +95,7 @@ CustomSelectField.propTypes = {
   watchListsArray: PropTypes.array,
   selectedListIndex: PropTypes.number,
   setSelectedListIndex: PropTypes.func,
+  assetsListArray: PropTypes.array,
   className: PropTypes.string,
   setListDropdownIndex: PropTypes.func,
   functionOptions: PropTypes.array,
