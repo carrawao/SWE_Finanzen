@@ -107,19 +107,24 @@ const ActivitiesScreen = (props) => {
     const shares = [
       {
         "symbol": "IBM",
+        "name": "IBM",
+        "value": 20,
         "quantity": 2
       }
     ];
     const crypto = [
       {
         "symbol": "BTC",
+        "name": "Bitcoin",
+        "value": 2000,
         "quantity": 2
       }
     ];
     const cash = [
       {
         "symbol": "ING",
-        "quantity": 900 
+        "name": "ING Konto",
+        "value": 900
       }
     ];
     props.setPortfolioData(prevData => {
@@ -128,6 +133,7 @@ const ActivitiesScreen = (props) => {
       portfolioData[props.activePortfolio]["shares"]= shares;
       portfolioData[props.activePortfolio]["crypto"]= crypto;
       portfolioData[props.activePortfolio]["cash"]= cash;
+      portfolioData[props.activePortfolio]["updated"]= "1970-01-01";
       return portfolioData;
     });
     console.log(props.portfolioData); 
@@ -184,9 +190,9 @@ const ActivitiesScreen = (props) => {
   );
 }
 
-ScreensTemplate.propTypes = {
-  activePortfolio: PropTypes.array,
-  portfolioData: PropTypes.array,
+ActivitiesScreen.propTypes = {
+  activePortfolio: PropTypes.string,
+  portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
 };
 

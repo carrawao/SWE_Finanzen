@@ -23,7 +23,7 @@ const emptyPortfolioData = {
     "crypto": [],
     "cash": [],
     "activities": [],
-    "updated": "timestamp"
+    "updated": "1970-01-01"
   },
 };
 
