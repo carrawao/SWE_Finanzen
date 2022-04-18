@@ -1,3 +1,4 @@
+import { getValue } from '@testing-library/user-event/dist/utils';
 import React, {lazy, useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 
@@ -26,9 +27,6 @@ const emptyPortfolioData = {
     "updated": "1970-01-01"
   },
 };
-
-
-    
 
 /**
  * Get value from key in local storage
@@ -70,44 +68,74 @@ const AppRoutes = () => {
   }, [watchListsArray, assetsListArray, portfolioData, activePortfolio]);
 
   const updatePortfolioData = async () => {
-    const updatedShares = getUpdatedAssetData("shares");
-    
+    const updatedShares = await getUpdatedAssetData("shares");
+    const updatedCrypto = await getUpdatedAssetData("crypto");
+    const value = getValue(updatedShares, updatedCrypto, portfolioData[activePortfolio]["cash"]);
     const todayDate = new Date();
     const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth()+1}-${todayDate.getDate()}`;
 
     setPortfolioData(prevPortfolioData => {
-      const portfolioData = {...prevPortfolioData};
-      portfolioData[activePortfolio]["shares"] = updatedShares;
-      portfolioData[activePortfolio]["updated"] = todayString;
+      let portfolioData = {...prevPortfolioData}
+      portfolioData[activePortfolio] = {...portfolioData[activePortfolio],
+        shares: updatedShares,
+        crypto: updatedCrypto,
+        value: value,
+        updated: todayString
+      };
       return portfolioData;
     });
+    
   };
 
   const getUpdatedAssetData = async (assettype) => {
-    const updatedAssets = await (async () => {
-      const assets = portfolioData[activePortfolio][assettype];
-      let updatedAssets = [...assets];
-      assets.forEach(async (asset, index) => {
+    const updatedAssets = (async () => {
+      let updatedAssets = portfolioData[activePortfolio][assettype];
+      await Promise.all(updatedAssets.map(async (asset, index) => {
         const symbol = asset["symbol"];
-        try {
-          await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'})
-            .then(response => response.json())
-            .then(data => {
-              updatedAssets[index] =
-                  {
-                    ...asset,
-                    name: data.name ? data.name : symbol,
-                    value: `${Number.parseFloat(data.value).toFixed(2)}`
-                  }
-              });
+        let data;
+        assettype === "shares" ? data = await getShareData(symbol) : data = await getCryptoData(symbol);
+        updatedAssets[index] = {...asset, 
+          name: data.name ? data.name : symbol,
+          value: `${Number.parseFloat(data.value).toFixed(2)}`
         }
-        catch (e) {
-          console.log('fetching failed === ', e);
-        }
-      })
+      }))
       return updatedAssets;
-    })
+    })();
     return updatedAssets;
+  }
+
+  const getShareData = async (symbol) => {
+    try {
+      let response = await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      return await response.json();
+    }
+    catch (e) {
+      console.log('fetching failed === ', e);
+    }
+  }
+
+  const getCryptoData = async (symbol) => {
+    try {
+      let response = await fetch(`http://localhost:3001/getCryptoForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      return await response.json();
+    }
+    catch (e) {
+      console.log('fetching failed === ', e);
+    }
+  }
+
+  const getValue = (shares, crypto, cash) => {
+    let value = 0;
+    shares.forEach(share => {
+      value = value + share["value"]*share["quantity"];
+    });
+    crypto.forEach(coin => {
+      value = value + coin["value"]*coin["quantity"];
+    });
+    cash.forEach(account => {
+      value = value + account["value"];
+    });
+    return value;
   }
 
   const updatedDate = new Date(portfolioData[activePortfolio]["updated"]);
