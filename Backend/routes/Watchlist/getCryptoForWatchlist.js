@@ -32,24 +32,21 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                 const dailyJson_data = JSON.parse(rawDailyData);  
                 const quotedUScryptosData = JSON.parse(rawQuotedUScryptos);
 
-                // let dayOne = new Date();
-                // dayOne.setDate(dayOne.getDate() - 1);
+                let dayOne = new Date();
+                dayOne.setDate(dayOne.getDate() - 1);
                     
-                // let dayOneSearchText = dayOne.getFullYear() + '-';
+                let dayOneSearchText = dayOne.getFullYear() + '-';
                     
-                // if((dayOne.getMonth() + 1) < 10){
-                //     dayOneSearchText = dayOneSearchText + '0' + (dayOne.getMonth() + 1) + '-';
-                // }else{
-                //     dayOneSearchText = dayOneSearchText + (dayOne.getMonth() + 1) + '-';
-                // }
-                // if(dayOne.getDate() < 10){
-                //     dayOneSearchText = dayOneSearchText + '0' + dayOne.getDate();
-                // }else{
-                //     dayOneSearchText = dayOneSearchText + dayOne.getDate();
-                // }
-
-                keys = dailyJson_data['Time Series (Digital Currency Daily)'].getKeys();
-                dayOneSearchText = keys[0];
+                if((dayOne.getMonth() + 1) < 10){
+                    dayOneSearchText = dayOneSearchText + '0' + (dayOne.getMonth() + 1) + '-';
+                }else{
+                    dayOneSearchText = dayOneSearchText + (dayOne.getMonth() + 1) + '-';
+                }
+                if(dayOne.getDate() < 10){
+                    dayOneSearchText = dayOneSearchText + '0' + dayOne.getDate();
+                }else{
+                    dayOneSearchText = dayOneSearchText + dayOne.getDate();
+                }
 
                 let openValue = dailyJson_data['Time Series (Digital Currency Daily)'][dayOneSearchText]['1a. open (EUR)'];
                 let closeValue = dailyJson_data['Time Series (Digital Currency Daily)'][dayOneSearchText]['4a. close (EUR)'];
