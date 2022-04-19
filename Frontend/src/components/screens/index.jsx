@@ -4,6 +4,7 @@ import ActivitiesScreen from './Activities/ActivitiesScreen';
 import WatchListsScreen from './WatchLists/WatchListsScreen';
 import SettingsScreen from './Settings/SettingsScreen';
 import AssetDetailsScreen from './AssetDetails/AssetDetailsScreen';
+import AnalysisScreen from './Analysis/AnalysisScreen';
 
 export {
   Home,
@@ -11,5 +12,6 @@ export {
   ActivitiesScreen,
   WatchListsScreen,
   SettingsScreen,
-  AssetDetailsScreen
+  AssetDetailsScreen,
+  AnalysisScreen
 }
