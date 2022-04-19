@@ -18,12 +18,32 @@ const AnalysisList = () => {
             {
                 "assettype": "share", //,crypto oder cash
                 "asset": "IBM", //symbol des assets
-                "percantage": "20"
+                "percantage": "32"
             },
             {
                 "assettype": "share", //,crypto oder cash
                 "asset": "APL", //symbol des assets
                 "percantage": "20"
+            },
+            {
+                "assettype": "share", //,crypto oder cash
+                "asset": "MSC", //symbol des assets
+                "percantage": "15"
+            },
+            {
+                "assettype": "share", //,crypto oder cash
+                "asset": "FGD", //symbol des assets
+                "percantage": "8"
+            }
+            ,{
+                "assettype": "share", //,crypto oder cash
+                "asset": "ERT", //symbol des assets
+                "percantage": "4"
+            }
+            ,{
+                "assettype": "share", //,crypto oder cash
+                "asset": "SWA", //symbol des assets
+                "percantage": "2"
             }
         ]
     }

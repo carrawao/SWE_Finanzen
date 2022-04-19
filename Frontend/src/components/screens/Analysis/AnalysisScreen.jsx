@@ -27,7 +27,7 @@ const AnalysisScreen = () => {
             <Grid item className='col-12 col-md-7 col-xl-9'>
                 <AnalysisList></AnalysisList>
             </Grid>
-        </Grid>    
+        </Grid>   
     );
 
     return (
