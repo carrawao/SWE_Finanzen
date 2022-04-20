@@ -67,8 +67,42 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
-            fs.writeFileSync(csvPath, data);
-            csvToJson.fieldDelimiter(',').generateJsonFileFromCsv(csvPath,jsonPath);
+            try {
+                if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
+                    let jsonMessage = [
+                        {
+                         "time": "Right now",
+                         "open": "0",
+                         "high": "0",
+                         "low": "0",
+                         "close": "0",
+                         "volume": "0"
+                        },
+                        {
+                            "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
+                            "2. Symbol": symbol
+                        }];
+                    if(fs.existsSync(jsonPath)){
+                        //Flie exists
+                        //Nothing todo
+                    }else{
+                        //File not exists
+                        // -> Write a new File with 
+                        fs.writeFileSync(jsonPath, JSON.stringify(jsonMessage));
+                    }
+                    throw new Error('To many API calls with the Key: ' + apiKey + ', for Intraday Share Data');
+                }else{
+                    fs.writeFileSync(csvPath, data);
+                    csvToJson.fieldDelimiter(',').generateJsonFileFromCsv(csvPath,jsonPath);
+                }
+
+            } catch (error) {
+                console.error(error);
+                //After 1 to 9 minutes we will try again to get the data.
+                let randomTime = 60000 * serviceFunctions.getRandomIntInclusive(1,10);
+                setTimeout(() => updateIntradaySeriesShare(symbol, 30, apiKey), randomTime);
+            }
+            
         })
         .catch(error => console.error(error))
 }
@@ -126,7 +160,7 @@ const updateDailySeriesShare = async (symbol, apiKey) => {
                             "5. Time Zone": "NONE"
                         },
                         "Time Series (Daily)": {
-                            "N0 Date": {
+                            "No Date": {
                                 "1. open": "0",
                                 "2. high": "0",
                                 "3. low": "0",

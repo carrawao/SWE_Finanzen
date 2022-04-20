@@ -70,7 +70,40 @@ const updateIntradaySeriesCrypto = async (symbol, interval = 60, apiKey) => {
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
+            try {
+                if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
+                    let jsonMessage = [
+                        {
+                         "time": "Right now",
+                         "open": "0",
+                         "high": "0",
+                         "low": "0",
+                         "close": "0",
+                         "volume": "0"
+                        },
+                        {
+                            "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
+                            "2. Symbol": symbol
+                        }];
+                    if(fs.existsSync(jsonPath)){
+                        //Flie exists
+                        //Nothing todo
+                    }else{
+                        //File not exists
+                        // -> Write a new File with 
+                        fs.writeFileSync(jsonPath, JSON.stringify(jsonMessage));
+                    }
+                    throw new Error('To many API calls with the Key: ' + apiKey + ', for Intraday Share Data');
+                }else{
+                    fs.writeFileSync(path, JSON.stringify(data));
+                }
+
+            } catch (error) {
+                console.error(error);
+                //After 1 to 9 minutes we will try again to get the data.
+                let randomTime = 60000 * serviceFunctions.getRandomIntInclusive(1,10);
+                setTimeout(() => updateIntradaySeriesCrypto(symbol, 30, apiKey), randomTime);
+            }
         })
         .catch(error => console.error(error))
 }
