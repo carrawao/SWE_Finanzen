@@ -7,9 +7,6 @@ const serviceFunctions = require('./serviceFunctions');
 const pathCryptoSymbol = './data/cryptoSymbols.txt';
 let url;
 
-// Todo: Check if we got new Data or we have to many Calls
-// Todo: -> To manye calls say do it later in 60 minutes
-// ! Else with try catch or the server get killed
 // Start updating all data:
 // -> Intraday
 // -> Daily

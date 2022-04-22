@@ -13,17 +13,13 @@ let url;
 // -> Weekly with the third apiKey
 // -> Monthly currently not used therefore no execution
 const startUpdateShareData = async (apiKeys) => {
-    // updateIntradayShareData(apiKeys[0]);
+    updateIntradayShareData(apiKeys[0]);
     updateDailyShareData(apiKeys[1]);
-    // updateWeeklyShareData(apiKeys[2]);
+    updateWeeklyShareData(apiKeys[2]);
 
     // Wird erstmal weggelassen wird nicht benötigt
     // updateMonthlyShareData(apiKeys[3]);
 };
-
-                // Todo: Wenn nicht geupdated Frontend mitteilen
-
-                // ! Daily Weekly Intraday data Währung in Euro umrechnen
 
 
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
@@ -104,7 +100,8 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
                     throw new Error('To many API calls with the Key: ' + apiKey + ', for Intraday Share Data');
                 }else{
                     fs.writeFileSync(csvPath, data);
-                    csvToJson.fieldDelimiter(',').generateJsonFileFromCsv(csvPath,jsonPath);
+                    
+                    csvToJson.fieldDelimiter(',').generateJsonFileFromCsv(csvPath,jsonPath); 
                 }
 
             } catch (error) {
@@ -198,6 +195,16 @@ const updateDailySeriesShare = async (symbol, apiKey) => {
 
                     throw new Error('To many API calls with the Key: ' + apiKey + ', for Daily Share Data');
                 }else{
+
+                    //Dollar into Euro
+                    let keys = Object.keys(data['Time Series (Daily)']);
+                    for (const key of keys) {
+                        let toChangeKeys = Object.keys(data['Time Series (Daily)'][key])
+                        for(const toChangeKey of toChangeKeys){
+                            data['Time Series (Daily)'][key][toChangeKey] = serviceFunctions.convertDollarToEuro(data['Time Series (Daily)'][key][toChangeKey]).toFixed(2);
+                        }
+                    }
+
                     fs.writeFileSync(path, JSON.stringify(data));
                 }
             } catch (error) {
@@ -263,7 +270,7 @@ const updateWeeklySeriesShare = async (symbol, apiKey) => {
                             "4. Output Size": "NONE",
                             "5. Time Zone": "NONE"
                         },
-                        "Time Series (Daily)": {
+                        "Weekly Time Series": {
                             "No Date": {
                                 "1. open": "0",
                                 "2. high": "0",
@@ -289,6 +296,15 @@ const updateWeeklySeriesShare = async (symbol, apiKey) => {
 
                     throw new Error('To many API calls with the Key: ' + apiKey + ', for Weekly Share Data');
                 }else{
+                    //Dollar into Euro
+                    let keys = Object.keys(data['Weekly Time Series']);
+                    for (const key of keys) {
+                        let toChangeKeys = Object.keys(data['Weekly Time Series'][key])
+                        for(const toChangeKey of toChangeKeys){
+                            data['Weekly Time Series'][key][toChangeKey] = serviceFunctions.convertDollarToEuro(data['Weekly Time Series'][key][toChangeKey]).toFixed(2);
+                        }
+                    }
+
                     fs.writeFileSync(path, JSON.stringify(data));
                 }
             } catch (error) {
@@ -377,6 +393,15 @@ const updateMonthlySeriesShare = async (symbol, apiKey) => {
 
                     throw new Error('To many API calls with the Key: ' + apiKey + ', for Monthly Share Data');
                 }else{
+
+                    //Dollar into Euro
+                    let keys = Object.keys(data['Monthly Time Series']);
+                    for (const key of keys) {
+                        let toChangeKeys = Object.keys(data['Monthly Time Series'][key])
+                        for(const toChangeKey of toChangeKeys){
+                            data['Monthly Time Series'][key][toChangeKey] = serviceFunctions.convertDollarToEuro(data['Monthly Time Series'][key][toChangeKey]).toFixed(2);
+                        }
+                    }
                     fs.writeFileSync(path, JSON.stringify(data));
                 }
             } catch (error) {
