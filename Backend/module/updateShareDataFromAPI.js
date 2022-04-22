@@ -13,13 +13,19 @@ let url;
 // -> Weekly with the third apiKey
 // -> Monthly currently not used therefore no execution
 const startUpdateShareData = async (apiKeys) => {
-    updateIntradayShareData(apiKeys[0]);
+    // updateIntradayShareData(apiKeys[0]);
     updateDailyShareData(apiKeys[1]);
-    updateWeeklyShareData(apiKeys[2]);
+    // updateWeeklyShareData(apiKeys[2]);
 
     // Wird erstmal weggelassen wird nicht benötigt
     // updateMonthlyShareData(apiKeys[3]);
 };
+
+                // Todo: Wenn nicht geupdated Frontend mitteilen
+
+                // ! Daily Weekly Intraday data Währung in Euro umrechnen
+
+
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
 //Intraday Data
 async function updateIntradayShareData(apiKey) {
@@ -68,6 +74,7 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
         .then(res => res.data)
         .then(data => {
             try {
+
                 if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
                     let jsonMessage = [
                         {
@@ -84,7 +91,11 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
                         }];
                     if(fs.existsSync(jsonPath)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 
@@ -146,6 +157,8 @@ const updateDailySeriesShare = async (symbol, apiKey) => {
     url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=${apiKey}`;
     let path = 'data/Shares/Daily/dailyShare_' + symbol + '.json';
 
+    console.log("Update Daily Data from API \" " + symbol);
+
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
@@ -172,7 +185,11 @@ const updateDailySeriesShare = async (symbol, apiKey) => {
 
                     if(fs.existsSync(path)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 
@@ -259,7 +276,11 @@ const updateWeeklySeriesShare = async (symbol, apiKey) => {
 
                     if(fs.existsSync(path)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 
@@ -343,7 +364,11 @@ const updateMonthlySeriesShare = async (symbol, apiKey) => {
 
                     if(fs.existsSync(path)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 

@@ -87,7 +87,11 @@ const updateIntradaySeriesCrypto = async (symbol, interval = 60, apiKey) => {
                         }];
                     if(fs.existsSync(jsonPath)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 
@@ -180,7 +184,11 @@ const updateDailySeriesCrypto = async (symbol, apiKey) => {
 
                     if(fs.existsSync(path)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 
@@ -274,7 +282,11 @@ const updateWeeklySeriesCrypto = async (symbol, apiKey) => {
 
                     if(fs.existsSync(path)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 
@@ -368,7 +380,11 @@ const updateMonthlySeriesCrypto = async (symbol, apiKey) => {
 
                     if(fs.existsSync(path)){
                         //Flie exists
-                        //Nothing todo
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
                         // -> Write a new File with 
