@@ -20,25 +20,30 @@ const DropdownMenu = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const handleClick = (event) => {
+  const handleClick = event => {
+    event.preventDefault()
+    event.stopPropagation();
     setOpen(true);
     setAnchorEl(event.currentTarget);
     props.listIndex ? props.setListDropdownIndex(props.listIndex) : props.setListDropdownIndex(props.selectedListIndex);
   };
 
-  const handleClose = () => {
+  const handleClose = event => {
+    event.stopPropagation();
     setAnchorEl(null);
     setOpen(false);
   };
 
-  const onOptionClick = index => {
-    handleClose();
+  const onOptionClick = (index, event) => {
+    event.stopPropagation();
+    handleClose(event);
     props.functionOptions[index]();
   };
 
   return (
     <React.Fragment>
       <Button
+        className='d-flex py-2 px-1'
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
@@ -46,7 +51,8 @@ const DropdownMenu = (props) => {
         sx={{
           textAlign: 'right',
           padding: 0,
-          color: `${props.selectedListIndex === props.listIndex ? 'white' : '#493f35'}`
+          color: `${props.selectedListIndex === props.listIndex ? 'white' : '#493f35'}`,
+          minWidth: 0
         }}
       >
         <MoreHorizIcon fontSize='medium'/>
@@ -60,7 +66,9 @@ const DropdownMenu = (props) => {
           'aria-labelledby': `${props.listName}-menu`,
           'className': 'p-0'
         }}
-
+        sx={{
+          borderRadius: '2rem'
+        }}
       >
         {props.menuOptions.map((option, index) => (
           <Container
@@ -69,7 +77,7 @@ const DropdownMenu = (props) => {
           >
             <MenuItem
               className='px-0'
-              onClick={() => onOptionClick(index)}
+              onClick={event => onOptionClick(index, event)}
             >
               <Typography
                 variant='inherit'
