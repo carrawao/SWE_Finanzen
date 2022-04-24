@@ -25,7 +25,7 @@ const DropdownMenu = (props) => {
     event.stopPropagation();
     setOpen(true);
     setAnchorEl(event.currentTarget);
-    props.listIndex ? props.setListDropdownIndex(props.listIndex) : props.setListDropdownIndex(props.selectedListIndex);
+    props.listIndex !== undefined ? props.setListDropdownIndex(props.listIndex) : props.setListDropdownIndex(props.selectedListIndex);
   };
 
   const handleClose = event => {
