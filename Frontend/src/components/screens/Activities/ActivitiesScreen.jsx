@@ -19,6 +19,7 @@ import ActivitiesList from './ActivitiesList';
 import ScreensTemplate from '../../ScreensTemplate';
 import {SearchField, CustomTable, SearchResultsTable} from '../../common';
 import { renderRemoveActivityModal, renderAddActivityModal } from './Modals/activityModals';
+import AddActivityForm from './AddActivityForm';
 
 /**
  * Component related to the activities page
@@ -28,8 +29,7 @@ import { renderRemoveActivityModal, renderAddActivityModal } from './Modals/acti
  */
 const ActivitiesScreen = (props) => {
   
-  const [addActivityModal, setActivityModal] = useState(false);
-  const [activity, setActivity] = useState('');
+  const [addActivityModal, setAddActivityModal] = useState(false);
 
   const setDummyActivities = () => {  
     const activities = [
@@ -119,7 +119,9 @@ const ActivitiesScreen = (props) => {
     const cash = [
       {
         "symbol": "ING",
-        "quantity": 900 
+        "name": "ING Konto",
+        "value": 900,
+        "quantity": 1
       }
     ];
     props.setPortfolioData(prevData => {
@@ -158,17 +160,16 @@ const ActivitiesScreen = (props) => {
   );
 
   const renderBody = () => (
-    <Grid className='d-lg-flex flex-lg-row justify-content-lg-around px-lg-2 px-xl-5 justify-content-center pt-2'>
-      <React.Fragment>
-        <Container className='px-1 px-sm-3 px-md-5 px-lg-2 pe-xl-3'>
-          <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
-          <ActivitiesList
-            activePortfolio={props.activePortfolio}
-            portfolioData={props.portfolioData}
-            setPortfolioData={props.setPortfolioData}
-          ></ActivitiesList>
-        </Container>
-      </React.Fragment>
+    <Grid className='d-flex justify-content-center pt-2'>
+      <Container className='p-0'>
+        <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
+        <Button onClick={() => setAddActivityModal(true)}>Add Activity</Button>
+        <ActivitiesList
+          activePortfolio={props.activePortfolio}
+          portfolioData={props.portfolioData}
+          setPortfolioData={props.setPortfolioData}
+        />
+      </Container>
     </Grid>
   );
 
@@ -180,6 +181,7 @@ const ActivitiesScreen = (props) => {
         searchBar
         selectedNavLinkIndex={3}
       />
+      {renderAddActivityModal(addActivityModal, setAddActivityModal)}
     </React.Fragment>
   );
 }
