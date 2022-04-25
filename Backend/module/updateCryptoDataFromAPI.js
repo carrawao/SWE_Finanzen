@@ -3,6 +3,7 @@ const csvToJson = require('convert-csv-to-json');
 const fs = require('fs');
 const readline = require('readline');
 
+const serviceFunctions = require('./serviceFunctions');
 const pathCryptoSymbol = './data/cryptoSymbols.txt';
 let url;
 
@@ -16,8 +17,8 @@ const startUpdateCryptoData = async (apiKeys) => {
     updateDailyCryptoData(apiKeys[1]);
     updateWeeklyCryptoData(apiKeys[2]);
 
-//     // Wird erstmal weggelassen wird nicht benötigt
-//     // updateMonthlyCryptoData(apiKeys[3]);
+    // Wird erstmal weggelassen wird nicht benötigt
+    // updateMonthlyCryptoData(apiKeys[3]);
 };
 
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
@@ -60,13 +61,60 @@ setTimeout(() => {
 },90000 * minutes);
 }
 const updateIntradaySeriesCrypto = async (symbol, interval = 60, apiKey) => {
-    url = `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${symbol}&market=EUR&interval=${interval}min&apikey=${apiKey}`
+    url = `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${symbol}&outputsize=full&market=EUR&interval=${interval}min&apikey=${apiKey}`
     let path = 'data/Crypto/Intraday/intradayCrypto_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
+            try {
+                if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
+                    let jsonMessage = {
+                        "Meta Data": {
+                        "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
+                        "2. Digital Currency Code": symbol,
+                        "3. Digital Currency Name": symbol,
+                        "4. Market Code": "EUR",
+                        "5. Market Name": "Euro",
+                        "6. Last Refreshed": "Right now",
+                        "7. Interval": "60min",
+                        "8. Output Size": "Full size",
+                        "9. Time Zone": "None"
+                        },
+                        "Time Series Crypto (60min)": {
+                            "No Date": {
+                                "1. open": "0",
+                                "2. high": "0",
+                                "3. low": "0",
+                                "4. close": "0",
+                                "5. volume": "0"
+                            }
+                        }
+                    };
+                
+                    if(fs.existsSync(jsonPath)){
+                        //Flie exists
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
+                    }else{
+                        //File not exists
+                        // -> Write a new File with 
+                        fs.writeFileSync(jsonPath, JSON.stringify(jsonMessage));
+                    }
+                    throw new Error('To many API calls with the Key: ' + apiKey + ', for Intraday Share Data');
+                }else{
+                    fs.writeFileSync(path, JSON.stringify(data));
+                }
+
+            } catch (error) {
+                console.error(error);
+                //After 1 to 9 minutes we will try again to get the data.
+                let randomTime = 60000 * serviceFunctions.getRandomIntInclusive(1,10);
+                setTimeout(() => updateIntradaySeriesCrypto(symbol, 30, apiKey), randomTime);
+            }
         })
         .catch(error => console.error(error))
 }
@@ -107,13 +155,64 @@ async function updateFiveDailyCryptoFromAPI(symbols, minutes, apiKey){
     },90000 * minutes);
 }
 const updateDailySeriesCrypto = async (symbol, apiKey) => {
-    url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${symbol}&market=EUR&apikey=${apiKey}'`
+    url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${symbol}&outputsize=full&market=EUR&apikey=${apiKey}`
     let path = 'data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
+            try {
+                if(JSON.stringify(data).includes('Invalid API call') || JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
+                    let jsonMessage = {
+                        "Meta Data": {
+                            "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
+                            "2. Digital Currency Code": symbol,
+                            "3. Digital Currency Name": symbol,
+                            "4. Market Code": "EUR",
+                            "5. Market Name": "Euro",
+                            "6. Last Refreshed": "Right now",
+                            "7. Time Zone": "NONE"
+                        },
+                        "Time Series (Digital Currency Daily)": {
+                            "No Date": {
+                                "1a. open (EUR)": "0",
+                                "1b. open (USD)": "0",
+                                "2a. high (EUR)": "0",
+                                "2b. high (USD)": "0",
+                                "3a. low (EUR)": "0",
+                                "3b. low (USD)": "0",
+                                "4a. close (EUR)": "0",
+                                "4b. close (USD)": "0",
+                                "5. volume": "0",
+                                "6. market cap (USD)": "0"
+                            }
+                        }
+                    };
+
+                    if(fs.existsSync(path)){
+                        //Flie exists
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
+                    }else{
+                        //File not exists
+                        // -> Write a new File with 
+                        fs.writeFileSync(path, JSON.stringify(jsonMessage));
+                    }
+
+                    throw new Error('To many API calls with the Key: ' + apiKey + ', for Daily Crypto Data');
+                }else{
+                    
+                    fs.writeFileSync(path, JSON.stringify(data));
+                }
+            } catch (error) {
+                console.error(error);
+                //After 1 to 9 minutes we will try again to get the data.
+                let randomTime = 60000 * serviceFunctions.getRandomIntInclusive(1,10);
+                setTimeout(() => updateDailySeriesCrypto(symbol,apiKey), randomTime);
+            }
         })
         .catch(error => console.error(error)
         )
@@ -161,7 +260,57 @@ const updateWeeklySeriesCrypto = async (symbol, apiKey) => {
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
+            try {
+                if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
+                    let jsonMessage = {
+                        "Meta Data": {
+                            "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
+                            "2. Digital Currency Code": symbol,
+                            "3. Digital Currency Name": symbol,
+                            "4. Market Code": "EUR",
+                            "5. Market Name": "Euro",
+                            "6. Last Refreshed": "Right now",
+                            "7. Time Zone": "NONE"
+                        },
+                        "Time Series (Digital Currency Weekly)": {
+                            "No Date": {
+                                "1a. open (EUR)": "0",
+                                "1b. open (USD)": "0",
+                                "2a. high (EUR)": "0",
+                                "2b. high (USD)": "0",
+                                "3a. low (EUR)": "0",
+                                "3b. low (USD)": "0",
+                                "4a. close (EUR)": "0",
+                                "4b. close (USD)": "0",
+                                "5. volume": "0",
+                                "6. market cap (USD)": "0"
+                            }
+                        }
+                    };
+
+                    if(fs.existsSync(path)){
+                        //Flie exists
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
+                    }else{
+                        //File not exists
+                        // -> Write a new File with 
+                        fs.writeFileSync(path, JSON.stringify(jsonMessage));
+                    }
+
+                    throw new Error('To many API calls with the Key: ' + apiKey + ', for Daily Crypto Data');
+                }else{
+                    fs.writeFileSync(path, JSON.stringify(data));
+                }
+            } catch (error) {
+                console.error(error);
+                //After 1 to 9 minutes we will try again to get the data.
+                let randomTime = 60000 * serviceFunctions.getRandomIntInclusive(1,10);
+                setTimeout(() => updateWeeklySeriesCrypto(symbol,apiKey), randomTime);
+            }
         })
         .catch(error => console.error(error))
 }
@@ -208,7 +357,58 @@ const updateMonthlySeriesCrypto = async (symbol, apiKey) => {
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
-            fs.writeFileSync(path, JSON.stringify(data));
+            try {
+                if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
+                    let jsonMessage = 
+                    {
+                        "Meta Data": {
+                            "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
+                            "2. Digital Currency Code": symbol,
+                            "3. Digital Currency Name": symbol,
+                            "4. Market Code": "EUR",
+                            "5. Market Name": "Euro",
+                            "6. Last Refreshed": "Right now",
+                            "7. Time Zone": "NONE"
+                        },
+                        "Time Series (Digital Currency Monthly)": {
+                            "No Date": {
+                                "1a. open (EUR)": "0",
+                                "1b. open (USD)": "0",
+                                "2a. high (EUR)": "0",
+                                "2b. high (USD)": "0",
+                                "3a. low (EUR)": "0",
+                                "3b. low (USD)": "0",
+                                "4a. close (EUR)": "0",
+                                "4b. close (USD)": "0",
+                                "5. volume": "0",
+                                "6. market cap (USD)": "0"
+                            }
+                        }
+                    };
+
+                    if(fs.existsSync(path)){
+                        //Flie exists
+                        // -> Add extra Information to Json
+                        let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
+                        data = data.substring(0, data.length -1);
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        fs.writeFileSync(path, (data));
+                    }else{
+                        //File not exists
+                        // -> Write a new File with 
+                        fs.writeFileSync(path, JSON.stringify(jsonMessage));
+                    }
+
+                    throw new Error('To many API calls with the Key: ' + apiKey + ', for Daily Crypto Data');
+                }else{
+                    fs.writeFileSync(path, JSON.stringify(data));
+                }
+            } catch (error) {
+                console.error(error);
+                //After 1 to 9 minutes we will try again to get the data.
+                let randomTime = 60000 * serviceFunctions.getRandomIntInclusive(1,10);
+                setTimeout(() => updateMonthlySeriesCrypto(symbol,apiKey), randomTime);
+            }
         })
         .catch(error => console.error(error))
 }
