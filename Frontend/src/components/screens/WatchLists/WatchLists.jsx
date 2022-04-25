@@ -12,9 +12,8 @@ import {
   AvatarGroup,
   Avatar,
   FormControl,
-  InputLabel,
-  Select,
-  Button, TextField
+  Button,
+  TextField
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -186,7 +185,7 @@ const WatchLists = (props) => {
         >
           {props.watchListsArray.map((element, index) => (
             <ListItem
-              className='mb-3'
+              className='mb-3 px-2'
               key={index}
               sx={{
                 borderTop: '1px solid lightgrey',
@@ -200,13 +199,13 @@ const WatchLists = (props) => {
               }}
             >
               <ListItemButton
-                className='py-2 px-1 col-10'
+                className='py-2 px-0 col-10'
                 selected={props.selectedListIndex === index}
                 onClick={event => handleWatchListItemClick(event, index)}
 
               >
                 <ListItemText
-                  className='text-start pe-1'
+                  className='text-start ps-1 pe-2'
                   disableTypography
                   primary={
                     <Typography
@@ -285,6 +284,7 @@ const WatchLists = (props) => {
                   listIndex={index}
                   selectedListIndex={props.selectedListIndex}
                   listName={props.watchListsArray[index]}
+                  listDropdownIndex={listDropdownIndex}
                   setListDropdownIndex={setListDropdownIndex}
                   menuOptions={['Edit', 'Delete']}
                   iconOptions={[<EditIcon />, <DeleteIcon />]}

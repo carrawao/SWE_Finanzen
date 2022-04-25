@@ -1,18 +1,9 @@
 import React, {useState} from 'react';
 import {
   Container,
-  Box,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  List,
-  Typography,
   Button,
-  IconButton,
   Grid
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 
 import ActivitiesList from './ActivitiesList';

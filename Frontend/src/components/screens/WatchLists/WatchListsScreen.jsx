@@ -36,6 +36,7 @@ const WatchListsScreen = (props) => {
       {searchResult.length > 0 ?
         <SearchResultsTable
           searchResult={searchResult}
+          watchListsArray={props.watchListsArray}
           selectedListIndex={props.selectedListIndex}
           assetsListArray={props.assetsListArray}
           addToWatchList={index => {
@@ -48,7 +49,7 @@ const WatchListsScreen = (props) => {
           }}
         /> :
       <React.Fragment>
-        <Grid item className='col-12 col-md-5 col-xl-3'>
+        <Grid item className='col-12 col-md-4 col-xl-3'>
           <WatchLists
             watchListsArray={props.watchListsArray}
             setWatchListsArray={props.setWatchListsArray}
@@ -58,7 +59,7 @@ const WatchListsScreen = (props) => {
             setSelectedListIndex={setSelectedListIndex}
           />
         </Grid>
-        <Grid item className='col-12 col-md-7 col-xl-9 pt-0'>
+        <Grid item className='col-12 col-md-8 col-xl-9 pt-0'>
           <AssetsList
             watchListsArray={props.watchListsArray}
             setWatchListsArray={props.setWatchListsArray}
@@ -83,8 +84,11 @@ const WatchListsScreen = (props) => {
 
   const addAssetToWatchlist = async () => {
     const symbol = searchResult[searchResultIndex].symbol;
+    const assetType = searchResult[searchResultIndex].assetType;
     try {
-      return await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'})
+      return await fetch(
+        `http://localhost:3001/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
+        {mode:'cors'})
         .then(response => response.json())
         .then(data => {
           props.setAssetsListArray(prevAssetsListArray => {

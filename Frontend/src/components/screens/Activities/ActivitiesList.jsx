@@ -2,16 +2,8 @@ import React, {useState} from 'react';
 import {
   Container,
   Box,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  List,
-  Typography,
-  Stack,
-  IconButton
+  List
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PropTypes from 'prop-types';
 import {AssetDetailItem} from '../../common';
