@@ -160,7 +160,7 @@ const AssetDetailItem = (props) => (
                     xs: 15
                   }}
                 >
-                  {`${(props.row.sum / props.row.quantity).toFixed(2)}$`}
+                  {`${(props.row.sum / props.row.quantity).toFixed(2)}€`}
                 </Typography>
               </Box> :
               <Typography
