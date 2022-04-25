@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
 import AnalysisList from './AnalysisList';
+import AnalysisStockSplit from './AnalysisStockSplit'
+import AnalysisDetailItem from './AnalysisDetailitem';
 
 
 const AnalysisScreen = () => {
@@ -18,7 +20,7 @@ const AnalysisScreen = () => {
     );
 
     const renderBody = () => (
-        <Grid className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
+        <Grid container className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
             <Grid item className='col-12 col-md-5 col-xl-3'>
                 <Typography variant='h6' noWrap component='div'>
                     Placeholder piechart
@@ -27,7 +29,13 @@ const AnalysisScreen = () => {
             <Grid item className='col-12 col-md-7 col-xl-9'>
                 <AnalysisList></AnalysisList>
             </Grid>
+            <Grid item xs={12} className='col-12 col-md-12 col-xl-12'>
+                <AnalysisStockSplit></AnalysisStockSplit>
+            </Grid>
+            
+           
         </Grid>   
+         
     );
 
     return (
