@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
-import Typography from "@mui/material/Typography";
+import Typography from '@mui/material/Typography';
 
 const AssetDetailsScreen = () => {
   let {asset} = useParams();

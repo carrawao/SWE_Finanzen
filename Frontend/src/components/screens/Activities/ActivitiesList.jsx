@@ -2,18 +2,11 @@ import React, {useState} from 'react';
 import {
   Container,
   Box,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  List,
-  Typography,
-  Stack,
-  IconButton
+  List
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PropTypes from 'prop-types';
+import {AssetDetailItem} from '../../common';
 
 /**
  * Show all the activities
@@ -22,30 +15,35 @@ import PropTypes from 'prop-types';
  * @constructor
  */
 const ActivitiesList = (props) => {
+  const [listDropdownIndex, setListDropdownIndex] = useState(0);
+  const colorsArray = [{
+    'buy': ['blue', 'rgb(59, 151, 210, .2)'],
+    'deposit': ['green', 'rgb(78, 185, 111, .2)'],
+    'sell': ['brown', 'rgb(228, 126, 37, .2)'],
+    'dividend': ['grey', 'rgb(239, 195, 21, .2)'],
+    'payout': ['brown', 'rgb(241, 155, 31, .2)']
+  }];
 
   return (
-    <Container>
-      <Box className='d-lg-flex'>
-        <List>
-          {props.portfolioData[props.activePortfolio]["activities"].map((element, index) => (
-            <ListItem
-              className='p-0 mb-3'
-              key={index}
-              sx={{
-                border: '2px solid #493f35',
-                backgroundColor: 'white'
-              }}
-            >
-              <ListItemButton
-                className='py-0'
-                onClick={event => {}}
-              >
-                <ListItemText
-                  className='text-start'
-                  primary={element["type"] + " of: " + element["asset"] + ", index in Array: " + index}
-                  sx={{color: '#493f35'}}/>
-              </ListItemButton>
-            </ListItem>
+    <Container className='p-0'>
+      <Box>
+        <List className='d-flex flex-column'>
+          {props.portfolioData[props.activePortfolio]['activities'].map((element, index) => (
+            <AssetDetailItem
+              key={`activity_${index}`}
+              activities
+              row={element}
+              index={index}
+              itemsArray={props.portfolioData[props.activePortfolio]['activities']}
+              colorsArray={colorsArray}
+              selectedListIndex={0}
+              setListDropdownIndex={setListDropdownIndex}
+              menuOptions={['Delete']}
+              iconOptions={[<DeleteIcon />]}
+              functionOptions={[
+                () => {} //TODO: function to pass to a specific modal. In this case delete activity modal
+              ]}
+            />
           ))}
         </List>
       </Box>
@@ -54,8 +52,8 @@ const ActivitiesList = (props) => {
 }
 
 ActivitiesList.propTypes = {
-  activePortfolio: PropTypes.array,
-  portfolioData: PropTypes.array,
+  activePortfolio: PropTypes.string,
+  portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
 };
 

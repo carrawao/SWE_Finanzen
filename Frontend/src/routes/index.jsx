@@ -57,7 +57,7 @@ const AppRoutes = () => {
   const [watchListsArray, setWatchListsArray] = useState(() => persistState('watchListsArray', []));
   const [assetsListArray, setAssetsListArray] = useState(() => persistState('assetsListsArray', []));
   const [portfolioData, setPortfolioData] = useState(() => persistState('portfolioData', emptyPortfolioData));
-  const [activePortfolio, setActivePortfolio] = useState(() => persistString('activePortfolio', "Portfolio"));
+  const [activePortfolio, setActivePortfolio] = useState(() => persistString('activePortfolio', 'Portfolio'));
 
   useEffect(() => {
     localStorage.setItem('watchListsArray', JSON.stringify(watchListsArray));
