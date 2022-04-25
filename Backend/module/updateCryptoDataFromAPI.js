@@ -61,7 +61,7 @@ setTimeout(() => {
 },90000 * minutes);
 }
 const updateIntradaySeriesCrypto = async (symbol, interval = 60, apiKey) => {
-    url = `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${symbol}&market=EUR&interval=${interval}min&apikey=${apiKey}`
+    url = `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${symbol}&outputsize=full&market=EUR&interval=${interval}min&apikey=${apiKey}`
     let path = 'data/Crypto/Intraday/intradayCrypto_' + symbol + '.json';
 
     const res = await axios.get(url)
@@ -69,19 +69,29 @@ const updateIntradaySeriesCrypto = async (symbol, interval = 60, apiKey) => {
         .then(data => {
             try {
                 if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
-                    let jsonMessage = [
-                        {
-                         "time": "Right now",
-                         "open": "0",
-                         "high": "0",
-                         "low": "0",
-                         "close": "0",
-                         "volume": "0"
+                    let jsonMessage = {
+                        "Meta Data": {
+                        "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
+                        "2. Digital Currency Code": symbol,
+                        "3. Digital Currency Name": symbol,
+                        "4. Market Code": "EUR",
+                        "5. Market Name": "Euro",
+                        "6. Last Refreshed": "Right now",
+                        "7. Interval": "60min",
+                        "8. Output Size": "Full size",
+                        "9. Time Zone": "None"
                         },
-                        {
-                            "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
-                            "2. Symbol": symbol
-                        }];
+                        "Time Series Crypto (60min)": {
+                            "No Date": {
+                                "1. open": "0",
+                                "2. high": "0",
+                                "3. low": "0",
+                                "4. close": "0",
+                                "5. volume": "0"
+                            }
+                        }
+                    };
+                
                     if(fs.existsSync(jsonPath)){
                         //Flie exists
                         // -> Add extra Information to Json
@@ -145,14 +155,14 @@ async function updateFiveDailyCryptoFromAPI(symbols, minutes, apiKey){
     },90000 * minutes);
 }
 const updateDailySeriesCrypto = async (symbol, apiKey) => {
-    url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${symbol}&market=EUR&apikey=${apiKey}'`
+    url = `https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=${symbol}&outputsize=full&market=EUR&apikey=${apiKey}`
     let path = 'data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
 
     const res = await axios.get(url)
         .then(res => res.data)
         .then(data => {
             try {
-                if(JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
+                if(JSON.stringify(data).includes('Invalid API call') || JSON.stringify(data).includes('Our standard API call frequency is 5 calls per minute and 500 calls per day.')){
                     let jsonMessage = {
                         "Meta Data": {
                             "1. Information": "Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.",
@@ -194,6 +204,7 @@ const updateDailySeriesCrypto = async (symbol, apiKey) => {
 
                     throw new Error('To many API calls with the Key: ' + apiKey + ', for Daily Crypto Data');
                 }else{
+                    
                     fs.writeFileSync(path, JSON.stringify(data));
                 }
             } catch (error) {

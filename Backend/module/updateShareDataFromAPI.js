@@ -21,7 +21,7 @@ const startUpdateShareData = async (apiKeys) => {
     // updateMonthlyShareData(apiKeys[3]);
 };
 
-
+// ! Intraday Data in Euro umrechnen fehlt noch!
 //---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ---------- ----------//
 //Intraday Data
 async function updateIntradayShareData(apiKey) {
@@ -90,7 +90,7 @@ const updateIntradaySeriesShare = async (symbol, interval = 30, apiKey) => {
                         // -> Add extra Information to Json
                         let data = JSON.stringify(JSON.parse(fs.readFileSync(path)));
                         data = data.substring(0, data.length -1);
-                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}}'
+                        data = data +  ', \"Info\" : { \"1. Information\": \"Sorry, our API is overloaded at the moment, it may take a few minutes before your data is available.\"}]'
                         fs.writeFileSync(path, (data));
                     }else{
                         //File not exists
