@@ -11,7 +11,7 @@ const formatDate = activityDate => {
   return `${day}.${month}`;
 }
 
-const AssetDetailItem  = (props) => (
+const AssetDetailItem = (props) => (
   <ListItem
     className='p-0 mb-0 col-12'
     sx={{
@@ -32,10 +32,10 @@ const AssetDetailItem  = (props) => (
 
     }}
   >
-    <Link className='col-12 text-decoration-none text-black' to={`${props.row.name ? `/watchlists/${props.row.name}` : ''}`}>
-      <Container className='d-flex flex-row col-12 py-3 px-3'>
-        <Container className='d-flex flex-row p-0 align-items-center'>
-          {props.activities && <Box className='d-flex flex-column mt-2 col-2 col-sm-1 me-2'>
+    <Link className='col-12 text-decoration-none text-black'
+          to={`${props.row.name ? `/watchlists/${props.row.name}` : ''}`}>
+      <Container className={`d-flex py-3 ${props.activities ? 'px-3 align-items-center' : 'px-1'}`}>
+          {props.activities && <Box className='d-flex flex-column mt-2 col-2 col-sm-1 me-2 me-sm-3 me-md-2'>
             <Typography
               className='align-self-start fw-bold px-1'
               component='span'
@@ -81,21 +81,21 @@ const AssetDetailItem  = (props) => (
             }}
           />
 
-          <Container className='d-flex justify-content-between align-items-center ps-0'>
-            <Box className='col-7 d-sm-flex flex-sm-row align-items-center'>
-              <Typography
-                className='ms-xs-2 flex-sm-grow-1 fw-bold'
-                noWrap
-                fontSize={{
-                  md: 16,
-                  xs: 14
-                }}
-              >
-                {props.activities ? props.row.asset : props.row.name}
-              </Typography>
-            </Box>
+          <Box className={`d-sm-flex flex-sm-row align-items-center ${props.activities ? 'col-3' : 'd-flex flex-grow-1 col-1 pe-5'}`}>
+            <Typography
+              className='ms-sm-2 fw-bold'
+              noWrap
+              fontSize={{
+                md: 16,
+                xs: 14
+              }}
+            >
+              {props.activities ? props.row.asset : props.row.name}
+            </Typography>
+          </Box>
 
-            {props.activities && <Box className='d-none d-md-flex flex-column col-2 justify-content-center align-items-center'>
+          {props.activities &&
+            <Box className='d-none d-md-flex flex-column flex-grow-1'>
               <Typography
                 className='align-self-end'
                 component='span'
@@ -120,50 +120,23 @@ const AssetDetailItem  = (props) => (
               </Typography>
             </Box>}
 
-            <Box className='d-flex flex-column justify-content-end align-items-center flex-grow-1'>
-              <Typography
-                noWrap
-                className='align-self-end'
-                fontSize={{
-                  md: 16,
-                  xs: 15
-                }}
-              >
-                {`${props.activities ? props.row.sum : props.row.price}€`}
-              </Typography>
+          <Box
+            className={`d-flex flex-column px-0 ${props.activities ? 'justify-content-end flex-grow-1 flex-grow-lg-0 col-md-1 me-2' : ''}`}>
+            <Typography
+              noWrap
+              className='align-self-end'
+              fontSize={{
+                md: 16,
+                xs: 15
+              }}
+            >
+              {`${props.activities ? props.row.sum : props.row.price}€`}
+            </Typography>
 
-              {props.activities ?
-                <Box className='d-flex flex-column flex-sm-row justify-content-end col-12'>
-                  <Typography
-                    className='align-self-end px-2'
-                    component='span'
-                    noWrap
-                    fontSize={{
-                      md: 14,
-                      xs: 12
-                    }}
-                    sx={{
-                      color: 'grey',
-                      backgroundColor: 'rgb(243, 244, 246)',
-                      borderRadius: '0.5rem'
-                    }}
-                  >
-                    {`${props.row.quantity}x`}
-                  </Typography>
-                  <Typography
-                    className='align-self-end'
-                    component='span'
-                    noWrap
-                    fontSize={{
-                      md: 16,
-                      xs: 15
-                    }}
-                  >
-                    {`${(props.row.sum / props.row.quantity).toFixed(2)}€`}
-                  </Typography>
-                </Box> :
+            {props.activities ?
+              <Box className='d-flex flex-column flex-sm-row justify-content-end col-12'>
                 <Typography
-                  className='align-self-end fw-bold px-2'
+                  className='align-self-end px-2'
                   component='span'
                   noWrap
                   fontSize={{
@@ -171,27 +144,53 @@ const AssetDetailItem  = (props) => (
                     xs: 12
                   }}
                   sx={{
-                    color: props.row.change < 0 ? 'brown' : 'green',
-                    backgroundColor: props.row.change < 0 ? 'rgb(228, 126, 37, .2)' :'rgb(78, 185, 111, .2)',
+                    color: 'grey',
+                    backgroundColor: 'rgb(243, 244, 246)',
                     borderRadius: '0.5rem'
                   }}
                 >
-                  {`${props.row.change}%`}
+                  {`${props.row.quantity}x`}
+                </Typography>
+                <Typography
+                  className='align-self-end'
+                  component='span'
+                  noWrap
+                  fontSize={{
+                    md: 16,
+                    xs: 15
+                  }}
+                >
+                  {`${(props.row.sum / props.row.quantity).toFixed(2)}$`}
+                </Typography>
+              </Box> :
+              <Typography
+                className='align-self-end fw-bold px-2'
+                component='span'
+                noWrap
+                fontSize={{
+                  md: 14,
+                  xs: 12
+                }}
+                sx={{
+                  color: props.row.change < 0 ? 'brown' : 'green',
+                  backgroundColor: props.row.change < 0 ? 'rgb(228, 126, 37, .2)' : 'rgb(78, 185, 111, .2)',
+                  borderRadius: '0.5rem'
+                }}
+              >
+                {`${props.row.change}%`}
               </Typography>}
-            </Box>
-          </Container>
-        </Container>
+          </Box>
 
-        <Box className='d-flex px-1 justify-content-end'>
-          <DropdownMenu
-            selectedListIndex={props.selectedListIndex}
-            listName={props.listName}
-            setListDropdownIndex={props.setListDropdownIndex}
-            menuOptions={props.menuOptions}
-            iconOptions={props.iconOptions}
-            functionOptions={props.functionOptions}
-          />
-        </Box>
+          <Box className='d-flex px-1'>
+            <DropdownMenu
+              selectedListIndex={props.selectedListIndex}
+              listName={props.listName}
+              setListDropdownIndex={props.setListDropdownIndex}
+              menuOptions={props.menuOptions}
+              iconOptions={props.iconOptions}
+              functionOptions={props.functionOptions}
+            />
+          </Box>
       </Container>
     </Link>
   </ListItem>

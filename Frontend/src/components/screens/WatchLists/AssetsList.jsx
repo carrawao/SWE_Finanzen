@@ -120,7 +120,7 @@ const AssetsList = (props) => {
         </Typography>
       </Container>
     ) : (
-    <Container className='px-1 px-sm-3 px-md-3 px-lg-2 pe-xl-3'>
+    <Container className='px-1 px-sm-3 px-md-3 px-lg-2 ps-xl-5 me-xl-0'>
       <Stack
         className='d-none d-md-flex mb-3 justify-content-between'
         direction='row'
