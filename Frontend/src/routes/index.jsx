@@ -100,7 +100,7 @@ const AppRoutes = () => {
         }
       />
       <Route path='/settings' element={<SettingsScreen/>}/>
-      <Route path='/watchlists/:asset' element={<AssetDetailsScreen/>}/>
+      <Route path='/asset/:asset' element={<AssetDetailsScreen/>}/>
     </Routes>
   );
 }

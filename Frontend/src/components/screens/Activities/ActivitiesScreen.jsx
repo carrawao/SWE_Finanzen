@@ -22,6 +22,8 @@ const ActivitiesScreen = (props) => {
   
   const [addActivityModal, setAddActivityModal] = useState(false);
 
+  const portfolioData = props.portfolioData[props.activePortfolio];
+
   const setDummyActivities = () => {  
     const activities = [
       {
@@ -126,23 +128,37 @@ const ActivitiesScreen = (props) => {
     console.log(props.portfolioData); 
   }
 
-  // const addActivity = (assettype, asset, type, date, time, quantity, sum, tax, fee) => {
-  //   var obj = JSON.parse(userData['portfolios'][activePortfolio]["activities"]);
-  //   obj['theTeam'].push({"teamId":"4","status":"pending"});
-  //   jsonStr = JSON.stringify(obj);
-  //   activityObj = {
-  //     "assettype": assettype,
-  //     "asset": asset,
-  //     "type": type,
-  //     "date": date,
-  //     "time": time,
-  //     "quantity": quantity,
-  //     "sum": sum,
-  //     "tax": tax,
-  //     "fee": fee
-  //   }
-  //   userData['portfolios'][activePortfolio]["activities"].add(activityObj);
-  // }
+  const addActivity = (assettype, assetSymbol, type, date, quantity, sum, tax, fee) => {
+    
+    const activityObj = {
+      "id": portfolioData["activities"].length,
+      "assettype": assettype,
+      "asset": assetSymbol,
+      "type": type,
+      "date": date,
+      "quantity": quantity,
+      "sum": sum,
+      "tax": tax,
+      "fee": fee
+    }
+
+    let assetData = portfolioData[assettype].find(element => element.symbol === assetSymbol);
+    if (assetData === undefined) {
+      const assetObj = {
+        "id": portfolioData[assettype].length,
+        "symbol": assetSymbol,
+        "name": "",
+        "value": "",
+        "quantity": quantity
+      }
+    }
+
+    props.setPortfolioData(prevData => {
+      const portfolioData = {...prevData};
+      portfolioData[props.activePortfolio]["activities"].push(activityObj);
+      return portfolioData;
+    });
+  }
 
   const renderHeader = () => (
       <SearchField
@@ -172,7 +188,7 @@ const ActivitiesScreen = (props) => {
         searchBar
         selectedNavLinkIndex={3}
       />
-      {renderAddActivityModal(addActivityModal, setAddActivityModal)}
+      {renderAddActivityModal(addActivityModal, setAddActivityModal, addActivity, props.portfolioData[props.activePortfolio])}
     </React.Fragment>
   );
 }

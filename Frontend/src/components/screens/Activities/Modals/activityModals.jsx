@@ -2,7 +2,7 @@ import React from 'react';
 import {CustomModal} from '../../../common';
 import AddActivityForm from '../AddActivityForm';
 
-export const renderAddActivityModal = (open, handleClose, errorModal) => (
+export const renderAddActivityModal = (open, handleClose, addActivity, portfolioData) => (
   
   <CustomModal
     open={open}
@@ -12,7 +12,7 @@ export const renderAddActivityModal = (open, handleClose, errorModal) => (
     describedby='add_activity-modal-description'
     modalTitle='Add new activity'
     modalBody={() => (
-      <AddActivityForm></AddActivityForm>
+      <AddActivityForm addActivity={addActivity} portfolioData={portfolioData}></AddActivityForm>
     )}
     modalButton={() => (
       false
