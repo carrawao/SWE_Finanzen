@@ -1,6 +1,8 @@
 const updateDataFromAPI = require('../../module/updateCryptoDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
+const dataPathQuotedUScryptos = './data/quotedCrypto.json';
+const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
 
 const userRoutes = (app, fs, apiKey, accessURL) => {
 
@@ -8,9 +10,6 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
             const dataPathDailycrypto = './data/Crypto/Daily/dailyCrypto_' + symbol + '.json';
-            const dataPathQuotedUScryptos = './data/quotedCrypto.json';
-            const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
-
 
             fs.access(dataPathDailycrypto, fs.F_OK, (err) => {
                 if (err) {
@@ -32,7 +31,7 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                 const quotedUScryptosData = JSON.parse(rawQuotedUScryptos);
 
                 let keys = Object.keys(dailyJson_data['Time Series (Digital Currency Daily)']);
-                dayOneSearchText = keys[0];
+                let dayOneSearchText = keys[0];
 
 
                 let openValue = dailyJson_data['Time Series (Digital Currency Daily)'][dayOneSearchText]['1a. open (EUR)'];

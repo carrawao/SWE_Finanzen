@@ -1,15 +1,15 @@
 const updateDataFromAPI = require('../../module/updateShareDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
+const dataPathQuotedUSshares = './data/quotedUSshares.json';
+const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
+
 const userRoutes = (app, fs, apiKey, accessURL) => {
 
     app.get('/getShareForWatchlist', (req, res) => {
         if(req.query.symbol){
             const symbol = req.query.symbol;
             const dataPathDailyShare = './data/Shares/Daily/dailyShare_' + symbol + '.json';
-            const dataPathQuotedUSshares = './data/quotedUSshares.json';
-            const dataPathCurrentCurrency = './data/Currency/currentCurrency.json';
-
 
             fs.access(dataPathDailyShare, fs.F_OK, (err) => {
                 if (err) {
@@ -33,7 +33,7 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
 
 
                 let keys = Object.keys(dailyJson_data['Time Series (Daily)']);
-                dayOneSearchText = keys[0];
+                let dayOneSearchText = keys[0];
 
                 let openValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['1. open'];
                 let closeValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['4. close'];
