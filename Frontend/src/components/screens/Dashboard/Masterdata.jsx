@@ -8,8 +8,7 @@ import { Divider, List, ListItem, ListItemText, Grid, Typography } from '@mui/ma
 // Sektor, Industry , etc
 
 const Masterdata = (props) => {
-    
-    
+
 
     return (
     <Grid container flex spacing={2} alignItems="stretch" justifyContent="space-evenly">
@@ -19,12 +18,6 @@ const Masterdata = (props) => {
                     <ListItemText
                         primary={props.masterdata['Name']}
                         secondary="Name">
-                    </ListItemText>
-                </ListItem>
-                <ListItem>
-                    <ListItemText
-                        primary={props.masterdata['Description']}
-                        secondary="Description">
                     </ListItemText>
                 </ListItem>
                 <ListItem>

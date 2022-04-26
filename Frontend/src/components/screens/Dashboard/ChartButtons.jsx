@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { ToggleButton, ToggleButtonGroup } from "@mui/material"
 
-const StockchartButtons = (props) => {
+const ChartButtons = (props) => {
 return(
     <ToggleButtonGroup color="primary"
     value={props.view}
@@ -17,4 +17,4 @@ return(
     )
     
 }
-export default StockchartButtons;
+export default ChartButtons;
