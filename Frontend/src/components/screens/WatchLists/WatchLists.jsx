@@ -29,13 +29,14 @@ import {renderAddWatchlistModal, renderEditListModal, renderRemoveListModal} fro
  * @returns {JSX.Element}
  * @constructor
  */
-const WatchLists = (props) => {
+const WatchLists = props => {
   const [addListModal, setAddListModal] = useState(false);
   const [editListModal, setEditListModal] = useState(false);
   const [removeListModal, setRemoveListModal] = useState(false);
   const [watchlist, setWatchlist] = useState(undefined);
   const [errorModal, setErrorModal] = useState(false);
   const [listDropdownIndex, setListDropdownIndex] = useState(0);
+  const avatarGroupColors = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)'];
 
   const handleWatchListItemClick = (event, index) => {
     props.setSelectedListIndex(index);
@@ -229,54 +230,30 @@ const WatchLists = (props) => {
                   spacing={5}
                   appearance='stack'
                 >
-                  {props.assetsListArray[index][0] && <Avatar
-                    alt={`${props.assetsListArray[index][0].name}`}
-                    sx={{
-                      backgroundColor: 'rgb(59 151 210)',
-                      width: {
-                        md: '1.2rem',
-                        xl: '1.5rem'
-                      },
-                      height: {
-                        md: '1.2rem',
-                        xl: '1.5rem'
-                      },
-                    }}
-                  >
-                    ${props.assetsListArray[index][0].name}
-                  </Avatar>}
-                  {props.assetsListArray[index][1] && <Avatar
-                    alt={`${props.assetsListArray[index][1].name}`}
-                    sx={{
-                      backgroundColor: 'rgb(78 185 111)',
-                      width: {
-                        md: '1.2rem',
-                        xl: '1.5rem'
-                      },
-                      height: {
-                        md: '1.2rem',
-                        xl: '1.5rem'
-                      },
-                    }}
-                  >
-                    ${props.assetsListArray[index][1].name}
-                  </Avatar>}
-                  {props.assetsListArray[index][2] && <Avatar
-                    alt={`${props.assetsListArray[index][2].name}`}
-                    sx={{
-                      backgroundColor: 'rgb(228 126 37)',
-                      width: {
-                        md: '1.2rem',
-                        xl: '1.5rem'
-                      },
-                      height: {
-                        md: '1.2rem',
-                        xl: '1.5rem'
-                      },
-                    }}
-                  >
-                    ${props.assetsListArray[index][2].name}
-                  </Avatar>}
+                  {props.assetsListArray[index].length > 0 && props.assetsListArray[index].map((asset, assetIndex) =>
+                    asset && assetIndex < 3 && <Avatar
+                      key={`avatarGroup_${asset.name}`}
+                      alt={`${asset.name}`}
+                      sx={{
+                        '&.MuiAvatar-circular': {
+                          borderColor: props.selectedListIndex === index ? 'white' : 'black'
+                        },
+                        backgroundColor: avatarGroupColors[assetIndex],
+                        width: {
+                          md: '1.2rem',
+                          xl: '1.5rem'
+                        },
+                        height: {
+                          md: '1.2rem',
+                          xl: '1.5rem'
+                        },
+                      }}
+                    >
+                      <Typography sx={{fontSize: '12px'}}>
+                        {asset.name.slice(0, 3).toUpperCase()}
+                      </Typography>
+                    </Avatar>
+                  )}
                 </AvatarGroup>
               </ListItemButton>
               {props.watchListsArray.length > 0 && (
@@ -319,7 +296,7 @@ WatchLists.propTypes = {
   selectedListIndex: PropTypes.number,
   setSelectedListIndex: PropTypes.func,
   assetsListArray: PropTypes.array,
-  setAssetsListArray: PropTypes.func,
+  setAssetsListArray: PropTypes.func
 };
 
 export default WatchLists;

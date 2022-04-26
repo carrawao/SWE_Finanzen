@@ -34,7 +34,7 @@ const AssetListItem = (props) => {
             row={row}
             index={index}
             colorsArray={colorsArray}
-            itemsArray={props.assetsListArray}
+            itemsArray={props.assetsListArray[props.selectedListIndex]}
             listName={props.watchListsArray[index]}
             selectedListIndex={props.selectedListIndex}
             setListDropdownIndex={setListDropdownIndex}
