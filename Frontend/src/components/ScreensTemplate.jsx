@@ -26,7 +26,7 @@ const ScreensTemplate = (props) => {
     <Box className='d-flex w-100'>
       <CssBaseline/>
       <AppBar
-        className={`position-fixed ${props.searchBar ? 'bg-white' : ''}`}
+        className='position-fixed bg-white'
         elevation={0}
         sx={{
           width: {lg: `calc(100% - ${drawerWidth}rem)`},
@@ -50,7 +50,7 @@ const ScreensTemplate = (props) => {
             <MenuIcon/>
           </IconButton>
 
-          {props.headerComponent()}
+          {props.headerComponent && props.headerComponent()}
         </Toolbar>
       </AppBar>
 

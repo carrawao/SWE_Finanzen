@@ -11,7 +11,7 @@ const formatDate = activityDate => {
   return `${day}.${month}`;
 }
 
-const AssetDetailItem = (props) => (
+const AssetDetailItem = props => (
   <ListItem
     className='p-0 mb-0 col-12'
     sx={{
@@ -68,8 +68,9 @@ const AssetDetailItem = (props) => (
           <Avatar
             className='me-xs-2 me-md-0'
             alt={`${props.activities ? props.row.asset : props.row.name}-logo`}
-            src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`}
+            //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`} //TODO: put icon if exists
             sx={{
+              backgroundColor: props.colorsArray[props.index % 4],
               width: {
                 xs: '2.5rem',
                 md: '2.8rem'
@@ -79,11 +80,15 @@ const AssetDetailItem = (props) => (
                 md: '2.8rem'
               },
             }}
-          />
+          >
+            <Typography fontSize='16px'>
+              {`${props.activities ? props.row.asset.slice(0, 3).toUpperCase() : props.row.name.slice(0, 3).toUpperCase()}`}
+            </Typography>
+          </Avatar>
 
           <Box className={`d-sm-flex flex-sm-row align-items-center ${props.activities ? 'col-3' : 'd-flex flex-grow-1 col-1 pe-5'}`}>
             <Typography
-              className='ms-sm-2 fw-bold'
+              className='ms-2 fw-bold'
               noWrap
               fontSize={{
                 md: 16,
