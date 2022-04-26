@@ -1,36 +1,14 @@
 import React, {useState} from 'react';
-import {CustomModal} from '../../common/index';
 import {
   Container,
   Typography,
   Stack,
-  Button,
   IconButton,
-  TextField
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
-import {CustomTable} from '../../common/index';
-
-
-const createData = (name, price, change) => {
-  return { name, price, change };
-}
-
-const assetsArrayTest = [
-  [
-    createData('Allianz', '212.25$', '-1.80%'),
-    createData('Fuijitsu', '212.25$', '-1.80%'),
-    createData('Capgemini', '212.25$', '-1.80%'),
-    createData('IBM', '212.25$', '-1.80%'),
-  ],
-  [
-    createData('Thales', '212.25$', '-1.80%'),
-    createData('WW', '212.25$', '-1.80%'),
-    createData('DHBW', '212.25$', '-1.80%'),
-    createData('Netto', '212.25$', '-1.80%'),
-  ]
-];
+import AssetListItem from './AssetListItem';
+import {renderRemoveAssetModal, renderAddAssetModal} from './Modals/assetModals';
 
 /**
  * Show all the assets corresponding a watchlist
@@ -39,16 +17,17 @@ const assetsArrayTest = [
  * @constructor
  */
 const AssetsList = (props) => {
-  //const [assetsArray, setAssetsArray] = useState([]);
-  //const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [showAssetModal, setShowAssetModal] = useState(false);
+  const [removeAssetModal, setRemoveAssetModal] = useState(false);
   const [asset, setAsset] = useState('');
+  const [selectedAssetIndex, setSelectedAssetIndex] = useState(0);
   const [errorModal, setErrorModal] = useState(false);
 
-
+  // Function to close the modals
   const handleClose = () => {
     setErrorModal(false);
     setShowAssetModal(false);
+    setRemoveAssetModal(false);
   }
 
   const addAsset = () => {
@@ -61,48 +40,89 @@ const AssetsList = (props) => {
     }
   }
 
-  const renderAddAssetModal = () => (
-    <CustomModal
-      open={showAssetModal}
-      handleClose={() => handleClose()}
-      labelledby='add_asset-modal-title'
-      describedby='add_asset-modal-description'
-      modalTitle='New asset'
-      modalBody={() => (
-        <TextField
-          variant='outlined'
-          className='pb-3'
-          label='Enter name'
-          error={errorModal}
-          helperText={errorModal ? '*Name cannot be empty' : false}
-          defaultValue=''
-          sx={{display: 'flex', flexGrow: 2}}
-          onChange={data => setAsset(data.target.value)}
-        />
-      )}
-      modalButton={() => (
-        <Button
-          variant='outlined'
-          onClick={() => addAsset()}
-          sx={{
-            color: 'white',
-            width: '5rem',
-            backgroundColor: '#493f35',
-            '&:hover': {
-              backgroundColor: '#493f35',
-            }
+  const removeAsset = () => {
+    if (props.assetsListArray.length > 0) {
+      props.setAssetsListArray(prevAssetsListArray => {
+        const assetsListArray = [...prevAssetsListArray];
+        assetsListArray[props.selectedListIndex] =
+          assetsListArray[props.selectedListIndex].filter(
+            (element, index) => index !== selectedAssetIndex
+          );
+        return assetsListArray;
+      });
+      setRemoveAssetModal(false);
+      setSelectedAssetIndex(0);
+    }
+  };
+
+  return props.watchListsArray.length === 0 ? (
+    <Container className='mt-4 mt-md-0 px-3 px-sm-5 justify-content-center'>
+      <Typography
+        variant='h6'
+        fontWeight='bold'
+        fontSize={{
+          lg: 24,
+          xs: 18
+        }}
+      >
+        Start off by creating a Watchlist
+      </Typography>
+      <Typography
+        className='mt-2'
+        fontSize={{
+          lg: 20,
+          xs: 16
+        }}
+      >
+        With watchlists you can keep an eye on assets before you make any buying decisions.
+      </Typography>
+      <Typography
+        className='mt-2'
+        fontSize={{
+          lg: 20,
+          xs: 16
+        }}
+      >
+        Group different assets into watchlists like your top 5 US stocks or 10 sustainable ETFs.
+        Create your first watchlist by adding a name on the above form and add later the assets you desire to follow.
+      </Typography>
+    </Container>
+    ) : props.assetsListArray[props.selectedListIndex].length === 0 ? (
+      <Container className='mt-4 mt-md-0 px-3 px-sm-4 justify-content-center'>
+        <Typography
+          variant='h6'
+          fontWeight='bold'
+          fontSize={{
+            lg: 24,
+            xs: 18
           }}
         >
-          Add
-        </Button>
-      )}
-    />
-  );
-
-  return props.watchListsArray.length > 0 && (
-    <Container className='pe-2 pe-xl-5'>
+          Continue by adding an Asset to the Watchlist
+        </Typography>
+        <Typography
+          className='mt-2'
+          fontSize={{
+            lg: 20,
+            xs: 16
+          }}
+        >
+          In order to find an asset please type in its name or acronym on the search field above. The search will be limited to 10 assets per attempt,
+          so keep typing until the desired one is on the screen.
+        </Typography>
+        <Typography
+          className='mt-2'
+          fontSize={{
+            lg: 20,
+            xs: 16
+          }}
+        >
+          Once the wanted asset shows up in the list, please click the "bookmark" icon and select the Watchlist you wish to add it to.
+        </Typography>
+      </Container>
+    ) : (
+    <Container className='px-1 px-sm-3 px-md-3 px-lg-2 ps-xl-5 me-xl-0'>
       <Stack
-        className='d-none d-lg-flex mb-3 justify-content-between'
+        className='d-none d-md-flex mb-3 justify-content-between'
         direction='row'
         alignItems='center'
         gap={1}
@@ -118,7 +138,7 @@ const AssetsList = (props) => {
         </IconButton>
       </Stack>
 
-      <Container className='d-flex d-lg-none col-12 justify-content-end pe-2'>
+      <Container className='d-flex d-md-none col-12 justify-content-end pe-2'>
         <IconButton
           onClick={() => setShowAssetModal(true)}
           className='pe-0'
@@ -127,20 +147,27 @@ const AssetsList = (props) => {
         </IconButton>
       </Container>
 
-      <CustomTable
-        assetsArray={assetsArrayTest}
+      <AssetListItem
+        assetsListArray={props.assetsListArray}
         selectedListIndex={props.selectedListIndex}
         watchListsArray={props.watchListsArray}
+        setSelectedAssetIndex={setSelectedAssetIndex}
+        setRemoveAssetModal={setRemoveAssetModal}
       />
 
-      {renderAddAssetModal()}
+      {renderAddAssetModal(showAssetModal, handleClose, errorModal, setAsset, addAsset)}
+      {renderRemoveAssetModal(removeAssetModal, handleClose, removeAsset)}
     </Container>
   );
 }
 
 AssetsList.propTypes = {
   watchListsArray: PropTypes.array,
+  setWatchListsArray: PropTypes.func,
+  assetsListArray: PropTypes.array,
+  setAssetsListArray: PropTypes.func,
   selectedListIndex: PropTypes.number,
+  setSelectedListIndex: PropTypes.func
 };
 
 export default AssetsList;
