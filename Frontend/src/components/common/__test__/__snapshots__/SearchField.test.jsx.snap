@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`changes the class when hovered 1`] = `
+exports[`Snapshot Test SearchField 1`] = `
 <div
   className="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1tg2a5i-MuiFormControl-root-MuiTextField-root"
 >
