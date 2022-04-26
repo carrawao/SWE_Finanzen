@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {ListItem, Typography, Container, Box} from '@mui/material';
 
 
 const AnalysisDetailItem  = (props) => (
+    
+   
     <ListItem
     sx={{
         borderBottom: '2px solid lightgrey'
     }}
-
+ 
+ 
     >    
         <Container className='d-flex flex-row p-0 align-items-center'>
             <Box className='d-flex flex-column mt-6 col-6 col-sm-6 me-6'>
@@ -43,8 +46,9 @@ const AnalysisDetailItem  = (props) => (
         </Container>
         
 
-        
+
     </ListItem>
+    
 );
 
 export default AnalysisDetailItem;
