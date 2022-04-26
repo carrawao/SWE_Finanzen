@@ -1,7 +1,7 @@
 import renderer from 'react-test-renderer';
 import SearchField from '../SearchField';
 
-it('changes the class when hovered', () => {
+it('Snapshot Test SearchField', () => {
   const component = renderer.create(
     <SearchField/>
   );
