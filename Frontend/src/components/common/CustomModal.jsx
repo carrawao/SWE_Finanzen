@@ -14,34 +14,33 @@ import CloseIcon from '@mui/icons-material/Close';
  * @returns {JSX.Element}
  * @constructor
  */
-const CustomModal = (props) => {
-  return (
-    <Modal
-      open={props.open}
-      onClose={() => props.handleClose()}
-      aria-labelledby={props.labelledby}
-    >
-      <Box sx={{...style}}>
-        <Container
-          className='d-flex justify-content-between px-0 align-self-center'
+const CustomModal = props => (
+  <Modal
+    open={props.open}
+    onClose={() => props.handleClose()}
+    aria-labelledby={props.labelledby}
+    className='p-0'
+  >
+    <Box sx={{...style}}>
+      <Container
+        className='d-flex justify-content-between px-0 align-self-center'
+      >
+        <Typography id={props.labelledby} variant='h6' component='h2' className='pb-3 mb-2'>
+          {props.modalTitle}
+        </Typography>
+        <IconButton
+          onClick={() => props.handleClose()}
+          className='px-0 py-1 align-self-start'
         >
-          <Typography id={props.labelledby} variant='h6' component='h2' className='pb-3 mb-2'>
-            {props.modalTitle}
-          </Typography>
-          <IconButton
-            onClick={() => props.handleClose()}
-            className='px-0 py-1 align-self-start'
-          >
-            <CloseIcon style={{color: 'rgb(228 126 37)'}}/>
-          </IconButton>
-        </Container>
+          <CloseIcon style={{color: 'rgb(228 126 37)'}}/>
+        </IconButton>
+      </Container>
 
-        {props.modalBody ? props.modalBody() : null}
-        {props.modalButton()}
-      </Box>
-    </Modal>
-  );
-}
+      {props.modalBody ? props.modalBody() : null}
+      {props.modalButton()}
+    </Box>
+  </Modal>
+);
 
 const style = {
   position: 'absolute',
