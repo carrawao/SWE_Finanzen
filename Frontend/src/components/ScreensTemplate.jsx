@@ -33,7 +33,7 @@ const ScreensTemplate = (props) => {
           marginLeft: {lg: `${drawerWidth}rem`},
         }}
       >
-        <Toolbar>
+        <Toolbar className='px-3'>
           <IconButton
             aria-label='open drawer'
             size='medium'
