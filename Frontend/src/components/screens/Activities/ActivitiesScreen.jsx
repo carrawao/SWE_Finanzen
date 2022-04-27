@@ -165,8 +165,8 @@ const ActivitiesScreen = (props) => {
 }
 
 ScreensTemplate.propTypes = {
-  activePortfolio: PropTypes.array,
-  portfolioData: PropTypes.array,
+  activePortfolio: PropTypes.string,
+  portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
 };
 

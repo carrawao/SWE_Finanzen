@@ -4,6 +4,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import deLocale from 'date-fns/locale/de';
+import ClearIcon from '@mui/icons-material/Clear';
+import DragHandleIcon from '@mui/icons-material/DragHandle';
 import PropTypes from 'prop-types';
 
 const StyledTextField = styled(TextField)({
@@ -85,15 +87,19 @@ const AddActivityForm = (props) => {
         }
     }
 
+    const numberRegex = /^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/
+    const numberWithZeroRegex = /^(\d+|\d*\.\d+)$/
+
     const validate = () => {
         let errors = {};
         errors.asset = values.asset ? "" : "This field is required";
-        if (values.assettype === "share") errors = {...errors, ...validateShare()};
-        if (values.assettype === "crypto") errors = {...errors, ...validateCrypto()};
-        if (values.assettype === "cash") errors = {...errors, ...validateCash()};
-
-        errors.tax = (/^(\d+|\d*\.\d+)$/).test(values.tax) ? "" : "Not a valid number";
-        errors.fee = (/^(\d+|\d*\.\d+)$/).test(values.fee) ? "" : "Not a valid number";
+        if(values.asset) {
+            if (values.assettype === "share") errors = {...errors, ...validateShare()};
+            if (values.assettype === "crypto") errors = {...errors, ...validateCrypto()};
+            if (values.assettype === "cash") errors = {...errors, ...validateCash()};
+            errors.tax = (numberWithZeroRegex).test(values.tax) ? "" : "Not a valid number";
+            errors.fee = (numberWithZeroRegex).test(values.fee) ? "" : "Not a valid number";
+        }
         
         setErrors({...errors});
 
@@ -102,22 +108,57 @@ const AddActivityForm = (props) => {
 
     const validateShare = () => {
         let errors = {};
-        if (values.asset && values.typeShare === "sell" || values.typeShare === "dividend") {
+        if (values.typeShare === "sell" || values.typeShare === "dividend") {
             let share = shares.find(element => element.symbol === values.asset);
-            errors.quantity = share.quantity < values.quantity ? "" : "Can't be bigger than the quantity you own of asset";
+            if (typeof(share) === 'undefined') {
+                errors.typeShare = "Sell/Dividend not valid for this share"
+            } else {
+                if (!(numberRegex).test(values.quantity)) {
+                    errors.quantity = "Not a valid number";
+                } else {
+                    errors.quantity = share.quantity >= values.quantity ? "" : "Can't be greater than quantity in your portfolio"
+                }
+            };
         }
-        errors.quantity = (/^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/).test(values.quantity) ? "" : "Not a valid number";
-        errors.value = (/^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/).test(values.value) ? "" : "Not a valid number";
-        errors.sum = (/^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/).test(values.sum) ? "" : "Not a valid number";
+        errors.value = (numberRegex).test(values.value) ? "" : "Not a valid number";
+        errors.sum = (numberRegex).test(values.sum) ? "" : "Not a valid number";
         return errors;
     }
 
     const validateCrypto = () => {
-
+        let errors = {};
+        if (values.typeCrypto === "sell") {
+            let coin = crypto.find(element => element.symbol === values.asset);
+            if (typeof(coin) === 'undefined') {
+                errors.typeCrypto = "Sell not valid for this coin"
+            } else {
+                if (!(numberRegex).test(values.quantity)) {
+                    errors.quantity = "Not a valid number";
+                } else {
+                    errors.quantity = coin.quantity >= values.quantity ? "" : "Can't be greater than quantity in your portfolio"
+                }
+            };
+        }
+        errors.value = (numberRegex).test(values.value) ? "" : "Not a valid number";
+        errors.sum = (numberRegex).test(values.sum) ? "" : "Not a valid number";
+        return errors;
     }
 
     const validateCash = () => {
-        
+        let errors = {};
+        if (values.typeCash === "payout") {
+            let account = cash.find(element => element.symbol === values.asset);
+            if (typeof(account) === 'undefined') {
+                errors.typeCash = "Payout not valid for this account"
+            } else {
+                if (!(numberRegex).test(values.sum)) {
+                    errors.sum = "Not a valid number";
+                } else {
+                    errors.sum = account.value >= values.sum ? "" : "Can't be greater than deposited amout"
+                }
+            };
+        }
+        return errors;
     }
 
     const handleSubmit = (e) => {
@@ -142,6 +183,7 @@ const AddActivityForm = (props) => {
     >
         <Grid item xs={4} sx={{ margin: '1rem'}}>
             <StyledTextField
+                margin="normal"
                 select
                 label="assettype"
                 name="assettype"
@@ -153,6 +195,7 @@ const AddActivityForm = (props) => {
                 <MenuItem value={"cash"}>Cash</MenuItem>
             </StyledTextField>
             <StyledTextField
+                margin="normal"
                 type="search"
                 label="asset/account"
                 name="asset"
@@ -172,6 +215,7 @@ const AddActivityForm = (props) => {
                     name="typeShare"
                     onChange = {handleInputChange}
                     value={values.typeShare}
+                    {...(errors.typeShare && {error: true, helperText: errors.typeShare})}
                     >
                         <MenuItem value={"buy"}>Buy</MenuItem>
                         <MenuItem value={"sell"}>Sell</MenuItem>
@@ -185,6 +229,7 @@ const AddActivityForm = (props) => {
                     name="typeCrypto"
                     onChange = {handleInputChange}
                     value={values.typeCrypto}
+                    {...(errors.typeCrypto && {error: true, helperText: errors.typeCrypto})}
                     >
                         <MenuItem value={"buy"}>Buy</MenuItem>
                         <MenuItem value={"sell"}>Sell</MenuItem>
@@ -197,6 +242,7 @@ const AddActivityForm = (props) => {
                     name="typeCash"
                     onChange = {handleInputChange}
                     value={values.typeCash}
+                    {...(errors.typeCash && {error: true, helperText: errors.typeCash})}
                     >
                         <MenuItem value={"deposit"}>Deposit</MenuItem>
                         <MenuItem value={"payout"}>Payout</MenuItem>
@@ -228,6 +274,7 @@ const AddActivityForm = (props) => {
                     alignItems="space-around"
                 >
                     <StyledTextField
+                        margin="normal"
                         label="Value per Item"
                         name="value"
                         id="add-activity-value"
@@ -236,8 +283,9 @@ const AddActivityForm = (props) => {
                         {...(errors.value && {error: true, helperText: errors.value})}
                         InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
                     ></StyledTextField>
-                    <Typography sx={{margin: '1rem'}}>×</Typography>
+                    <ClearIcon style={{fontSize: 'medium', margin: '1rem', color: '#493f35'}}></ClearIcon>
                     <StyledTextField
+                        margin="normal"
                         label="Quantity"
                         name="quantity"
                         id="add-activity-quantity"
@@ -246,8 +294,9 @@ const AddActivityForm = (props) => {
                         {...(errors.quantity && {error: true, helperText: errors.quantity})}
                         InputProps={{ inputMode: 'numeric', pattern: '[0-9]*'}} 
                     ></StyledTextField>
-                    <Typography sx={{margin: '1rem'}}>=</Typography>
+                    <DragHandleIcon style={{fontSize: 'medium', margin: '1rem', color: '#493f35'}}></DragHandleIcon>
                     <StyledTextField
+                        margin="normal"
                         disabled
                         label="Sum"
                         name="sum"
@@ -259,36 +308,51 @@ const AddActivityForm = (props) => {
                 </Grid>
             }
             {values.assettype === "cash" &&
-                <StyledTextField
-                    label="Sum"
-                    name="sum"
-                    id="add-activity-sum-cash"
-                    onChange = {handleInputChange}
-                    value={values.sum}
-                    {...(errors.sum && {error: true, helperText: errors.sum})}
-                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
-                ></StyledTextField>
+                <Grid container 
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="space-around"
+                >
+                    <StyledTextField
+                        margin="normal"
+                        label="Sum"
+                        name="sum"
+                        id="add-activity-sum-cash"
+                        onChange = {handleInputChange}
+                        value={values.sum}
+                        {...(errors.sum && {error: true, helperText: errors.sum})}
+                        InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                    ></StyledTextField>
+                </Grid>
             }
         </Grid>
         <Grid item xs={4} sx={{ margin: '1rem'}}>
-                    <StyledTextField
-                        label="Fees"
-                        name="fee"
-                        id="add-activity-fee"
-                        onChange = {handleInputChange}
-                        value={values.fee}
-                        {...(errors.fee && {error: true, helperText: errors.fee})}
-                        InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
-                    ></StyledTextField>
-                    <StyledTextField
-                        label="Taxes"
-                        name="tax"
-                        id="add-activity-tax"
-                        onChange = {handleInputChange}
-                        value={values.tax}
-                        {...(errors.tax && {error: true, helperText: errors.tax})}
-                        InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
-                    ></StyledTextField>
+            <Grid container 
+                direction="row"
+                justifyContent="center"
+                alignItems="space-around"
+            >        
+                <StyledTextField
+                    margin="normal"
+                    label="Fees"
+                    name="fee"
+                    id="add-activity-fee"
+                    onChange = {handleInputChange}
+                    value={values.fee}
+                    {...(errors.fee && {error: true, helperText: errors.fee})}
+                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                ></StyledTextField>
+                <StyledTextField
+                    margin="normal"
+                    label="Taxes"
+                    name="tax"
+                    id="add-activity-tax"
+                    onChange = {handleInputChange}
+                    value={values.tax}
+                    {...(errors.tax && {error: true, helperText: errors.tax})}
+                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                ></StyledTextField>
+            </Grid>
         </Grid>
         <Button type="submit">ADD</Button>
     </Grid>

@@ -82,8 +82,8 @@ const AddActivityScreen = (props) => {
 }
 
 AddActivityScreen.propTypes = {
-  activePortfolio: PropTypes.array,
-  portfolioData: PropTypes.array,
+  activePortfolio: PropTypes.string,
+  portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
 };
 

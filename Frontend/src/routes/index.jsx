@@ -90,7 +90,7 @@ const AppRoutes = () => {
         />}
       />
       <Route 
-        path='/addActivity' 
+        path='/activities/addActivity' 
         element={
         <AddActivityScreen
           activePortfolio={activePortfolio}
