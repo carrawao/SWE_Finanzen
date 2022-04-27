@@ -8,6 +8,7 @@ import {Route, Routes} from 'react-router-dom';
 const Home = lazy(() => import('../components/screens/Home'));
 const DashboardScreen = lazy(() => import('../components/screens/Dashboard/DashboardScreen'));
 const ActivitiesScreen = lazy(() => import('../components/screens/Activities/ActivitiesScreen'));
+const AddActivityScreen = lazy(() => import('../components/screens/Activities/AddActivity/AddActivityScreen'));
 const WatchListsScreen = lazy(() => import('../components/screens/WatchLists/WatchListsScreen'));
 const SettingsScreen = lazy(() => import('../components/screens/Settings/SettingsScreen'));
 const AssetDetailsScreen = lazy(() => import('../components/screens/AssetDetails/AssetDetailsScreen'));
@@ -83,6 +84,15 @@ const AppRoutes = () => {
         path='/activities' 
         element={
         <ActivitiesScreen
+          activePortfolio={activePortfolio}
+          portfolioData={portfolioData}
+          setPortfolioData={setPortfolioData}
+        />}
+      />
+      <Route 
+        path='/addActivity' 
+        element={
+        <AddActivityScreen
           activePortfolio={activePortfolio}
           portfolioData={portfolioData}
           setPortfolioData={setPortfolioData}

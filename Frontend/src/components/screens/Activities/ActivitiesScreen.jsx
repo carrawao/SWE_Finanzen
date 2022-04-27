@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Button,
@@ -9,8 +10,7 @@ import PropTypes from 'prop-types';
 import ActivitiesList from './ActivitiesList';
 import ScreensTemplate from '../../ScreensTemplate';
 import {SearchField, CustomTable, SearchResultsTable} from '../../common';
-import { renderRemoveActivityModal, renderAddActivityModal } from './Modals/activityModals';
-import AddActivityForm from './AddActivityForm';
+import { renderRemoveActivityModal } from './Modals/activityModals';
 
 /**
  * Component related to the activities page
@@ -19,10 +19,13 @@ import AddActivityForm from './AddActivityForm';
  * @constructor
  */
 const ActivitiesScreen = (props) => {
-  
-  const [addActivityModal, setAddActivityModal] = useState(false);
 
   const portfolioData = props.portfolioData[props.activePortfolio];
+
+  let navigate = useNavigate(); 
+  const routeChange = (path) =>{ 
+    navigate(path);
+  }
 
   const setDummyActivities = () => {  
     const activities = [
@@ -128,38 +131,6 @@ const ActivitiesScreen = (props) => {
     console.log(props.portfolioData); 
   }
 
-  const addActivity = (assettype, assetSymbol, type, date, quantity, sum, tax, fee) => {
-    
-    const activityObj = {
-      "id": portfolioData["activities"].length,
-      "assettype": assettype,
-      "asset": assetSymbol,
-      "type": type,
-      "date": date,
-      "quantity": quantity,
-      "sum": sum,
-      "tax": tax,
-      "fee": fee
-    }
-
-    let assetData = portfolioData[assettype].find(element => element.symbol === assetSymbol);
-    if (assetData === undefined) {
-      const assetObj = {
-        "id": portfolioData[assettype].length,
-        "symbol": assetSymbol,
-        "name": "",
-        "value": "",
-        "quantity": quantity
-      }
-    }
-
-    props.setPortfolioData(prevData => {
-      const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]["activities"].push(activityObj);
-      return portfolioData;
-    });
-  }
-
   const renderHeader = () => (
       <SearchField
 
@@ -170,7 +141,7 @@ const ActivitiesScreen = (props) => {
     <Grid className='d-flex justify-content-center pt-2'>
       <Container className='p-0'>
         <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
-        <Button onClick={() => setAddActivityModal(true)}>Add Activity</Button>
+        <Button onClick={() => routeChange('addActivity')}>Add Activity</Button>
         <ActivitiesList
           activePortfolio={props.activePortfolio}
           portfolioData={props.portfolioData}
@@ -188,7 +159,7 @@ const ActivitiesScreen = (props) => {
         searchBar
         selectedNavLinkIndex={3}
       />
-      {renderAddActivityModal(addActivityModal, setAddActivityModal, addActivity, props.portfolioData[props.activePortfolio])}
+      {renderRemoveActivityModal()}
     </React.Fragment>
   );
 }
