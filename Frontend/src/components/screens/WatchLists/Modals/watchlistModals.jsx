@@ -1,5 +1,5 @@
-import React from 'react';
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField} from '@mui/material';
 import {CustomModal} from '../../../common';
 
 export const renderAddWatchlistModal = (open, handleClose, errorModal, onChange, onClick) => (
@@ -106,70 +106,115 @@ export const renderRemoveListModal = (open, handleClose, onClick) => (
   />
 );
 
-export const renderAddToWatchlistModal = (open, handleClose, watchListsArray, selectedListIndex, onChange, onClick ) => (
-  <CustomModal
-    open={open}
-    handleClose={() => handleClose(false)}
-    labelledby='add_to_watchlist-modal-title'
-    describedby='add_to_watchlist-modal-description'
-    modalTitle='Add to watchlist:'
-    modalBody={() => (
-      <FormControl
-        className='pb-3'
-      >
-        <InputLabel id='select_watchlist' className='d-flex'>Watchlist</InputLabel>
-        <Select
-          className='py-0'
-          label='Watchlist'
-          labelId='select_watchlist'
-          value={watchListsArray.length > 0 ? watchListsArray[selectedListIndex] : 'Select watchlist'}
-          onChange={(event) => onChange(event)}
-          renderValue={(value) => `${value}`}
-          MenuProps={{
-            sx: {
-              paddingBottom: '10px',
-              '& ul': {paddingTop: 0, paddingBottom: 0},
-              '&& .MuiMenuItem-root': {
-                '&.Mui-selected': {
+export const RenderAddToWatchlistModal = ({
+  open,
+  handleClose,
+  watchListsArray,
+  assetsListArray,
+  resultAsset,
+  selectedListIndex,
+  onChange,
+  onClick
+}) => {
+  const [error, setError] = useState(false);
+  const [selectedWatchListIndex, setSelectedWatchListIndex] = useState(selectedListIndex);
+
+  useEffect(() => {
+    if (selectedWatchListIndex !== selectedListIndex) {
+      setSelectedWatchListIndex(selectedListIndex);
+    }
+
+    if (resultAsset !== undefined) {
+      const name = resultAsset.name;
+      assetsListArray[selectedWatchListIndex].forEach(element => {
+        if (element.name === name) {
+          setError(true);
+        }
+      });
+    }
+  }, [assetsListArray, error, resultAsset, selectedWatchListIndex]);
+
+  return (
+    <CustomModal
+      open={open}
+      className='p-0'
+      handleClose={() => {
+        handleClose();
+        setError(false);
+      }}
+      labelledby='add_to_watchlist-modal-title'
+      describedby='add_to_watchlist-modal-description'
+      modalTitle='Add to watchlist:'
+      modalBody={() => (
+        <FormControl
+          className='pb-3'
+          error={error}
+        >
+          <InputLabel id='select_watchlist' className='d-flex'>Watchlist</InputLabel>
+          <Select
+            className='py-0'
+            label='Watchlist'
+            labelId='select_watchlist'
+            value={watchListsArray.length > 0 ? watchListsArray[selectedWatchListIndex] : 'Select watchlist'}
+            onChange={(event) => {
+              const eventIndex = watchListsArray.map(item => item).indexOf(event.target.value);
+              setSelectedWatchListIndex(eventIndex);
+              setError(false);
+              onChange(event);
+            }}
+            renderValue={(value) => `${value}`}
+            MenuProps={{
+              sx: {
+                paddingBottom: '10px',
+                '& ul': {paddingTop: 0, paddingBottom: 0},
+                '&& .MuiMenuItem-root': {
+                  '&.Mui-selected': {
+                    color: 'white',
+                    backgroundColor: '#493f35'
+                  }
+                },
+                '&& .Mui-selected': {
                   color: 'white',
                   backgroundColor: '#493f35'
                 }
-              },
-              '&& .Mui-selected': {
-                color: 'white',
-                backgroundColor: '#493f35'
               }
+            }}
+          >
+            {watchListsArray.map((element, index) => (
+              <MenuItem
+                key={`watchlist_${index}`}
+                className='py-3'
+                value={element}
+                divider
+              >
+                {element}
+              </MenuItem>
+            ))}
+          </Select>
+          {error && <FormHelperText error>*Asset already in selected Watchlist</FormHelperText>}
+        </FormControl>
+      )}
+      modalButton={() => (
+        <Button
+          variant='outlined'
+          onClick={() => {
+            if (!error) {
+              onClick();
+              handleClose();
+            }
+          }}
+          sx={{
+            color: 'white',
+            width: '5rem',
+            backgroundColor: 'rgb(78 185 111)',
+            '&:hover': {
+              backgroundColor: 'rgb(78 185 111)',
             }
           }}
         >
-          {watchListsArray.map((element, index) => (
-            <MenuItem
-              key={`watchlist_${index}`}
-              className='py-3'
-              value={element}
-              divider
-            >
-              {element}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    )}
-    modalButton={() => (
-      <Button
-        variant='outlined'
-        onClick={() => onClick()}
-        sx={{
-          color: 'white',
-          width: '5rem',
-          backgroundColor: 'rgb(78 185 111)',
-          '&:hover': {
-            backgroundColor: 'rgb(78 185 111)',
-          }
-        }}
-      >
-        Add
-      </Button>
-    )}
-  />
-);
+          Add
+        </Button>
+      )}
+    />
+  );
+}

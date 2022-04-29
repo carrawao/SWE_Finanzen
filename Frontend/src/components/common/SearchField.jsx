@@ -39,7 +39,7 @@ const SearchField = props => {
       id='standard-basic'
       variant='standard'
       placeholder='Search Asset'
-      fullWidth
+      className='d-flex flex-grow-1'
       sx={{
         '& .MuiInputBase-input': {
           '&::-webkit-input-placeholder': {

@@ -2,7 +2,6 @@ import React from 'react';
 import {Avatar, Button, Grid, List, ListItem, ListItemButton, Typography} from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 
@@ -26,7 +25,7 @@ const SearchResultsTable = (props) => {
 
   return (
     <Grid item className='d-flex flex-column justify-content-center align-items-center flex-grow-1 px-xl-5'>
-      <List className={`d-flex flex-column ${props.watchListsArray.length > 0 ? 'col-12 col-sm-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
+      <List className={`d-flex flex-column ${props.watchListsArray.length > 0 ? 'col-12 col-sm-7 col-md-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
         {props.searchResult.map((element, index) => {
           let isAssetInWatchList = checkAssetInWatchLists(element);
           return (
@@ -111,14 +110,12 @@ const SearchResultsTable = (props) => {
                     </Avatar>
                     <ListItemButton
                       className='p-0 ms-3 flex-grow-0 justify-content-end'
-                      onClick={() => isAssetInWatchList ? {} : props.addToWatchList(index)}
+                      onClick={() => props.addToWatchList(index)}
                     >
                       <Avatar
                         sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
                       >
-                        {isAssetInWatchList ?
-                          <BookmarkIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/> :
-                          <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/> }
+                        <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/>
                       </Avatar>
                     </ListItemButton>
                     <ListItemButton

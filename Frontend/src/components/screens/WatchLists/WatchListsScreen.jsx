@@ -7,7 +7,7 @@ import AssetsList from './AssetsList';
 import ScreensTemplate from '../../ScreensTemplate';
 import {SearchField} from '../../common';
 import SearchResultsTable from '../../common/SearchResultsTable';
-import {renderAddToWatchlistModal} from './Modals/watchlistModals';
+import {RenderAddToWatchlistModal} from './Modals/watchlistModals';
 
 /**
  * Component related to the watchLists page
@@ -15,12 +15,13 @@ import {renderAddToWatchlistModal} from './Modals/watchlistModals';
  * @returns {JSX.Element}
  * @constructor
  */
-const WatchListsScreen = (props) => {
+const WatchListsScreen = props => {
   const [selectedListIndex, setSelectedListIndex] = useState(0);
   const [searchResult, setSearchResult] = useState([]);
   const [searchResultIndex, setSearchResultIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [addToWatchlistModal, setAddToWatchlistModal] = useState(false);
+  const [isAssetInWatchList, setIsAssetInWatchList] = useState(false);
 
   const renderHeader = () => (
       <SearchField
@@ -32,8 +33,7 @@ const WatchListsScreen = (props) => {
   );
 
   const renderBody = () => (
-    <Grid className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
-      {searchResult.length > 0 ?
+    searchResult.length > 0 ? <Grid className='justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
         <SearchResultsTable
           searchResult={searchResult}
           watchListsArray={props.watchListsArray}
@@ -47,8 +47,9 @@ const WatchListsScreen = (props) => {
             setSearchResult([]);
             setSearchQuery('');
           }}
-        /> :
-      <React.Fragment>
+        />
+      </Grid>
+    :  <Grid className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
         <Grid item className='col-12 col-md-4 col-xl-3'>
           <WatchLists
             watchListsArray={props.watchListsArray}
@@ -69,42 +70,46 @@ const WatchListsScreen = (props) => {
             setSelectedListIndex={setSelectedListIndex}
           />
         </Grid>
-      </React.Fragment>
-      }
     </Grid>
   );
 
   // Selects the index of the current watchlist
-  const handleChange = (event) => {
+  const handleChange = event => {
     if (props.watchListsArray.includes(event.target.value)) {
       const index = props.watchListsArray.map(item => item).indexOf(event.target.value);
       setSelectedListIndex(index);
     }
   };
 
+  // Function to close the modals
+  const handleClose = () => {
+    setIsAssetInWatchList(false)
+    setAddToWatchlistModal(false);
+  }
+
   const addAssetToWatchlist = async () => {
     const symbol = searchResult[searchResultIndex].symbol;
     const assetType = searchResult[searchResultIndex].assetType;
+
     try {
       return await fetch(
-        `http://localhost:3001/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
-        {mode:'cors'})
-        .then(response => response.json())
-        .then(data => {
-          props.setAssetsListArray(prevAssetsListArray => {
-            const assetsListArray = [...prevAssetsListArray];
-            assetsListArray[selectedListIndex] = [
-              ...assetsListArray[selectedListIndex],
-              {
-                name: data.name ? data.name : symbol,
-                price: `${Number.parseFloat(data.value).toFixed(2)}`,
-                change: `${Number.parseFloat(data.percentChange).toFixed(2)}`
-              }
-            ];
-            return assetsListArray;
-          })
-          setSearchResult([]);
-          setAddToWatchlistModal(false);
+      `http://localhost:3001/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
+      {mode:'cors'})
+      .then(response => response.json())
+      .then(data => {
+        props.setAssetsListArray(prevAssetsListArray => {
+          const assetsListArray = [...prevAssetsListArray];
+          assetsListArray[selectedListIndex] = [
+            ...assetsListArray[selectedListIndex],
+            {
+              name: data.name ? data.name : symbol,
+              price: `${Number.parseFloat(data.value).toFixed(2)}`,
+              change: `${Number.parseFloat(data.percentChange).toFixed(2)}`
+            }
+          ];
+          return assetsListArray;
+        })
+        setSearchResult([]);
         });
     }
     catch (e) {
@@ -120,9 +125,17 @@ const WatchListsScreen = (props) => {
         searchBar
         selectedNavLinkIndex={2}
       />
-      {renderAddToWatchlistModal(addToWatchlistModal, setAddToWatchlistModal, props.watchListsArray, selectedListIndex, handleChange, addAssetToWatchlist)}
+      <RenderAddToWatchlistModal
+        open={addToWatchlistModal}
+        handleClose={() => handleClose()}
+        watchListsArray={props.watchListsArray}
+        assetsListArray={props.assetsListArray}
+        resultAsset={searchResult[searchResultIndex]}
+        selectedListIndex={selectedListIndex}
+        onChange={event => handleChange(event)}
+        onClick={() => addAssetToWatchlist()}
+      />
     </React.Fragment>
-
   );
 }
 

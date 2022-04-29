@@ -100,7 +100,15 @@ const AppRoutes = () => {
           />
         }
       />
-      <Route path='/settings' element={<SettingsScreen/>}/>
+      <Route
+        path='/settings'
+        element={
+        <SettingsScreen
+          watchListsArray={watchListsArray}
+          assetsListArray={assetsListArray}
+          portfolioData={portfolioData}
+        />}
+      />
       <Route path='/watchlists/:asset' element={<AssetDetailsScreen/>}/>
       <Route path='/analysis' element={<AnalysisScreen/>}/>
     </Routes>
