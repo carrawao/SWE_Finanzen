@@ -5,7 +5,9 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 
-const SearchResultsTable = (props) => {
+const SearchResultsTable = props => {
+  const colorsArray = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)', 'rgb(239 195 21)'];
+
   /**
    * Checks whether asset is already in watchlist
    * @param asset
@@ -25,7 +27,7 @@ const SearchResultsTable = (props) => {
 
   return (
     <Grid item className='d-flex flex-column justify-content-center align-items-center flex-grow-1 px-xl-5'>
-      <List className={`d-flex flex-column ${props.watchListsArray.length > 0 ? 'col-12 col-sm-7 col-md-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
+      <List className={`d-flex flex-column ${props.watchListsArray.length > 0 ? 'col-12 col-sm-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
         {props.searchResult.map((element, index) => {
           let isAssetInWatchList = checkAssetInWatchLists(element);
           return (
@@ -52,8 +54,9 @@ const SearchResultsTable = (props) => {
                 <Grid item className='pe-3'>
                   <Avatar
                     alt={`${element.name}-logo`}
-                    src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`}
+                    //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`}
                     sx={{
+                      backgroundColor: colorsArray[index % 4],
                       width: {
                         xs: '1.8rem',
                         sm: '2rem',
@@ -65,7 +68,11 @@ const SearchResultsTable = (props) => {
                         md: '2.3rem'
                       },
                     }}
-                  />
+                  >
+                    <Typography fontSize='14px'>
+                      {`${element.symbol.slice(0, 3).toUpperCase()}`}
+                    </Typography>
+                  </Avatar>
                 </Grid>
 
                 <Grid
