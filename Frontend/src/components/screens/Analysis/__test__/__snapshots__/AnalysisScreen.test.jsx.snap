@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot Test AnalysisDetailItem 1`] = `
+<ForwardRef(ListItem)
+  className="hoverElement"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  sx={
+    Object {
+      "borderBottom": "2px solid lightgrey",
+    }
+  }
+>
+  <ForwardRef(Container)
+    className="d-flex flex-row p-0 align-items-center"
+  >
+    <ForwardRef(Box)
+      className="d-flex flex-column mt-6 col-6 col-sm-6 me-6"
+    >
+      <ForwardRef(Typography)
+        className="align-self-start fw-bold px-1"
+        component="span"
+        fontSize={
+          Object {
+            "md": 14,
+            "xs": 12,
+          }
+        }
+        noWrap={true}
+        sx={
+          Object {
+            "alignItems": "flex-end",
+          }
+        }
+      >
+        IBM
+      </ForwardRef(Typography)>
+    </ForwardRef(Box)>
+    <ForwardRef(Box)
+      className="d-flex flex-row-reverse mt-6 col-6 col-sm-6 me-6"
+    >
+      <ForwardRef(Typography)
+        className="align-self-start fw-bold px-1"
+        component="span"
+        fontSize={
+          Object {
+            "md": 14,
+            "xs": 12,
+          }
+        }
+        noWrap={true}
+      >
+        32
+         %
+      </ForwardRef(Typography)>
+    </ForwardRef(Box)>
+  </ForwardRef(Container)>
+</ForwardRef(ListItem)>
+`;
+
+exports[`Snapshot Test AnalysisScreen 1`] = `
+<Fragment>
+  <ScreensTemplate
+    bodyComponent={[Function]}
+    headerComponent={[Function]}
+    selectedNavLinkIndex={5}
+  />
+</Fragment>
+`;
+
+exports[`Snapshot Test AnalysisStockSplitDetailItem 1`] = `
+<ForwardRef(ListItem)
+  sx={
+    Object {
+      "borderBottom": "2px solid lightgrey",
+    }
+  }
+>
+  <ForwardRef(Container)
+    className="d-flex flex-row p-0 align-items-center"
+  >
+    <ForwardRef(Box)
+      className="d-flex flex-column mt-6 col-6 col-sm-6 me-6"
+    >
+      <ForwardRef(Typography)
+        className="align-self-start fw-bold px-1"
+        component="span"
+        fontSize={
+          Object {
+            "md": 14,
+            "xs": 12,
+          }
+        }
+        noWrap={true}
+        sx={
+          Object {
+            "alignItems": "flex-end",
+          }
+        }
+      >
+        Germany
+      </ForwardRef(Typography)>
+    </ForwardRef(Box)>
+    <ForwardRef(Box)
+      className="d-flex flex-row-reverse mt-6 col-6 col-sm-6 me-6"
+    >
+      <ForwardRef(Typography)
+        className="align-self-start fw-bold px-1"
+        component="span"
+        fontSize={
+          Object {
+            "md": 14,
+            "xs": 12,
+          }
+        }
+        noWrap={true}
+      >
+        30
+         %
+      </ForwardRef(Typography)>
+    </ForwardRef(Box)>
+  </ForwardRef(Container)>
+</ForwardRef(ListItem)>
+`;

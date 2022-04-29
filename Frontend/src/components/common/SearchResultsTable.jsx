@@ -2,11 +2,12 @@ import React from 'react';
 import {Avatar, Button, Grid, List, ListItem, ListItemButton, Typography} from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 
-const SearchResultsTable = (props) => {
+const SearchResultsTable = props => {
+  const colorsArray = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)', 'rgb(239 195 21)'];
+
   /**
    * Checks whether asset is already in watchlist
    * @param asset
@@ -26,7 +27,7 @@ const SearchResultsTable = (props) => {
 
   return (
     <Grid item className='d-flex flex-column justify-content-center align-items-center flex-grow-1 px-xl-5'>
-      <List className='d-flex flex-column col-12 col-sm-10 col-lg-9 col-xl-11'>
+      <List className={`d-flex flex-column ${props.watchListsArray.length > 0 ? 'col-12 col-sm-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
         {props.searchResult.map((element, index) => {
           let isAssetInWatchList = checkAssetInWatchLists(element);
           return (
@@ -53,8 +54,9 @@ const SearchResultsTable = (props) => {
                 <Grid item className='pe-3'>
                   <Avatar
                     alt={`${element.name}-logo`}
-                    src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`}
+                    //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`}
                     sx={{
+                      backgroundColor: colorsArray[index % 4],
                       width: {
                         xs: '1.8rem',
                         sm: '2rem',
@@ -66,13 +68,19 @@ const SearchResultsTable = (props) => {
                         md: '2.3rem'
                       },
                     }}
-                  />
+                  >
+                    <Typography fontSize='14px'>
+                      {`${element.symbol.slice(0, 3).toUpperCase()}`}
+                    </Typography>
+                  </Avatar>
                 </Grid>
 
-                <Grid item className='d-flex flex-column flex-xl-row col-6 col-sm-7 pe-sm-3 ps-lg-0'>
+                <Grid
+                  item
+                  className={`d-flex flex-column ${props.watchListsArray.length > 0 ? 'flex-xl-row flex-grow-1 col-1 pe-4' : 'col-9 col-sm-10'}`}>
                   <Typography
-                    className='col-12 col-xl-9 me-md-5'
                     noWrap
+                    className='col-xl-8'
                     fontSize={{
                       lg: 16,
                       md: 15,
@@ -83,7 +91,7 @@ const SearchResultsTable = (props) => {
                   </Typography>
 
                   <Typography
-                    className='fw-bold ms-xl-3 col-lg-6'
+                    className={`fw-bold ${props.watchListsArray.length > 0 && 'ms-xl-3 text-xl-center'} col-lg-4`}
                     color='#493f35'
                     fontSize={{
                       lg: 16,
@@ -95,42 +103,42 @@ const SearchResultsTable = (props) => {
                   </Typography>
                 </Grid>
 
-                <Grid item className='d-flex flex-row flex-grow-1 justify-content-end'>
-                  <Avatar
-                    className='ms-0'
-                    sx={{
-                      width: '1.4rem',
-                      height: '1.4rem',
-                      backgroundColor: 'white',
-                      border: !isAssetInWatchList ? 'solid 2px white' : 'solid 2px #493f35'}}
-                  >
-                    {isAssetInWatchList && <DoneIcon sx={{color: 'green', fontSize: '20px'}}/>}
-                  </Avatar>
-                  <ListItemButton
-                    className='p-0 ms-3 flex-grow-0 justify-content-end'
-                    onClick={() => isAssetInWatchList ? {} : props.addToWatchList(index)}
-                  >
+                {props.watchListsArray.length > 0 &&
+                  <Grid item className='d-flex flex-row justify-content-end'>
                     <Avatar
-                      sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                      className='ms-0'
+                      sx={{
+                        width: '1.4rem',
+                        height: '1.4rem',
+                        backgroundColor: 'white',
+                        border: !isAssetInWatchList ? 'solid 2px white' : 'solid 2px #493f35'}}
                     >
-                      {isAssetInWatchList ?
-                        <BookmarkIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/> :
-                        <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/> }
+                      {isAssetInWatchList && <DoneIcon sx={{color: 'green', fontSize: '20px'}}/>}
                     </Avatar>
-                  </ListItemButton>
-                  <ListItemButton
-                    className='p-0 ms-3 flex-grow-0 justify-content-end'
-                    onClick={() => {
-                    }}
-                  >
-                    <Avatar
-                      className='me-2'
-                      sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                    <ListItemButton
+                      className='p-0 ms-3 flex-grow-0 justify-content-end'
+                      onClick={() => props.addToWatchList(index)}
                     >
-                      <AddIcon sx={{color: '#493f35', fontSize: '20px'}}/>
-                    </Avatar>
-                  </ListItemButton>
-                </Grid>
+                      <Avatar
+                        sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                      >
+                        <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/>
+                      </Avatar>
+                    </ListItemButton>
+                    <ListItemButton
+                      className='p-0 ms-3 flex-grow-0 justify-content-end'
+                      onClick={() => {
+                      }}
+                    >
+                      <Avatar
+                        className='me-2'
+                        sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                      >
+                        <AddIcon sx={{color: '#493f35', fontSize: '20px'}}/>
+                      </Avatar>
+                    </ListItemButton>
+                  </Grid>
+                }
               </Grid>
             </ListItem>
           )

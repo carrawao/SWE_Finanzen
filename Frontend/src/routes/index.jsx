@@ -1,6 +1,9 @@
 import { getValue } from '@testing-library/user-event/dist/utils';
 import React, {lazy, useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
+import Impressum from '../components/screens/Impressum';
+import AGB from '../components/screens/AGB';
+import Privacy from '../components/screens/Privacy';
 
 /**
  * Optional the component could load lazily, allowing to borrow more
@@ -9,9 +12,11 @@ import {Route, Routes} from 'react-router-dom';
 const Home = lazy(() => import('../components/screens/Home'));
 const DashboardScreen = lazy(() => import('../components/screens/Dashboard/DashboardScreen'));
 const ActivitiesScreen = lazy(() => import('../components/screens/Activities/ActivitiesScreen'));
+const AddActivityScreen = lazy(() => import('../components/screens/Activities/AddActivity/AddActivityScreen'));
 const WatchListsScreen = lazy(() => import('../components/screens/WatchLists/WatchListsScreen'));
 const SettingsScreen = lazy(() => import('../components/screens/Settings/SettingsScreen'));
 const AssetDetailsScreen = lazy(() => import('../components/screens/AssetDetails/AssetDetailsScreen'));
+const AnalysisScreen = lazy(() => import('../components/screens/Analysis/AnalysisScreen'));
 
 const emptyPortfolioData = {
   "Portfolio": {
@@ -171,9 +176,25 @@ const AppRoutes = () => {
         />}
       />
       <Route 
+        path='/analysis' 
+        element={
+        <AnalysisScreen
+          
+        />}
+      />
+      <Route 
         path='/activities' 
         element={
         <ActivitiesScreen
+          activePortfolio={activePortfolio}
+          portfolioData={portfolioData}
+          setPortfolioData={setPortfolioData}
+        />}
+      />
+      <Route 
+        path='/activities/addActivity' 
+        element={
+        <AddActivityScreen
           activePortfolio={activePortfolio}
           portfolioData={portfolioData}
           setPortfolioData={setPortfolioData}
@@ -190,8 +211,20 @@ const AppRoutes = () => {
           />
         }
       />
-      <Route path='/settings' element={<SettingsScreen/>}/>
-      <Route path='/watchlists/:asset' element={<AssetDetailsScreen/>}/>
+      <Route
+        path='/settings'
+        element={
+        <SettingsScreen
+          watchListsArray={watchListsArray}
+          assetsListArray={assetsListArray}
+          portfolioData={portfolioData}
+        />}
+      />
+      <Route path='/asset/:asset' element={<AssetDetailsScreen/>}/>
+      <Route path='/analysis' element={<AnalysisScreen/>}/>
+      <Route path='/impressum' element={<Impressum/>}/>
+      <Route path='/privacy' element={<Privacy/>}/>
+      <Route path='/agb' element={<AGB/>}/>
     </Routes>
   );
 }
