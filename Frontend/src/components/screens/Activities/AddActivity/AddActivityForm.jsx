@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Grid, Button, TextField, MenuItem, styled, InputAdornment, Typography} from '@mui/material';
+import { Grid, Button, Box, TextField, MenuItem, styled, InputAdornment, Autocomplete} from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -7,6 +7,8 @@ import deLocale from 'date-fns/locale/de';
 import ClearIcon from '@mui/icons-material/Clear';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import PropTypes from 'prop-types';
+import SearchAssetInput from './SearchAssetsInput';
+import { set } from 'date-fns';
 
 const StyledTextField = styled(TextField)({
     //Label color when focused
@@ -33,8 +35,9 @@ const StyledTextField = styled(TextField)({
 });
 
 const initialValues = {
-    assettype: "share",
-    asset: "",
+    assetType: "share",
+    asset: null,
+    assetInput: "",
     typeShare: "buy",
     typeCrypto: "buy",
     typeCash: "deposit",
@@ -94,9 +97,9 @@ const AddActivityForm = (props) => {
         let errors = {};
         errors.asset = values.asset ? "" : "This field is required";
         if(values.asset) {
-            if (values.assettype === "share") errors = {...errors, ...validateShare()};
-            if (values.assettype === "crypto") errors = {...errors, ...validateCrypto()};
-            if (values.assettype === "cash") errors = {...errors, ...validateCash()};
+            if (values.assetType === "share") errors = {...errors, ...validateShare()};
+            if (values.assetType === "crypto") errors = {...errors, ...validateCrypto()};
+            if (values.assetType === "cash") errors = {...errors, ...validateCash()};
             errors.tax = (numberWithZeroRegex).test(values.tax) ? "" : "Not a valid number";
             errors.fee = (numberWithZeroRegex).test(values.fee) ? "" : "Not a valid number";
         }
@@ -164,9 +167,9 @@ const AddActivityForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(validate()) {
-            if (values.assettype === "share") props.addActivity(values.assettype, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.tax, values.fee);
-            if (values.assettype === "crypto") props.addActivity(values.assettype, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.tax, values.fee);
-            if (values.assettype === "cash") props.addActivity(values.assettype, values.asset, values.typeCash, values.date, 1, values.sum, values.tax, values.fee);
+            if (values.assetType === "share") props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.tax, values.fee);
+            if (values.assetType === "crypto") props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.tax, values.fee);
+            if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sum, values.tax, values.fee);
         }
     }
 
@@ -174,187 +177,218 @@ const AddActivityForm = (props) => {
     <Grid 
         container 
         direction="column"
-        justifyContent="space-evenly"
+        justifyContent="center"
         alignItems="stretch"
         component="form" 
         autoComplete="off"
         onSubmit={handleSubmit}
         noValidate
     >
-        <Grid item xs={4} sx={{ margin: '1rem'}}>
-            <StyledTextField
-                margin="normal"
-                select
-                label="assettype"
-                name="assettype"
-                onChange = {handleInputChange}
-                value={values.assettype}
-            >
-                <MenuItem value={"share"}>Share</MenuItem>
-                <MenuItem value={"crypto"}>Crypto</MenuItem>
-                <MenuItem value={"cash"}>Cash</MenuItem>
-            </StyledTextField>
-            <StyledTextField
-                margin="normal"
-                type="search"
-                label="asset/account"
-                name="asset"
-                onChange = {handleInputChange}
-                value={values.asset}
-                {...(errors.asset && {error: true, helperText: errors.asset})}
-            >
-
-            </StyledTextField>
-
-        </Grid>
-        <Grid item xs={4} sx={{ margin: '1rem'}}>
-                {values.assettype === "share" &&
-                    <StyledTextField
+        <Grid 
+            container 
+            direction="row"
+            justifyContent="center"
+            alignItems="flex-start"
+        >
+            <Grid item xs={1.5} sx={{ marginRight: '0rem'}}>
+                <StyledTextField
+                    fullWidth
+                    margin="normal"
                     select
-                    label="type"
-                    name="typeShare"
+                    label="type of asset"
+                    name="assetType"
                     onChange = {handleInputChange}
-                    value={values.typeShare}
-                    {...(errors.typeShare && {error: true, helperText: errors.typeShare})}
-                    >
-                        <MenuItem value={"buy"}>Buy</MenuItem>
-                        <MenuItem value={"sell"}>Sell</MenuItem>
-                        <MenuItem value={"dividend"}>Dividend</MenuItem>
-                    </StyledTextField>
-                }
-                {values.assettype === "crypto" &&
-                    <StyledTextField
-                    select
-                    label="type"
-                    name="typeCrypto"
-                    onChange = {handleInputChange}
-                    value={values.typeCrypto}
-                    {...(errors.typeCrypto && {error: true, helperText: errors.typeCrypto})}
-                    >
-                        <MenuItem value={"buy"}>Buy</MenuItem>
-                        <MenuItem value={"sell"}>Sell</MenuItem>
-                    </StyledTextField>
-                }
-                {values.assettype === "cash" &&
-                    <StyledTextField
-                    select
-                    label="type"
-                    name="typeCash"
-                    onChange = {handleInputChange}
-                    value={values.typeCash}
-                    {...(errors.typeCash && {error: true, helperText: errors.typeCash})}
-                    >
-                        <MenuItem value={"deposit"}>Deposit</MenuItem>
-                        <MenuItem value={"payout"}>Payout</MenuItem>
-                        <MenuItem value={"interest"}>Interest</MenuItem>
-                    </StyledTextField>
-                }
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>    
-                    <DatePicker
-                        disableFuture
-                        label="Date"
-                        name="date"
-                        mask = '__.__.____'
-                        views={['day']}
-                        value={values.date}
-                        onChange={(newValue) => {
-                            setValues({
-                                ...values,
-                                ['date']:newValue
-                            });}}
-                        renderInput={(params) => <TextField {...params} />}
-                    />
-                </LocalizationProvider>
-        </Grid>
-        <Grid item xs={4} sx={{ margin: '1rem'}}>
-            {(values.assettype === "share" || values.assettype === "crypto") &&
-                <Grid container 
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="space-around"
+                    value={values.assetType}
                 >
-                    <StyledTextField
-                        margin="normal"
-                        label="Value per Item"
-                        name="value"
-                        id="add-activity-value"
-                        onChange = {handleInputChange}
-                        value={values.value}
-                        {...(errors.value && {error: true, helperText: errors.value})}
-                        InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
-                    ></StyledTextField>
-                    <ClearIcon style={{fontSize: 'medium', margin: '1rem', color: '#493f35'}}></ClearIcon>
-                    <StyledTextField
-                        margin="normal"
-                        label="Quantity"
-                        name="quantity"
-                        id="add-activity-quantity"
-                        onChange = {handleInputChange}
-                        value={values.quantity}
-                        {...(errors.quantity && {error: true, helperText: errors.quantity})}
-                        InputProps={{ inputMode: 'numeric', pattern: '[0-9]*'}} 
-                    ></StyledTextField>
-                    <DragHandleIcon style={{fontSize: 'medium', margin: '1rem', color: '#493f35'}}></DragHandleIcon>
-                    <StyledTextField
-                        margin="normal"
-                        disabled
-                        label="Sum"
-                        name="sum"
-                        id="add-activity-sum"
-                        onChange = {handleInputChange}
-                        value={values.sum}
-                        InputProps={{ required: true, inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
-                    ></StyledTextField>
-                </Grid>
-            }
-            {values.assettype === "cash" &&
-                <Grid container 
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="space-around"
-                >
-                    <StyledTextField
-                        margin="normal"
-                        label="Sum"
-                        name="sum"
-                        id="add-activity-sum-cash"
-                        onChange = {handleInputChange}
-                        value={values.sum}
-                        {...(errors.sum && {error: true, helperText: errors.sum})}
-                        InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
-                    ></StyledTextField>
-                </Grid>
-            }
+                    <MenuItem value={"share"}>Share</MenuItem>
+                    <MenuItem value={"crypto"}>Crypto</MenuItem>
+                    <MenuItem value={"cash"}>Cash</MenuItem>
+                </StyledTextField>
+            </Grid>
+            <Grid item xs={8} sx={{ marginLeft: '0rem'}}>
+                <SearchAssetInput
+                    values={values}
+                    errors={errors}
+                    portfolioData={props.portfolioData}
+                    handleInputChange={handleInputChange}
+                    StyledTextField={StyledTextField}
+                    setValues={setValues}
+                ></SearchAssetInput>
+            </Grid>
         </Grid>
-        <Grid item xs={4} sx={{ margin: '1rem'}}>
-            <Grid container 
+        <Grid 
+            container 
+            direction="row"
+            justifyContent="center"
+            alignItems="flex-start"
+        >
+                {values.assetType === "share" &&
+                    <Grid item xs={4}>
+                        <StyledTextField
+                        fullWidth
+                        select
+                        margin="normal"
+                        label="type"
+                        name="typeShare"
+                        onChange = {handleInputChange}
+                        value={values.typeShare}
+                        {...(errors.typeShare && {error: true, helperText: errors.typeShare})}
+                        >
+                            <MenuItem value={"buy"}>Buy</MenuItem>
+                            <MenuItem value={"sell"}>Sell</MenuItem>
+                            <MenuItem value={"dividend"}>Dividend</MenuItem>
+                        </StyledTextField>
+                    </Grid>
+                }
+                {values.assetType === "crypto" &&
+                    <Grid item xs={4}>
+                        <StyledTextField
+                        fullWidth
+                        select
+                        margin="normal"
+                        label="type"
+                        name="typeCrypto"
+                        onChange = {handleInputChange}
+                        value={values.typeCrypto}
+                        {...(errors.typeCrypto && {error: true, helperText: errors.typeCrypto})}
+                        >
+                            <MenuItem value={"buy"}>Buy</MenuItem>
+                            <MenuItem value={"sell"}>Sell</MenuItem>
+                        </StyledTextField>
+                    </Grid>
+                }
+                {values.assetType === "cash" &&
+                    <Grid item xs={4}>
+                        <StyledTextField
+                        fullWidth
+                        select
+                        margin="normal"
+                        label="type"
+                        name="typeCash"
+                        onChange = {handleInputChange}
+                        value={values.typeCash}
+                        {...(errors.typeCash && {error: true, helperText: errors.typeCash})}
+                        >
+                            <MenuItem value={"deposit"}>Deposit</MenuItem>
+                            <MenuItem value={"payout"}>Payout</MenuItem>
+                            <MenuItem value={"interest"}>Interest</MenuItem>
+                        </StyledTextField>
+                    </Grid>
+                }
+                <Grid item xs={4}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>    
+                        <DatePicker
+                            disableFuture
+                            label="Date"
+                            name="date"
+                            mask = '__.__.____'
+                            views={['day']}
+                            value={values.date}
+                            onChange={(newValue) => {
+                                setValues({
+                                    ...values,
+                                    ['date']:newValue
+                                });}}
+                            renderInput={(params) => <TextField {...params} margin="normal" fullWidth/>}
+                        />
+                    </LocalizationProvider>
+                </Grid>
+        </Grid>
+        {(values.assetType === "share" || values.assetType === "crypto") &&
+            <Grid 
+                container 
                 direction="row"
                 justifyContent="center"
-                alignItems="space-around"
-            >        
+                alignItems="flex-start"
+            >
                 <StyledTextField
                     margin="normal"
-                    label="Fees"
-                    name="fee"
-                    id="add-activity-fee"
+                    label="Value per Item"
+                    name="value"
+                    id="add-activity-value"
                     onChange = {handleInputChange}
-                    value={values.fee}
-                    {...(errors.fee && {error: true, helperText: errors.fee})}
+                    value={values.value}
+                    {...(errors.value && {error: true, helperText: errors.value})}
                     InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
                 ></StyledTextField>
+                <ClearIcon style={{fontSize: 'medium', margin: '1rem', marginTop: '2rem', color: '#493f35'}}></ClearIcon>
                 <StyledTextField
                     margin="normal"
-                    label="Taxes"
-                    name="tax"
-                    id="add-activity-tax"
+                    label="Quantity"
+                    name="quantity"
+                    id="add-activity-quantity"
                     onChange = {handleInputChange}
-                    value={values.tax}
-                    {...(errors.tax && {error: true, helperText: errors.tax})}
+                    value={values.quantity}
+                    {...(errors.quantity && {error: true, helperText: errors.quantity})}
+                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*'}} 
+                ></StyledTextField>
+                <DragHandleIcon style={{fontSize: 'medium', margin: '1rem', marginTop: '2rem', color: '#493f35'}}></DragHandleIcon>
+                <StyledTextField
+                    margin="normal"
+                    disabled
+                    label="Sum"
+                    name="sum"
+                    id="add-activity-sum"
+                    onChange = {handleInputChange}
+                    value={values.sum}
+                    InputProps={{ required: true, inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                ></StyledTextField>
+            </Grid>
+        }
+        {values.assetType === "cash" &&
+            <Grid
+                container 
+                direction="row"
+                justifyContent="center"
+                alignItems="flex-start"
+            >
+                <StyledTextField
+                    margin="normal"
+                    label="Sum"
+                    name="sum"
+                    id="add-activity-sum-cash"
+                    onChange = {handleInputChange}
+                    value={values.sum}
+                    {...(errors.sum && {error: true, helperText: errors.sum})}
                     InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
                 ></StyledTextField>
             </Grid>
+        }
+        <Grid
+            container 
+            direction="row"
+            justifyContent="center"
+            alignItems="flex-start"
+        >        
+            <StyledTextField
+                margin="normal"
+                label="Fees"
+                name="fee"
+                id="add-activity-fee"
+                onChange = {handleInputChange}
+                value={values.fee}
+                {...(errors.fee && {error: true, helperText: errors.fee})}
+                InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+            ></StyledTextField>
+            <StyledTextField
+                margin="normal"
+                label="Taxes"
+                name="tax"
+                id="add-activity-tax"
+                onChange = {handleInputChange}
+                value={values.tax}
+                {...(errors.tax && {error: true, helperText: errors.tax})}
+                InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+            ></StyledTextField>
         </Grid>
-        <Button type="submit">ADD</Button>
+        <Grid
+            container 
+            direction="row"
+            justifyContent="center"
+            alignItems="flex-start"
+        >    
+            <Button type="submit">ADD</Button>
+        </Grid>
     </Grid>
   );
 }
