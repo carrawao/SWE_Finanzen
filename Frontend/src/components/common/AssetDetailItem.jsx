@@ -82,7 +82,7 @@ const AssetDetailItem = props => (
             }}
           >
             <Typography fontSize='16px'>
-              {`${props.activities ? props.row.asset.slice(0, 3).toUpperCase() : props.row.name.slice(0, 3).toUpperCase()}`}
+              {`${props.activities ? props.row.asset.slice(0, 3).toUpperCase() : props.row.symbol.slice(0, 3).toUpperCase()}`}
             </Typography>
           </Avatar>
 

@@ -87,6 +87,7 @@ const WatchListsScreen = props => {
     setAddToWatchlistModal(false);
   }
 
+  // Asset will be added to the selected Watchlist
   const addAssetToWatchlist = async () => {
     const symbol = searchResult[searchResultIndex].symbol;
     const assetType = searchResult[searchResultIndex].assetType;
@@ -103,6 +104,7 @@ const WatchListsScreen = props => {
             ...assetsListArray[selectedListIndex],
             {
               name: data.name ? data.name : symbol,
+              symbol: symbol,
               price: `${Number.parseFloat(data.value).toFixed(2)}`,
               change: `${Number.parseFloat(data.percentChange).toFixed(2)}`
             }
