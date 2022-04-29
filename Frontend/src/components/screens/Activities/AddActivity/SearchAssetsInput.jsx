@@ -56,14 +56,14 @@ const SearchAssetInput = (props) => {
     
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
-    const [sharesInPortfolioOptions, setSharesInPortfolioOptions] = useState(getSharesInPortfolioOptions());
-    const [cryptoInPortfolioOptions, setCryptoInPortfolioOptions] = useState(getCryptoInPortfolioOptions());
-    const [cashOptions, setCashOptions] = useState(getCashOptions());
     const [loading, setLoading] = useState(false);
     const [cash, setCash] = useState(false);
 
+    const sharesInPortfolioOptions = getSharesInPortfolioOptions();
+    const cryptoInPortfolioOptions = getCryptoInPortfolioOptions();
+    const cashOptions = getCashOptions();
+
     useEffect(async () => {
-        console.log("new loading")
         let active = true;
         if (!loading) {
             return undefined;
@@ -75,10 +75,8 @@ const SearchAssetInput = (props) => {
                 tempOptions = searchCash(props.values.assetInput, cashOptions);
             } else {
                 tempOptions = await updateSearchAssetOptions(props.values.assetInput);
-                console.log("tempOptions", tempOptions);
             }
             if (active) {
-                console.log("set");
                 setOptions([...tempOptions]);
             }
             setLoading(false);
@@ -89,11 +87,17 @@ const SearchAssetInput = (props) => {
     }, [loading]);
 
     useEffect(() => {
+        if (!open) {
+            props.setValues({
+                ...props.values,
+                assetInput: ''
+            })
+        }
         if (open) {
             setLoading(true);
         }
     }, [open]);
-
+    
     useEffect(() => {
         if (props.values.assetType === "cash") {
             setCash(true);
@@ -112,19 +116,15 @@ const SearchAssetInput = (props) => {
             if (value==='') {
                 return sharesInPortfolioOptions;
             }
-            fetchShareOptions(value).then((results) => {
-                console.log("fetched", results);
-                return results;
-            });
+            const results = await fetchShareOptions(value);
+            return results;
         }
         if (props.values.assetType === "crypto") {
             if (value==='') {
                 return cryptoInPortfolioOptions;
             }
-            fetchCryptoOptions(value).then((results) => {
-                console.log("fetched", results);
-                return results;
-            });
+            const results = await fetchCryptoOptions(value);
+            return results;
         }
     }
 
@@ -137,13 +137,20 @@ const SearchAssetInput = (props) => {
     }
     
     const fetchShareOptions = async (query) => {
+        let slice = true;
+        if (query.length > 2) {
+            slice = false;
+        }
         try {
-            return await fetch(`http://localhost:3001/searchShare?text=${query}`, {mode:'cors'})
-                .then(response => response.json())
-                .then(searchResult => {
-                    let firstResults = searchResult.slice(0, 10);
-                    return firstResults;
-                });
+            const response = await fetch(`http://localhost:3001/searchShare?text=${query}`, {mode:'cors'})
+            const json = await response.json();
+            let results = [];
+            if (slice === true) {
+                results = json.slice(0, 20);
+            } else {
+                results = json;
+            }
+            return results;
         }
         catch (e) {
             console.log('fetching failed === ', e);
@@ -152,12 +159,10 @@ const SearchAssetInput = (props) => {
     
     const fetchCryptoOptions = async (query) => {
         try {
-            return await fetch(`http://localhost:3001/searchCrypto?text=${query}`, {mode:'cors'})
-                .then(response => response.json())
-                .then(searchResult => {
-                    let firstResults = searchResult.slice(0, 10);
-                    return firstResults;
-                });
+            const response = await fetch(`http://localhost:3001/searchCrypto?text=${query}`, {mode:'cors'})
+            const json = await response.json();
+            let results = json;
+            return results;
         }
         catch (e) {
             console.log('fetching failed === ', e);
@@ -252,7 +257,8 @@ SearchAssetInput.propTypes = {
     errors: PropTypes.object,
     portfolioData: PropTypes.object,
     handleInputChange: PropTypes.func,
-    StyledTextField: PropTypes.object
+    StyledTextField: PropTypes.object,
+    setValues: PropTypes.func,
 };
 
 export default SearchAssetInput;
