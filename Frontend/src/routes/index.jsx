@@ -28,7 +28,7 @@ const emptyPortfolioData = {
     "crypto": [],
     "cash": [],
     "activities": [],
-    "updated": "timestamp"
+    "updated": "1970-01-01"
   },
 };
 
@@ -127,6 +127,12 @@ const AppRoutes = () => {
           watchListsArray={watchListsArray}
           assetsListArray={assetsListArray}
           portfolioData={portfolioData}
+          activePortfolio={activePortfolio}
+          emptyPortfolioData={emptyPortfolioData}
+          setWatchListsArray={setWatchListsArray}
+          setAssetsListArray={setAssetsListArray}
+          setPortfolioData={setPortfolioData}
+          setActivePortfolio={setActivePortfolio}
         />}
       />
       <Route path='/asset/:asset' element={<AssetDetailsScreen/>}/>
