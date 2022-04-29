@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
+import {AppBar, Box, CssBaseline, Toolbar} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
-import Toolbar from '@mui/material/Toolbar';
-import SideNavLeft from './common/SideNavLeft';
+import PropTypes from 'prop-types';
+import {SideNavLeft, Footer} from './common/index';
 
 const drawerWidth = 14; // This is the value in rem units, for responsiveness
 /**
@@ -23,7 +20,7 @@ const ScreensTemplate = (props) => {
   };
 
   return (
-    <Box className='d-flex w-100'>
+    <Box className='d-flex' sx={{position: 'relative', minHeight: '100vh'}}>
       <CssBaseline/>
       <AppBar
         className='position-fixed bg-white'
@@ -66,14 +63,28 @@ const ScreensTemplate = (props) => {
         sx={{
           flexGrow: 1,
           padding: '1rem',
+          paddingBottom: '6rem',
           width: {
-            lg: `calc(100% - ${drawerWidth}rem)`
-          },
+          lg: `calc(100% - ${drawerWidth}rem)`
+        },
           maxWidth: '100%'
         }}
       >
         <Toolbar style={{minHeight: '3rem'}}/>
-        {props.bodyComponent()}
+        <Box>
+          {props.bodyComponent()}
+        </Box>
+      </Box>
+      <Box sx={{
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        width: {
+          xs: '100%',
+          lg: `calc(100% - ${drawerWidth}rem)`
+        }
+      }}>
+        <Footer />
       </Box>
     </Box>
   );
