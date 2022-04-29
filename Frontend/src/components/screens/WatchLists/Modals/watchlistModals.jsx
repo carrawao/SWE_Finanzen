@@ -124,7 +124,7 @@ export const RenderAddToWatchlistModal = ({
       setSelectedWatchListIndex(selectedListIndex);
     }
 
-    if (resultAsset !== undefined) {
+    if (open && resultAsset !== undefined) {
       const name = resultAsset.name;
       assetsListArray[selectedWatchListIndex].forEach(element => {
         if (element.name === name) {
@@ -132,7 +132,7 @@ export const RenderAddToWatchlistModal = ({
         }
       });
     }
-  }, [assetsListArray, error, resultAsset, selectedWatchListIndex]);
+  }, [assetsListArray, error, open, resultAsset, selectedWatchListIndex]);
 
   return (
     <CustomModal

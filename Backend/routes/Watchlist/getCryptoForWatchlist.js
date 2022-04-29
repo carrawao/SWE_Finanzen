@@ -24,7 +24,6 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                 }
             });
             const setData = () => {
-                const rawCurreny = fs.readFileSync(dataPathCurrentCurrency);
                 const rawDailyData = fs.readFileSync(dataPathDailycrypto);
                 const rawQuotedUScryptos = fs.readFileSync(dataPathQuotedUScryptos);
                 const dailyJson_data = JSON.parse(rawDailyData);  

@@ -23,6 +23,7 @@ const routesArray = [
   {routeName: 'Watchlists', path: '/watchlists', icon: <ShutterSpeedIcon/>},
   {routeName: 'Activities', path: '/activities', icon: <LocalActivityIcon/>},
   {routeName: 'Settings', path: '/settings', icon: <SettingsIcon/>},
+  {routeName: 'Analysis', path: '/analysis', icon: <SettingsIcon/>}
 ];
 
 /**
