@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { Typography } from '@mui/material';
 
 /**
  * Shows the allocation of the portfolio
@@ -12,14 +13,34 @@ import { Doughnut } from 'react-chartjs-2';
 
 const AllocationGraph = (props) => {
   
+  const [middleDisplay, setMiddleDisplay] = useState(props.portfolioData["value"]);
+  
   ChartJS.register(ArcElement, Tooltip, Legend);
   
+  const assets = props.getAllAssets();
+  
+  const labels = (() => {
+    let labels = []
+    assets.forEach(element => {
+      labels.push(element["name"]);
+    });
+    return labels;
+  })();
+
+  const valueData = (() => {
+    let valueData = []
+    assets.forEach(element => {
+      valueData.push(element["value"]*element["quantity"]);
+    });
+    return valueData;
+  })();
+
   const data = {
-    labels: ['Allianz', 'MSCI World', 'MSCI Emerging Markets'],
+    labels: labels,
     datasets: [
       {
-        label: '# of Votes',
-        data: [1202.72, 19223.21, 302.12],
+        label: 'value',
+        data: valueData,
         color: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -45,16 +66,44 @@ const AllocationGraph = (props) => {
           'rgba(255, 159, 64, 1)',
         ],
         borderWidth: 1,
+        spacing: 0
       },
     ],
   };
   
-  return <Doughnut data={data} />;
+  return (
+    <React.Fragment sx={{position: 'relative'}}>
+    <Doughnut 
+            data={data} 
+            options={{
+              responsive: true,
+              cutoutPercentage: 90,
+              plugins: {
+                legend: {
+                  display: false,
+                },
+              }
+            }}
+          />
+          
+    <Typography 
+      id="allocationGraph-middleDisplay" 
+      sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
+      }}
+    >
+      Hi
+    </Typography>
+    </React.Fragment>
+  );        
 }
 
 AllocationGraph.propTypes = {
-  activePortfolio: PropTypes.string,
   portfolioData: PropTypes.object,
+  getAllAssets: PropTypes.func,
 };
 
 export default AllocationGraph;

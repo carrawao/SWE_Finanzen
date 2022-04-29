@@ -124,7 +124,8 @@ const ActivitiesScreen = (props) => {
       {
         "symbol": "ING",
         "name": "ING Konto",
-        "value": 900
+        "value": 900,
+        "quantity": 1
       }
     ];
     props.setPortfolioData(prevData => {

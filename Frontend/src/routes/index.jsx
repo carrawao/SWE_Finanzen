@@ -67,6 +67,8 @@ const AppRoutes = () => {
     localStorage.setItem('activePortfolio', activePortfolio);
   }, [watchListsArray, assetsListArray, portfolioData, activePortfolio]);
 
+  const portfolio = portfolioData[activePortfolio];
+  
   const updatePortfolioData = async () => {
     const updatedShares = await getUpdatedAssetData("shares");
     const updatedCrypto = await getUpdatedAssetData("crypto");
@@ -84,7 +86,6 @@ const AppRoutes = () => {
       };
       return portfolioData;
     });
-    
   };
 
   const getUpdatedAssetData = async (assettype) => {
@@ -138,6 +139,14 @@ const AppRoutes = () => {
     return value;
   }
 
+  const getAllAssets = () => {
+    let assets = [];
+    assets = assets.concat(portfolio["shares"]);
+    assets = assets.concat(portfolio["crypto"]);
+    assets = assets.concat(portfolio["cash"]);
+    return assets;
+  }
+
   const updatedDate = new Date(portfolioData[activePortfolio]["updated"]);
   const updated = "" + updatedDate.getDay() + updatedDate.getMonth() + updatedDate.getFullYear();
   const todayDate = new Date();
@@ -158,6 +167,7 @@ const AppRoutes = () => {
           setActivePortfolio={setActivePortfolio}
           portfolioData={portfolioData}
           setPortfolioData={setPortfolioData}
+          getAllAssets={getAllAssets}
         />}
       />
       <Route 
