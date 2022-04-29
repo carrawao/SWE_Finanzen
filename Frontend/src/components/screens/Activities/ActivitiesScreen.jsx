@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Button,
@@ -9,7 +10,7 @@ import PropTypes from 'prop-types';
 import ActivitiesList from './ActivitiesList';
 import ScreensTemplate from '../../ScreensTemplate';
 import {SearchField, CustomTable, SearchResultsTable} from '../../common';
-import { renderRemoveActivityModal, renderAddActivityModal } from './Modals/activityModals';
+import { renderRemoveActivityModal } from './Modals/activityModals';
 
 /**
  * Component related to the activities page
@@ -18,9 +19,13 @@ import { renderRemoveActivityModal, renderAddActivityModal } from './Modals/acti
  * @constructor
  */
 const ActivitiesScreen = (props) => {
-  
-  const [addActivityModal, setActivityModal] = useState(false);
-  const [activity, setActivity] = useState('');
+
+  const portfolioData = props.portfolioData[props.activePortfolio];
+
+  let navigate = useNavigate(); 
+  const routeChange = (path) =>{ 
+    navigate(path);
+  }
 
   const setDummyActivities = () => {  
     const activities = [
@@ -97,20 +102,27 @@ const ActivitiesScreen = (props) => {
     ];
     const shares = [
       {
+        "name": "IBM",
         "symbol": "IBM",
-        "quantity": 2
+        "quantity": 2,
+        "assetType": "Stock"
       }
     ];
     const crypto = [
       {
+        "name": "Bitcoin",
         "symbol": "BTC",
-        "quantity": 2
+        "quantity": 2,
+        "assetType": "Crypto"
       }
     ];
     const cash = [
       {
         "symbol": "ING",
-        "quantity": 900 
+        "name": "ING Konto",
+        "value": 900,
+        "quantity": 1,
+        "assetType": "Cash"
       }
     ];
     props.setPortfolioData(prevData => {
@@ -124,24 +136,6 @@ const ActivitiesScreen = (props) => {
     console.log(props.portfolioData); 
   }
 
-  // const addActivity = (assettype, asset, type, date, time, quantity, sum, tax, fee) => {
-  //   var obj = JSON.parse(userData['portfolios'][activePortfolio]["activities"]);
-  //   obj['theTeam'].push({"teamId":"4","status":"pending"});
-  //   jsonStr = JSON.stringify(obj);
-  //   activityObj = {
-  //     "assettype": assettype,
-  //     "asset": asset,
-  //     "type": type,
-  //     "date": date,
-  //     "time": time,
-  //     "quantity": quantity,
-  //     "sum": sum,
-  //     "tax": tax,
-  //     "fee": fee
-  //   }
-  //   userData['portfolios'][activePortfolio]["activities"].add(activityObj);
-  // }
-
   const renderHeader = () => (
       <SearchField
 
@@ -152,6 +146,7 @@ const ActivitiesScreen = (props) => {
     <Grid className='d-flex justify-content-center pt-2'>
       <Container className='p-0'>
         <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
+        <Button onClick={() => routeChange('addActivity')}>Add Activity</Button>
         <ActivitiesList
           activePortfolio={props.activePortfolio}
           portfolioData={props.portfolioData}
@@ -169,13 +164,14 @@ const ActivitiesScreen = (props) => {
         searchBar
         selectedNavLinkIndex={3}
       />
+      {renderRemoveActivityModal()}
     </React.Fragment>
   );
 }
 
 ScreensTemplate.propTypes = {
-  activePortfolio: PropTypes.array,
-  portfolioData: PropTypes.array,
+  activePortfolio: PropTypes.string,
+  portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
 };
 

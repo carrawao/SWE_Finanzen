@@ -11,6 +11,7 @@ import Privacy from '../components/screens/Privacy';
 const Home = lazy(() => import('../components/screens/Home'));
 const DashboardScreen = lazy(() => import('../components/screens/Dashboard/DashboardScreen'));
 const ActivitiesScreen = lazy(() => import('../components/screens/Activities/ActivitiesScreen'));
+const AddActivityScreen = lazy(() => import('../components/screens/Activities/AddActivity/AddActivityScreen'));
 const WatchListsScreen = lazy(() => import('../components/screens/WatchLists/WatchListsScreen'));
 const SettingsScreen = lazy(() => import('../components/screens/Settings/SettingsScreen'));
 const AssetDetailsScreen = lazy(() => import('../components/screens/AssetDetails/AssetDetailsScreen'));
@@ -84,9 +85,25 @@ const AppRoutes = () => {
         />}
       />
       <Route 
+        path='/analysis' 
+        element={
+        <AnalysisScreen
+          
+        />}
+      />
+      <Route 
         path='/activities' 
         element={
         <ActivitiesScreen
+          activePortfolio={activePortfolio}
+          portfolioData={portfolioData}
+          setPortfolioData={setPortfolioData}
+        />}
+      />
+      <Route 
+        path='/activities/addActivity' 
+        element={
+        <AddActivityScreen
           activePortfolio={activePortfolio}
           portfolioData={portfolioData}
           setPortfolioData={setPortfolioData}
@@ -112,7 +129,7 @@ const AppRoutes = () => {
           portfolioData={portfolioData}
         />}
       />
-      <Route path='/watchlists/:asset' element={<AssetDetailsScreen/>}/>
+      <Route path='/asset/:asset' element={<AssetDetailsScreen/>}/>
       <Route path='/analysis' element={<AnalysisScreen/>}/>
       <Route path='/impressum' element={<Impressum/>}/>
       <Route path='/privacy' element={<Privacy/>}/>

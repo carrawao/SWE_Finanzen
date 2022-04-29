@@ -33,7 +33,7 @@ const AssetDetailItem = props => (
     }}
   >
     <Link className='col-12 text-decoration-none text-black'
-          to={`${props.row.name ? `/watchlists/${props.row.name}` : ''}`}>
+          to={`${props.row.name ? `/asset/${props.row.name}` : ''}`}>
       <Container className={`d-flex py-3 ${props.activities ? 'px-3 align-items-center' : 'px-1'}`}>
           {props.activities && <Box className='d-flex flex-column mt-2 col-2 col-sm-1 me-2 me-sm-3 me-md-2'>
             <Typography
@@ -110,7 +110,7 @@ const AssetDetailItem = props => (
                   xs: 15
                 }}
               >
-                {`${(props.row.fee).toFixed(2)}$`}
+                {`${(props.row.fee).toFixed(2)}€`}
               </Typography>
               <Typography
                 className='align-self-end'
@@ -121,7 +121,7 @@ const AssetDetailItem = props => (
                   xs: 15
                 }}
               >
-                {`${(props.row.tax).toFixed(2)}$`}
+                {`${(props.row.tax).toFixed(2)}€`}
               </Typography>
             </Box>}
 
@@ -135,7 +135,7 @@ const AssetDetailItem = props => (
                 xs: 15
               }}
             >
-              {`${props.activities ? props.row.sum : props.row.price}$`}
+              {`${props.activities ? props.row.sum : props.row.price}€`}
             </Typography>
 
             {props.activities ?
@@ -165,7 +165,7 @@ const AssetDetailItem = props => (
                     xs: 15
                   }}
                 >
-                  {`${(props.row.sum / props.row.quantity).toFixed(2)}$`}
+                  {`${(props.row.sum / props.row.quantity).toFixed(2)}€`}
                 </Typography>
               </Box> :
               <Typography
