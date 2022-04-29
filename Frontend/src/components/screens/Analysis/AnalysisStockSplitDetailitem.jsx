@@ -4,6 +4,7 @@ import {ListItem, Typography, Container, Box} from '@mui/material';
 
 
 const AnalysisStockSplitDetailitem  = (props) => (
+    
     <ListItem
     sx={{
         borderBottom: '2px solid lightgrey'
