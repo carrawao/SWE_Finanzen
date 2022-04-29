@@ -19,7 +19,7 @@ const SearchField = props => {
     props.setSearchQuery(query);
     if (query !== '') {
       try {
-        return await fetch(`http://localhost:3001/search?text=${query}`, {mode:'cors'})
+        return await fetch(`${process.env.REACT_SERVER_BASEURL}/search?text=${query}`, {mode:'cors'})
           .then(response => response.json())
           .then(searchResult => {
             let firstResults = searchResult.slice(0, 10);
