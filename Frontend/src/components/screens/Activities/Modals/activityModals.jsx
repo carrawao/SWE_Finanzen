@@ -5,11 +5,10 @@ export const renderRemoveActivityModal = (open, handleClose) => (
   
   <CustomModal
     open={open}
-    size="big"
     handleClose={() => handleClose(false)}
-    labelledby='add_activity-modal-title'
-    describedby='add_activity-modal-description'
-    modalTitle='Add new activity'
+    labelledby='remove_activity-modal-title'
+    describedby='remove_activity-modal-description'
+    modalTitle='Remove activity'
     modalBody={() => (
       <p>Hi</p>
     )}
