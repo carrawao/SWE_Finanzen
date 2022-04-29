@@ -94,7 +94,7 @@ const WatchListsScreen = props => {
 
     try {
       return await fetch(
-      `http://localhost:3001/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
+      `${process.env.REACT_SERVER_BASEURL}/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
       {mode:'cors'})
       .then(response => response.json())
       .then(data => {

@@ -1,5 +1,8 @@
 import React, {lazy, useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
+import Impressum from '../components/screens/Impressum';
+import AGB from '../components/screens/AGB';
+import Privacy from '../components/screens/Privacy';
 
 /**
  * Optional the component could load lazily, allowing to borrow more
@@ -127,6 +130,10 @@ const AppRoutes = () => {
         />}
       />
       <Route path='/asset/:asset' element={<AssetDetailsScreen/>}/>
+      <Route path='/analysis' element={<AnalysisScreen/>}/>
+      <Route path='/impressum' element={<Impressum/>}/>
+      <Route path='/privacy' element={<Privacy/>}/>
+      <Route path='/agb' element={<AGB/>}/>
     </Routes>
   );
 }

@@ -4,7 +4,8 @@ import {
   Box,
   Modal,
   Container,
-  Typography, IconButton
+  Typography,
+  IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 

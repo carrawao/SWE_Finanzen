@@ -1,7 +1,6 @@
 import React from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import Typography from '@mui/material/Typography';
-import { Container, Box, Button } from '@mui/material';
+import { Typography, Container, Box, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 
 const SettingsScreen = props => {
