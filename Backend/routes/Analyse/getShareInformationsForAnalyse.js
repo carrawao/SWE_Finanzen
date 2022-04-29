@@ -2,6 +2,7 @@ const updateDataFromAPI = require('../../module/updateGeneralDataFromAPI');
 const safeNewSymbol = require('../../module/safeNewSymbol');
 
 const dataPathCountryListData = './data/country.json';
+const dataPathQuotedUSshares = './data/quotedUSshares.json';
 
 const userRoutes = (app, fs, apiKey, accessURL) => {
 
@@ -25,6 +26,8 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
             const setData = () => {
                 const rawCompanyOverviewData = fs.readFileSync(dataPathCompanyOverview);
                 const rawCountryList = fs.readFileSync(dataPathCountryListData);
+                const rawQuotedUSshares = fs.readFileSync(dataPathQuotedUSshares);
+                const quotedUSsharesData = JSON.parse(rawQuotedUSshares);
                 
                 const countryList = JSON.parse(rawCountryList);
                 const companyOverviewData = JSON.parse(rawCompanyOverviewData);
@@ -39,6 +42,13 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                         countrySubRegion = iterator['sub_region'];
                     }
                 }
+                let typ = '';
+                for(let share of quotedUSsharesData){
+                    if(share['symbol'] === symbol){
+                        typ = share['assetType'];
+                        break;
+                    }
+                }
                 
 
                 const back = { 
@@ -46,13 +56,13 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                     "symbol": symbol, 
                     "exDividendDate": companyOverviewData['ExDividendDate'],
                     "dividendDate": companyOverviewData['DividendDate'],
-                    "assetClass": '',//companyOverviewData['Name'],
+                    "assetClass": companyOverviewData['AssetType'],
                     "sector": companyOverviewData['Sector'],
                     "branche": companyOverviewData['Industry'],
                     "region": countryRegion,
                     "sub_region": countrySubRegion,
                     "country": companyOverviewData['Country'],
-                    "typ": '',//companyOverviewData['Name'],
+                    "typ": typ,
                     "DividendPerShare" : companyOverviewData['DividendPerShare']
                 };
                 
