@@ -16,27 +16,27 @@ const SearchField = props => {
    * @returns {Promise<Response<any, Record<string, any>, number>>}
    */
   const search = async query => {
-    props.setSearchQuery(query);
     if (query !== '') {
+      console.log(query);
       try {
         return await fetch(`http://localhost:3001/search?text=${query}`, {mode:'cors'})
           .then(response => response.json())
           .then(searchResult => {
             let firstResults = searchResult.slice(0, 10);
-            props.setSearchResult(firstResults);
+            props.onQueryChange(firstResults);
           });
       }
       catch (e) {
         console.log('fetching failed === ', e);
       }
     } else {
-      props.setSearchResult([]);
+      props.onQueryChange([]);
     }
   }
 
   return (
     <TextField
-      id='standard-basic'
+      id='search-field'
       variant='standard'
       placeholder='Search Asset'
       className='d-flex flex-grow-1'
@@ -67,7 +67,7 @@ const SearchField = props => {
           </InputAdornment>
         ),
       }}
-      value={props.searchQuery}
+      defaultValue={props.searchQuery}
       onChange={event => search(event.target.value)}
     />
   );
@@ -75,9 +75,7 @@ const SearchField = props => {
 
 SearchField.propTypes = {
   searchQuery: PropTypes.string,
-  setSearchQuery: PropTypes.func,
-  searchResult: PropTypes.array,
-  setSearchResult: PropTypes.func,
+  onQueryChange: PropTypes.func,
 };
 
 export default SearchField;
