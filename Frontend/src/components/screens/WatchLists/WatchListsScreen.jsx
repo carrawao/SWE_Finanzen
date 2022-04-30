@@ -26,9 +26,7 @@ const WatchListsScreen = props => {
   const renderHeader = () => (
       <SearchField
         searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        searchResult={searchResult}
-        setSearchResult={setSearchResult}
+        onQueryChange={setSearchResult}
       />
   );
 
