@@ -102,27 +102,50 @@ const ActivitiesScreen = (props) => {
     ];
     const shares = [
       {
-        "name": "IBM",
-        "symbol": "IBM",
-        "quantity": 2,
-        "assetType": "Stock"
+        id: 0,
+        symbol: "IBM",
+        name: "International Business Machines Corp",
+        type: "Stock",
+        value: 100,
+        quantity: 2,
+        invested: 100,
+        gains: 0,
+        realisedGains: 0,
+        performance: 0,
+        taxes: 0,
+        fees: 0
       }
     ];
     const crypto = [
       {
-        "name": "Bitcoin",
-        "symbol": "BTC",
-        "quantity": 2,
-        "assetType": "Crypto"
+        id: 0,
+        symbol: "BTC",
+        name: "Bitcoin",
+        type: "Crypto",
+        value: 1000,
+        quantity: 2,
+        invested: 1000,
+        gains: 0,
+        realisedGains: 0,
+        performance: 0,
+        taxes: 0,
+        fees: 0
       }
     ];
     const cash = [
       {
-        "symbol": "ING",
-        "name": "ING Konto",
-        "value": 900,
-        "quantity": 1,
-        "assetType": "Cash"
+        id: 0,
+        symbol: "ING",
+        name: "ING Konto",
+        type: "Cash",
+        value: 900,
+        quantity: 1,
+        invested: 900,
+        gains: 0,
+        realisedGains: 0,
+        performance: 0,
+        taxes: 0,
+        fees: 0
       }
     ];
     props.setPortfolioData(prevData => {

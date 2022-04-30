@@ -38,35 +38,37 @@ const AddActivityScreen = (props) => {
 
     //update assetData
     let assetData = portfolioData[assetType === "share" ? "shares" : assetType].find(element => element.symbol === asset.symbol);
+    let tempAssetData = {};
     if (assetType === "cash") {
-      if (assetData === undefined) {
-        assetData = {
-          id: portfolioData[assetType === "share" ? "shares" : assetType].length,
-          symbol: asset.symbol,
-          name: asset.name,
-          shareType: activityObj.shareType,
-          value: sum,
-          quantity: quantity,
-          taxes: tax,
-          fees: fee
+      // if (assetData === undefined) {
+      //   assetData = {
+      //     id: portfolioData[assetType === "share" ? "shares" : assetType].length,
+      //     symbol: asset.symbol,
+      //     name: asset.name,
+      //     shareType: activityObj.shareType,
+      //     value: sum,
+      //     quantity: quantity,
+      //     taxes: tax,
+      //     fees: fee
+      //   }
+      // } else {
+      if (type === "deposit") {
+        tempAssetData = {
+          ...assetData,
+          value: assetData.value + sum,
+          taxes: assetData.value.taxes + tax,
+          fees: assetData.fees + fee
         }
-      } else {
-        if (type === "deposit") {
-          assetData = {
-            ...assetData,
-            value: assetData.value + sum,
-            taxes: assetData.value.taxes + tax,
-            fees: assetData.fees + fee
-          }
-        } else if (type === "payout") {
-          assetData = {
-            ...assetData,
-            value: assetData.value - sum,
-            taxes: assetData.value.taxes + tax,
-            fees: assetData.fees + fee
-          }
+      } else if (type === "payout") {
+        tempAssetData = {
+          ...assetData,
+          value: assetData.value - sum,
+          taxes: assetData.value.taxes + tax,
+          fees: assetData.fees + fee
         }
-      }
+        } else if (type === "interest") {
+
+        }
     } else {
       if (assetData === undefined) {
         assetData = {
@@ -99,7 +101,7 @@ const AddActivityScreen = (props) => {
     props.setPortfolioData(prevData => {
       const tempPortfolioData = {...prevData};
       tempPortfolioData[props.activePortfolio]["activities"].push(activityObj);
-      tempPortfolioData[props.activePortfolio][assetType === "share" ? "shares" : assetType][assetData.id] = assetData;
+      tempPortfolioData[props.activePortfolio][assetType === "share" ? "shares" : assetType][assetData.id] = tempAssetData;
       tempPortfolioData[props.activePortfolio]["updated"] = "1970-01-01";
       return tempPortfolioData;
     });
