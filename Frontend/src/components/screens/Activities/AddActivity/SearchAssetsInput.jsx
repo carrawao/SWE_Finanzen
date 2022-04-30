@@ -142,7 +142,7 @@ const SearchAssetInput = (props) => {
             slice = false;
         }
         try {
-            const response = await fetch(`http://localhost:3001/searchShare?text=${query}`, {mode:'cors'})
+            const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchShare?text=${query}`, {mode:'cors'})
             const json = await response.json();
             let results = [];
             if (slice === true) {
@@ -159,7 +159,7 @@ const SearchAssetInput = (props) => {
     
     const fetchCryptoOptions = async (query) => {
         try {
-            const response = await fetch(`http://localhost:3001/searchCrypto?text=${query}`, {mode:'cors'})
+            const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchCrypto?text=${query}`, {mode:'cors'})
             const json = await response.json();
             let results = json;
             return results;

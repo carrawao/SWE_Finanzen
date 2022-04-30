@@ -54,7 +54,6 @@ const SearchResultsTable = props => {
                 <Grid item className='pe-3'>
                   <Avatar
                     alt={`${element.name}-logo`}
-                    //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`}
                     sx={{
                       backgroundColor: colorsArray[index % 4],
                       width: {
