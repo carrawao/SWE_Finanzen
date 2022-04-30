@@ -21,7 +21,6 @@ const WatchListsScreen = props => {
   const [searchResultIndex, setSearchResultIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [addToWatchlistModal, setAddToWatchlistModal] = useState(false);
-  const [isAssetInWatchList, setIsAssetInWatchList] = useState(false);
 
   const renderHeader = () => (
       <SearchField
@@ -81,7 +80,6 @@ const WatchListsScreen = props => {
 
   // Function to close the modals
   const handleClose = () => {
-    setIsAssetInWatchList(false)
     setAddToWatchlistModal(false);
   }
 
@@ -92,7 +90,7 @@ const WatchListsScreen = props => {
 
     try {
       return await fetch(
-      `http://localhost:3001/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
+      `${process.env.REACT_APP_BASEURL}/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
       {mode:'cors'})
       .then(response => response.json())
       .then(data => {
