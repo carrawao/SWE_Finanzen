@@ -136,6 +136,17 @@ const ActivitiesScreen = (props) => {
     console.log(props.portfolioData); 
   }
 
+  const clearActivities = () => {  
+    props.setPortfolioData(prevData => {
+      const portfolioData = {...prevData};
+      portfolioData[props.activePortfolio]["activities"]=[];
+      portfolioData[props.activePortfolio]["shares"]= [];
+      portfolioData[props.activePortfolio]["crypto"]= [];
+      portfolioData[props.activePortfolio]["cash"]= [];
+      return portfolioData;
+    });
+  }
+
   const renderHeader = () => (
       <SearchField
 
@@ -147,6 +158,7 @@ const ActivitiesScreen = (props) => {
       <Container className='p-0'>
         <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
         <Button onClick={() => routeChange('addActivity')}>Add Activity</Button>
+        <Button onClick={() => clearActivities()}>Clear Activities</Button>
         <ActivitiesList
           activePortfolio={props.activePortfolio}
           portfolioData={props.portfolioData}

@@ -20,35 +20,88 @@ const AddActivityScreen = (props) => {
 
   const portfolioData = props.portfolioData[props.activePortfolio];
 
-  const addActivity = (assettype, assetSymbol, type, date, quantity, sum, tax, fee) => {
-    
+  const addActivity = (assetType, asset, type, date, quantity, sum, tax, fee) => {
+    //define activityObject to push into activity array
     const activityObj = {
-      "id": portfolioData["activities"].length,
-      "assettype": assettype,
-      "asset": assetSymbol,
-      "type": type,
-      "date": date,
-      "quantity": quantity,
-      "sum": sum,
-      "tax": tax,
-      "fee": fee
+      id: portfolioData["activities"].length,
+      assetType: assetType,
+      shareType: assetType === "share" ? asset.assetType : undefined,
+      asset: asset.symbol,
+      assetName: asset.name,
+      type: type,
+      date: date,
+      quantity: quantity,
+      sum: sum,
+      tax: tax,
+      fee: fee
     }
 
-    let assetData = portfolioData[assettype].find(element => element.symbol === assetSymbol);
-    if (assetData === undefined) {
-      const assetObj = {
-        "id": portfolioData[assettype].length,
-        "symbol": assetSymbol,
-        "name": "",
-        "value": "",
-        "quantity": quantity
+    //update assetData
+    let assetData = portfolioData[assetType === "share" ? "shares" : assetType].find(element => element.symbol === asset.symbol);
+    if (assetType === "cash") {
+      if (assetData === undefined) {
+        assetData = {
+          id: portfolioData[assetType === "share" ? "shares" : assetType].length,
+          symbol: asset.symbol,
+          name: asset.name,
+          shareType: activityObj.shareType,
+          value: sum,
+          quantity: quantity,
+          taxes: tax,
+          fees: fee
+        }
+      } else {
+        if (type === "deposit") {
+          assetData = {
+            ...assetData,
+            value: assetData.value + sum,
+            taxes: assetData.value.taxes + tax,
+            fees: assetData.fees + fee
+          }
+        } else if (type === "payout") {
+          assetData = {
+            ...assetData,
+            value: assetData.value - sum,
+            taxes: assetData.value.taxes + tax,
+            fees: assetData.fees + fee
+          }
+        }
+      }
+    } else {
+      if (assetData === undefined) {
+        assetData = {
+          id: portfolioData[assetType === "share" ? "shares" : assetType].length,
+          symbol: asset.symbol,
+          name: asset.name,
+          shareType: activityObj.shareType,
+          value: sum,
+          quantity: quantity,
+          invested: sum,
+          gains: 0,
+          realisedGains: 0,
+          performance: 0,
+          taxes: tax,
+          fees: fee
+        }
+      } else {
+        if (type === "buy") {
+          assetData = {
+            ...assetData,
+            quantity: assetData.quantity + quantity,
+            invested: assetData.invested + sum,
+            taxes: assetData.taxes + tax,
+            fees: assetData.fees + fee
+          }
+        } 
       }
     }
 
     props.setPortfolioData(prevData => {
-      const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]["activities"].push(activityObj);
-      return portfolioData;
+      const tempPortfolioData = {...prevData};
+      tempPortfolioData[props.activePortfolio]["activities"].push(activityObj);
+      tempPortfolioData[props.activePortfolio][assetType === "share" ? "shares" : assetType][assetData.id] = assetData;
+      tempPortfolioData[props.activePortfolio]["updated"] = "1970-01-01";
+      return tempPortfolioData;
     });
   }
 

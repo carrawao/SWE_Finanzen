@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
 import { Grid, Button, Box, TextField, MenuItem, styled, InputAdornment, Autocomplete} from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -150,7 +151,7 @@ const AddActivityForm = (props) => {
     const validateCash = () => {
         let errors = {};
         if (values.typeCash === "payout") {
-            let account = cash.find(element => element.symbol === values.asset);
+            let account = cash.find(element => element.symbol === values.asset.symbol);
             if (typeof(account) === 'undefined') {
                 errors.typeCash = "Payout not valid for this account"
             } else {
@@ -164,6 +165,11 @@ const AddActivityForm = (props) => {
         return errors;
     }
 
+    let navigate = useNavigate(); 
+    const routeChange = (path) =>{ 
+      navigate(path);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if(validate()) {
@@ -171,6 +177,7 @@ const AddActivityForm = (props) => {
             if (values.assetType === "crypto") props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.tax, values.fee);
             if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sum, values.tax, values.fee);
         }
+        routeChange('../activities');
     }
 
   return (
