@@ -135,7 +135,14 @@ const AppRoutes = () => {
           setActivePortfolio={setActivePortfolio}
         />}
       />
-      <Route path='/asset/:asset' element={<AssetDetailsScreen/>}/>
+      <Route 
+        path='/asset/:assetType/:asset' 
+        element={
+        <AssetDetailsScreen
+          portfolioData={portfolioData}
+          activePortfolio={activePortfolio}
+        />}
+      />
       <Route path='/analysis' element={<AnalysisScreen/>}/>
       <Route path='/impressum' element={<Impressum/>}/>
       <Route path='/privacy' element={<Privacy/>}/>

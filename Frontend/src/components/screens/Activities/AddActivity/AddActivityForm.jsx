@@ -74,14 +74,19 @@ const AddActivityForm = (props) => {
         if (name==="quantity") {
             setValues({
                 ...values,
-                sum: (value*values.value),
+                sum: (value*values.value).toFixed(2),
                 [name]:value
             })
         } else if (name==="value") {
             setValues({
                 ...values,
-                sum: (value*values.quantity),
+                sum: (value*values.quantity).toFixed(2),
                 [name]:value
+            })
+        } else if (name==="sum") {
+            setValues({
+                ...values,
+                sum: value.toFixed(2)
             })
         } else {
             setValues({
@@ -101,7 +106,11 @@ const AddActivityForm = (props) => {
             if (values.assetType === "share") errors = {...errors, ...validateShare()};
             if (values.assetType === "crypto") errors = {...errors, ...validateCrypto()};
             if (values.assetType === "cash") errors = {...errors, ...validateCash()};
-            errors.tax = (numberWithZeroRegex).test(values.tax) ? "" : "Not a valid number";
+            if (!(numberWithZeroRegex).test(values.tax)) {
+                errors.tax = "Not a valid number";
+            } else {
+                errors.tax = values.sum >= values.tax ? "" : "Can't be greater than sum";
+            }
             errors.fee = (numberWithZeroRegex).test(values.fee) ? "" : "Not a valid number";
         }
         
@@ -122,10 +131,13 @@ const AddActivityForm = (props) => {
                 } else {
                     errors.quantity = share.quantity >= values.quantity ? "" : "Can't be greater than quantity in your portfolio"
                 }
-            };
+            }
+        } else {
+            if (!(numberRegex).test(values.quantity)) {
+                errors.quantity = "Not a valid number";
+            }
         }
         errors.value = (numberRegex).test(values.value) ? "" : "Not a valid number";
-        errors.sum = (numberRegex).test(values.sum) ? "" : "Not a valid number";
         return errors;
     }
 
@@ -142,18 +154,21 @@ const AddActivityForm = (props) => {
                     errors.quantity = coin.quantity >= values.quantity ? "" : "Can't be greater than quantity in your portfolio"
                 }
             };
+        } else {
+            if (!(numberRegex).test(values.quantity)) {
+                errors.quantity = "Not a valid number";
+            }
         }
         errors.value = (numberRegex).test(values.value) ? "" : "Not a valid number";
-        errors.sum = (numberRegex).test(values.sum) ? "" : "Not a valid number";
         return errors;
     }
 
     const validateCash = () => {
         let errors = {};
-        if (values.typeCash === "payout") {
+        if (values.typeCash !== "deposit") {
             let account = cash.find(element => element.symbol === values.asset.symbol);
             if (typeof(account) === 'undefined') {
-                errors.typeCash = "Payout not valid for this account"
+                errors.typeCash = "Payout/Interest not valid for this account"
             } else {
                 if (!(numberRegex).test(values.sum)) {
                     errors.sum = "Not a valid number";
@@ -161,6 +176,8 @@ const AddActivityForm = (props) => {
                     errors.sum = account.value >= values.sum ? "" : "Can't be greater than deposited amout"
                 }
             };
+        } else {
+            errors.sum = !(numberRegex).test(values.sum) ? "Not a valid number" : "";
         }
         return errors;
     }
@@ -173,9 +190,9 @@ const AddActivityForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(validate()) {
-            if (values.assetType === "share") props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.tax, values.fee);
-            if (values.assetType === "crypto") props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.tax, values.fee);
-            if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sum, values.tax, values.fee);
+            if (values.assetType === "share") props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
+            if (values.assetType === "crypto") props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
+            if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sum, values.sum, values.tax, values.fee);
         }
         routeChange('../activities');
     }

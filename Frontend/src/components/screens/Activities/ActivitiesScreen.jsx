@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -20,143 +20,13 @@ import { renderRemoveActivityModal } from './Modals/activityModals';
  */
 const ActivitiesScreen = (props) => {
 
+  const [deleteActivityModal, setDeleteActivityModal] = useState(false);
+
   const portfolioData = props.portfolioData[props.activePortfolio];
 
   let navigate = useNavigate(); 
   const routeChange = (path) =>{ 
     navigate(path);
-  }
-
-  const setDummyActivities = () => {  
-    const activities = [
-      {
-          "assettype": "share", //,crypto oder cash
-          "asset": "IBM", //symbol des assets
-          "type": "buy", //mögliche Werte: buy (nicht für cash), sell (nicht für cash), dividend (nur für share), deposit (nur für cash), payout (nur für cash)
-          "date": "Apr 12 2020 21:56 GMT+0200",
-          "quantity": 2,
-          "sum": 60.24,
-          "tax": 0,
-          "fee": 0
-      },
-      {
-        "assettype": "share", //,crypto oder cash
-        "asset": "IBM", //symbol des assets
-        "type": "buy", //mögliche Werte: buy (nicht für cash), sell (nicht für cash), dividend (nur für share), deposit (nur für cash), payout (nur für cash)
-        "date": "Apr 12 2021 21:56 GMT+0200",
-        "quantity": 1,
-        "sum": 35.24,
-        "tax": 0,
-        "fee": 0
-      },
-      {
-        "assettype": "share", //,crypto oder cash
-        "asset": "IBM", //symbol des assets
-        "type": "sell", //mögliche Werte: buy (nicht für cash), sell (nicht für cash), dividend (nur für share), deposit (nur für cash), payout (nur für cash)
-        "date": "Apr 12 2022 21:56 GMT+0200",
-        "quantity": 1,
-        "sum": 40.00,
-        "tax": 0,
-        "fee": 0
-      },
-      {
-          "assettype": "crypto",
-          "asset": "BTC", //symbol des assets
-          "type": "buy", 
-          "date": "Apr 12 2022 21:56 GMT+0200",
-          "quantity": 2,
-          "sum": 6000.24,
-          "fee": 0,
-          "tax": 0
-      },
-      {
-          "assettype": "share", //nur für share
-          "asset": "IBM", //symbol des assets
-          "type": "dividend", //nur für assets die man davor im besitz hatte
-          "date": "May 15 2021 21:56 GMT+0200",
-          "quantity": 3,
-          "sum": 20.24,
-          "tax": 4.05,
-          "fee": 0
-      },
-      {
-          "assettype": "cash", //nur für cash
-          "asset": "ING", //symbol des assets
-          "type": "deposit",
-          "date": "May 10 2021 21:56 GMT+0200",
-          "quantity": 1,
-          "sum": 1000.23,
-          "tax": 0,
-          "fee": 0
-      },
-      {
-          "assettype": "cash", //nur für cash
-          "asset": "ING", //symbol des assets
-          "type": "payout",
-          "date": "May 15 2021 21:56 GMT+0200",
-          "quantity": 1,
-          "sum": 100.23,
-          "tax": 0,
-          "fee": 0
-      }
-    ];
-    const shares = [
-      {
-        id: 0,
-        symbol: "IBM",
-        name: "International Business Machines Corp",
-        type: "Stock",
-        value: 100,
-        quantity: 2,
-        invested: 100,
-        gains: 0,
-        realisedGains: 0,
-        performance: 0,
-        taxes: 0,
-        fees: 0
-      }
-    ];
-    const crypto = [
-      {
-        id: 0,
-        symbol: "BTC",
-        name: "Bitcoin",
-        type: "Crypto",
-        value: 1000,
-        quantity: 2,
-        invested: 1000,
-        gains: 0,
-        realisedGains: 0,
-        performance: 0,
-        taxes: 0,
-        fees: 0
-      }
-    ];
-    const cash = [
-      {
-        id: 0,
-        symbol: "ING",
-        name: "ING Konto",
-        type: "Cash",
-        value: 900,
-        quantity: 1,
-        invested: 900,
-        gains: 0,
-        realisedGains: 0,
-        performance: 0,
-        taxes: 0,
-        fees: 0
-      }
-    ];
-    props.setPortfolioData(prevData => {
-      const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]["activities"]=activities;
-      portfolioData[props.activePortfolio]["shares"]= shares;
-      portfolioData[props.activePortfolio]["crypto"]= crypto;
-      portfolioData[props.activePortfolio]["cash"]= cash;
-      return portfolioData;
-    });
-    console.log(props.portfolioData); 
   }
 
   const clearActivities = () => {  
@@ -170,6 +40,35 @@ const ActivitiesScreen = (props) => {
     });
   }
 
+  const dummyCash = () => {
+    const cash = [{
+      id: 0,
+      symbol: "ING",
+      name: "ING Konto",
+      assetTypeForDisplay: "Cash",
+      value: 0,
+      quantity: 1,
+      invested: 0,
+      unrealisedGains: 0,
+      realisedGains: 0,
+      totalGains: 0,
+      performanceWithRealisedGains: 0,
+      performanceWithOutRealisedGains: 0,
+      taxes: 0,
+      fees: 0,
+      dailyValues: [],
+      dailyDataForPerformanceGraph: [],
+      dailyDataForValueDevelopment: [],
+      analysisInfo: undefined
+    }]
+    
+    props.setPortfolioData(prevData => {
+      const portfolioData = {...prevData};
+      portfolioData[props.activePortfolio]["cash"]= cash;
+      return portfolioData;
+    });
+  }
+
   const renderHeader = () => (
       <SearchField
 
@@ -179,7 +78,7 @@ const ActivitiesScreen = (props) => {
   const renderBody = () => (
     <Grid className='d-flex justify-content-center pt-2'>
       <Container className='p-0'>
-        <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
+        <Button onClick={() => dummyCash()}>Add a dummy cash account</Button>
         <Button onClick={() => routeChange('addActivity')}>Add Activity</Button>
         <Button onClick={() => clearActivities()}>Clear Activities</Button>
         <ActivitiesList
@@ -199,7 +98,7 @@ const ActivitiesScreen = (props) => {
         searchBar
         selectedNavLinkIndex={3}
       />
-      {renderRemoveActivityModal()}
+      {renderRemoveActivityModal(deleteActivityModal, setDeleteActivityModal)}
     </React.Fragment>
   );
 }
