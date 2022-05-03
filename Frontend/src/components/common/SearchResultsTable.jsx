@@ -193,6 +193,7 @@ const SearchResultsTable = props => {
 SearchResultsTable.propTypes = {
   searchResult: PropTypes.array,
   selectedListIndex: PropTypes.number,
+  watchListsArray: PropTypes.array,
   assetsListArray: PropTypes.array,
   addToWatchList: PropTypes.func,
   onClose: PropTypes.func
