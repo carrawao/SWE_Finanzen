@@ -277,8 +277,7 @@ const WatchLists = props => {
       </Box>
 
       {renderAddWatchlistModal(addListModal, handleClose, errorModal, onTextChange, addWatchlist)}
-      {
-        renderEditListModal(
+      {renderEditListModal(
         editListModal,
         handleClose,
         errorModal,

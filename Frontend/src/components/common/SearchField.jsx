@@ -17,7 +17,6 @@ const SearchField = props => {
    */
   const search = async query => {
     if (query !== '') {
-      console.log(query);
       try {
         return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${query}`, {mode:'cors'})
           .then(response => response.json())
@@ -61,9 +60,7 @@ const SearchField = props => {
       InputProps={{
         startAdornment: (
           <InputAdornment position='start'>
-            <IconButton className='pe-0'>
               <SearchIcon style={{color: '#493f35'}}/>
-            </IconButton>
           </InputAdornment>
         ),
       }}
