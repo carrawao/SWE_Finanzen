@@ -19,7 +19,6 @@ const AnalysisList = (props) => {
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        //this.forceUpdate()
       };
    
     const calculateStockSplit = () => {
@@ -35,8 +34,8 @@ const AnalysisList = (props) => {
             })
         });
 
-        console.log(stockArray)
-        return stockArray
+        //console.log(stockArray)
+        return orderArray(stockArray)
     }
 
     const calculateSectorSplit = (selection) => {
@@ -71,9 +70,9 @@ const AnalysisList = (props) => {
             })
         });
 
-        console.log(sectorArray)
+        //console.log(sectorArray)
 
-        return stockArray   
+        return orderArray(stockArray)
     }
 
     const getPiechartData = (splitArray) => {
@@ -85,7 +84,26 @@ const AnalysisList = (props) => {
             dataArray.push(arrayElement.percantage)
         });
 
-        console.log(labelArray, dataArray)
+        return {
+            "label" : labelArray,
+            "data" : dataArray
+        }
+    }
+
+    const orderArray = (splitArray) => {
+        function compare(a, b) {
+            if ( a.percantage< b.percantage){
+              return 1;
+            }
+            if ( a.percantage > b.percantage ){
+              return -1;
+            }
+            return 0;
+          }
+          
+        var sortetArray = splitArray.sort( compare );
+
+        return sortetArray
     }
    
     calculateSectorSplit()
@@ -97,7 +115,6 @@ const AnalysisList = (props) => {
 
     var allArrays = [stockSplitArray, subRegionArray, countryArray, regionArray, sectorArray]
 
-    getPiechartData(allArrays[4])
 
     var valueSelect = value
     return (
