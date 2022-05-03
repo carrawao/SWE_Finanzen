@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Button,
@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 
 import ActivitiesList from './ActivitiesList';
 import ScreensTemplate from '../../ScreensTemplate';
-import {SearchField, CustomTable, SearchResultsTable} from '../../common';
 import { renderRemoveActivityModal } from './Modals/activityModals';
 
 /**
@@ -18,25 +17,24 @@ import { renderRemoveActivityModal } from './Modals/activityModals';
  * @returns {JSX.Element}
  * @constructor
  */
-const ActivitiesScreen = (props) => {
-
+const ActivitiesScreen = props => {
   const [deleteActivityModal, setDeleteActivityModal] = useState(false);
   const [selectedActivityId, setSelectedActivityId] = useState(null);
 
   const portfolioData = props.portfolioData[props.activePortfolio];
 
-  let navigate = useNavigate(); 
-  const routeChange = (path) =>{ 
+  let navigate = useNavigate();
+  const routeChange = path => {
     navigate(path);
   }
 
   const clearActivities = () => {  
     props.setPortfolioData(prevData => {
       const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]["activities"]=[];
-      portfolioData[props.activePortfolio]["shares"]= [];
-      portfolioData[props.activePortfolio]["crypto"]= [];
-      portfolioData[props.activePortfolio]["cash"]= [];
+      portfolioData[props.activePortfolio]['activities']=[];
+      portfolioData[props.activePortfolio]['shares']= [];
+      portfolioData[props.activePortfolio]['crypto']= [];
+      portfolioData[props.activePortfolio]['cash']= [];
       return portfolioData;
     });
   }
@@ -44,9 +42,9 @@ const ActivitiesScreen = (props) => {
   const dummyCash = () => {
     const cash = [{
       id: 0,
-      symbol: "ING",
-      name: "ING Konto",
-      assetTypeForDisplay: "Cash",
+      symbol: 'ING',
+      name: 'ING Konto',
+      assetTypeForDisplay: 'Cash',
       value: 0,
       quantity: 1,
       invested: 0,
@@ -65,17 +63,17 @@ const ActivitiesScreen = (props) => {
     
     props.setPortfolioData(prevData => {
       const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]["cash"]= cash;
+      portfolioData[props.activePortfolio]['cash']= cash;
       return portfolioData;
     });
   }
 
   const deleteActivity = () => {
-    if (portfolioData["activities"].length > 0) {
+    if (portfolioData['activities'].length > 0) {
       props.setPortfolioData(prevData => {
         const portfolioData = {...prevData};
-        portfolioData[props.activePortfolio]["activities"] =
-          portfolioData[props.activePortfolio]["activities"].filter(
+        portfolioData[props.activePortfolio]['activities'] =
+          portfolioData[props.activePortfolio]['activities'].filter(
             (element) => element.id !== selectedActivityId
           );
         return portfolioData;
@@ -84,12 +82,6 @@ const ActivitiesScreen = (props) => {
       setSelectedActivityId(null);
     }
   };
-
-  const renderHeader = () => (
-      <SearchField
-
-      />
-  );
 
   const renderBody = () => (
     <Grid className='d-flex justify-content-center pt-2'>
@@ -111,20 +103,24 @@ const ActivitiesScreen = (props) => {
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
-        searchBar
         selectedNavLinkIndex={3}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
       {renderRemoveActivityModal(deleteActivityModal, deleteActivity, setDeleteActivityModal)}
     </React.Fragment>
   );
 }
 
-ScreensTemplate.propTypes = {
+ActivitiesScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
   activePortfolio: PropTypes.string,
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
+  assetsListArray: PropTypes.array
 };
 
 export default ActivitiesScreen;
