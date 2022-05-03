@@ -5,11 +5,34 @@ import {Grid,
         List,
         ListItem
     } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Typography, TextField, MenuItem, styled } from '@mui/material/';
 
 import AnalysisDetailItem from './AnalysisDetailitem';
 
 
+const StyledTextField = styled(TextField)({
+    //Label color when focused
+    '& label.Mui-focused': {
+      color: '#493f35',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#493f35',
+    },
+    '& .MuiOutlinedInput-root': {
+      //Standard border color
+      '& fieldset': {
+        borderColor: '#c4b8ac',
+      },
+      //Border color on hover
+      '&:hover fieldset': {
+        borderColor: '#493f35',
+      },
+      //Border color when focused
+      '&.Mui-focused fieldset': {
+        borderColor: '#493f35',
+      },
+    },
+});
 
 const AnalysisList = (props) => {
     const portfolioData = props.portfolioData[props.activePortfolio];
@@ -38,15 +61,15 @@ const AnalysisList = (props) => {
         return orderArray(stockArray)
     }
 
-    const calculateSectorSplit = (selection) => {
+    const calculateKeywordSplit = (keyword) => {
         var value = 825;
         var sectorArray = []
 
         portfolioData.shares.forEach(element => {
-            if( sectorArray.some(row => row.includes(element.analysisInfo[selection])) ){
+            if( sectorArray.some(row => row.includes(element.analysisInfo[keyword])) ){
 
                 sectorArray.forEach(arrayElement => {
-                    if (arrayElement[0] == element.analysisInfo[selection]){
+                    if (arrayElement[0] == element.analysisInfo[keyword]){
 
                         arrayElement[1] = parseFloat(arrayElement[1]);
                         arrayElement[1] += parseFloat(element.value)
@@ -54,7 +77,7 @@ const AnalysisList = (props) => {
                     
                 })
             } else {
-                sectorArray.push([element.analysisInfo[selection], parseFloat(element.value)])
+                sectorArray.push([element.analysisInfo[keyword], parseFloat(element.value)])
             }
 
         });
@@ -106,31 +129,39 @@ const AnalysisList = (props) => {
         return sortetArray
     }
    
-    calculateSectorSplit()
-    var stockSplitArray = calculateStockSplit()
-    var subRegionArray = calculateSectorSplit('sub_region')
-    var countryArray = calculateSectorSplit('country')
-    var regionArray = calculateSectorSplit('region')
-    var sectorArray = calculateSectorSplit('sector')
 
-    var allArrays = [stockSplitArray, subRegionArray, countryArray, regionArray, sectorArray]
+    var keywordCollection = ['sub_region', 'country', 'region', 'sector']
 
+    var allArrays = []
+
+    allArrays.push(calculateStockSplit())
+
+    keywordCollection.forEach(keyword => {
+        allArrays.push(calculateKeywordSplit(keyword))
+    });
 
     var valueSelect = value
+
     return (
        
         <List>
-             <div>
-                <label>
-                    <select value={value} onChange={handleChange}>
-                    <option value="0">Stocksplit</option>
-                    <option value="1">Sub Region</option>
-                    <option value="2">Country</option>
-                    <option value="3">Region</option>
-                    <option value="4">Sector</option>
-                    </select>
-                </label>            
-            </div>
+           
+            <StyledTextField
+                    fullWidth
+                    margin="normal"
+                    select
+                    label="Type of analysis"
+                    name="assetType"
+                    onChange = {handleChange}
+                    value={value}
+                >
+                    <MenuItem value={0}>{keywordCollection[0]}</MenuItem>
+                    <MenuItem value={1}>{keywordCollection[1]}</MenuItem>
+                    <MenuItem value={2}>{keywordCollection[2]}</MenuItem>
+                    <MenuItem value={3}>{keywordCollection[3]}</MenuItem>
+                    <MenuItem value={4}>{keywordCollection[4]}</MenuItem>
+     
+                </StyledTextField>
            
             {
             

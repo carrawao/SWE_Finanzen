@@ -7,8 +7,6 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
 import AnalysisList from './AnalysisList';
-import AnalysisStockSplit from './AnalysisStockSplit'
-import AnalysisDetailItem from './AnalysisDetailitem';
 
 /**
  * Component related to the analysis page
@@ -40,12 +38,7 @@ const AnalysisScreen = props => {
                  portfolioData={props.portfolioData}
                  setPortfolioData={props.setPortfolioData}
                  ></AnalysisList>
-            </Grid>
-            <Grid item xs={12} className='col-12 col-md-12 col-xl-12'>
-                <AnalysisStockSplit></AnalysisStockSplit>
-            </Grid>
-            
-           
+            </Grid>      
         </Grid>   
          
     );
