@@ -23,7 +23,7 @@ const AnalysisList = (props) => {
       };
    
     const calculateStockSplit = () => {
-        var value = 1000;
+        var value = 825;
         var stockArray = []
 
         portfolioData.shares.forEach(element => {
@@ -37,19 +37,17 @@ const AnalysisList = (props) => {
 
         console.log(stockArray)
         return stockArray
-        
-      
     }
 
-    const calculateSectorSplit = () => {
-        var value = 1000;
+    const calculateSectorSplit = (selection) => {
+        var value = 825;
         var sectorArray = []
 
         portfolioData.shares.forEach(element => {
-            if( sectorArray.some(row => row.includes(element.analysisInfo.sector)) ){
+            if( sectorArray.some(row => row.includes(element.analysisInfo[selection])) ){
 
                 sectorArray.forEach(arrayElement => {
-                    if (arrayElement[0] == element.analysisInfo.sector){
+                    if (arrayElement[0] == element.analysisInfo[selection]){
 
                         arrayElement[1] = parseFloat(arrayElement[1]);
                         arrayElement[1] += parseFloat(element.value)
@@ -57,7 +55,7 @@ const AnalysisList = (props) => {
                     
                 })
             } else {
-                sectorArray.push([element.analysisInfo.sector, parseFloat(element.value)])
+                sectorArray.push([element.analysisInfo[selection], parseFloat(element.value)])
             }
 
         });
@@ -69,7 +67,7 @@ const AnalysisList = (props) => {
 
             stockArray.push({
                 asset: sector[0],
-                percantage: percantage
+                percantage: percantage.toFixed(2)
             })
         });
 
@@ -83,10 +81,13 @@ const AnalysisList = (props) => {
     }
    
     calculateSectorSplit()
-    var testArray = calculateStockSplit()
-    var anotherArray = calculateSectorSplit()
+    var stockSplitArray = calculateStockSplit()
+    var subRegionArray = calculateSectorSplit('sub_region')
+    var countryArray = calculateSectorSplit('country')
+    var regionArray = calculateSectorSplit('region')
+    var sectorArray = calculateSectorSplit('sector')
 
-    var bossArray = [testArray, anotherArray]
+    var allArrays = [stockSplitArray, subRegionArray, countryArray, regionArray, sectorArray]
 
     var valueSelect = value
     return (
@@ -97,7 +98,10 @@ const AnalysisList = (props) => {
                     Select menu
                     <select value={value} onChange={handleChange}>
                     <option value="0">Stocksplit</option>
-                    <option value="1">Detail</option>
+                    <option value="1">Sub Region</option>
+                    <option value="2">Country</option>
+                    <option value="3">Region</option>
+                    <option value="4">Sector</option>
                     </select>
                 </label>
 
@@ -106,7 +110,7 @@ const AnalysisList = (props) => {
            
             {
             
-            bossArray[valueSelect].map((share, index) => ( 
+            allArrays[valueSelect].map((share, index) => ( 
                 <AnalysisDetailItem props={share}
                     key={`activity_${index}`}
                 ></AnalysisDetailItem>
