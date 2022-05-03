@@ -21,6 +21,7 @@ import { renderRemoveActivityModal } from './Modals/activityModals';
 const ActivitiesScreen = (props) => {
 
   const [deleteActivityModal, setDeleteActivityModal] = useState(false);
+  const [selectedActivityId, setSelectedActivityId] = useState(null);
 
   const portfolioData = props.portfolioData[props.activePortfolio];
 
@@ -69,6 +70,21 @@ const ActivitiesScreen = (props) => {
     });
   }
 
+  const deleteActivity = () => {
+    if (portfolioData["activities"].length > 0) {
+      props.setPortfolioData(prevData => {
+        const portfolioData = {...prevData};
+        portfolioData[props.activePortfolio]["activities"] =
+          portfolioData[props.activePortfolio]["activities"].filter(
+            (element) => element.id !== selectedActivityId
+          );
+        return portfolioData;
+      });
+      setDeleteActivityModal(false);
+      setSelectedActivityId(null);
+    }
+  };
+
   const renderHeader = () => (
       <SearchField
 
@@ -85,6 +101,8 @@ const ActivitiesScreen = (props) => {
           activePortfolio={props.activePortfolio}
           portfolioData={props.portfolioData}
           setPortfolioData={props.setPortfolioData}
+          setSelectedActivityId={setSelectedActivityId}
+          setDeleteActivityModal={setDeleteActivityModal}
         />
       </Container>
     </Grid>
@@ -98,7 +116,7 @@ const ActivitiesScreen = (props) => {
         searchBar
         selectedNavLinkIndex={3}
       />
-      {renderRemoveActivityModal(deleteActivityModal, setDeleteActivityModal)}
+      {renderRemoveActivityModal(deleteActivityModal, deleteActivity, setDeleteActivityModal)}
     </React.Fragment>
   );
 }

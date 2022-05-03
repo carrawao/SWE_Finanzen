@@ -41,7 +41,10 @@ const ActivitiesList = (props) => {
               menuOptions={['Delete']}
               iconOptions={[<DeleteIcon />]}
               functionOptions={[
-                () => {} //TODO: function to pass to a specific modal. In this case delete activity modal
+                () => {
+                  props.setDeleteActivityModal(true);
+                  props.setSelectedActivityId(element.id);
+                }
               ]}
             />
           ))}
@@ -55,6 +58,8 @@ ActivitiesList.propTypes = {
   activePortfolio: PropTypes.string,
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
+  setDeleteActivityModal: PropTypes.func,
+  setSelectedActivityId: PropTypes.func
 };
 
 export default ActivitiesList;
