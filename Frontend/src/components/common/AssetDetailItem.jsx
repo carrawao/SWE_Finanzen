@@ -4,6 +4,11 @@ import {Avatar, Box, Container, ListItem, Typography} from '@mui/material';
 import DropdownMenu from '../screens/WatchLists/DropdownMenu';
 import PropTypes from 'prop-types';
 
+/**
+ * Formats the date (day and month)
+ * @param activityDate
+ * @returns {string}
+ */
 const formatDate = activityDate => {
   let date = new Date(activityDate);
   let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -11,6 +16,12 @@ const formatDate = activityDate => {
   return `${day}.${month}`;
 }
 
+/**
+ * Component related to each asset shown either in activities or assets
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const AssetDetailItem = props => (
   <ListItem
     className='p-0 mb-0 col-12'
@@ -32,8 +43,12 @@ const AssetDetailItem = props => (
 
     }}
   >
-    <Link className='col-12 text-decoration-none text-black'
-          to={props.activities ? `${props.row.assetTypeForDisplay !== "Cash" ? `/asset/${props.row.assetTypeForDisplay}/${props.row.asset}` : ''}` : `${props.row.symbol ? `/asset/${props.row.assetType}/${props.row.symbol}` : ''}`}>
+    <Link
+      className='col-12 text-decoration-none text-black'
+      to={props.activities ? `${props.row.assetTypeForDisplay !== 'Cash' ?
+        `/asset/${props.row.assetTypeForDisplay}/${props.row.asset}` : ''}` :
+        `${props.row.symbol ? `/asset/${props.row.assetType}/${props.row.symbol}` : ''}`}
+    >
       <Container className={`d-flex py-3 ${props.activities ? 'px-3 align-items-center' : 'px-1'}`}>
           {props.activities && <Box className='d-flex flex-column mt-2 col-2 col-sm-1 me-2 me-sm-3 me-md-2'>
             <Typography

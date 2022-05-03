@@ -1,11 +1,12 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import {InputAdornment, IconButton} from '@mui/material';
+import {InputAdornment} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 /**
  * Component for the search field in the screens' header
+ * @param props
  * @returns {JSX.Element}
  * @constructor
  */
