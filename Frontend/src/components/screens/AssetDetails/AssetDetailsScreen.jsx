@@ -2,12 +2,16 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
 import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 
-const AssetDetailsScreen = () => {
-  let {asset} = useParams();
+const AssetDetailsScreen = (props) => {
+  let {asset, assetType} = useParams();
 
+  //data that we saved for this asset --> undefined if asset is not in the portfolio
+  const savedAssetData = asset === undefined ? undefined : props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);
+  
   const renderHeader = () => (
-    <Typography variant='h6' noWrap component='div'>
+    <Typography variant='h6' noWrap component='div' sx={{color: '#493f35'}}>
       Asset Details Screen
     </Typography>
   );
@@ -26,5 +30,10 @@ const AssetDetailsScreen = () => {
     </React.Fragment>
   );
 }
+
+AssetDetailsScreen.propTypes = {
+  portfolioData: PropTypes.object,
+  activePortfolio: PropTypes.string
+};
 
 export default AssetDetailsScreen;

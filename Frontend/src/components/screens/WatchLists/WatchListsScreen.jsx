@@ -21,7 +21,6 @@ const WatchListsScreen = props => {
   const [searchResultIndex, setSearchResultIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [addToWatchlistModal, setAddToWatchlistModal] = useState(false);
-  const [isAssetInWatchList, setIsAssetInWatchList] = useState(false);
 
   const renderHeader = () => (
       <SearchField
@@ -81,7 +80,6 @@ const WatchListsScreen = props => {
 
   // Function to close the modals
   const handleClose = () => {
-    setIsAssetInWatchList(false)
     setAddToWatchlistModal(false);
   }
 

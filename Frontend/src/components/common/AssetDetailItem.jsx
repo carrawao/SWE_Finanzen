@@ -33,7 +33,7 @@ const AssetDetailItem = props => (
     }}
   >
     <Link className='col-12 text-decoration-none text-black'
-          to={`${props.row.name ? `/asset/${props.row.name}` : ''}`}>
+          to={props.activities ? `${props.row.assetTypeForDisplay !== "Cash" ? `/asset/${props.row.assetTypeForDisplay}/${props.row.asset}` : ''}` : `${props.row.symbol ? `/asset/${props.row.assetType}/${props.row.symbol}` : ''}`}>
       <Container className={`d-flex py-3 ${props.activities ? 'px-3 align-items-center' : 'px-1'}`}>
           {props.activities && <Box className='d-flex flex-column mt-2 col-2 col-sm-1 me-2 me-sm-3 me-md-2'>
             <Typography
@@ -67,7 +67,7 @@ const AssetDetailItem = props => (
 
           <Avatar
             className='me-xs-2 me-md-0'
-            alt={`${props.activities ? props.row.asset : props.row.name}-logo`}
+            alt={`${props.activities ? props.row.assetName : props.row.name}-logo`}
             //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`} //TODO: put icon if exists
             sx={{
               backgroundColor: props.colorsArray[props.index % 4],
@@ -95,7 +95,7 @@ const AssetDetailItem = props => (
                 xs: 14
               }}
             >
-              {props.activities ? props.row.asset : props.row.name}
+              {props.activities ? props.row.assetName : props.row.name}
             </Typography>
           </Box>
 
@@ -110,7 +110,7 @@ const AssetDetailItem = props => (
                   xs: 15
                 }}
               >
-                {`${(props.row.fee).toFixed(2)}€`}
+                {`${parseFloat(props.row.fee).toFixed(2)}€`}
               </Typography>
               <Typography
                 className='align-self-end'
@@ -121,7 +121,7 @@ const AssetDetailItem = props => (
                   xs: 15
                 }}
               >
-                {`${(props.row.tax).toFixed(2)}€`}
+                {`${parseFloat(props.row.tax).toFixed(2)}€`}
               </Typography>
             </Box>}
 
@@ -165,7 +165,7 @@ const AssetDetailItem = props => (
                     xs: 15
                   }}
                 >
-                  {`${(props.row.sum / props.row.quantity).toFixed(2)}€`}
+                  {`${parseFloat(props.row.value).toFixed(2)}€`}
                 </Typography>
               </Box> :
               <Typography

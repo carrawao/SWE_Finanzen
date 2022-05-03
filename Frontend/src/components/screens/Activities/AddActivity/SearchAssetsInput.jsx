@@ -17,9 +17,9 @@ const SearchAssetInput = (props) => {
         const shareOptions = [];
         shares.forEach(share => {
             let option = {
-                name: share.name ? share.name : share.symbol,
+                name: share.name,
                 symbol: share.symbol,
-                assetType: share.assetType
+                assetType: share.assetTypeForDisplay
             }
             shareOptions.push(option);
         });
@@ -31,9 +31,9 @@ const SearchAssetInput = (props) => {
         const cryptoOptions = [];
         crypto.forEach(coin => {
             let option = {
-                name: coin.name ? coin.name : coin.symbol,
+                name: coin.name,
                 symbol: coin.symbol,
-                assetType: coin.assetType
+                assetType: coin.assetTypeForDisplay
             }
             cryptoOptions.push(option);
         });
@@ -45,9 +45,9 @@ const SearchAssetInput = (props) => {
         const cashOptions = [];
         cash.forEach(account => {
             let option = {
-                name: account.name ? account.name : account.symbol,
+                name: account.name,
                 symbol: account.symbol,
-                assetType: account.assetType
+                assetType: account.assetTypeForDisplay
             }
             cashOptions.push(option);
         });
@@ -142,7 +142,7 @@ const SearchAssetInput = (props) => {
             slice = false;
         }
         try {
-            const response = await fetch(`http://localhost:3001/searchShare?text=${query}`, {mode:'cors'})
+            const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchShare?text=${query}`, {mode:'cors'})
             const json = await response.json();
             let results = [];
             if (slice === true) {
@@ -159,7 +159,7 @@ const SearchAssetInput = (props) => {
     
     const fetchCryptoOptions = async (query) => {
         try {
-            const response = await fetch(`http://localhost:3001/searchCrypto?text=${query}`, {mode:'cors'})
+            const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchCrypto?text=${query}`, {mode:'cors'})
             const json = await response.json();
             let results = json;
             return results;
@@ -178,7 +178,7 @@ const SearchAssetInput = (props) => {
         onClose={() => {
             setOpen(false);
         }}
-        isOptionEqualToValue={(option, value) => option.symbol === value.symbol}
+        isOptionEqualToValue={() => true} //Function isnt required -> set it to always true to ignore warnings
         loading={loading}
         key={props.values.assetType} //component rerenderes on change of key
         name="asset"
@@ -224,7 +224,7 @@ const SearchAssetInput = (props) => {
                     srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
                     alt=""
                 /> */}
-                {option.name ? option.name : option.symbol} ({option.symbol}) Type:{option.assetType}
+                {option.name} {option.symbol !== option.name ? `(${option.symbol})` : ``} Type: {option.assetType}
             </Box>
         )}
         renderInput={(params) => 
