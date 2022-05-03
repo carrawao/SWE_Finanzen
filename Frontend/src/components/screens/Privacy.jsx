@@ -39,7 +39,7 @@ const Privacy = () => (
         Der Verantwortliche im Sinne der Datenschutz-Grundverordnung und anderer nationaler Datenschutzgesetze der Mitgliedsstaaten sowie sonstiger datenschutzrechtlicher Bestimmungen ist die:
       </p>
       <p>
-        Bench:Market
+        Bench:market
       </p>
       <p>
         Postanschrift:<br/>
@@ -75,7 +75,7 @@ const Privacy = () => (
       <p>
         Telefon: 01234-789456 <br/>
         E-Mail: max@muster.de<br/>
-        Website: Bench:marked
+        Website: www.bench:market.de
       </p>
     </Typography>
     

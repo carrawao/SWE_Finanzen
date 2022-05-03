@@ -18,7 +18,7 @@ const Impressum = () => (
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
-    Bench:Market
+    Bench:market
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
