@@ -21,6 +21,9 @@ const AddActivityScreen = (props) => {
   const portfolioData = props.portfolioData[props.activePortfolio];
 
   const addActivity = async (assetType, asset, type, date, quantity, sum, value, tax, fee) => {
+    //format the date to YYYY-MM-DD string
+    const formattedDateString = ((new Date(date)).toISOString()).slice(0,10);
+    
     //define activityObject to push into activity array
     const activityObj = {
       id: portfolioData["activities"].length,
@@ -29,7 +32,7 @@ const AddActivityScreen = (props) => {
       asset: asset.symbol,
       assetName: asset.name ? asset.name : asset.symbol,
       type: type,
-      date: date,
+      date: formattedDateString,
       quantity: quantity,
       value: value,
       sum: sum,
@@ -41,11 +44,29 @@ const AddActivityScreen = (props) => {
     let assetData = portfolioData[assetType === "share" ? "shares" : assetType].find(element => element.symbol === asset.symbol);
     let updatedAssetData = assetData === undefined ? await newAssetData(activityObj) : await updateAssetData(assetData, activityObj);
 
-    console.log(activityObj);
+    //update activitesArray
+    let newActivities = portfolioData["activities"];
+    //push activitiesObject
+    newActivities.push(activityObj);
+    //sort array by date (latest date at start of array)
+    newActivities.sort((element1, element2) => {
+      const dateResult = (new Date(element2.date)) - (new Date(element1.date));
+      if (dateResult === 0) {
+        //if date is the same sort by assetName
+        const nameResult = element1.assetName > element2.assetName ? 1 : element2.assetName > element1.assetName ? -1 : 0;
+        if (nameResult === 0) {
+          //if name is the same sort by activityType
+          const typeResult = element1.type > element2.type ? 1 : element2.type > element1.type ? -1 : 0;
+          return typeResult;
+        }
+        return nameResult;
+      }
+      return dateResult;
+    });
 
     props.setPortfolioData(prevData => {
       const tempPortfolioData = {...prevData};
-      tempPortfolioData[props.activePortfolio]["activities"].push(activityObj);
+      tempPortfolioData[props.activePortfolio]["activities"] = newActivities;
       if (assetData === undefined) {
         tempPortfolioData[props.activePortfolio][assetType === "share" ? "shares" : assetType].push(updatedAssetData);
       } else {
@@ -110,6 +131,7 @@ const AddActivityScreen = (props) => {
         
     const newAssetData = {
       id: portfolioData[activityObj.assetType === "share" ? "shares" : activityObj.assetType].length,
+      firstActivity: activityObj.date, 
       symbol: activityObj.asset,
       name: activityObj.assetName,
       assetTypeForDisplay: activityObj.assetTypeForDisplay,
