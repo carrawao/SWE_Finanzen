@@ -10,8 +10,16 @@ import AnalysisList from './AnalysisList';
 import AnalysisStockSplit from './AnalysisStockSplit'
 import AnalysisDetailItem from './AnalysisDetailitem';
 
+/**
+ * Component related to the analysis page
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const AnalysisScreen = props => {
 
-const AnalysisScreen = () => {
+ 
+    console.log(props);
 
     const renderHeader = () => (
         <Typography variant='h6' noWrap component='div'>
@@ -40,14 +48,19 @@ const AnalysisScreen = () => {
 
     return (
         <React.Fragment>
-        <ScreensTemplate
-            headerComponent={renderHeader}
-            bodyComponent={renderBody}
-            selectedNavLinkIndex={5}
-        />
+            <ScreensTemplate
+                headerComponent={renderHeader}
+                bodyComponent={renderBody}
+                selectedNavLinkIndex={5}
+            />
         </React.Fragment>
-
     );
 }
+
+ScreensTemplate.propTypes = {
+    activePortfolio: PropTypes.string,
+    portfolioData: PropTypes.object,
+    setPortfolioData: PropTypes.func,
+};
 
 export default AnalysisScreen;

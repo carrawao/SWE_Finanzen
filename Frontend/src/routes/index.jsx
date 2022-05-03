@@ -85,13 +85,6 @@ const AppRoutes = () => {
         />}
       />
       <Route 
-        path='/analysis' 
-        element={
-        <AnalysisScreen
-          
-        />}
-      />
-      <Route 
         path='/activities' 
         element={
         <ActivitiesScreen
@@ -143,7 +136,15 @@ const AppRoutes = () => {
           activePortfolio={activePortfolio}
         />}
       />
-      <Route path='/analysis' element={<AnalysisScreen/>}/>
+      <Route 
+        path='/analysis' 
+        element={
+        <AnalysisScreen 
+          portfolioData={false}
+          activePortfolio={activePortfolio}
+          emptyPortfolioData={emptyPortfolioData}
+        />}
+      />
       <Route path='/impressum' element={<Impressum/>}/>
       <Route path='/privacy' element={<Privacy/>}/>
       <Route path='/agb' element={<AGB/>}/>
