@@ -18,8 +18,8 @@ import AnalysisDetailItem from './AnalysisDetailitem';
  */
 const AnalysisScreen = props => {
 
- 
-    console.log(props);
+    const portfolioData = props.portfolioData[props.activePortfolio];
+
 
     const renderHeader = () => (
         <Typography variant='h6' noWrap component='div'>
@@ -35,7 +35,11 @@ const AnalysisScreen = props => {
                 </Typography>
             </Grid>
             <Grid item className='col-12 col-md-7 col-xl-9'>
-                <AnalysisList></AnalysisList>
+                <AnalysisList
+                 activePortfolio={props.activePortfolio}
+                 portfolioData={props.portfolioData}
+                 setPortfolioData={props.setPortfolioData}
+                 ></AnalysisList>
             </Grid>
             <Grid item xs={12} className='col-12 col-md-12 col-xl-12'>
                 <AnalysisStockSplit></AnalysisStockSplit>

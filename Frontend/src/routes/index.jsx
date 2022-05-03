@@ -140,7 +140,7 @@ const AppRoutes = () => {
         path='/analysis' 
         element={
         <AnalysisScreen 
-          portfolioData={false}
+          portfolioData={portfolioData}
           activePortfolio={activePortfolio}
           emptyPortfolioData={emptyPortfolioData}
         />}
