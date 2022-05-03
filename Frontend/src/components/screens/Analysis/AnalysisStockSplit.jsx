@@ -64,13 +64,14 @@ const AnalysisDetailItem = () => {
         ]
     }
 
-    const renderHeader = () => (
-        <Typography variant='h6' noWrap component='div'>
-        Header of Analysis Page
-        </Typography>
-    );
+   
 
-    const renderBody = () => (
+        
+
+
+
+
+    return (
         <Grid container spacing={10}>
             <Grid item xs={6}>
                 <List>
@@ -100,20 +101,7 @@ const AnalysisDetailItem = () => {
                 ))
                 }</List>
             </Grid>
-        </Grid>
-      
-
-
-    );
-
-    return (
-        <React.Fragment>
-        <ScreensTemplate
-            headerComponent={renderHeader}
-            bodyComponent={renderBody}
-            selectedNavLinkIndex={5}
-        />
-        </React.Fragment>
+        </Grid>  
 
     );
 }

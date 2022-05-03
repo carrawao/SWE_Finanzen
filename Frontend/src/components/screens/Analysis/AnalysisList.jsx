@@ -48,13 +48,12 @@ const AnalysisList = () => {
         ]
     }
 
-    const renderHeader = () => (
-        <Typography variant='h6' noWrap component='div'>
-        Header of Analysis Page
-        </Typography>
-    );
 
-    const renderBody = () => (
+   
+
+
+    return (
+       
         <List>{
             props.shareDistribution.map((share, index) => ( 
                 <AnalysisDetailItem props={share}
@@ -62,16 +61,6 @@ const AnalysisList = () => {
                 ></AnalysisDetailItem>
             ))
         }</List>
-    );
-
-    return (
-        <React.Fragment>
-        <ScreensTemplate
-            headerComponent={renderHeader}
-            bodyComponent={renderBody}
-            selectedNavLinkIndex={5}
-        />
-        </React.Fragment>
 
     );
 }
