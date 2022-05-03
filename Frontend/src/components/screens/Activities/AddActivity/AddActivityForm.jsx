@@ -43,6 +43,7 @@ const initialValues = {
     typeCrypto: "buy",
     typeCash: "deposit",
     date: new Date(),
+    dateInput: "date",
     quantity: 1,
     value: '',
     sum: '',
@@ -60,6 +61,8 @@ const AddActivityForm = (props) => {
     
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
+    let dateError = "";
+    let changedByDatePicker = false;
 
     useEffect(() => {
         validate();
@@ -100,30 +103,31 @@ const AddActivityForm = (props) => {
     const numberWithZeroRegex = /^(\d+|\d*\.\d+)$/
 
     const validate = () => {
-        let errors = {};
-        errors.asset = values.asset ? "" : "This field is required";
+        const newDateError = changedByDatePicker ? (dateError ? "Not a valid date" : "") : (errors.date === undefined ? "" : errors.date);
+        let newErrors = {date: newDateError};
+        newErrors.asset = values.asset ? "" : "This field is required";
         if(values.asset) {
-            if (values.assetType === "share") errors = {...errors, ...validateShare()};
-            if (values.assetType === "crypto") errors = {...errors, ...validateCrypto()};
-            if (values.assetType === "cash") errors = {...errors, ...validateCash()};
+            if (values.assetType === "share") newErrors = {...newErrors, ...validateShare()};
+            if (values.assetType === "crypto") newErrors = {...newErrors, ...validateCrypto()};
+            if (values.assetType === "cash") newErrors = {...newErrors, ...validateCash()};
             if (!(numberWithZeroRegex).test(values.tax)) {
-                errors.tax = "Not a valid number";
+                newErrors.tax = "Not a valid number";
             } else {
-                errors.tax = values.sum >= values.tax ? "" : "Can't be greater than sum";
+                newErrors.tax = values.sum >= values.tax ? "" : "Can't be greater than sum";
             }
-            errors.fee = (numberWithZeroRegex).test(values.fee) ? "" : "Not a valid number";
+            newErrors.fee = (numberWithZeroRegex).test(values.fee) ? "" : "Not a valid number";
+            newErrors.date = values.dateInput === "" ? "Not a valid date" : newErrors.date;
         }
-        
-        setErrors({...errors});
+        setErrors({...newErrors});
 
-        return Object.values(errors).every(x => x === "");
+        return Object.values(newErrors).every(x => x === "");
     }
 
     const validateShare = () => {
         let errors = {};
         if (values.typeShare === "sell" || values.typeShare === "dividend") {
-            let share = shares.find(element => element.symbol === values.asset);
-            if (typeof(share) === 'undefined') {
+            const share = shares.find(element => element.symbol === values.asset.symbol);
+            if (share === undefined) {
                 errors.typeShare = "Sell/Dividend not valid for this share"
             } else {
                 if (!(numberRegex).test(values.quantity)) {
@@ -144,8 +148,8 @@ const AddActivityForm = (props) => {
     const validateCrypto = () => {
         let errors = {};
         if (values.typeCrypto === "sell") {
-            let coin = crypto.find(element => element.symbol === values.asset);
-            if (typeof(coin) === 'undefined') {
+            let coin = crypto.find(element => element.symbol === values.asset.symbol);
+            if (coin === undefined) {
                 errors.typeCrypto = "Sell not valid for this coin"
             } else {
                 if (!(numberRegex).test(values.quantity)) {
@@ -167,7 +171,7 @@ const AddActivityForm = (props) => {
         let errors = {};
         if (values.typeCash !== "deposit") {
             let account = cash.find(element => element.symbol === values.asset.symbol);
-            if (typeof(account) === 'undefined') {
+            if (account === undefined) {
                 errors.typeCash = "Payout/Interest not valid for this account"
             } else {
                 if (!(numberRegex).test(values.sum)) {
@@ -193,8 +197,8 @@ const AddActivityForm = (props) => {
             if (values.assetType === "share") props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
             if (values.assetType === "crypto") props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
             if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sum, values.sum, values.tax, values.fee);
+            routeChange('../activities');
         }
-        routeChange('../activities');
     }
 
   return (
@@ -305,15 +309,23 @@ const AddActivityForm = (props) => {
                             disableFuture
                             label="Date"
                             name="date"
+                            id="add-activity-date"
                             mask = '__.__.____'
                             views={['day']}
                             value={values.date}
-                            onChange={(newValue) => {
+                            onError={(reason, value) => {
+                                dateError = reason;
+                                changedByDatePicker = true;
+                                validate();
+                            }}
+                            onChange={(newValue, newInputValue) => {
                                 setValues({
                                     ...values,
-                                    ['date']:newValue
-                                });}}
-                            renderInput={(params) => <TextField {...params} margin="normal" fullWidth/>}
+                                    date: newValue,
+                                    dateInput: newInputValue
+                                });
+                            }}
+                            renderInput={(params) => <TextField {...params} margin="normal" fullWidth {...(errors.date && {error: true, helperText: errors.date})}/>}
                         />
                     </LocalizationProvider>
                 </Grid>
