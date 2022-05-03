@@ -31,7 +31,7 @@ const AnalysisList = (props) => {
 
             stockArray.push({
                 asset: element.name,
-                percantage: percantage
+                percantage: percantage.toFixed(2)
             })
         });
 
@@ -73,11 +73,19 @@ const AnalysisList = (props) => {
 
         console.log(sectorArray)
 
-        
+        return stockArray   
+    }
 
-        return stockArray
-        
-      
+    const getPiechartData = (splitArray) => {
+        var labelArray = [];
+        var dataArray = [];
+
+        splitArray.forEach(arrayElement => {
+            labelArray.push(arrayElement.asset)
+            dataArray.push(arrayElement.percantage)
+        });
+
+        console.log(labelArray, dataArray)
     }
    
     calculateSectorSplit()
@@ -89,13 +97,14 @@ const AnalysisList = (props) => {
 
     var allArrays = [stockSplitArray, subRegionArray, countryArray, regionArray, sectorArray]
 
+    getPiechartData(allArrays[4])
+
     var valueSelect = value
     return (
        
         <List>
              <div>
                 <label>
-                    Select menu
                     <select value={value} onChange={handleChange}>
                     <option value="0">Stocksplit</option>
                     <option value="1">Sub Region</option>
@@ -103,9 +112,7 @@ const AnalysisList = (props) => {
                     <option value="3">Region</option>
                     <option value="4">Sector</option>
                     </select>
-                </label>
-
-                <p>We eat {value}!</p>
+                </label>            
             </div>
            
             {
