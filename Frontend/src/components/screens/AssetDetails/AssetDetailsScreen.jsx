@@ -8,7 +8,7 @@ const AssetDetailsScreen = (props) => {
   let {asset, assetType} = useParams();
 
   //data that we saved for this asset --> undefined if asset is not in the portfolio
-  const savedAssetData = props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);
+  const savedAssetData = asset === undefined ? undefined : props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);
   
   const renderHeader = () => (
     <Typography variant='h6' noWrap component='div' sx={{color: '#493f35'}}>
