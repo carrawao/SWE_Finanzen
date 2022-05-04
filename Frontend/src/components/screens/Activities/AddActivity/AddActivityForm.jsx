@@ -47,6 +47,7 @@ const initialValues = {
     quantity: 1,
     value: '',
     sum: '',
+    sumCash: '',
     tax: 0,
     fee: 0
 }
@@ -61,6 +62,9 @@ const AddActivityForm = (props) => {
     
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
+    const [valid, setValid] = useState(false);
+    const [addAnother, setAddAnother] = useState(false);
+
     let dateError = "";
     let changedByDatePicker = false;
 
@@ -84,12 +88,12 @@ const AddActivityForm = (props) => {
             setValues({
                 ...values,
                 sum: (value*values.quantity).toFixed(2),
-                [name]:value
+                [name]: value
             })
-        } else if (name==="sum") {
+        } else if (name==="sumCash") {
             setValues({
                 ...values,
-                sum: value.toFixed(2)
+                sumCash: value
             })
         } else {
             setValues({
@@ -119,8 +123,9 @@ const AddActivityForm = (props) => {
             newErrors.date = values.dateInput === "" ? "Not a valid date" : newErrors.date;
         }
         setErrors({...newErrors});
-
-        return Object.values(newErrors).every(x => x === "");
+        const valid = Object.values(newErrors).every(x => x === "");
+        setValid(valid);
+        return valid;
     }
 
     const validateShare = () => {
@@ -174,14 +179,14 @@ const AddActivityForm = (props) => {
             if (account === undefined) {
                 errors.typeCash = "Payout/Interest not valid for this account"
             } else {
-                if (!(numberRegex).test(values.sum)) {
-                    errors.sum = "Not a valid number";
+                if (!(numberRegex).test(values.sumCash)) {
+                    errors.sumCash = "Not a valid number";
                 } else {
-                    errors.sum = account.value >= values.sum ? "" : "Can't be greater than deposited amout"
+                    errors.sumCash = account.value >= values.sumCash ? "" : "Can't be greater than deposited amout"
                 }
             };
         } else {
-            errors.sum = !(numberRegex).test(values.sum) ? "Not a valid number" : "";
+            errors.sumCash = !(numberRegex).test(values.sumCash) ? "Not a valid number" : "";
         }
         return errors;
     }
@@ -196,8 +201,12 @@ const AddActivityForm = (props) => {
         if(validate()) {
             if (values.assetType === "share") props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
             if (values.assetType === "crypto") props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
-            if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sum, values.sum, values.tax, values.fee);
-            routeChange('../activities');
+            if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sumCash, values.sumCash, values.tax, values.fee);
+            if (!addAnother) {
+                routeChange('../activities');
+            } else {
+                alert("Activity saved!");
+            }
         }
     }
 
@@ -381,11 +390,11 @@ const AddActivityForm = (props) => {
                 <StyledTextField
                     margin="normal"
                     label="Sum"
-                    name="sum"
+                    name="sumCash"
                     id="add-activity-sum-cash"
                     onChange = {handleInputChange}
-                    value={values.sum}
-                    {...(errors.sum && {error: true, helperText: errors.sum})}
+                    value={values.sumCash}
+                    {...(errors.sumCash && {error: true, helperText: errors.sumCash})}
                     InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
                 ></StyledTextField>
             </Grid>
@@ -423,7 +432,8 @@ const AddActivityForm = (props) => {
             justifyContent="center"
             alignItems="flex-start"
         >    
-            <Button type="submit">ADD</Button>
+            <Button disabled={!valid ? true : false} type="submit" onClick={() => setAddAnother(false)}>Save</Button>
+            <Button disabled={!valid ? true : false} type="submit" onClick={() => setAddAnother(true)}>Save and add another</Button>
         </Grid>
     </Grid>
   );
