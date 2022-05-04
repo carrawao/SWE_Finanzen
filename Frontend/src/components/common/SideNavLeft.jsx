@@ -23,6 +23,7 @@ const routesArray = [
   {routeName: 'Watchlists', path: '/watchlists', icon: <ShutterSpeedIcon/>},
   {routeName: 'Activities', path: '/activities', icon: <LocalActivityIcon/>},
   {routeName: 'Settings', path: '/settings', icon: <SettingsIcon/>},
+  {routeName: 'Analysis', path: '/analysis', icon: <SettingsIcon/>}
 ];
 
 /**
@@ -31,14 +32,19 @@ const routesArray = [
  * @returns {JSX.Element}
  * @constructor
  */
-const SideNavLeft = (props) => {
+const SideNavLeft = props => {
   const {window} = props;
 
   const handleNavLinkClick = () => {
     props.setOpenInMobile(false)
   };
 
-  const drawer = (routesArray) => (
+  /**
+   * Renders the drawer navigation with the routes
+   * @param routesArray
+   * @returns {JSX.Element}
+   */
+  const renderDrawer = routesArray => (
     <Container className='px-3'>
       <List className='px-0'>
         <img
@@ -119,7 +125,7 @@ const SideNavLeft = (props) => {
           }
         }}
       >
-        {drawer(routesArray)}
+        {renderDrawer(routesArray)}
       </Drawer>
       <Drawer
         variant='permanent'
@@ -129,7 +135,7 @@ const SideNavLeft = (props) => {
         }}
         open
       >
-        {drawer(routesArray)}
+        {renderDrawer(routesArray)}
       </Drawer>
     </Box>
   );

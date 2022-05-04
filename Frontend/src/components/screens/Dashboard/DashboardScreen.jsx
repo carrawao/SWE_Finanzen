@@ -6,26 +6,33 @@ import StockchartCard from './StockchartCard';
 import CryptochartCard from './CryptochartCard';
 import data from '../../../exdata/daily_ABC.json';
 import masterdata from '../../../exdata/overview_ABC.json';
-const DashboardScreen = () => {
-  const renderHeader = () => (
-    <SearchField/>
-  );
+import PropTypes from 'prop-types';
+const DashboardScreen = props => {  
 
   const renderBody = () => {
     return <CryptochartCard symbol={"BTC"}></CryptochartCard>
   };
 
+
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
-        searchBar
         selectedNavLinkIndex={1}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
     </React.Fragment>
 
   );
 }
+
+DashboardScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
+  watchListsArray: PropTypes.array,
+  assetsListArray: PropTypes.array
+};
 
 export default DashboardScreen;

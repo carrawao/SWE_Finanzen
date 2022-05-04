@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import Typography from '@mui/material/Typography';
 import { Container, Box, Button } from '@mui/material';
+import {renderDeleteDataModal} from './Modals/settingsModals'
 import PropTypes from 'prop-types';
 
+/**
+ * Component related to the Settings screen
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const SettingsScreen = props => {
-  const renderHeader = () => (
-    <Typography variant='h6' noWrap component='div'>
-      Header of Settings Page
-    </Typography>
-  );
+  const [deleteDataModal, setDeleteDataModal] = useState(false);
 
   const renderBody = () => (
     <Container className='d-flex flex-column px-1 pt-2'>
@@ -53,19 +55,41 @@ const SettingsScreen = props => {
             Import Data
           </Button>
         </label>
+
+        <Button
+          className='ms-3'
+          variant='outlined'
+          onClick={() => setDeleteDataModal(true)}
+          sx={{
+            color: 'white',
+            borderColor: 'rgb(228 126 37)',
+            backgroundColor: 'rgb(228 126 37)',
+            '&:hover': {
+              backgroundColor: 'rgb(228 126 37)',
+            }
+          }}
+        >
+          Delete Data
+        </Button>
       </Box>
     </Container>
   );
 
-  // Export/Download the portfolio summary to a json-file
+  /**
+   * Export/Download the portfolio summary to a json-file
+   * @returns {Promise<void>}
+   */
   const downloadFile = async () => {
     const myData = { //TODO: the structure of the json file should be determined
-      'watchListsArray': props.watchListsArray,
-      'assetsListArray': props.assetsListArray,
-      'portfolioData': props.portfolioData
+      'watchlistData': {
+        'watchListsArray': props.watchListsArray,
+        'assetsListArray': props.assetsListArray,
+      },
+      'portfolioData': props.portfolioData,
+      'activePortfolio': props.activePortfolio
     };
 
-    const fileName = 'benchmarkt';
+    const fileName = 'benchmarket';
     const json = JSON.stringify(myData);
     const blob = new Blob([json],{type:'application/json'});
     const href = URL.createObjectURL(blob);
@@ -77,7 +101,10 @@ const SettingsScreen = props => {
     document.body.removeChild(link);
   }
 
-  // Import data from the portfolio summary file
+  /**
+   * Import data from the portfolio summary file
+   * @param event
+   */
   const importData = event => {
     let reader = new FileReader();
     reader.onload = onReaderLoad;
@@ -85,10 +112,17 @@ const SettingsScreen = props => {
     document.getElementById('import-file-button').value = '';
   }
 
-  // Preloading data from external json file
+  /**
+   * Preloading data from external json file
+   * @param event
+   */
   const onReaderLoad = event => {
     const obj = JSON.parse(event.target.result);
     console.log("uploading file .....", obj);
+    props.setWatchListsArray(obj.watchlistData.watchListsArray);
+    props.setAssetsListArray(obj.watchlistData.assetsListArray);
+    props.setPortfolioData(obj.portfolioData);
+    props.setActivePortfolio(obj.activePortfolio);
   }
 
   // Upload the portfolio summary
@@ -96,21 +130,46 @@ const SettingsScreen = props => {
     document.getElementById('import-file-button').click();
   }
 
+  // Delete all user data
+  const deleteData = () => {
+    props.setWatchListsArray([]);
+    props.setAssetsListArray([]);
+    props.setPortfolioData(props.emptyPortfolioData);
+    props.setActivePortfolio('Portfolio');
+    setDeleteDataModal(false);
+  }
+
+  // Closes the modal for deleting user data
+  const handleClose = () => {
+    setDeleteDataModal(false);
+  }
+
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
         selectedNavLinkIndex={4}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
+    {renderDeleteDataModal(deleteDataModal, handleClose, deleteData)}
     </React.Fragment>
   );
 }
 
 SettingsScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
   watchListsArray: PropTypes.array,
   assetsListArray: PropTypes.array,
-  portfolioData: PropTypes.object
+  portfolioData: PropTypes.object,
+  activePortfolio: PropTypes.string,
+  emptyPortfolioData: PropTypes.object,
+  setWatchListsArray: PropTypes.func,
+  setAssetsListArray: PropTypes.func,
+  setPortfolioData: PropTypes.func,
+  setActivePortfolio: PropTypes.func,
 };
 
 export default SettingsScreen;

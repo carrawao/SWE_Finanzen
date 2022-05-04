@@ -1,11 +1,12 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import {InputAdornment, IconButton} from '@mui/material';
+import {InputAdornment} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 /**
  * Component for the search field in the screens' header
+ * @param props
  * @returns {JSX.Element}
  * @constructor
  */
@@ -16,30 +17,29 @@ const SearchField = props => {
    * @returns {Promise<Response<any, Record<string, any>, number>>}
    */
   const search = async query => {
-    props.setSearchQuery(query);
     if (query !== '') {
       try {
-        return await fetch(`http://localhost:3001/search?text=${query}`, {mode:'cors'})
+        return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${query}`, {mode:'cors'})
           .then(response => response.json())
           .then(searchResult => {
             let firstResults = searchResult.slice(0, 10);
-            props.setSearchResult(firstResults);
+            props.onQueryChange(firstResults);
           });
       }
       catch (e) {
         console.log('fetching failed === ', e);
       }
     } else {
-      props.setSearchResult([]);
+      props.onQueryChange([]);
     }
   }
 
   return (
     <TextField
-      id='standard-basic'
+      id='search-field'
       variant='standard'
       placeholder='Search Asset'
-      fullWidth
+      className='d-flex flex-grow-1'
       sx={{
         '& .MuiInputBase-input': {
           '&::-webkit-input-placeholder': {
@@ -61,13 +61,11 @@ const SearchField = props => {
       InputProps={{
         startAdornment: (
           <InputAdornment position='start'>
-            <IconButton className='pe-0'>
               <SearchIcon style={{color: '#493f35'}}/>
-            </IconButton>
           </InputAdornment>
         ),
       }}
-      value={props.searchQuery}
+      defaultValue={props.searchQuery}
       onChange={event => search(event.target.value)}
     />
   );
@@ -75,9 +73,7 @@ const SearchField = props => {
 
 SearchField.propTypes = {
   searchQuery: PropTypes.string,
-  setSearchQuery: PropTypes.func,
-  searchResult: PropTypes.array,
-  setSearchResult: PropTypes.func,
+  onQueryChange: PropTypes.func,
 };
 
 export default SearchField;
