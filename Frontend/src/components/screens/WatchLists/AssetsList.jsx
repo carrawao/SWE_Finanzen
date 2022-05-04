@@ -16,7 +16,7 @@ import {renderRemoveAssetModal, renderAddAssetModal} from './Modals/assetModals'
  * @returns {JSX.Element}
  * @constructor
  */
-const AssetsList = (props) => {
+const AssetsList = props => {
   const [showAssetModal, setShowAssetModal] = useState(false);
   const [removeAssetModal, setRemoveAssetModal] = useState(false);
   const [asset, setAsset] = useState('');

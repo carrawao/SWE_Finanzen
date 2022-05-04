@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import { Typography, Container, Box, Button } from '@mui/material';
+import { Container, Box, Button } from '@mui/material';
 import {renderDeleteDataModal} from './Modals/settingsModals'
 import PropTypes from 'prop-types';
 
+/**
+ * Component related to the Settings screen
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const SettingsScreen = props => {
   const [deleteDataModal, setDeleteDataModal] = useState(false);
-  
-  const renderHeader = () => (
-    <Typography variant='h6' noWrap component='div'>
-      Header of Settings Page
-    </Typography>
-  );
 
   const renderBody = () => (
     <Container className='d-flex flex-column px-1 pt-2'>
@@ -75,7 +75,10 @@ const SettingsScreen = props => {
     </Container>
   );
 
-  // Export/Download the portfolio summary to a json-file
+  /**
+   * Export/Download the portfolio summary to a json-file
+   * @returns {Promise<void>}
+   */
   const downloadFile = async () => {
     const myData = { //TODO: the structure of the json file should be determined
       'watchlistData': {
@@ -98,7 +101,10 @@ const SettingsScreen = props => {
     document.body.removeChild(link);
   }
 
-  // Import data from the portfolio summary file
+  /**
+   * Import data from the portfolio summary file
+   * @param event
+   */
   const importData = event => {
     let reader = new FileReader();
     reader.onload = onReaderLoad;
@@ -106,7 +112,10 @@ const SettingsScreen = props => {
     document.getElementById('import-file-button').value = '';
   }
 
-  // Preloading data from external json file
+  /**
+   * Preloading data from external json file
+   * @param event
+   */
   const onReaderLoad = event => {
     const obj = JSON.parse(event.target.result);
     console.log("uploading file .....", obj);
@@ -121,15 +130,16 @@ const SettingsScreen = props => {
     document.getElementById('import-file-button').click();
   }
 
-  //deletes all of the Users data
+  // Delete all user data
   const deleteData = () => {
     props.setWatchListsArray([]);
     props.setAssetsListArray([]);
     props.setPortfolioData(props.emptyPortfolioData);
-    props.setActivePortfolio("Portfolio");
+    props.setActivePortfolio('Portfolio');
     setDeleteDataModal(false);
   }
 
+  // Closes the modal for deleting user data
   const handleClose = () => {
     setDeleteDataModal(false);
   }
@@ -137,9 +147,11 @@ const SettingsScreen = props => {
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
         selectedNavLinkIndex={4}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
     {renderDeleteDataModal(deleteDataModal, handleClose, deleteData)}
     </React.Fragment>
@@ -147,6 +159,8 @@ const SettingsScreen = props => {
 }
 
 SettingsScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
   watchListsArray: PropTypes.array,
   assetsListArray: PropTypes.array,
   portfolioData: PropTypes.object,

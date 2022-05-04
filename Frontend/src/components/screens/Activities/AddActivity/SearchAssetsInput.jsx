@@ -10,8 +10,7 @@ import PropTypes from 'prop-types';
 * @returns {JSX.Element}
 * @constructor
 */
-const SearchAssetInput = (props) => {
-    
+const SearchAssetInput = props => {
     const getSharesInPortfolioOptions = () => {
         const shares = props.portfolioData.shares;
         const shareOptions = [];

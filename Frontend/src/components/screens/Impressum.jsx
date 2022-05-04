@@ -1,6 +1,11 @@
 import React from 'react';
 import {Typography, Container} from '@mui/material';
 
+/**
+ * Component related to the Impressum external page
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Impressum = () => (
   <Container className='d-flex flex-column col-12 mx-0 px-3 pt-4 justify-content-start'>
     <img
@@ -75,7 +80,7 @@ const Impressum = () => (
       Infromation gemäß § 36 VSBG
     </Typography>
 
-    <Typography variant='h7' className='pt-4 ps-3'>
+    <Typography variant='h7' className='pt-4 ps-3 pb-5'>
     gemäß § 36 VSBG (Verbraucherstreitbeilegungsgesetz – Gesetz über die alternative Streitbeilegung in Verbrauchersachen) erklärt der Betreiber dieser Website: <br/>
     Wir sind weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
     </Typography>

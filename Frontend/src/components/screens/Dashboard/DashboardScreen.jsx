@@ -1,12 +1,8 @@
 import React from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {SearchField} from '../../common';
+import PropTypes from 'prop-types';
 
-const DashboardScreen = () => {
-  const renderHeader = () => (
-    <SearchField/>
-  );
-
+const DashboardScreen = props => {
   const renderBody = () => (
     <h1>Welcome to Dashboard!</h1>
   );
@@ -14,14 +10,22 @@ const DashboardScreen = () => {
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
-        searchBar
         selectedNavLinkIndex={1}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
     </React.Fragment>
 
   );
 }
+
+DashboardScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
+  watchListsArray: PropTypes.array,
+  assetsListArray: PropTypes.array
+};
 
 export default DashboardScreen;

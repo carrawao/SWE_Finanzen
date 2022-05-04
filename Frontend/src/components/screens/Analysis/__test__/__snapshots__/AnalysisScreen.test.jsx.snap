@@ -59,13 +59,68 @@ exports[`Snapshot Test AnalysisDetailItem 1`] = `
 `;
 
 exports[`Snapshot Test AnalysisScreen 1`] = `
-<Fragment>
-  <ScreensTemplate
-    bodyComponent={[Function]}
-    headerComponent={[Function]}
-    selectedNavLinkIndex={5}
+<ForwardRef(List)>
+  <AnalysisDetailItem
+    key="activity_0"
+    props={
+      Object {
+        "asset": "IBM",
+        "assettype": "share",
+        "percantage": "32",
+      }
+    }
   />
-</Fragment>
+  <AnalysisDetailItem
+    key="activity_1"
+    props={
+      Object {
+        "asset": "APL",
+        "assettype": "share",
+        "percantage": "20",
+      }
+    }
+  />
+  <AnalysisDetailItem
+    key="activity_2"
+    props={
+      Object {
+        "asset": "MSC",
+        "assettype": "share",
+        "percantage": "15",
+      }
+    }
+  />
+  <AnalysisDetailItem
+    key="activity_3"
+    props={
+      Object {
+        "asset": "FGD",
+        "assettype": "share",
+        "percantage": "8",
+      }
+    }
+  />
+  <AnalysisDetailItem
+    key="activity_4"
+    props={
+      Object {
+        "asset": "ERT",
+        "assettype": "share",
+        "percantage": "4",
+      }
+    }
+  />
+  <AnalysisDetailItem
+    key="activity_5"
+    props={
+      Object {
+        "asset": "SWA",
+        "assettype": "share",
+        "percantage": "2",
+      }
+    }
+  />
+</ForwardRef(List)>
 `;
 
 exports[`Snapshot Test AnalysisStockSplitDetailItem 1`] = `

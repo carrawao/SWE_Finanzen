@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
-import {AppBar, Box, CssBaseline, Toolbar} from '@mui/material';
+import React, {useState, useEffect} from 'react';
+import { useLocation } from 'react-router-dom';
+import {AppBar, Box, CssBaseline, Grid, Toolbar} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
-import {SideNavLeft, Footer} from './common/index';
+import {SideNavLeft, Footer, SearchField} from './common/index';
+import SearchResultsTable from './common/SearchResultsTable';
 
 const drawerWidth = 14; // This is the value in rem units, for responsiveness
 /**
@@ -12,9 +14,18 @@ const drawerWidth = 14; // This is the value in rem units, for responsiveness
  * @returns {JSX.Element}
  * @constructor
  */
-const ScreensTemplate = (props) => {
+const ScreensTemplate = props => {
+  const location = useLocation()
   const [openInMobile, setOpenInMobile] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
+  // Resetting the search when changing routes
+  useEffect(() => {
+    props.setSearchResult([]);
+    setSearchQuery('');
+  }, [location]);
+
+  // Shows and hides the drawer navigation menu
   const handleDrawerToggle = () => {
     setOpenInMobile(!openInMobile);
   };
@@ -47,7 +58,10 @@ const ScreensTemplate = (props) => {
             <MenuIcon/>
           </IconButton>
 
-          {props.headerComponent && props.headerComponent()}
+          <SearchField
+            searchQuery={searchQuery}
+            onQueryChange={props.setSearchResult}
+          />
         </Toolbar>
       </AppBar>
 
@@ -72,7 +86,22 @@ const ScreensTemplate = (props) => {
       >
         <Toolbar style={{minHeight: '3rem'}}/>
         <Box>
-          {props.bodyComponent()}
+          {props.searchResult && props.searchResult.length > 0 ?
+            <Grid className='justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
+              <SearchResultsTable
+                searchResult={props.searchResult}
+                watchListsArray={props.watchListsArray}
+                selectedListIndex={props.selectedListIndex}
+                assetsListArray={props.assetsListArray}
+                addToWatchList={props.addToWatchList}
+                onClose={() => {
+                  props.setSearchResult([]);
+                  setSearchQuery('');
+                }}
+              />
+            </Grid>
+            :
+            props.bodyComponent()}
         </Box>
       </Box>
       <Box sx={{
@@ -91,9 +120,13 @@ const ScreensTemplate = (props) => {
 }
 
 ScreensTemplate.propTypes = {
-  headerComponent: PropTypes.func,
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
   bodyComponent: PropTypes.func,
-  selectedNavLinkIndex: PropTypes.number
+  selectedNavLinkIndex: PropTypes.number,
+  addToWatchList: PropTypes.func,
+  watchListsArray: PropTypes.array,
+  assetsListArray: PropTypes.array
 };
 
 export default ScreensTemplate;
