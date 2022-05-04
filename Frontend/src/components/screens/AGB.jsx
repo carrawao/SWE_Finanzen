@@ -1,6 +1,11 @@
 import React from 'react';
 import {Typography, Container, List, ListItem} from '@mui/material';
 
+/**
+ * Component related to AGB external page
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const AGB = () => (
   <Container className='d-flex flex-column col-12 mx-0 px-3 pt-4 justify-content-start'>
     <img

@@ -10,7 +10,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 /**
- * Drawer navigation menu throughout the app
+ * Template to show modals throughout the app
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -22,7 +22,7 @@ const CustomModal = props => (
     aria-labelledby={props.labelledby}
     className='p-0'
   >
-    <Box sx={props.size === "big" ? {...bigStyle} : {...normalStyle}}>
+    <Box sx={props.size === 'big' ? {...bigStyle} : {...normalStyle}}>
       <Container
         className='d-flex justify-content-between px-0 align-self-center'
       >
@@ -94,7 +94,7 @@ CustomModal.propTypes = {
   modalTitle: PropTypes.string,
   modalBody: PropTypes.func,
   modalButton: PropTypes.func,
-  size: PropTypes.string,
+  size: PropTypes.string
 };
 
 export default CustomModal;

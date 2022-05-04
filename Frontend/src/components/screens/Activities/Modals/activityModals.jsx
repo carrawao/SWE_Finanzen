@@ -3,7 +3,6 @@ import {Button, Typography} from '@mui/material';
 import {CustomModal} from '../../../common';
 
 export const renderRemoveActivityModal = (open, onClick, handleClose) => (
-  
   <CustomModal
     open={open}
     handleClose={() => handleClose(false)}
