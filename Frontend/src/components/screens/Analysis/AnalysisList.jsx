@@ -44,11 +44,17 @@ const AnalysisList = (props) => {
         setValue(event.target.value);
       };
    
-    const calculateStockSplit = () => {
-        var value = 825;
+    const calculateStockSplit = (keyword) => {
+        var value 
         var stockArray = []
 
-        portfolioData.shares.forEach(element => {
+        if(keyword == "shares"){
+            value = 825;
+        } else if (keyword == "crypto"){
+            value = 106.5
+        }
+
+        portfolioData[keyword].forEach(element => {
             var percantage = element.value / value * 100;
 
             stockArray.push({
@@ -61,8 +67,13 @@ const AnalysisList = (props) => {
         return orderArray(stockArray)
     }
 
-    const calculateKeywordSplit = (keyword) => {
-        var value = 825;
+    const calculateKeywordSplit = (keyword, typSplit) => {
+        if(typSplit == true){
+            var value =  835 + 106.5;
+        } else {
+            var value = 825;
+        }
+       
         var sectorArray = []
 
         portfolioData.shares.forEach(element => {
@@ -92,6 +103,15 @@ const AnalysisList = (props) => {
                 percantage: percantage.toFixed(2)
             })
         });
+
+        if(typSplit == true){
+            var percantage = 106.5 / value * 100;
+
+            stockArray.push({
+                asset: "Crypto",
+                percantage: percantage.toFixed(2)
+            })
+        }
 
         //console.log(sectorArray)
 
@@ -130,15 +150,18 @@ const AnalysisList = (props) => {
     }
    
 
-    var keywordCollection = ['sub_region', 'country', 'region', 'sector']
+    var keywordCollection = ['sub_region', 'country', 'region', 'sector', "assetClass", "branche"]
 
     var allArrays = []
 
-    allArrays.push(calculateStockSplit())
+    allArrays.push(calculateStockSplit("shares"))
+    allArrays.push(calculateStockSplit("crypto"))
 
     keywordCollection.forEach(keyword => {
-        allArrays.push(calculateKeywordSplit(keyword))
+        allArrays.push(calculateKeywordSplit(keyword, false))
     });
+
+    allArrays.push(calculateKeywordSplit("typ", true))
 
     var valueSelect = value
 
@@ -155,11 +178,15 @@ const AnalysisList = (props) => {
                     onChange = {handleChange}
                     value={value}
                 >
-                    <MenuItem value={0}>{keywordCollection[0]}</MenuItem>
-                    <MenuItem value={1}>{keywordCollection[1]}</MenuItem>
-                    <MenuItem value={2}>{keywordCollection[2]}</MenuItem>
-                    <MenuItem value={3}>{keywordCollection[3]}</MenuItem>
-                    <MenuItem value={4}>{keywordCollection[4]}</MenuItem>
+                    <MenuItem value={0}>Stock</MenuItem>
+                    <MenuItem value={1}>Crypto</MenuItem>
+                    <MenuItem value={2}>{keywordCollection[0]}</MenuItem>
+                    <MenuItem value={3}>{keywordCollection[1]}</MenuItem>
+                    <MenuItem value={4}>{keywordCollection[2]}</MenuItem>
+                    <MenuItem value={5}>{keywordCollection[3]}</MenuItem>
+                    <MenuItem value={6}>{keywordCollection[4]}</MenuItem>
+                    <MenuItem value={7}>{keywordCollection[5]}</MenuItem>
+                    <MenuItem value={8}>Typ</MenuItem>
      
                 </StyledTextField>
            
