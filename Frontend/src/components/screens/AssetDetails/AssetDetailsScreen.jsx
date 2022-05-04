@@ -25,7 +25,7 @@ const AssetDetailsScreen = (props) => {
       <ScreensTemplate
         headerComponent={renderHeader}
         bodyComponent={renderBody}
-        selectedNavLinkIndex={2}
+        selectedNavLinkIndex={-1}
       />
     </React.Fragment>
   );
