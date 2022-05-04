@@ -19,7 +19,7 @@ const SearchField = props => {
   const search = async query => {
     if (query !== '') {
       try {
-        return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${query}`, {mode:'cors'})
+        return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${encodeURIComponent(query)}`, {mode:'cors'})
           .then(response => response.json())
           .then(searchResult => {
             let firstResults = searchResult.slice(0, 10);
