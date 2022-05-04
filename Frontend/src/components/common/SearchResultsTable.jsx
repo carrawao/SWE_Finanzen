@@ -44,7 +44,7 @@ const SearchResultsTable = props => {
     return (
       <ListItem
         className='col-12 py-2 px-1'
-        key={`search_${index}`}
+        key={`search_results_${index}`}
         sx={{
           borderTop: '1px lightgrey',
           borderLeft: '4px solid rgb(0, 0, 0, .1)',
@@ -164,6 +164,7 @@ const SearchResultsTable = props => {
             <Link
               className='col-12 text-decoration-none text-black'
               to={`/asset/${element.assetType}/${element.symbol}`}
+              key={`search_result_links_${index}`}
             >
               {renderSearchResultList(element, index)}
             </Link>
