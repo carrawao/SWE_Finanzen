@@ -28,6 +28,7 @@ const PortfolioOverview = (props) => {
         justifyContent="space-evenly"
         alignContent="center"
         height = "100%"
+        padding = "1rem"
       >
         <Box sx={{ marin: '10px', borderBottom: '1px solid #493f35' }}>
             <Grid

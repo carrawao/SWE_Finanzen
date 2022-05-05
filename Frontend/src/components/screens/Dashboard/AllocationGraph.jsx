@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { Typography } from '@mui/material';
+import { Typography, Grid, Paper } from '@mui/material';
 
 /**
  * Shows the allocation of the portfolio
@@ -12,10 +12,19 @@ import { Typography } from '@mui/material';
  */
 
 const AllocationGraph = (props) => {
+
+  const defaultMiddleDisplayLabel = "Total Value";
+  const defaultMiddleDisplayValue = props.portfolioData.value;
   
-  const [middleDisplay, setMiddleDisplay] = useState(props.portfolioData["value"]);
-  
+  const [middleDisplayLabel, setMiddleDisplayLabel] = useState(defaultMiddleDisplayLabel);
+  const [middleDisplayValue, setMiddleDisplayValue] = useState(defaultMiddleDisplayValue);
+
   ChartJS.register(ArcElement, Tooltip, Legend);
+
+  const setDefaultValues = () => {
+    setMiddleDisplayLabel(defaultMiddleDisplayLabel);
+    setMiddleDisplayValue(defaultMiddleDisplayValue);
+  }
   
   const assets = props.getAllAssets();
   
@@ -72,32 +81,70 @@ const AllocationGraph = (props) => {
   };
   
   return (
-    <React.Fragment sx={{position: 'relative'}}>
-    <Doughnut 
-            data={data} 
-            options={{
-              responsive: true,
-              cutoutPercentage: 90,
-              plugins: {
-                legend: {
-                  display: false,
-                },
-              }
-            }}
-          />
-          
-    <Typography 
-      id="allocationGraph-middleDisplay" 
+    <Grid 
       sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
+        position: 'relative',
+        padding: '1rem'
       }}
     >
-      Hi
-    </Typography>
-    </React.Fragment>
+      <Grid 
+        id="doughnutGraph-middleDisplay" 
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translateY(-50%) translateX(-50%)',
+          zIndex: '100'
+        }}
+      >
+        <Paper sx={{marginBottom: '0.5rem'}}>
+          <Typography>{middleDisplayLabel}</Typography>
+        </Paper>
+        <Typography>{middleDisplayValue}</Typography>
+      </Grid>
+      <Doughnut 
+              data={data} 
+              options={{
+                responsive: true,
+                cutoutPercentage: 90,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                  tooltip: {
+                    enabled: false,
+                    external: function(context) {
+                      const tooltipModel = context.tooltip;
+                      //Set to default values if no tooltip
+                      if (tooltipModel.opacity === 0) {
+                        setDefaultValues();
+                        return;
+                      }
+                      
+                      function getBody(bodyItem) {
+                        return bodyItem.lines;
+                      }
+  
+                      // Set Text
+                      if (tooltipModel.body) {
+                        const bodyLines = tooltipModel.body.map(getBody);
+                        
+                        bodyLines.forEach(function(body, i) {
+                          const bodyparts = body[0].split(":");
+                          setMiddleDisplayLabel(bodyparts[0]);
+                          setMiddleDisplayValue(`${bodyparts[1].trim()} €`);
+                        });
+                      }
+                    }
+                  },
+                }
+              }}
+            />
+    </Grid>
   );        
 }
 

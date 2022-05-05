@@ -17,22 +17,20 @@ const DashboardScreen = (props) => {
         justifyContent="center"
         alignItems="space-evenly"
         marginTop= "10px"
-        spacing={2}
       >
         <Grid
           container
           direction="row"
           justifyContent="space-evenly"
           alignItems="center"
-          spacing={2}
         >
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <AllocationGraph
               portfolioData={props.portfolioData[props.activePortfolio]}
               getAllAssets={props.getAllAssets}
             />
           </Grid>
-          <Grid item xs={7}>
+          <Grid item xs={8}>
             <PortfolioOverview
               portfolioData={props.portfolioData}
               activePortfolio={props.activePortfolio}
@@ -45,23 +43,12 @@ const DashboardScreen = (props) => {
           direction="row"
           justifyContent="space-evenly"
           alignContent="center"
-          spacing={2}
         >
           <Grid item xs={6}>
-            <Box border='1px solid black'>
-              <AllocationGraph
-                portfolioData={props.portfolioData[props.activePortfolio]}
-                getAllAssets={props.getAllAssets}
-              />
-            </Box>
+            
           </Grid>
           <Grid item xs={6}>
-            <Box border='1px solid black'>
-              <AllocationGraph
-                portfolioData={props.portfolioData[props.activePortfolio]}
-                getAllAssets={props.getAllAssets}
-              />
-            </Box>
+            
           </Grid>
         </Grid>
       </Grid>

@@ -190,19 +190,23 @@ const AddActivityScreen = (props) => {
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
-        searchBar
         selectedNavLinkIndex={3}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
     </React.Fragment>
   );
 }
 
 AddActivityScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
   activePortfolio: PropTypes.string,
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
+  assetsListArray: PropTypes.array
 };
 
 export default AddActivityScreen;
