@@ -1,21 +1,15 @@
 import React from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {SearchField} from '../../common';
-import Stockchart from './Stockchart';
-import StockchartCard from './StockchartCard';
-import CryptochartCard from './CryptochartCard';
-import data from '../../../exdata/daily_ABC.json';
-import masterdata from '../../../exdata/overview_ABC.json';
 import PropTypes from 'prop-types';
 const DashboardScreen = props => {  
 
-  const renderBody = () => {
-    return <CryptochartCard symbol={"BTC"}></CryptochartCard>
-  };
+  const renderBody = () => (
+    <h1>Hello this is dashboad</h1>
+    );
 
 
   return (
-    <React.Fragment>
+    <>
       <ScreensTemplate
         bodyComponent={renderBody}
         selectedNavLinkIndex={1}
@@ -23,7 +17,7 @@ const DashboardScreen = props => {
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
       />
-    </React.Fragment>
+    </>
 
   );
 }

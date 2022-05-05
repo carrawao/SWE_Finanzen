@@ -1,9 +1,10 @@
-import React,{ useState} from "react";
+import React,{ useEffect, useState} from "react";
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables,} from 'chart.js';
-import {format, addDays, subDays, differenceInDays} from 'date-fns'
+import {format, addDays, subDays, differenceInDays} from 'date-fns';
 import "chartjs-adapter-date-fns";
-import { Container } from "@mui/material";
+import { CircularProgress, Container } from "@mui/material";
+import PropTypes from "prop-types"
 
 ChartJS.register(...registerables);
 
@@ -26,7 +27,7 @@ const crosshair = {
         }
     }
 }
-function useView(view,data,labels,options,setup){
+function setView(view,data,labels,options,setup){    
     let lastDate = new Date(labels[0]);
     //Timespan in days default = from first to last datapoints date
     let timespan = differenceInDays(lastDate,new Date(labels[labels.length-1]));
@@ -72,16 +73,52 @@ function useView(view,data,labels,options,setup){
  * @returns {JSX.Element}
  * @constructor
  */
-const Cryptochart = (props) => {
-    const symbol = props.symbol;
-    const labels = Object.keys(props.cryptodata['Time Series (Digital Currency Daily)']);
-    const data = Object.values(props.cryptodata['Time Series (Digital Currency Daily)']).map(o => Number(o['4b. close (USD)'])); 
-    props.setCryptoPrice(data[0]);
+const Stockchart = (props) => {  
+    const [isLoaded, setLoaded] = useState(false);
+    const [labels, setLabels] = useState([]);
+    const [data, setData] = useState([]);    
+    
+    useEffect(() => {
+        console.log("fetching stockdata...");
+        const base = "http://localhost:3001";
+        let url = new URL(`dailyShare?symbol=${props.symbol}`, base);
+        if(props.assetType === "Crypto"){
+            url = new URL(`dailyCrypto?symbol=${props.symbol}`, base);
+        }
+        fetch(url.toString())
+        .then(res => res.json())
+        .then(json => {
+            let labels;
+            let data;
+            // Chooses how to format different json according to assetType
+            switch(props.assetType){
+                case "Crypto":
+                    labels = Object.keys(json['Time Series (Digital Currency Daily)']);
+                    data = Object.values(json['Time Series (Digital Currency Daily)']).map(o => Number(o['4b. close (USD)']));
+                    break;
+                case "ETF":
+                case "Stock":
+                default:
+                    labels = Object.keys(json['Time Series (Daily)']);
+                    data = Object.values(json['Time Series (Daily)']).map(o => Number(o['4. close']));
+                    break;
+
+            }
+            setLabels(labels);
+            setData(data);
+            setLoaded(true);
+            props.setStockPrice(data[0]);
+            console.log("Sharedata loaded!");
+          }
+        );
+    
+      }, []);
+
     const setup = {
-        labels:[],
+        labels:labels,
         datasets:[{
-            label:symbol,
-            data:[],
+            label:props.symbol,
+            data:data,
             borderColor: 'rgba(0,0,255,0.6)',
             backgroundColor: 'rgba(0,0,255,0.6)',
             yAxisId: 'stockpriceAxis',
@@ -150,10 +187,19 @@ const Cryptochart = (props) => {
         }
     }    
     
-    useView(props.view,data,labels,options,setup);
-        
-    props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length-1] / setup.datasets[0].data[0]));
+    if(isLoaded){
 
-    return <Container maxWidth='md'><div><Line data={setup} options={options} plugins={[crosshair]}/></div></Container>
+        setView(props.view,data,labels,options,setup);
+        props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length-1] / setup.datasets[0].data[0]));
+        return <Container maxWidth='md'><div><Line data={setup} options={options} plugins={[crosshair]}/></div></Container>
+    }
+    return <CircularProgress/>
 };
-export default Cryptochart;
+Stockchart.propTypes = {
+    symbol: PropTypes.string,
+    setStockPrice: PropTypes.func,
+    view: PropTypes.string,
+    setPerf: PropTypes.func,    
+  };
+
+export default Stockchart;
