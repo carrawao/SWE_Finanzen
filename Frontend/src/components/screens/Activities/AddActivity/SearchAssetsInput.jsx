@@ -98,6 +98,10 @@ const SearchAssetInput = props => {
     }, [open]);
     
     useEffect(() => {
+        props.setValues({
+            ...props.values,
+            asset: null
+        })
         if (props.values.assetType === "cash") {
             setCash(true);
         } else {

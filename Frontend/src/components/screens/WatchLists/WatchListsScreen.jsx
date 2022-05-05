@@ -80,6 +80,7 @@ const WatchListsScreen = props => {
             {
               name: data.name ? data.name : symbol,
               symbol: symbol,
+              assetType: assetType,
               price: `${Number.parseFloat(data.value).toFixed(2)}`,
               change: `${Number.parseFloat(data.percentChange).toFixed(2)}`
             }
