@@ -50,6 +50,10 @@ const WatchLists = props => {
     setRemoveListModal(false);
   }
 
+  /**
+   * Updates text when changing watchlist name
+   * @param data
+   */
   const onTextChange = data => {
     setWatchlist(data.target.value);
     data.target.value === '' ? setErrorModal(true) : setErrorModal(false);
@@ -277,8 +281,7 @@ const WatchLists = props => {
       </Box>
 
       {renderAddWatchlistModal(addListModal, handleClose, errorModal, onTextChange, addWatchlist)}
-      {
-        renderEditListModal(
+      {renderEditListModal(
         editListModal,
         handleClose,
         errorModal,

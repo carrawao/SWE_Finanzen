@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsScreen renders without crashing 1`] = `
+<Fragment>
+  <ScreensTemplate
+    assetsListArray={
+      Array [
+        Array [],
+      ]
+    }
+    bodyComponent={[Function]}
+    searchResult={Array []}
+    selectedNavLinkIndex={4}
+    setSearchResult={[MockFunction]}
+  />
+  <CustomModal
+    describedby="delete_data-modal-description"
+    handleClose={[Function]}
+    labelledby="delete_data-modal-title"
+    modalButton={[Function]}
+    modalTitle="Delete all data"
+    open={false}
+  />
+</Fragment>
+`;

@@ -1,29 +1,18 @@
-import React, {useState} from 'react';
-import ScreensTemplate from '../../ScreensTemplate';
-import {Grid,
-        Button,
-        List,
-        ListItem
-    } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import React from 'react';
+import {Grid,List} from '@mui/material';
 
 import AnalysisStockSplitDetailitem from './AnalysisStockSplitDetailitem';
 
-
-
 const AnalysisDetailItem = () => {
-
     const props ={
         countries: [
             {
-            
                 "propertie" : "Germany",
                 "percantage" : 30,
             },
             {
                 "propertie" : "Turkey",
                 "percantage" : 30,
-            
             },
             {
                 "propertie" : "Russia",
@@ -32,14 +21,12 @@ const AnalysisDetailItem = () => {
         ],
         crypto: [
             {
-            
                 "propertie" : "BTC",
                 "percantage" : 30,
             },
             {
                 "propertie" : "ETH",
                 "percantage" : 30,
-            
             },
             {
                 "propertie" : "BLABLA",
@@ -48,14 +35,12 @@ const AnalysisDetailItem = () => {
         ],
         sector: [
             {
-            
                 "propertie" : "IT",
                 "percantage" : 30,
             },
             {
                 "propertie" : "Not IT",
                 "percantage" : 20,
-            
             },
             {
                 "propertie" : "Gas",
@@ -64,57 +49,39 @@ const AnalysisDetailItem = () => {
         ]
     }
 
-    const renderHeader = () => (
-        <Typography variant='h6' noWrap component='div'>
-        Header of Analysis Page
-        </Typography>
-    );
-
-    const renderBody = () => (
-        <Grid container spacing={10}>
-            <Grid item xs={6}>
-                <List>
-                {
-                props.countries.map((share, index) => ( 
-                    <AnalysisStockSplitDetailitem props={share}
-                        key={`activity_${index}`}
-                    ></AnalysisStockSplitDetailitem>
-                ))
-                }</List>
-            </Grid>
-            <Grid item xs={6}>
-                <List>{
-                props.crypto.map((share, index) => ( 
-                    <AnalysisStockSplitDetailitem props={share}
-                        key={`activity_${index}`}
-                    ></AnalysisStockSplitDetailitem>
-                ))
-                }</List>
-            </Grid>
-            <Grid item xs={6}>
-                <List>{
-                props.sector.map((share, index) => ( 
-                    <AnalysisStockSplitDetailitem props={share}
-                        key={`activity_${index}`}
-                    ></AnalysisStockSplitDetailitem>
-                ))
-                }</List>
-            </Grid>
-        </Grid>
-      
-
-
-    );
-
     return (
-        <React.Fragment>
-        <ScreensTemplate
-            headerComponent={renderHeader}
-            bodyComponent={renderBody}
-            selectedNavLinkIndex={5}
-        />
-        </React.Fragment>
-
+      <Grid container spacing={10}>
+          <Grid item xs={6}>
+              <List>
+                  {props.countries.map((share, index) => (
+                    <AnalysisStockSplitDetailitem
+                      props={share}
+                      key={`activity_${index}`}
+                    />
+                  ))}
+              </List>
+          </Grid>
+          <Grid item xs={6}>
+              <List>
+                  {props.crypto.map((share, index) => (
+                    <AnalysisStockSplitDetailitem
+                      props={share}
+                      key={`activity_${index}`}
+                    />
+                  ))}
+              </List>
+          </Grid>
+          <Grid item xs={6}>
+              <List>
+                  {props.sector.map((share, index) => (
+                    <AnalysisStockSplitDetailitem
+                      props={share}
+                      key={`activity_${index}`}
+                    />
+                  ))}
+              </List>
+          </Grid>
+      </Grid>
     );
 }
 

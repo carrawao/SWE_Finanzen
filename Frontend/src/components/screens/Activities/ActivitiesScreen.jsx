@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Button,
@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 
 import ActivitiesList from './ActivitiesList';
 import ScreensTemplate from '../../ScreensTemplate';
-import {SearchField, CustomTable, SearchResultsTable} from '../../common';
 import { renderRemoveActivityModal } from './Modals/activityModals';
 
 /**
@@ -18,140 +17,84 @@ import { renderRemoveActivityModal } from './Modals/activityModals';
  * @returns {JSX.Element}
  * @constructor
  */
-const ActivitiesScreen = (props) => {
+const ActivitiesScreen = props => {
+  const [deleteActivityModal, setDeleteActivityModal] = useState(false);
+  const [selectedActivityId, setSelectedActivityId] = useState(null);
 
   const portfolioData = props.portfolioData[props.activePortfolio];
 
-  let navigate = useNavigate(); 
-  const routeChange = (path) =>{ 
+  let navigate = useNavigate();
+  const routeChange = path => {
     navigate(path);
   }
 
-  const setDummyActivities = () => {  
-    const activities = [
-      {
-          "assettype": "share", //,crypto oder cash
-          "asset": "IBM", //symbol des assets
-          "type": "buy", //mögliche Werte: buy (nicht für cash), sell (nicht für cash), dividend (nur für share), deposit (nur für cash), payout (nur für cash)
-          "date": "Apr 12 2020 21:56 GMT+0200",
-          "quantity": 2,
-          "sum": 60.24,
-          "tax": 0,
-          "fee": 0
-      },
-      {
-        "assettype": "share", //,crypto oder cash
-        "asset": "IBM", //symbol des assets
-        "type": "buy", //mögliche Werte: buy (nicht für cash), sell (nicht für cash), dividend (nur für share), deposit (nur für cash), payout (nur für cash)
-        "date": "Apr 12 2021 21:56 GMT+0200",
-        "quantity": 1,
-        "sum": 35.24,
-        "tax": 0,
-        "fee": 0
-      },
-      {
-        "assettype": "share", //,crypto oder cash
-        "asset": "IBM", //symbol des assets
-        "type": "sell", //mögliche Werte: buy (nicht für cash), sell (nicht für cash), dividend (nur für share), deposit (nur für cash), payout (nur für cash)
-        "date": "Apr 12 2022 21:56 GMT+0200",
-        "quantity": 1,
-        "sum": 40.00,
-        "tax": 0,
-        "fee": 0
-      },
-      {
-          "assettype": "crypto",
-          "asset": "BTC", //symbol des assets
-          "type": "buy", 
-          "date": "Apr 12 2022 21:56 GMT+0200",
-          "quantity": 2,
-          "sum": 6000.24,
-          "fee": 0,
-          "tax": 0
-      },
-      {
-          "assettype": "share", //nur für share
-          "asset": "IBM", //symbol des assets
-          "type": "dividend", //nur für assets die man davor im besitz hatte
-          "date": "May 15 2021 21:56 GMT+0200",
-          "quantity": 3,
-          "sum": 20.24,
-          "tax": 4.05,
-          "fee": 0
-      },
-      {
-          "assettype": "cash", //nur für cash
-          "asset": "ING", //symbol des assets
-          "type": "deposit",
-          "date": "May 10 2021 21:56 GMT+0200",
-          "quantity": 1,
-          "sum": 1000.23,
-          "tax": 0,
-          "fee": 0
-      },
-      {
-          "assettype": "cash", //nur für cash
-          "asset": "ING", //symbol des assets
-          "type": "payout",
-          "date": "May 15 2021 21:56 GMT+0200",
-          "quantity": 1,
-          "sum": 100.23,
-          "tax": 0,
-          "fee": 0
-      }
-    ];
-    const shares = [
-      {
-        "name": "IBM",
-        "symbol": "IBM",
-        "quantity": 2,
-        "assetType": "Stock"
-      }
-    ];
-    const crypto = [
-      {
-        "name": "Bitcoin",
-        "symbol": "BTC",
-        "quantity": 2,
-        "assetType": "Crypto"
-      }
-    ];
-    const cash = [
-      {
-        "symbol": "ING",
-        "name": "ING Konto",
-        "value": 900,
-        "quantity": 1,
-        "assetType": "Cash"
-      }
-    ];
+  const clearActivities = () => {  
     props.setPortfolioData(prevData => {
       const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]["activities"]=activities;
-      portfolioData[props.activePortfolio]["shares"]= shares;
-      portfolioData[props.activePortfolio]["crypto"]= crypto;
-      portfolioData[props.activePortfolio]["cash"]= cash;
-      portfolioData[props.activePortfolio]["updated"]= "1970-01-01";
+      portfolioData[props.activePortfolio]['activities']=[];
+      portfolioData[props.activePortfolio]['shares']= [];
+      portfolioData[props.activePortfolio]['crypto']= [];
+      portfolioData[props.activePortfolio]['cash']= [];
       return portfolioData;
     });
-    console.log(props.portfolioData); 
   }
 
-  const renderHeader = () => (
-      <SearchField
+  const dummyCash = () => {
+    const cash = [{
+      id: 0,
+      symbol: 'ING',
+      name: 'ING Konto',
+      assetTypeForDisplay: 'Cash',
+      value: 0,
+      quantity: 1,
+      invested: 0,
+      unrealisedGains: 0,
+      realisedGains: 0,
+      totalGains: 0,
+      performanceWithRealisedGains: 0,
+      performanceWithOutRealisedGains: 0,
+      taxes: 0,
+      fees: 0,
+      dailyValues: [],
+      dailyDataForPerformanceGraph: [],
+      dailyDataForValueDevelopment: [],
+      analysisInfo: undefined
+    }]
+    
+    props.setPortfolioData(prevData => {
+      const portfolioData = {...prevData};
+      portfolioData[props.activePortfolio]['cash']= cash;
+      return portfolioData;
+    });
+  }
 
-      />
-  );
+  const deleteActivity = () => {
+    if (portfolioData['activities'].length > 0) {
+      props.setPortfolioData(prevData => {
+        const portfolioData = {...prevData};
+        portfolioData[props.activePortfolio]['activities'] =
+          portfolioData[props.activePortfolio]['activities'].filter(
+            (element) => element.id !== selectedActivityId
+          );
+        return portfolioData;
+      });
+      setDeleteActivityModal(false);
+      setSelectedActivityId(null);
+    }
+  };
 
   const renderBody = () => (
     <Grid className='d-flex justify-content-center pt-2'>
       <Container className='p-0'>
-        <Button onClick={() => setDummyActivities()}>Set Dummy Activities</Button>
+        <Button onClick={() => dummyCash()}>Add a dummy cash account</Button>
         <Button onClick={() => routeChange('addActivity')}>Add Activity</Button>
+        <Button onClick={() => clearActivities()}>Clear Activities</Button>
         <ActivitiesList
           activePortfolio={props.activePortfolio}
           portfolioData={props.portfolioData}
           setPortfolioData={props.setPortfolioData}
+          setSelectedActivityId={setSelectedActivityId}
+          setDeleteActivityModal={setDeleteActivityModal}
         />
       </Container>
     </Grid>
@@ -160,20 +103,24 @@ const ActivitiesScreen = (props) => {
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
-        searchBar
         selectedNavLinkIndex={3}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
-      {renderRemoveActivityModal()}
+      {renderRemoveActivityModal(deleteActivityModal, deleteActivity, setDeleteActivityModal)}
     </React.Fragment>
   );
 }
 
 ActivitiesScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
   activePortfolio: PropTypes.string,
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
+  assetsListArray: PropTypes.array
 };
 
 export default ActivitiesScreen;

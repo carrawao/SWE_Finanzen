@@ -16,7 +16,7 @@ import {renderRemoveAssetModal, renderAddAssetModal} from './Modals/assetModals'
  * @returns {JSX.Element}
  * @constructor
  */
-const AssetsList = (props) => {
+const AssetsList = props => {
   const [showAssetModal, setShowAssetModal] = useState(false);
   const [removeAssetModal, setRemoveAssetModal] = useState(false);
   const [asset, setAsset] = useState('');
@@ -122,6 +122,7 @@ const AssetsList = (props) => {
     ) : (
     <Container className='px-1 px-sm-3 px-md-3 px-lg-2 ps-xl-5 me-xl-0'>
       <Stack
+        id='assets-stack'
         className='d-none d-md-flex mb-3 justify-content-between'
         direction='row'
         alignItems='center'

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {SearchField} from '../../common';
 import {Grid, Box} from '@mui/material';
 import PropTypes from 'prop-types';
 import AllocationGraph from './AllocationGraph';
@@ -8,18 +7,6 @@ import PortfolioOverview from './PortfolioOverview';
 
 
 const DashboardScreen = (props) => {
-    const [searchResult, setSearchResult] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    
-    const renderHeader = () => (
-        <SearchField
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-        />
-    );
-  
 
   const renderBody = () => (
     
@@ -84,10 +71,11 @@ const DashboardScreen = (props) => {
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
-        searchBar
         selectedNavLinkIndex={1}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
     </React.Fragment>
 
@@ -100,6 +88,10 @@ DashboardScreen.propTypes = {
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
   getAllAssets: PropTypes.func,
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
+  watchListsArray: PropTypes.array,
+  assetsListArray: PropTypes.array
 };
 
 export default DashboardScreen;

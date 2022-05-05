@@ -10,8 +10,9 @@ import {
   Typography
 } from '@mui/material';
 import ScreensTemplate from '../ScreensTemplate';
+import PropTypes from 'prop-types';
 
-const Home = () => {
+const Home = props => {
   const infoArray = {
     'dashboard': [
       'rgb(78 185 111)',
@@ -105,10 +106,20 @@ const Home = () => {
       <ScreensTemplate
         bodyComponent={renderBody}
         selectedNavLinkIndex={0}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
     </React.Fragment>
 
   );
 }
+
+Home.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
+  watchListsArray: PropTypes.array,
+  assetsListArray: PropTypes.array,
+};
 
 export default Home;
