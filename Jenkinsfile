@@ -7,9 +7,10 @@ pipeline {
                     sh "pwd"
                     echo "INFO: Building NodeJS Docker Image"
                     dir('Backend'){
-                        sh "docker build . -t swe/node-web-app"
+                        echo"CHANGED VERZEICHNIS"
+                        sh "pwd"
+                        sh "sudo docker build . -t swe/node-web-app"    
                     }
-                    
                     echo "INFO: Docker Image built"
                 }
             }
