@@ -20,7 +20,7 @@ pipeline {
                 script {
                     echo "INFO: Running new Docker image"
                     sh "docker rm -f swe/node-web-app || true"
-                    sh "docker run --restart always -p 3001:3001 -d fefifef/node-web-app"
+                    sh "docker run --restart always -p 3001:3001 -d swe/node-web-app"
                      echo "INFO: Deployed"
                 }
             }
