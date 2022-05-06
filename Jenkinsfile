@@ -4,6 +4,7 @@ pipeline {
         stage ("Build"){
             steps{
                 script {
+                    sh "pwd"
                     echo "INFO: Building NodeJS Docker Image"
                     sh "sudo docker build . -t swe/node-web-app"
                     echo "INFO: Docker Image built"
