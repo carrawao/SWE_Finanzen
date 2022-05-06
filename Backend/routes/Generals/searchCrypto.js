@@ -1,3 +1,5 @@
+const {matchSorter} = require('match-sorter')
+
 const userRoutes = (app, fs, accessURL) => {
     // variables
     const shareDataPath = './data/quotedUSshares.json';
