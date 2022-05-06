@@ -191,7 +191,7 @@ const AppRoutes = () => {
       <Route 
         path='/analysis' 
         element={
-          <DashboardScreen
+          <AnalysisScreen
             searchResult={searchResult}
             setSearchResult={setSearchResult}
             watchListsArray={watchListsArray}
