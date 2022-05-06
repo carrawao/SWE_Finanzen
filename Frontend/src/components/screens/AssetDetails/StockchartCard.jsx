@@ -24,7 +24,7 @@ const StockchartCard = (props) =>{
     <CardHeader
       action={<ChartButtons view={view} setView={setView}></ChartButtons>}
       title={props.symbol}
-      subheader={new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'})
+      subheader={new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR'})
       .format(stockPrice) + " | " + (perf * 100).toFixed(2) + "%"}
     />
     <Divider />

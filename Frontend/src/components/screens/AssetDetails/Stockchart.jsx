@@ -147,7 +147,7 @@ const Stockchart = (props) => {
                 },
                 ticks: {
                     callback: function (value) {
-                        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', }).format(value);
+                        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', }).format(value);
                     }
                 }
             }
@@ -159,7 +159,7 @@ const Stockchart = (props) => {
                 callbacks: {
                     label: function (context) {
                         let label = context.dataset.label;
-                        label += ": " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', })
+                        label += ": " + new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', })
                             .format(context.dataset.data[context.dataIndex]);
                         return label;
                     },

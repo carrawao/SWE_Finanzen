@@ -55,11 +55,7 @@ export const AnalysisPie = () => {
             }
         }
     }
-    // Percantage btw nice 
-    function selectColor(colorNum, colors){
-        if (colors < 1) colors = 1; // defaults to one color - avoid divide by zero
-        return "hsl(" + (colorNum * (360 / colors) % 360) + ",100%,50%)";
-    }
+    // Percantage btw nice   
     const labels = example.map((share, index) => (share["asset"]));
     const data = example.map((share, index) => (Number(share["percantage"])));
     const colors = example.map((share, index) => {
