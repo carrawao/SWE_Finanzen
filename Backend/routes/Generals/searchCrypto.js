@@ -16,7 +16,7 @@ const userRoutes = (app, fs, accessURL) => {
             });
 
             res.set('Access-Control-AlLow-Origin', accessURL);
-            res.send(cryptoArrFound);
+            res.send(matchSorter(cryptoArrFound,searchText,{keys: ['name','symbol']}));
             return;
         }
         res.send("NO search Text");

@@ -16,7 +16,7 @@ const userRoutes = (app, fs, accessURL) => {
             });
 
             res.set('Access-Control-AlLow-Origin', accessURL);
-            res.send(shareArrFound);
+            res.send(matchSorter(shareArrFound,searchText,{keys: ['name','symbol']}));
             return;
         }
         res.send("NO search Text");
