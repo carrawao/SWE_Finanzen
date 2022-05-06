@@ -24,6 +24,11 @@ const getCryptoForWatchlist = require('./Watchlist/getCryptoForWatchlist');
 //Analyse
 const getShareInformationsForAnalyse = require('./Analyse/getShareInformationsForAnalyse');
 
+//Activities
+const getShareDataFromDateForActivities = require('./Activities/getShareDataFromDateForActivities');
+const getCryptoDataFromDateForActivities = require('./Activities/getCryptoDataFromDateForActivities')
+
+
 const appRouter = (app, fs, apiKeys, accessURL) => {
   app.get('/', (req, res) => {
     res.send('welcome to the api-server');
@@ -53,6 +58,10 @@ const appRouter = (app, fs, apiKeys, accessURL) => {
 
   //Analyse
   getShareInformationsForAnalyse(app,fs,apiKeys[1],accessURL);
+
+  //Activities
+  getShareDataFromDateForActivities(app, fs, apiKeys[0], accessURL);
+  getCryptoDataFromDateForActivities(app,fs, apiKeys[0], accessURL);
 };
 
 module.exports = appRouter;
