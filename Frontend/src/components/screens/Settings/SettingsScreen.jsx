@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import { Container, Box, Button } from '@mui/material';
+import { Container, Box, Button, Typography } from '@mui/material';
 import {renderDeleteDataModal} from './Modals/settingsModals'
 import PropTypes from 'prop-types';
+
 
 /**
  * Component related to the Settings screen
@@ -15,22 +16,42 @@ const SettingsScreen = props => {
 
   const renderBody = () => (
     <Container className='d-flex flex-column px-1 pt-2'>
-      <Box calssName='d-flex flex-row'>
-        <Button
-          variant='outlined'
-          onClick={downloadFile}
-          sx={{
-            color: 'white',
-            borderColor: 'rgb(228 126 37)',
-            backgroundColor: 'rgb(228 126 37)',
-            '&:hover': {
+      <Box className='d-flex flex-row col-12'>
+        <Container>
+          <Box className='col-12 col-md-6 col-xl-6'>
+            <Typography
+                className='align-self-start fw-bold px-1'
+                component='span'
+                noWrap
+                fontSize={{
+                    md: 14,
+                    xs: 12
+                }}
+                >
+                        Lore, Ipsum
+              </Typography>
+          </Box>
+          <Box className='col-12 col-md-6 col-xl-6'>
+            <Button
+            variant='outlined'
+            onClick={downloadFile}
+            sx={{
+              color: 'white',
+              borderColor: 'rgb(228 126 37)',
               backgroundColor: 'rgb(228 126 37)',
-            }
-          }}
-        >
-          Export Data
-        </Button>
+              '&:hover': {
+                backgroundColor: 'rgb(228 126 37)',
+              }
+            }}
+            >
+              Export Data
+            </Button>
+          </Box>
+        </Container>
+        
+      </Box>
 
+      <Box>
         <input
           accept='application/json'
           className='d-none'
@@ -55,7 +76,9 @@ const SettingsScreen = props => {
             Import Data
           </Button>
         </label>
+      </Box>
 
+      <Box>
         <Button
           className='ms-3'
           variant='outlined'
