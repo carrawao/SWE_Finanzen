@@ -9,12 +9,7 @@ const AssetDetailsScreen = props => {
   //data that we saved for this asset --> undefined if asset is not in the portfolio
   const savedAssetData = asset === undefined ? undefined : props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);  
   console.log(savedAssetData);
-  const renderBody = () => (
-    <>
-    <h1>Details of asset: {assetType}|{asset} </h1>
-    <StockchartCard assetType={assetType} symbol={asset}/>
-    </>
-  );
+  const renderBody = () => <StockchartCard assetType={assetType} symbol={asset}/>;
 
   return (
     <React.Fragment>

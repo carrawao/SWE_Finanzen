@@ -1,8 +1,8 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState} from 'react';
 import Stockchart from "./Stockchart";
 import ChartButtons from "./ChartButtons";
 import Masterdata from './Masterdata';
-import {Card, Divider, CardContent, CardHeader, Collapse, IconButton, CircularProgress} from '@mui/material'
+import {Card, Divider, CardContent, CardHeader, Collapse, IconButton, Grid} from '@mui/material'
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 
@@ -20,30 +20,37 @@ const StockchartCard = (props) =>{
     setOpen(!open);
   }
   return (
-  <Card sx={{maxWidth: 750, border:3, borderColor: 'primary.main', borderRadius: 3}} raised {...props}>
-    <CardHeader
-      action={<ChartButtons view={view} setView={setView}></ChartButtons>}
-      title={props.symbol}
-      subheader={new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR'})
-      .format(stockPrice) + " | " + (perf * 100).toFixed(2) + "%"}
-    />
-    <Divider />
-    <CardContent>        
-      <Stockchart {...props} view={view} setStockPrice={setStockPrice} setPerf={setPerf}/>
-    </CardContent>
-    <Divider />
-    {
-      props.assetType === "Stock" &&
-        <>
-          <IconButton onClick={handleClick}>
-          {open ? <ExpandLess/> : <ExpandMore/>}
-          </IconButton>
-          <Collapse in={open}>      
-            <Masterdata {...props}/>
-          </Collapse>
-        </>
-    } 
-  </Card>
+  <Grid container className='d-flex justify-content-center pt-2'>  
+  <Grid item xs={10}>
+    <Card raised sx={{border:3, borderColor: 'rgb(228 126 37)', borderRadius:3}}>
+      <CardHeader
+        title={props.assetType+" | "+props.symbol}
+        subheader={new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR'})
+        .format(stockPrice) + ` | ${(perf * 100).toFixed(2)}%`}
+        action={<ChartButtons view={view} setView={setView}></ChartButtons>}
+      />
+      <Divider/>
+      
+        <CardContent>
+          <Stockchart {...props} view={view} setStockPrice={setStockPrice} setPerf={setPerf}/>
+        </CardContent>
+      
+      <Divider />
+      {
+        // Show overview if stock
+        props.assetType === "Stock" &&
+          <>
+            <IconButton onClick={handleClick}>
+            {open ? <ExpandLess/> : <ExpandMore/>}
+            </IconButton>
+            <Collapse in={open}>      
+              <Masterdata {...props}/>
+            </Collapse>
+          </>
+      } 
+    </Card>  
+  </Grid>
+  </Grid>
   )
 }
 StockchartCard.propTypes = {

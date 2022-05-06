@@ -126,6 +126,7 @@ const Stockchart = (props) => {
         }]
     }
     const options = {
+        maintainAspectRatio: true,
         scales: {
             x: {               
                 type: 'time',
@@ -192,7 +193,7 @@ const Stockchart = (props) => {
     }
     setView(props.view,data,labels,options,setup);
     props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length-1] / setup.datasets[0].data[0]));
-    return <Container maxWidth='md'><div><Line data={setup} options={options} plugins={[crosshair]}/></div></Container>
+    return <Line data={setup} options={options} plugins={[crosshair]}/>
 };
 Stockchart.propTypes = {
     symbol: PropTypes.string,
