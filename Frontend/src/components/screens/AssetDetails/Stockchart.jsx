@@ -1,12 +1,10 @@
-import React,{ useEffect, useState} from "react";
+import React,{ useEffect, useState} from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables,} from 'chart.js';
 import {format, addDays, subDays, differenceInDays} from 'date-fns';
-import "chartjs-adapter-date-fns";
-import { CircularProgress, Container } from "@mui/material";
-import PropTypes from "prop-types"
-
-ChartJS.register(...registerables);
+import 'chartjs-adapter-date-fns';
+import { CircularProgress, Container } from '@mui/material';
+import PropTypes from 'prop-types'
 
 // Crosshair plugin
 const crosshair = {
@@ -27,10 +25,11 @@ const crosshair = {
         }
     }
 }
-function setView(view,data,labels,options,setup){    
+
+const setView = (view, data, labels, options, setup) => {
     let lastDate = new Date(labels[0]);
     //Timespan in days default = from first to last datapoints date
-    let timespan = differenceInDays(lastDate,new Date(labels[labels.length-1]));
+    let timespan = differenceInDays(lastDate,new Date(labels[labels.length - 1]));
 
     switch(view){
         case 'week':
@@ -57,32 +56,36 @@ function setView(view,data,labels,options,setup){
     // searching for starting Date by shrinking the timespan day by day
     let startDate = subDays(lastDate, timespan);
     let startDateIndex = -1;
-    do{
+    do {
         let startDateString = format(startDate,"yyyy-MM-dd");
         startDateIndex = labels.indexOf(startDateString);
         startDate = addDays(startDate,1);
-    }while(startDateIndex === -1);
+    } while(startDateIndex === -1);
     
     // slicing out original data accordingly and replacing ONLY the graph data
-    setup.datasets[0].data = data.slice(0,startDateIndex+1);
-    setup.labels = labels.slice(0,startDateIndex+1);
+    setup.datasets[0].data = data.slice(0,startDateIndex + 1);
+    setup.labels = labels.slice(0,startDateIndex + 1);
 }
+
 /**
  * Component to display a stockchart from given 
  * @param props
  * @returns {JSX.Element}
  * @constructor
  */
-const Stockchart = (props) => {  
+const Stockchart = props => {
+    ChartJS.register(...registerables);
+
     const [isLoaded, setLoaded] = useState(false);
     const [labels, setLabels] = useState([]);
     const [data, setData] = useState([]);    
     
     useEffect(() => {
-        console.log("fetching stockdata...");
-        const base = "http://localhost:3001";
+        console.log('fetching stockdata...');
+        const base = 'http://localhost:3001';
         let url = new URL(`dailyShare?symbol=${props.symbol}`, base);
-        if(props.assetType === "Crypto"){
+
+        if (props.assetType === 'Crypto') {
             url = new URL(`dailyCrypto?symbol=${props.symbol}`, base);
         }
         fetch(url.toString())
@@ -91,24 +94,23 @@ const Stockchart = (props) => {
             let labels;
             let data;
             // Chooses how to format different json according to assetType
-            switch(props.assetType){
-                case "Crypto":
+            switch (props.assetType){
+                case 'Crypto':
                     labels = Object.keys(json['Time Series (Digital Currency Daily)']);
                     data = Object.values(json['Time Series (Digital Currency Daily)']).map(o => Number(o['4b. close (USD)']));
                     break;
-                case "ETF":
-                case "Stock":
+                case 'ETF':
+                case 'Stock':
                 default:
                     labels = Object.keys(json['Time Series (Daily)']);
                     data = Object.values(json['Time Series (Daily)']).map(o => Number(o['4. close']));
                     break;
-
             }
             setLabels(labels);
             setData(data);
             setLoaded(true);
             props.setStockPrice(data[0]);
-            console.log("Sharedata loaded!");
+            console.log('Sharedata loaded!');
           }
         );
     
@@ -117,14 +119,15 @@ const Stockchart = (props) => {
     const setup = {
         labels:labels,
         datasets:[{
-            label:props.symbol,
-            data:data,
+            label: props.symbol,
+            data: data,
             borderColor: 'rgba(0,0,255,0.6)',
             backgroundColor: 'rgba(0,0,255,0.6)',
             yAxisId: 'stockpriceAxis',
             pointRadius: 0			
         }]
     }
+
     const options = {
         scales: {
             x: {               
@@ -159,7 +162,7 @@ const Stockchart = (props) => {
                 callbacks: {
                     label: function (context) {
                         let label = context.dataset.label;
-                        label += ": " + new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', })
+                        label += ': ' + new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', })
                             .format(context.dataset.data[context.dataIndex]);
                         return label;
                     },
@@ -187,19 +190,20 @@ const Stockchart = (props) => {
         }
     }    
     
-    if(isLoaded){
-
+    if (isLoaded) {
         setView(props.view,data,labels,options,setup);
         props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length-1] / setup.datasets[0].data[0]));
         return <Container maxWidth='md'><div><Line data={setup} options={options} plugins={[crosshair]}/></div></Container>
     }
-    return <CircularProgress/>
+    return <CircularProgress />
 };
+
 Stockchart.propTypes = {
     symbol: PropTypes.string,
     setStockPrice: PropTypes.func,
     view: PropTypes.string,
-    setPerf: PropTypes.func,    
+    setPerf: PropTypes.func,
+    assetType: PropTypes.string
   };
 
 export default Stockchart;

@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import {ListItem, Typography, Container, Box} from '@mui/material';
+import PropTypes from 'prop-types';
 
-
-const AnalysisDetailItem  = (props) => {
-
+const AnalysisDetailItem = props => {
     const [hovered, setHovered] = useState(false);
     const toggleHover = () => setHovered(!hovered);
 
@@ -33,7 +31,7 @@ const AnalysisDetailItem  = (props) => {
                         alignItems: 'flex-end'
                     }}
                     >
-                            {props.props.asset}
+                            {props.asset}
                     </Typography>
                 </Box>
                 <Box className='d-flex flex-row-reverse mt-6 col-6 col-sm-6 me-6'>
@@ -46,18 +44,18 @@ const AnalysisDetailItem  = (props) => {
                         xs: 12
                     }}
                     >
-                        {props.props.percantage} %
+                        {props.percentage} %
                     </Typography>
                 </Box>
             </Container>
-            
-    
-    
         </ListItem>
         
     );
 }
-    
-   
+
+AnalysisDetailItem.propTypes = {
+    asset: PropTypes.string,
+    percentage: PropTypes.string,
+};
 
 export default AnalysisDetailItem;

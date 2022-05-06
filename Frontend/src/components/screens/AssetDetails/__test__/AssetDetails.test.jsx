@@ -1,7 +1,10 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import AssetDetailsScreen from '../AssetDetailsScreen';
-import { BrowserRouter } from 'react-router-dom';
+import toJson from 'enzyme-to-json';
+import Enzyme, {shallow} from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+
+Enzyme.configure({ adapter: new Adapter() })
 
 it('AssetDetailsScreen renders without crashing', () => {
   const portfolioData = {
@@ -21,17 +24,15 @@ it('AssetDetailsScreen renders without crashing', () => {
 
   const setSearchResult = jest.fn();
 
-    const div = document.createElement('div');
-    ReactDom.render(
-        <BrowserRouter>
-            <AssetDetailsScreen
-              searchResult={[]}
-              setSearchResult={setSearchResult}
-              watchListsArray={[]}
-              assetsListArray={[[]]}
-              portfolioData={portfolioData}
-              activePortfolio={'Portfolio'}
-            />
-        </BrowserRouter>
-    , div);
+  const wrapper = shallow(
+    <AssetDetailsScreen
+      searchResult={[]}
+      setSearchResult={setSearchResult}
+      watchListsArray={[]}
+      assetsListArray={[[]]}
+      portfolioData={portfolioData}
+      activePortfolio={'Portfolio'}
+    />);
+
+  expect(toJson(wrapper)).toMatchSnapshot();
 })
