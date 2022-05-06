@@ -16,7 +16,10 @@ const CustomSelectField = props => {
     }
   }, [props, props.watchListsArray, selectedItem]);
 
-  // Selects the index of the current watchlist
+  /**
+   * Selects the index of the current watchlist
+   * @param event
+   */
   const handleChange = (event) => {
     if (props.watchListsArray.includes(event.target.value)) {
       const index = props.watchListsArray.map(item => item).indexOf(event.target.value);

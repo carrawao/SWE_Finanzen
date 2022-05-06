@@ -10,8 +10,7 @@ import PropTypes from 'prop-types';
 * @returns {JSX.Element}
 * @constructor
 */
-const SearchAssetInput = (props) => {
-    
+const SearchAssetInput = props => {
     const getSharesInPortfolioOptions = () => {
         const shares = props.portfolioData.shares;
         const shareOptions = [];
@@ -99,6 +98,10 @@ const SearchAssetInput = (props) => {
     }, [open]);
     
     useEffect(() => {
+        props.setValues({
+            ...props.values,
+            asset: null
+        })
         if (props.values.assetType === "cash") {
             setCash(true);
         } else {

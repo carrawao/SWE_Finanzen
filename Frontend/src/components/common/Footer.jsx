@@ -7,6 +7,11 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
+/**
+ * Component related to the footer of the app
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Footer = () => (
   <footer
     style={{

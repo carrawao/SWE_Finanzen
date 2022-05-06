@@ -1,3 +1,5 @@
+const {matchSorter} = require('match-sorter')
+
 const userRoutes = (app, fs, accessURL) => {
     // variables
     const shareDataPath = './data/quotedUSshares.json';
@@ -21,9 +23,11 @@ const userRoutes = (app, fs, accessURL) => {
                 return isPartOf;
             });
 
+            
+
             let result = [...shareArrFound, ...cryptoArrFound];
             res.set('Access-Control-AlLow-Origin', accessURL);
-            res.send(result);
+            res.send(matchSorter(result,searchText,{keys: ['name','symbol']}));
             return;
         }
         res.send("NO search Text");

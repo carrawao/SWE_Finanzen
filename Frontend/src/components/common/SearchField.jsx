@@ -1,11 +1,12 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import {InputAdornment, IconButton} from '@mui/material';
+import {InputAdornment} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 /**
  * Component for the search field in the screens' header
+ * @param props
  * @returns {JSX.Element}
  * @constructor
  */
@@ -18,7 +19,7 @@ const SearchField = props => {
   const search = async query => {
     if (query !== '') {
       try {
-        return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${query}`, {mode:'cors'})
+        return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${encodeURIComponent(query)}`, {mode:'cors'})
           .then(response => response.json())
           .then(searchResult => {
             let firstResults = searchResult.slice(0, 10);

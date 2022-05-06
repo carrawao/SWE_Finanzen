@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import AnalysisList from './AnalysisList';
 
+
 /**
  * Component related to the analysis page
  * @param props
@@ -45,16 +46,22 @@ const AnalysisScreen = props => {
 
     return (
         <React.Fragment>
-            <ScreensTemplate
-                headerComponent={renderHeader}
-                bodyComponent={renderBody}
-                selectedNavLinkIndex={5}
-            />
+          <ScreensTemplate
+            bodyComponent={renderBody}
+            selectedNavLinkIndex={5}
+            assetsListArray={props.assetsListArray}
+            searchResult={props.searchResult}
+            setSearchResult={props.setSearchResult}
+          />
         </React.Fragment>
-    );
+      );
 }
 
-ScreensTemplate.propTypes = {
+AnalysisScreen.propTypes = {
+    searchResult: PropTypes.array,
+    setSearchResult: PropTypes.func,
+    watchListsArray: PropTypes.array,
+    assetsListArray: PropTypes.array,
     activePortfolio: PropTypes.string,
     portfolioData: PropTypes.object,
     setPortfolioData: PropTypes.func,

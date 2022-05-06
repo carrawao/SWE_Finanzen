@@ -1,20 +1,13 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
-import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
-const AssetDetailsScreen = (props) => {
+const AssetDetailsScreen = props => {
   let {asset, assetType} = useParams();
 
   //data that we saved for this asset --> undefined if asset is not in the portfolio
   const savedAssetData = asset === undefined ? undefined : props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);
-  
-  const renderHeader = () => (
-    <Typography variant='h6' noWrap component='div' sx={{color: '#493f35'}}>
-      Asset Details Screen
-    </Typography>
-  );
 
   const renderBody = () => (
     <h1>Details of asset: {asset}</h1>
@@ -23,17 +16,23 @@ const AssetDetailsScreen = (props) => {
   return (
     <React.Fragment>
       <ScreensTemplate
-        headerComponent={renderHeader}
         bodyComponent={renderBody}
-        selectedNavLinkIndex={2}
+        selectedNavLinkIndex={-1}
+        assetsListArray={props.assetsListArray}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
       />
     </React.Fragment>
   );
 }
 
 AssetDetailsScreen.propTypes = {
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
   portfolioData: PropTypes.object,
-  activePortfolio: PropTypes.string
+  activePortfolio: PropTypes.string,
+  watchListsArray: PropTypes.array,
+  assetsListArray: PropTypes.array,
 };
 
 export default AssetDetailsScreen;

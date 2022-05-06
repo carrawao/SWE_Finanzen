@@ -192,7 +192,7 @@ const AnalysisList = (props) => {
            
             {
             
-            allArrays[valueSelect].map((share, index) => ( 
+            [valallArraysueSelect].map((share, index) => ( 
                 <AnalysisDetailItem props={share}
                     key={`activity_${index}`}
                 ></AnalysisDetailItem>
