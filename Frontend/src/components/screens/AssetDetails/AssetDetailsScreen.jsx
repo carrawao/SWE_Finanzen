@@ -4,8 +4,11 @@ import ScreensTemplate from '../../ScreensTemplate';
 import StockchartCard from '../AssetDetails/StockchartCard';
 import PropTypes from 'prop-types';
 
+/**
+ * Screen for any Type of Asset
+ */
 const AssetDetailsScreen = props => {
-  let {asset, assetType} = useParams();  
+  let {asset, assetType} = useParams();
   //data that we saved for this asset --> undefined if asset is not in the portfolio
   const savedAssetData = asset === undefined ? undefined : props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);  
   console.log(savedAssetData);
