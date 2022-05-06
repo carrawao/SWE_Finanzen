@@ -8,19 +8,25 @@ import { Divider, List, ListItem, ListItemText, Grid, Typography, CircularProgre
 // Sektor, Industry , etc
 
 const Masterdata = (props) => {
-    const [isMdLoaded, setMdLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [masterdata, setMasterdata] = useState({});
     useEffect(()=>{
         console.log("fetching stockdata...");
-        fetch(`http://localhost:3001/companyOverview?symbol=${props.symbol}`)
+        const base = process.env.REACT_APP_BASEURL;
+        let url = new URL(`companyOverview?symbol=${encodeURIComponent(props.symbol)}`, base);
+        fetch(url.toString())
         .then(res => res.json())
         .then(data => {
           setMasterdata(data);
-          setMdLoaded(true);
+          setIsLoading(false);
           console.log("Masterdata loaded!");          
         })
     },[]);
-    let body = <><Grid container flex spacing={2} alignItems="stretch" justifyContent="space-evenly">
+
+    if(isLoading){
+        return <CircularProgress/>
+    }
+    return <Grid container flex spacing={2} alignItems="stretch" justifyContent="space-evenly">
     <Grid item xs={4}>
         <List>
             <ListItem>
@@ -68,13 +74,8 @@ const Masterdata = (props) => {
             </ListItem>
         </List>
     </Grid>
-</Grid></>;
-
-    if(isMdLoaded){
-        return body;
-    }
-    return <CircularProgress/>        
-
+</Grid>
+    
 }
 
 export default Masterdata;

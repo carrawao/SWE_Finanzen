@@ -74,16 +74,16 @@ function setView(view,data,labels,options,setup){
  * @constructor
  */
 const Stockchart = (props) => {  
-    const [isLoaded, setLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [labels, setLabels] = useState([]);
     const [data, setData] = useState([]);    
     
     useEffect(() => {
         console.log("fetching stockdata...");
-        const base = "http://localhost:3001";
-        let url = new URL(`dailyShare?symbol=${props.symbol}`, base);
+        const base = process.env.REACT_APP_BASEURL;
+        let url = new URL(`dailyShare?symbol=${encodeURIComponent(props.symbol)}`, base);
         if(props.assetType === "Crypto"){
-            url = new URL(`dailyCrypto?symbol=${props.symbol}`, base);
+            url = new URL(`dailyCrypto?symbol=${encodeURIComponent(props.symbol)}`, base);
         }
         fetch(url.toString())
         .then(res => res.json())
@@ -106,7 +106,7 @@ const Stockchart = (props) => {
             }
             setLabels(labels);
             setData(data);
-            setLoaded(true);
+            setIsLoading(false);
             props.setStockPrice(data[0]);
             console.log("Sharedata loaded!");
           }
@@ -119,8 +119,8 @@ const Stockchart = (props) => {
         datasets:[{
             label:props.symbol,
             data:data,
-            borderColor: 'rgba(0,0,255,0.6)',
-            backgroundColor: 'rgba(0,0,255,0.6)',
+            borderColor: 'rgb(59 151 210)', // light blue
+            backgroundColor: 'rgb(78 185 111)',// light green
             yAxisId: 'stockpriceAxis',
             pointRadius: 0			
         }]
@@ -187,13 +187,12 @@ const Stockchart = (props) => {
         }
     }    
     
-    if(isLoaded){
-
-        setView(props.view,data,labels,options,setup);
-        props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length-1] / setup.datasets[0].data[0]));
-        return <Container maxWidth='md'><div><Line data={setup} options={options} plugins={[crosshair]}/></div></Container>
+    if(isLoading){
+        return <CircularProgress/>
     }
-    return <CircularProgress/>
+    setView(props.view,data,labels,options,setup);
+    props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length-1] / setup.datasets[0].data[0]));
+    return <Container maxWidth='md'><div><Line data={setup} options={options} plugins={[crosshair]}/></div></Container>
 };
 Stockchart.propTypes = {
     symbol: PropTypes.string,
