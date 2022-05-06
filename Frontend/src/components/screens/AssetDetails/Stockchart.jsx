@@ -82,7 +82,7 @@ const Stockchart = props => {
     
     useEffect(() => {
         console.log('fetching stockdata...');
-        const base = 'http://localhost:3001';
+        const base = process.env.REACT_APP_BASEURL;
         let url = new URL(`dailyShare?symbol=${props.symbol}`, base);
 
         if (props.assetType === 'Crypto') {

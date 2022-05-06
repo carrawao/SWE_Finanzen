@@ -13,7 +13,7 @@ const Masterdata = props => {
     const [masterdata, setMasterdata] = useState({});
     useEffect(()=>{
         console.log('fetching stockdata...');
-        fetch(`http://localhost:3001/companyOverview?symbol=${props.symbol}`)
+        fetch(`${process.env.REACT_APP_BASEURL}/companyOverview?symbol=${props.symbol}`)
         .then(res => res.json())
         .then(data => {
           setMasterdata(data);
