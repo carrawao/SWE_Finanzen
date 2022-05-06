@@ -65,17 +65,20 @@ const DoughnutChart = (props) => {
   
   return (
     <Grid 
+      container
+      justifyContent="center"
       sx={{
         position: 'relative',
         padding: '1rem'
       }}
     >
       <Grid 
-        id="doughnutGraph-middleDisplay" 
         container
+        id="doughnutGraph-middleDisplay" 
         direction="column"
         justifyContent="center"
         alignItems="center"
+        maxWidth="50%"
         sx={{
           position: 'absolute',
           left: '50%',
@@ -84,49 +87,51 @@ const DoughnutChart = (props) => {
           zIndex: '100'
         }}
       >
-        <Paper sx={{marginBottom: '0.5rem'}}>
-          <Typography>{middleDisplayLabel}</Typography>
+        <Paper sx={{margin: '0.25rem', zIndex: '100'}}>
+          <Typography sx={{textAlign: "center"}}>{middleDisplayLabel}</Typography>
         </Paper>
-        <Typography>{middleDisplayValue}</Typography>
+        <Paper elevation={0} sx={{margin: '0.25rem', zIndex: '100'}}>
+          <Typography sx={{textAlign: "center"}}>{middleDisplayValue}</Typography>
+        </Paper>
       </Grid>
       <Doughnut 
-              data={data} 
-              options={{
-                responsive: true,
-                cutoutPercentage: 90,
-                plugins: {
-                  legend: {
-                    display: false,
-                  },
-                  tooltip: {
-                    enabled: false,
-                    external: function(context) {
-                      const tooltipModel = context.tooltip;
-                      //Set to default values if no tooltip
-                      if (tooltipModel.opacity === 0) {
-                        setDefaultValues();
-                        return;
-                      }
-                      
-                      function getBody(bodyItem) {
-                        return bodyItem.lines;
-                      }
-  
-                      // Set Text
-                      if (tooltipModel.body) {
-                        const bodyLines = tooltipModel.body.map(getBody);
-                        
-                        bodyLines.forEach(function(body, i) {
-                          const bodyparts = body[0].split(":");
-                          setMiddleDisplayLabel(bodyparts[0]);
-                          setMiddleDisplayValue(`${bodyparts[1].trim()} €`);
-                        });
-                      }
-                    }
-                  },
+        data={data} 
+        options={{
+          responsive: true,
+          cutoutPercentage: 90,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              enabled: false,
+              external: function(context) {
+                const tooltipModel = context.tooltip;
+                //Set to default values if no tooltip
+                if (tooltipModel.opacity === 0) {
+                  setDefaultValues();
+                  return;
                 }
-              }}
-            />
+                
+                function getBody(bodyItem) {
+                  return bodyItem.lines;
+                }
+
+                // Set Text
+                if (tooltipModel.body) {
+                  const bodyLines = tooltipModel.body.map(getBody);
+                  
+                  bodyLines.forEach(function(body, i) {
+                    const bodyparts = body[0].split(":");
+                    setMiddleDisplayLabel(bodyparts[0]);
+                    setMiddleDisplayValue(`${bodyparts[1].trim()} €`);
+                  });
+                }
+              }
+            },
+          }
+        }}
+      />
     </Grid>
   );        
 }
