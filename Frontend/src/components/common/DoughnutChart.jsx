@@ -26,23 +26,9 @@ const DoughnutChart = (props) => {
     setMiddleDisplayValue(defaultMiddleDisplayValue);
   }
   
-  const assets = props.getAllAssets();
-  
-  const labels = (() => {
-    let labels = []
-    assets.forEach(element => {
-      labels.push(element["name"]);
-    });
-    return labels;
-  })();
+  const labels = props.labels;
 
-  const valueData = (() => {
-    let valueData = []
-    assets.forEach(element => {
-      valueData.push(element["value"]*element["quantity"]);
-    });
-    return valueData;
-  })();
+  const valueData = props.data;
 
   const data = {
     labels: labels,
@@ -51,28 +37,25 @@ const DoughnutChart = (props) => {
         label: 'value',
         data: valueData,
         color: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+            'rgba(59, 151, 210, 1)',
+            'rgba(241, 155, 31, 1)',
+            'rgba(229, 126, 37, 1)',
+            'rgba(239, 195, 25, 1)',
+            'rgba(78, 185, 111, 1)',
         ],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+            'rgba(59, 151, 210, 1)',
+            'rgba(241, 155, 31, 1)',
+            'rgba(229, 126, 37, 1)',
+            'rgba(239, 195, 25, 1)',
+            'rgba(78, 185, 111, 1)',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
+            'rgba(59, 151, 210, 1)',
+            'rgba(241, 155, 31, 1)',
+            'rgba(229, 126, 37, 1)',
+            'rgba(239, 195, 25, 1)',
+            'rgba(78, 185, 111, 1)',
         ],
         borderWidth: 1,
         spacing: 0
@@ -148,11 +131,11 @@ const DoughnutChart = (props) => {
   );        
 }
 
-AllocationGraph.propTypes = {
+DoughnutChart.propTypes = {
+  defaultMiddleDisplayLabel: PropTypes.string,
   defaultMiddleDisplayValue: PropTypes.string,
-  defaultMiddleDisplayValue: PropTypes.string,
-  data: PropTypes.string,
-  labels: PropTypes.string 
+  data: PropTypes.array,
+  labels: PropTypes.array 
 };
 
-export default AllocationGraph;
+export default DoughnutChart;
