@@ -48,6 +48,7 @@ returns a JSON list of the daily Share data of the passed symbol. (EUR)
 returns a JSON list of the weekly Share data of the passed symbol. (EUR)
 ##### `/monthlyShare?symbol=...`:
 returns a JSON list of the monthly Share data of the passed symbol. (EUR)
+
 #### Crypto
 ##### `/intradaCrypto?symbol=...`:
 returns a JSON list of the intraday Crypto data of the passed symbol. (EUR)
@@ -57,24 +58,79 @@ returns a JSON list of the daily Crypto data of the passed symbol. (EUR)
 returns a JSON list of the weekly Crypto data of the passed symbol. (EUR)
 ##### `/monthlyCrypto?symbol=...`:
 returns a JSON list of the daily Crypto data of the passed symbol. (EUR)
+
 #### General
 ##### `/companyOverview?symbol=...`:
 ##### `/quotedUSshares`:
-Returns a json of all quoted US shares about which we provide information.
+returns a json of all quoted US shares about which we provide information.
 ##### `/search?text=...`:
-Returns a JSON list of share and crypto data depending on the search text
+returns a JSON list of share and crypto data depending on the search text
 ##### `/searchShare?text=...`:
-Returns a JSON list of share data depending on the search text
+returns a JSON list of share data depending on the search text
 ##### `/searchCrypto?text=...`:
-Returns a JSON list of Crypto data depending on the search text
+returns a JSON list of Crypto data depending on the search text
+
 #### Watchlist
 ##### `/getShareForWatchlist?symbol=...`:
 returns a customized JSON list of a Share for the watchlist. (EUR)
--> {"name":"", "symbol":"", "value": "","percentChange":""}
+-> 
+{
+    "name":"", 
+    "symbol":"symbol", 
+    "value": "",
+    "percentChange":""
+}
 ##### `/getCryptoForWatchlist?symbol=...`:
 returns a customized JSON list of a Crypto for the watchlist. (EUR)
--> {"name":"", "symbol":"", "value": "", "percentChange":""}
+-> 
+{
+    "name":"", 
+    "symbol":"", 
+    value": "", 
+    "percentChange":""
+}
+
 #### Analyse
 ##### `/getShareInformationsForAnalyse?symbol=...`:
-eturns a customized JSON list of a Share for the Analyse page.
--> {"name":"", "symbol":"", "exDividendDate":"", "dividendDate":"", "assetClass":"", "sector":"", "branche":"", "region":"", "sub_region":"", "country":"","typ":"", "DividendPerShare":""}
+returns a customized JSON of a Share for the Analyse page.
+-> 
+{
+    "name":"", 
+    "symbol":"symbol", 
+    "exDividendDate":"", 
+    "dividendDate":"", 
+    "assetClass":"", 
+    "sector":"", 
+    "branche":"", 
+    "region":"", 
+    "sub_region":"", 
+    "country":"",
+    "typ":"", 
+    "DividendPerShare":""
+}
+
+#### Activities
+##### `/getShareDataFromDateForActivities?symbol=...&date=year-month-day`:
+returns a customized JSON of a Share for the Activities page. (EUR)
+->
+{
+  "symbol": "symbol",
+  "date": "year-month-day",
+  "1. open": "",
+  "2. high": "",
+  "3. low": "",
+  "4. close": "",
+  "5. volume": ""
+}
+##### `/getCryptoDataFromDateForActivities?symbol=...&date=year-month-day`:
+returns a customized JSON of a Crypto for the Activities page. (EUR)
+-> 
+{
+  "symbol": "symbol",
+  "date": "year-month-day",
+  "1. open": "",
+  "2. high": "",
+  "3. low": "",
+  "4. close": "",
+  "5. volume": ""
+}
