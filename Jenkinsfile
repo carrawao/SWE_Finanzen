@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage ( "Build"){
+        stage ("Build"){
             steps{
                 script {
                     echo "INFO: Building NodeJS Docker Image"
