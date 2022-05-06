@@ -9,7 +9,7 @@ pipeline {
                     dir('Backend'){
                         echo"CHANGED VERZEICHNIS"
                         sh "pwd"
-                        sh "sudo docker build . -t swe/node-web-app"    
+                        sh "docker build . -t swe/node-web-app"    
                     }
                     echo "INFO: Docker Image built"
                 }
