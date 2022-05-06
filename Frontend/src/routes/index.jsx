@@ -1,5 +1,5 @@
-import React, {lazy, useEffect, useState} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import React, { lazy, useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Impressum from '../components/screens/Impressum';
 import AGB from '../components/screens/AGB';
 import Privacy from '../components/screens/Privacy';
@@ -49,7 +49,7 @@ const persistState = (keyName, defaultValue) => {
  * @param defaultValue
  * @returns {string}
  */
- const persistString = (keyName, defaultValue) => {
+const persistString = (keyName, defaultValue) => {
   const savedData = localStorage.getItem(keyName);
   return !savedData ? defaultValue : savedData;
 };
@@ -77,118 +77,114 @@ const AppRoutes = () => {
       <Route
         path='/'
         element={
-        <Home
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
+          <Home
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+          />
+        } />
+      <Route
+        path='/dashboard'
+        element={
+          <DashboardScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            setActivePortfolio={setActivePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+          />}
+      />
+
+      <Route 
+         path='/activities' 
+         element={
+         <ActivitiesScreen
+           searchResult={searchResult}
+           setSearchResult={setSearchResult}
+           watchListsArray={watchListsArray}
+           assetsListArray={assetsListArray}
+           activePortfolio={activePortfolio}
+           portfolioData={portfolioData}
+           setPortfolioData={setPortfolioData}      
         />
-      }/>
-      <Route 
-        path='/dashboard' 
-        element={
-        <DashboardScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          activePortfolio={activePortfolio}
-          setActivePortfolio={setActivePortfolio}
-          portfolioData={portfolioData}
-          setPortfolioData={setPortfolioData}
-        />}
+        }
       />
-      <Route 
-        path='/analysis' 
+
+      <Route
+        path='/activities/addActivity'
         element={
-        <AnalysisScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-        />}
-      />
-      <Route 
-        path='/activities' 
-        element={
-        <ActivitiesScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          activePortfolio={activePortfolio}
-          portfolioData={portfolioData}
-          setPortfolioData={setPortfolioData}
-        />}
-      />
-      <Route 
-        path='/activities/addActivity' 
-        element={
-        <AddActivityScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          activePortfolio={activePortfolio}
-          portfolioData={portfolioData}
-          setPortfolioData={setPortfolioData}
-        />}
+          <AddActivityScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+          />}
       />
       <Route
         path='/watchlists'
         element={
-        <WatchListsScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          setWatchListsArray={setWatchListsArray}
-          assetsListArray={assetsListArray}
-          setAssetsListArray={setAssetsListArray}
+          <WatchListsScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            setWatchListsArray={setWatchListsArray}
+            assetsListArray={assetsListArray}
+            setAssetsListArray={setAssetsListArray}
           />
         }
       />
       <Route
         path='/settings'
         element={
-        <SettingsScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          portfolioData={portfolioData}
-          activePortfolio={activePortfolio}
-          emptyPortfolioData={emptyPortfolioData}
-          setWatchListsArray={setWatchListsArray}
-          setAssetsListArray={setAssetsListArray}
-          setPortfolioData={setPortfolioData}
-          setActivePortfolio={setActivePortfolio}
-        />}
+          <SettingsScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            portfolioData={portfolioData}
+            activePortfolio={activePortfolio}
+            emptyPortfolioData={emptyPortfolioData}
+            setWatchListsArray={setWatchListsArray}
+            setAssetsListArray={setAssetsListArray}
+            setPortfolioData={setPortfolioData}
+            setActivePortfolio={setActivePortfolio}
+          />}
       />
-      <Route 
-        path='/asset/:assetType/:asset' 
+      <Route
+        path='/asset/:assetType/:asset'
         element={
-        <AssetDetailsScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          portfolioData={portfolioData}
-          activePortfolio={activePortfolio}
-        />}
+          <AssetDetailsScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            portfolioData={portfolioData}
+            activePortfolio={activePortfolio}
+          />}
       />
       <Route
         path='/analysis'
         element={
-        <AnalysisScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-        />
-      }/>
-      <Route path='/impressum' element={<Impressum/>}/>
-      <Route path='/privacy' element={<Privacy/>}/>
-      <Route path='/agb' element={<AGB/>}/>
+          <AnalysisScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+          />}
+      />
+      <Route path='/impressum' element={<Impressum />} />
+      <Route path='/privacy' element={<Privacy />} />
+      <Route path='/agb' element={<AGB />} />
     </Routes>
   );
 }

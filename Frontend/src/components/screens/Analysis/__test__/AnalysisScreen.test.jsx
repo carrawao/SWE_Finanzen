@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import AnalysisScreen from '../AnalysisList';
 import AnalysisDetailItem from '../AnalysisDetailitem';
-import AnalysisStockSplitDetailitem from '../AnalysisStockSplitDetailitem';
 import { BrowserRouter } from 'react-router-dom';
 import { shallow, mount, configure} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -38,19 +37,6 @@ it('Snapshot Test AnalysisDetailItem', () => {
     expect(toJson(tree)).toMatchSnapshot();
 });
 
-it('Snapshot Test AnalysisStockSplitDetailItem', () => {
-    const share ={
-        "propertie" : "Germany", //Asset category
-        "percantage" : 30   //Percentage of category
-    }
-    
-    const index = 0;
-    const tree = shallow(
-         <AnalysisStockSplitDetailitem props={share} key={`activity_${index}`} />
-    );
-
-    expect(toJson(tree)).toMatchSnapshot();
-});
 
 it('Hover Test AnalysisDetailItem', () => {
     const share ={
