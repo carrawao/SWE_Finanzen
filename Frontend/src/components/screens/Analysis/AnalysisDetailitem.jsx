@@ -63,6 +63,4 @@ const AnalysisDetailItem  = (props) => {
     );
 }
     
-   
-
 export default AnalysisDetailItem;

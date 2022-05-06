@@ -1,14 +1,15 @@
 import React, {useState, select} from 'react';
-import ScreensTemplate from '../../ScreensTemplate';
 import {Grid,
         Button,
         List,
-        ListItem
+        ListItem,
+        Typography, 
+        TextField, 
+        MenuItem, 
+        styled
     } from '@mui/material';
-import { Typography, TextField, MenuItem, styled } from '@mui/material/';
-
-import AnalysisDetailItem from './AnalysisDetailitem';
-
+import PropTypes from 'prop-types';
+import AnalysisDetailItem from './AnalysisDetailItem';
 
 const StyledTextField = styled(TextField)({
     //Label color when focused
@@ -35,51 +36,43 @@ const StyledTextField = styled(TextField)({
 });
 
 const AnalysisList = (props) => {
-   
-    const [value, setValue] = React.useState('0');
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        props.setAnalysisType(event.target.value);
     };
 
-    var valueSelect = value
+    const analysisType = props.analysisType;
 
     return (
-       
-        <List>
-           
-            <StyledTextField
-                    fullWidth
-                    margin="normal"
-                    select
-                    label="Type of analysis"
-                    name="assetType"
-                    onChange = {handleChange}
-                    value={value}
-                >
-                    <MenuItem value={0}>Stock</MenuItem>
-                    <MenuItem value={1}>Crypto</MenuItem>
-                    <MenuItem value={2}>{props.keywordCollection[0]}</MenuItem>
-                    <MenuItem value={3}>{props.keywordCollection[1]}</MenuItem>
-                    <MenuItem value={4}>{props.keywordCollection[2]}</MenuItem>
-                    <MenuItem value={5}>{props.keywordCollection[3]}</MenuItem>
-                    <MenuItem value={6}>{props.keywordCollection[4]}</MenuItem>
-                    <MenuItem value={7}>{props.keywordCollection[5]}</MenuItem>
-                    <MenuItem value={8}>Typ</MenuItem>
-     
-                </StyledTextField>
-           
-            {
-            
-            props.allArrays[valueSelect].map((share, index) => ( 
-                <AnalysisDetailItem props={share}
-                    key={`activity_${index}`}
-                ></AnalysisDetailItem>
-            )) 
-            
-        }</List>
-
+      <List>
+          <StyledTextField
+            fullWidth
+            margin="normal"
+            select
+            label="Type of analysis"
+            name="analysisType"
+            onChange = {handleChange}
+            value={analysisType}
+          >
+            {props.analysisTypes.map((type, index) => (
+              <MenuItem key={index} value={index}>{type}</MenuItem>
+            ))}
+          </StyledTextField>
+          
+          {props.allArrays[analysisType].map((share, index) => ( 
+              <AnalysisDetailItem props={share}
+                  key={`activity_${index}`}
+              />
+          ))}
+      </List>
     );
 }
+
+AnalysisList.propTypes = {
+  allArrays: PropTypes.array,
+  analysisType: PropTypes.number,
+  setAnalysisType: PropTypes.func,
+  analysisTypes: PropTypes.array
+};
 
 export default AnalysisList;

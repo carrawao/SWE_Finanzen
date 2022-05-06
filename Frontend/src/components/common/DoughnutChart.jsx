@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -20,6 +20,10 @@ const DoughnutChart = (props) => {
   const [middleDisplayValue, setMiddleDisplayValue] = useState(defaultMiddleDisplayValue);
 
   ChartJS.register(ArcElement, Tooltip, Legend);
+
+  useEffect(() => {
+    setDefaultValues();
+  }, [defaultMiddleDisplayLabel]);
 
   const setDefaultValues = () => {
     setMiddleDisplayLabel(defaultMiddleDisplayLabel);
@@ -124,7 +128,7 @@ const DoughnutChart = (props) => {
                   bodyLines.forEach(function(body, i) {
                     const bodyparts = body[0].split(":");
                     setMiddleDisplayLabel(bodyparts[0]);
-                    setMiddleDisplayValue(`${bodyparts[1].trim()} €`);
+                    setMiddleDisplayValue(`${bodyparts[1].trim()} ${props.analysis ? '%' : '€'}`);
                   });
                 }
               }
@@ -137,6 +141,7 @@ const DoughnutChart = (props) => {
 }
 
 DoughnutChart.propTypes = {
+  analysis: PropTypes.bool,
   defaultMiddleDisplayLabel: PropTypes.string,
   defaultMiddleDisplayValue: PropTypes.string,
   data: PropTypes.array,
