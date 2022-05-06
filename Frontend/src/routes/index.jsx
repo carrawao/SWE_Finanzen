@@ -1,5 +1,5 @@
-import React, {lazy, useEffect, useState} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import React, { lazy, useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Impressum from '../components/screens/Impressum';
 import AGB from '../components/screens/AGB';
 import Privacy from '../components/screens/Privacy';
@@ -49,7 +49,7 @@ const persistState = (keyName, defaultValue) => {
  * @param defaultValue
  * @returns {string}
  */
- const persistString = (keyName, defaultValue) => {
+const persistString = (keyName, defaultValue) => {
   const savedData = localStorage.getItem(keyName);
   return !savedData ? defaultValue : savedData;
 };
@@ -71,6 +71,95 @@ const AppRoutes = () => {
     localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
     localStorage.setItem('activePortfolio', activePortfolio);
   }, [watchListsArray, assetsListArray, portfolioData, activePortfolio]);
+
+  const portfolio = portfolioData[activePortfolio];
+  
+  const updatePortfolioData = async () => {
+    const updatedShares = await getUpdatedAssetData("shares");
+    const updatedCrypto = await getUpdatedAssetData("crypto");
+    const value = getValue(updatedShares, updatedCrypto, portfolioData[activePortfolio]["cash"]);
+    const todayDate = new Date();
+    const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth()+1}-${todayDate.getDate()}`;
+
+    setPortfolioData(prevPortfolioData => {
+      let portfolioData = {...prevPortfolioData}
+      portfolioData[activePortfolio] = {...portfolioData[activePortfolio],
+        shares: updatedShares,
+        crypto: updatedCrypto,
+        value: value,
+        updated: todayString
+      };
+      return portfolioData;
+    });
+  };
+
+  const getUpdatedAssetData = async (assettype) => {
+    const updatedAssets = (async () => {
+      let updatedAssets = portfolioData[activePortfolio][assettype];
+      await Promise.all(updatedAssets.map(async (asset, index) => {
+        const symbol = asset["symbol"];
+        let data;
+        assettype === "shares" ? data = await getShareData(symbol) : data = await getCryptoData(symbol);
+        updatedAssets[index] = {...asset, 
+          name: data.name ? data.name : symbol,
+          value: `${Number.parseFloat(data.value).toFixed(2)}`
+        }
+      }))
+      return updatedAssets;
+    })();
+    return updatedAssets;
+  }
+
+  const getShareData = async (symbol) => {
+    try {
+      let response = await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      return await response.json();
+    }
+    catch (e) {
+      console.log('fetching failed === ', e);
+    }
+  }
+
+  const getCryptoData = async (symbol) => {
+    try {
+      let response = await fetch(`http://localhost:3001/getCryptoForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      return await response.json();
+    }
+    catch (e) {
+      console.log('fetching failed === ', e);
+    }
+  }
+
+  const getValue = (shares, crypto, cash) => {
+    let value = 0;
+    shares.forEach(share => {
+      value = value + share["value"]*share["quantity"];
+    });
+    crypto.forEach(coin => {
+      value = value + coin["value"]*coin["quantity"];
+    });
+    cash.forEach(account => {
+      value = value + account["value"];
+    });
+    return value;
+  }
+
+  const getAllAssets = () => {
+    let assets = [];
+    assets = assets.concat(portfolio["shares"]);
+    assets = assets.concat(portfolio["crypto"]);
+    assets = assets.concat(portfolio["cash"]);
+    return assets;
+  }
+
+  const updatedDate = new Date(portfolioData[activePortfolio]["updated"]);
+  const updated = "" + updatedDate.getDay() + updatedDate.getMonth() + updatedDate.getFullYear();
+  const todayDate = new Date();
+  const today = "" + todayDate.getDay() + todayDate.getMonth() + todayDate.getFullYear();
+
+  if (updated !== today) {
+    updatePortfolioData();
+  }
 
   return (
     <Routes>
@@ -96,99 +185,110 @@ const AppRoutes = () => {
           setActivePortfolio={setActivePortfolio}
           portfolioData={portfolioData}
           setPortfolioData={setPortfolioData}
+          getAllAssets={getAllAssets}
         />}
       />
       <Route 
         path='/analysis' 
         element={
-        <AnalysisScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-        />}
+          <DashboardScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            setActivePortfolio={setActivePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+          />}
       />
+
       <Route 
-        path='/activities' 
-        element={
-        <ActivitiesScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          activePortfolio={activePortfolio}
-          portfolioData={portfolioData}
-          setPortfolioData={setPortfolioData}
-        />}
+         path='/activities' 
+         element={
+         <ActivitiesScreen
+           searchResult={searchResult}
+           setSearchResult={setSearchResult}
+           watchListsArray={watchListsArray}
+           assetsListArray={assetsListArray}
+           activePortfolio={activePortfolio}
+           portfolioData={portfolioData}
+           setPortfolioData={setPortfolioData}      
+        />
+        }
       />
-      <Route 
-        path='/activities/addActivity' 
+
+      <Route
+        path='/activities/addActivity'
         element={
-        <AddActivityScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          activePortfolio={activePortfolio}
-          portfolioData={portfolioData}
-          setPortfolioData={setPortfolioData}
-        />}
+          <AddActivityScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+          />}
       />
       <Route
         path='/watchlists'
         element={
-        <WatchListsScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          setWatchListsArray={setWatchListsArray}
-          assetsListArray={assetsListArray}
-          setAssetsListArray={setAssetsListArray}
+          <WatchListsScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            setWatchListsArray={setWatchListsArray}
+            assetsListArray={assetsListArray}
+            setAssetsListArray={setAssetsListArray}
           />
         }
       />
       <Route
         path='/settings'
         element={
-        <SettingsScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          portfolioData={portfolioData}
-          activePortfolio={activePortfolio}
-          emptyPortfolioData={emptyPortfolioData}
-          setWatchListsArray={setWatchListsArray}
-          setAssetsListArray={setAssetsListArray}
-          setPortfolioData={setPortfolioData}
-          setActivePortfolio={setActivePortfolio}
-        />}
+          <SettingsScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            portfolioData={portfolioData}
+            activePortfolio={activePortfolio}
+            emptyPortfolioData={emptyPortfolioData}
+            setWatchListsArray={setWatchListsArray}
+            setAssetsListArray={setAssetsListArray}
+            setPortfolioData={setPortfolioData}
+            setActivePortfolio={setActivePortfolio}
+          />}
       />
-      <Route 
-        path='/asset/:assetType/:asset' 
+      <Route
+        path='/asset/:assetType/:asset'
         element={
-        <AssetDetailsScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          portfolioData={portfolioData}
-          activePortfolio={activePortfolio}
-        />}
+          <AssetDetailsScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            portfolioData={portfolioData}
+            activePortfolio={activePortfolio}
+          />}
       />
       <Route
         path='/analysis'
         element={
-        <AnalysisScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-        />
-      }/>
-      <Route path='/impressum' element={<Impressum/>}/>
-      <Route path='/privacy' element={<Privacy/>}/>
-      <Route path='/agb' element={<AGB/>}/>
+          <AnalysisScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+          />}
+      />
+      <Route path='/impressum' element={<Impressum />} />
+      <Route path='/privacy' element={<Privacy />} />
+      <Route path='/agb' element={<AGB />} />
     </Routes>
   );
 }

@@ -123,7 +123,7 @@ const WatchListsScreen = props => {
   );
 }
 
-ScreensTemplate.propTypes = {
+WatchListsScreen.propTypes = {
   searchResult: PropTypes.array,
   setSearchResult: PropTypes.func,
   watchListsArray: PropTypes.array,
