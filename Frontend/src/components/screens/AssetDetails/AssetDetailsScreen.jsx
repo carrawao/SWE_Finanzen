@@ -10,9 +10,9 @@ import PropTypes from 'prop-types';
 const AssetDetailsScreen = props => {
   let {asset, assetType} = useParams();
   //data that we saved for this asset --> undefined if asset is not in the portfolio
-  const savedAssetData = asset === undefined ? undefined : props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);  
+  const savedAssetData = props.portfolioData[props.activePortfolio][assetType === "Crypto" ? "crypto" : "shares"].find(element => element.symbol === asset);  
   console.log(savedAssetData);
-  const renderBody = () => <StockchartCard assetType={assetType} symbol={asset}/>;
+  const renderBody = () => <StockchartCard assetType={assetType} symbol={asset} activity={savedAssetData}/>;
 
   return (
     <React.Fragment>

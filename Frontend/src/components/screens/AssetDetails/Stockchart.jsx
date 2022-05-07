@@ -4,6 +4,7 @@ import { Chart as ChartJS, registerables, } from 'chart.js';
 import { format, addDays, subDays, differenceInDays } from 'date-fns';
 import "chartjs-adapter-date-fns";
 import { CircularProgress, Container } from "@mui/material";
+import Performance from "./Perfofmance";
 import PropTypes from "prop-types";
 
 ChartJS.register(...registerables);
@@ -201,7 +202,10 @@ const Stockchart = (props) => {
 
     setView(props.view, data, labels, options, setup);
     props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length - 1] / setup.datasets[0].data[0]));
-    return <Line data={setup} options={options} plugins={[crosshair]} />
+    return <>
+        <Line data={setup} options={options} plugins={[crosshair]} />
+        <Performance data={data} labels={labels} activity={props.activity}/>
+        </>
 };
 
 Stockchart.propTypes = {
