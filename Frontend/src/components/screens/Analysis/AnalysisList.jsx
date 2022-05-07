@@ -35,7 +35,7 @@ const AnalysisList = props => {
 
     const handleChange = event => {
         setValue(event.target.value);
-      };
+    };
    
     const calculateStockSplit = keyword => {
         let value;
@@ -130,8 +130,8 @@ const AnalysisList = props => {
               return -1;
             }
             return 0;
-          }
-          
+        }
+       
         return splitArray.sort( compare );
     }
 
@@ -147,7 +147,6 @@ const AnalysisList = props => {
     });
 
     allArrays.push(calculateKeywordSplit('typ', true));
-    };
 
     var valueSelect = value
 
