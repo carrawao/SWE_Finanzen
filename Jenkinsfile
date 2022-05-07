@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage ("Build"){
+        stage ("Build Backend"){
             steps{
                 script {
                     sh "pwd"
@@ -9,21 +9,45 @@ pipeline {
                     dir('Backend'){
                         echo"CHANGED VERZEICHNIS"
                         sh "pwd"
-                        sh "docker build . -t swe/node-web-app"    
+                        sh "docker build . -t swe-node-web-app"    
                     }
                     echo "INFO: Docker Image built"
                 }
             }
         }
-        stage ("Deploy"){
+        stage ("Deploy Backend"){
             steps{
                 script {
                     echo "INFO: Running new Docker image"
-                    sh "docker rm -f swe/node-web-app || true"
-                    sh "docker run --restart always -p 3001:3001 -d swe/node-web-app"
+                    sh "docker rm -f swe-node-web-app || true"
+                    sh "docker run --restart always -p --name 3001:3001 -d swe-node-web-app swe-node-web-app:latest"
                      echo "INFO: Deployed"
                 }
             }
         }
+        // stage ("Build Frontend"){
+        //     steps{
+        //         script {
+        //             sh "pwd"
+        //             echo "INFO: Building NodeJS Docker Image"
+        //             dir('Backend'){
+        //                 echo"CHANGED VERZEICHNIS"
+        //                 sh "pwd"
+        //                 sh "docker build . -t swe/node-web-app"    
+        //             }
+        //             echo "INFO: Docker Image built"
+        //         }
+        //     }
+        // }
+        // stage ("Deploy Frontend"){
+        //     steps{
+        //         script {
+        //             echo "INFO: Running new Docker image"
+        //             sh "docker rm -f swe/node-web-app || true"
+        //             sh "docker run --restart always -p 3001:3001 -d swe/node-web-app"
+        //              echo "INFO: Deployed"
+        //         }
+        //     }
+        // }
     }
 }
