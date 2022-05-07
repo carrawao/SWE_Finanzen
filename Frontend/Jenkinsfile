@@ -6,7 +6,7 @@ pipeline {
                 script {
                     sh "pwd"
                     echo "INFO: Building React Frontend Docker Image"
-                    dir('Backend'){
+                    dir('Frontend'){
                         echo"CHANGED VERZEICHNIS"
                         sh "pwd"
                         sh "docker build -t swe-react-nginx ."    
