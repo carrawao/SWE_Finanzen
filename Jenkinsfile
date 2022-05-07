@@ -43,7 +43,7 @@ pipeline {
                 script {
                     echo "INFO: Running new Docker image"
                     sh "docker rm -f swe-react-nginx || true"
-                    sh "docker run --restart always -p 80:4200 -d --name swe-react-nginx swe-react-nginx:latest"
+                    sh "docker run --restart always -p 80:80 -d --name swe-react-nginx swe-react-nginx:latest"
                      echo "INFO: Deployed Frontend"
                 }
             }
