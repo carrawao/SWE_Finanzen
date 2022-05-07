@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {ListItem, Typography, Container, Box} from '@mui/material';
 import PropTypes from 'prop-types';
+import { width } from '@mui/system';
 
 const AnalysisDetailItem = props => {
     const [hovered, setHovered] = useState(false);
@@ -17,7 +18,11 @@ const AnalysisDetailItem = props => {
      
      
         >    
-            <Container className='d-flex flex-row p-0 align-items-center'>
+            <Container className='d-flex flex-row p-0'
+            sx={{
+                margin: '0',
+                maxWidth: 'initial !important'
+            }}>
                 <Box className='d-flex flex-column mt-6 col-6 col-sm-6 me-6'>
                         <Typography
                     className='align-self-start fw-bold px-1'

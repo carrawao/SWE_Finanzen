@@ -30,7 +30,6 @@ const StyledTextField = styled(TextField)({
 
 const AnalysisList = props => {
     const portfolioData = props.portfolioData[props.activePortfolio];
-    console.log(portfolioData);
 
     const [value, setValue] = useState('0');
 
@@ -148,6 +147,9 @@ const AnalysisList = props => {
     });
 
     allArrays.push(calculateKeywordSplit('typ', true));
+    };
+
+    var valueSelect = value
 
     return (
         <List>
@@ -172,7 +174,7 @@ const AnalysisList = props => {
             </StyledTextField>
 
             {
-                allArrays[value].map((share, index) => (
+                props.allArrays[value].map((share, index) => (
                     <AnalysisDetailItem
                         key={`activity_${index}`}
                         asset={share.asset}
