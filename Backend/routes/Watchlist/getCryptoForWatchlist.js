@@ -30,7 +30,7 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
                 const quotedUScryptosData = JSON.parse(rawQuotedUScryptos);
 
                 let keys = Object.keys(dailyJson_data['Time Series (Digital Currency Daily)']);
-                dayOneSearchText = keys[0];
+                let dayOneSearchText = keys[0];
 
 
                 let openValue = dailyJson_data['Time Series (Digital Currency Daily)'][dayOneSearchText]['1a. open (EUR)'];

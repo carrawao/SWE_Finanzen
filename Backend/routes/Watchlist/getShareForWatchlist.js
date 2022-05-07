@@ -33,7 +33,7 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
 
 
                 let keys = Object.keys(dailyJson_data['Time Series (Daily)']);
-                dayOneSearchText = keys[0];
+                let dayOneSearchText = keys[0];
 
                 let openValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['1. open'];
                 let closeValue = dailyJson_data['Time Series (Daily)'][dayOneSearchText]['4. close'];

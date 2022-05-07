@@ -16,24 +16,37 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
  * @returns {JSX.Element}
  * @constructor
  */
-const DropdownMenu = (props) => {
+const DropdownMenu = props => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
 
+  /**
+   * Opes the dropdown when icon is clicked
+   * @param event
+   */
   const handleClick = event => {
     event.preventDefault()
     event.stopPropagation();
     setOpen(true);
     setAnchorEl(event.currentTarget);
-    props.listIndex ? props.setListDropdownIndex(props.listIndex) : props.setListDropdownIndex(props.selectedListIndex);
+    props.listIndex !== undefined ? props.setListDropdownIndex(props.listIndex) : props.setListDropdownIndex(props.selectedListIndex);
   };
 
+  /**
+   * Closes the dropdown
+   * @param event
+   */
   const handleClose = event => {
     event.stopPropagation();
     setAnchorEl(null);
     setOpen(false);
   };
 
+  /**
+   * Triggers function according to the selected action in the dropdown
+   * @param index
+   * @param event
+   */
   const onOptionClick = (index, event) => {
     event.stopPropagation();
     handleClose(event);

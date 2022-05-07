@@ -13,7 +13,7 @@ import {AssetDetailItem} from '../../common';
  * @constructor
  */
 const AssetListItem = (props) => {
-  const [listDropdownIndex, setListDropdownIndex] = useState(0);
+  const [, setListDropdownIndex] = useState(0);
   const colorsArray = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)', 'rgb(239 195 21)'];
 
   return (
@@ -34,7 +34,7 @@ const AssetListItem = (props) => {
             row={row}
             index={index}
             colorsArray={colorsArray}
-            itemsArray={props.assetsListArray}
+            itemsArray={props.assetsListArray[props.selectedListIndex]}
             listName={props.watchListsArray[index]}
             selectedListIndex={props.selectedListIndex}
             setListDropdownIndex={setListDropdownIndex}
