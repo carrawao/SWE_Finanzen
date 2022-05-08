@@ -1,15 +1,8 @@
-import React, {useState, select} from 'react';
-import {Grid,
-        Button,
-        List,
-        ListItem,
-        Typography, 
-        TextField, 
-        MenuItem, 
-        styled
-    } from '@mui/material';
+import React, {useState} from 'react';
+import {List, MenuItem, styled, TextField} from '@mui/material';
+
+import AnalysisDetailItem from './AnalysisDetailitem';
 import PropTypes from 'prop-types';
-import AnalysisDetailItem from './AnalysisDetailItem';
 
 const StyledTextField = styled(TextField)({
     //Label color when focused
@@ -59,12 +52,16 @@ const AnalysisList = (props) => {
             ))}
           </StyledTextField>
           
-          {props.allArrays[analysisType].map((share, index) => ( 
-              <AnalysisDetailItem props={share}
-                  key={`activity_${index}`}
-              />
-          ))}
-      </List>
+          {
+              props.allArrays[analysisType] && props.allArrays[analysisType].map((share, index) => (
+                    <AnalysisDetailItem
+                        key={`activity_${index}`}
+                        asset={share.asset}
+                        percentage={share.percentage}
+                    />
+                ))
+            }
+        </List>
     );
 }
 

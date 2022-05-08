@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { DoughnutChart } from '../../common';
 
@@ -9,7 +9,7 @@ import { DoughnutChart } from '../../common';
  * @constructor
  */
 
-const AllocationGraph = (props) => {
+const AllocationGraph = props => {
 
   const defaultMiddleDisplayLabel = `Value of ${props.activePortfolio}`;
   const defaultMiddleDisplayValue = `${parseFloat(props.portfolioData.value.toFixed(2)).toLocaleString()} €`;
@@ -43,7 +43,7 @@ const AllocationGraph = (props) => {
       labels={labels}
       defaultMiddleDisplayValue={defaultMiddleDisplayValue}
       defaultMiddleDisplayLabel={defaultMiddleDisplayLabel}
-    ></DoughnutChart>
+    />
   );        
 }
 

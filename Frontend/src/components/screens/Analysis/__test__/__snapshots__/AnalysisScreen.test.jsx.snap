@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AnalysisScreen renders without crashing 1`] = `
+<Fragment>
+  <ScreensTemplate
+    assetsListArray={
+      Array [
+        Array [],
+      ]
+    }
+    bodyComponent={[Function]}
+    searchResult={Array []}
+    selectedNavLinkIndex={5}
+    setSearchResult={[MockFunction]}
+  />
+</Fragment>
+`;
+
 exports[`Snapshot Test AnalysisDetailItem 1`] = `
 <ForwardRef(ListItem)
   className="hoverElement"
@@ -12,7 +28,13 @@ exports[`Snapshot Test AnalysisDetailItem 1`] = `
   }
 >
   <ForwardRef(Container)
-    className="d-flex flex-row p-0 align-items-center"
+    className="d-flex flex-row p-0"
+    sx={
+      Object {
+        "margin": "0",
+        "maxWidth": "initial !important",
+      }
+    }
   >
     <ForwardRef(Box)
       className="d-flex flex-column mt-6 col-6 col-sm-6 me-6"
@@ -51,126 +73,6 @@ exports[`Snapshot Test AnalysisDetailItem 1`] = `
         noWrap={true}
       >
         32
-         %
-      </ForwardRef(Typography)>
-    </ForwardRef(Box)>
-  </ForwardRef(Container)>
-</ForwardRef(ListItem)>
-`;
-
-exports[`Snapshot Test AnalysisScreen 1`] = `
-<ForwardRef(List)>
-  <AnalysisDetailItem
-    key="activity_0"
-    props={
-      Object {
-        "asset": "IBM",
-        "assettype": "share",
-        "percantage": "32",
-      }
-    }
-  />
-  <AnalysisDetailItem
-    key="activity_1"
-    props={
-      Object {
-        "asset": "APL",
-        "assettype": "share",
-        "percantage": "20",
-      }
-    }
-  />
-  <AnalysisDetailItem
-    key="activity_2"
-    props={
-      Object {
-        "asset": "MSC",
-        "assettype": "share",
-        "percantage": "15",
-      }
-    }
-  />
-  <AnalysisDetailItem
-    key="activity_3"
-    props={
-      Object {
-        "asset": "FGD",
-        "assettype": "share",
-        "percantage": "8",
-      }
-    }
-  />
-  <AnalysisDetailItem
-    key="activity_4"
-    props={
-      Object {
-        "asset": "ERT",
-        "assettype": "share",
-        "percantage": "4",
-      }
-    }
-  />
-  <AnalysisDetailItem
-    key="activity_5"
-    props={
-      Object {
-        "asset": "SWA",
-        "assettype": "share",
-        "percantage": "2",
-      }
-    }
-  />
-</ForwardRef(List)>
-`;
-
-exports[`Snapshot Test AnalysisStockSplitDetailItem 1`] = `
-<ForwardRef(ListItem)
-  sx={
-    Object {
-      "borderBottom": "2px solid lightgrey",
-    }
-  }
->
-  <ForwardRef(Container)
-    className="d-flex flex-row p-0 align-items-center"
-  >
-    <ForwardRef(Box)
-      className="d-flex flex-column mt-6 col-6 col-sm-6 me-6"
-    >
-      <ForwardRef(Typography)
-        className="align-self-start fw-bold px-1"
-        component="span"
-        fontSize={
-          Object {
-            "md": 14,
-            "xs": 12,
-          }
-        }
-        noWrap={true}
-        sx={
-          Object {
-            "alignItems": "flex-end",
-          }
-        }
-      >
-        Germany
-      </ForwardRef(Typography)>
-    </ForwardRef(Box)>
-    <ForwardRef(Box)
-      className="d-flex flex-row-reverse mt-6 col-6 col-sm-6 me-6"
-    >
-      <ForwardRef(Typography)
-        className="align-self-start fw-bold px-1"
-        component="span"
-        fontSize={
-          Object {
-            "md": 14,
-            "xs": 12,
-          }
-        }
-        noWrap={true}
-      >
-        30
          %
       </ForwardRef(Typography)>
     </ForwardRef(Box)>

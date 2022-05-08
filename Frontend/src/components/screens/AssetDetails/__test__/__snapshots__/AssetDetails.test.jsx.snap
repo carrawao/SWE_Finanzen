@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssetDetailsScreen renders without crashing 1`] = `
+<Fragment>
+  <ScreensTemplate
+    assetsListArray={
+      Array [
+        Array [],
+      ]
+    }
+    bodyComponent={[Function]}
+    searchResult={Array []}
+    selectedNavLinkIndex={-1}
+    setSearchResult={[MockFunction]}
+  />
+</Fragment>
+`;

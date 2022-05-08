@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {Grid, Button} from '@mui/material';
+import {Grid} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
 import AnalysisList from './AnalysisList';
 import { DoughnutChart } from '../../common';
-
 
 /**
  * Component related to the analysis page
@@ -19,23 +18,35 @@ const AnalysisScreen = props => {
     const [analysisType, setAnalysisType] = useState(0);
     
     const portfolioData = props.portfolioData[props.activePortfolio];
+    const analysisTypes = ['Asset Type Allocation', 'Shares Allocation', 'Crypto Allocation', 'Region Allocation', 'Sub region Allocation', 'Country Allocation', 'Sector Allocation', 'Industry Allocation', 'Asset Class Allocation'];
+    let keywordCollection = ['region', 'sub_region', 'country', 'sector', 'branche', 'assetClass'];
+    let allArrays = [];
 
-    const calculateStockSplit = (keyword) => {
+    useEffect(() => {
+        allArrays.push(calculateKeywordSplit("typ", true));
+        allArrays.push(calculateStockSplit("shares"));
+        allArrays.push(calculateStockSplit("crypto"));
+        keywordCollection.forEach(keyword => {
+            allArrays.push(calculateKeywordSplit(keyword, false));
+        });
+    }, []);
+
+    const calculateStockSplit = keyword => {
         let value;
         let stockArray = [];
 
-        if(keyword == "shares"){
+        if (keyword === 'shares'){
             value = 825;
-        } else if (keyword == "crypto"){
+        } else if (keyword === 'crypto'){
             value = 106.5;
         }
 
         portfolioData[keyword].forEach(element => {
-            let percantage = element.value / value * 100;
+            const percentage = element.value / value * 100;
 
             stockArray.push({
                 asset: element.name,
-                percantage: percantage.toFixed(2)
+                percentage: percentage.toFixed(2)
             })
         });
 
@@ -45,7 +56,7 @@ const AnalysisScreen = props => {
 
     const calculateKeywordSplit = (keyword, typSplit) => {
         let value = 825;
-        if(typSplit == true){
+        if(typSplit){
             value =  835 + 106.5;
         }
        
@@ -54,7 +65,7 @@ const AnalysisScreen = props => {
         portfolioData.shares.forEach(element => {
             if(sectorArray.some(row => row.includes(element.analysisInfo[keyword]))){
                 sectorArray.forEach(arrayElement => {
-                    if (arrayElement[0] == element.analysisInfo[keyword]){
+                    if (arrayElement[0] === element.analysisInfo[keyword]){
                         arrayElement[1] = parseFloat(arrayElement[1]);
                         arrayElement[1] += parseFloat(element.value);
                     }
@@ -64,23 +75,23 @@ const AnalysisScreen = props => {
             }
         });
 
-        let stockArray = [];
+        let stockArray = []
 
         sectorArray.forEach(sector => {
-            let percantage = sector[1] / value * 100;
+            const percentage = sector[1] / value * 100;
 
             stockArray.push({
                 asset: sector[0],
-                percantage: percantage.toFixed(2)
+                percentage: percentage.toFixed(2)
             })
         });
 
-        if(typSplit == true){
-            let percantage = 106.5 / value * 100;
+        if (typSplit) {
+            const percentage = 106.5 / value * 100;
 
             stockArray.push({
-                asset: "Crypto",
-                percantage: percantage.toFixed(2)
+                asset: 'Crypto',
+                percentage: percentage.toFixed(2)
             })
         }
         //console.log(sectorArray)
@@ -92,44 +103,31 @@ const AnalysisScreen = props => {
         let dataArray = [];
 
         splitArray.forEach(arrayElement => {
-            labelArray.push(arrayElement.asset);
-            dataArray.push(arrayElement.percantage);
+            labelArray.push(arrayElement.asset)
+            dataArray.push(arrayElement.percentage)
         });
 
         return {
-            labels: labelArray,
-            data: dataArray
+            'labels' : labelArray,
+            'data' : dataArray
         }
     }
 
-    const orderArray = (splitArray) => {
+    const orderArray = splitArray => {
         function compare(a, b) {
-            if ( a.percantage< b.percantage){
-              return 1;
+            if (a.percentage < b.percentage) {
+                return 1;
+            } else if (a.percentage > b.percentage) {
+                return -1;
+            } else {
+                return 0;
             }
-            if ( a.percantage > b.percantage ){
-              return -1;
-            }
-            return 0;
           }
           
-        let sortetArray = splitArray.sort( compare );
-
-        return sortetArray;
+        return splitArray.sort( compare );
     }
-   
-    let keywordCollection = ['region', 'sub_region', 'country', 'sector', 'branche', 'assetClass'];
-
-    let allArrays = [];
-    allArrays.push(calculateKeywordSplit("typ", true));
-    allArrays.push(calculateStockSplit("shares"));
-    allArrays.push(calculateStockSplit("crypto"));
-    keywordCollection.forEach(keyword => {
-        allArrays.push(calculateKeywordSplit(keyword, false));
-    });
 
     const doughnutChartData = getDoughnutChartData(allArrays[analysisType]);
-    const analysisTypes = ['Asset Type Allocation', 'Shares Allocation', 'Crypto Allocation', 'Region Allocation', 'Sub region Allocation', 'Country Allocation', 'Sector Allocation', 'Industry Allocation', 'Asset Class Allocation'];
 
     const renderBody = () => (
         <Grid container className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
@@ -150,8 +148,7 @@ const AnalysisScreen = props => {
                     analysisTypes={analysisTypes}
                  ></AnalysisList>
             </Grid>      
-        </Grid>   
-         
+        </Grid>
     );
 
     return (
