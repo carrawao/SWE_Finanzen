@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, TextField} from '@mui/material';
 import {CustomModal} from '../../../common';
 
-export const renderRemoveAssetModal = (open, handleClose, onClick ) => (
+export const renderRemoveAssetModal = (open, handleClose, onClick) => (
   <CustomModal
     open={open}
     handleClose={() => handleClose()}

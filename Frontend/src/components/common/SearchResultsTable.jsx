@@ -121,7 +121,8 @@ const SearchResultsTable = props => {
                   width: '1.4rem',
                   height: '1.4rem',
                   backgroundColor: 'white',
-                  border: !isAssetInWatchList ? 'solid 2px white' : 'solid 2px #493f35'}}
+                  border: !isAssetInWatchList ? 'solid 2px white' : 'solid 2px #493f35'
+                }}
               >
                 {isAssetInWatchList && <DoneIcon sx={{color: 'green', fontSize: '20px'}}/>}
               </Avatar>
@@ -156,18 +157,19 @@ const SearchResultsTable = props => {
 
   return (
     <Grid item className='d-flex flex-column justify-content-center align-items-center flex-grow-1 px-xl-5'>
-      <List className={`d-flex flex-column ${props.watchListsArray && props.watchListsArray.length > 0 ? 'col-12 col-sm-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
+      <List
+        className={`d-flex flex-column ${props.watchListsArray && props.watchListsArray.length > 0 ? 'col-12 col-sm-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
         {props.searchResult.map((element, index) => {
           return props.watchListsArray && props.watchListsArray.length > 0 ?
             renderSearchResultList(element, index)
-             : (
-            <Link
-              className='col-12 text-decoration-none text-black'
-              to={`/asset/${element.assetType}/${element.symbol}`}
-              key={`search_result_links_${index}`}
-            >
-              {renderSearchResultList(element, index)}
-            </Link>
+            : (
+              <Link
+                className='col-12 text-decoration-none text-black'
+                to={`/asset/${element.assetType}/${element.symbol}`}
+                key={`search_result_links_${index}`}
+              >
+                {renderSearchResultList(element, index)}
+              </Link>
             )
         })}
       </List>

@@ -19,15 +19,14 @@ const SearchField = props => {
   const search = async query => {
     if (query !== '') {
       try {
-        return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${encodeURIComponent(query)}`, {mode:'cors'})
+        return await fetch(`${process.env.REACT_APP_BASEURL}/search?text=${encodeURIComponent(query)}`, {mode: 'cors'})
           .then(response => response.json())
           .then(searchResult => {
             let firstResults = searchResult.slice(0, 10);
             props.onQueryChange(firstResults);
           });
-      }
-      catch (e) {
-        console.log('fetching failed === ', e);
+      } catch (error) {
+        console.log('fetching failed === ', error);
       }
     } else {
       props.onQueryChange([]);
@@ -61,7 +60,7 @@ const SearchField = props => {
       InputProps={{
         startAdornment: (
           <InputAdornment position='start'>
-              <SearchIcon style={{color: '#493f35'}}/>
+            <SearchIcon style={{color: '#493f35'}}/>
           </InputAdornment>
         ),
       }}

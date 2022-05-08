@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import { Container, Box, Button } from '@mui/material';
+import {Container, Box, Button} from '@mui/material';
 import {renderDeleteDataModal} from './Modals/settingsModals'
 import PropTypes from 'prop-types';
 
@@ -91,7 +91,7 @@ const SettingsScreen = props => {
 
     const fileName = 'benchmarket';
     const json = JSON.stringify(myData);
-    const blob = new Blob([json],{type:'application/json'});
+    const blob = new Blob([json], {type: 'application/json'});
     const href = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = href;
@@ -118,7 +118,6 @@ const SettingsScreen = props => {
    */
   const onReaderLoad = event => {
     const obj = JSON.parse(event.target.result);
-    console.log("uploading file .....", obj);
     props.setWatchListsArray(obj.watchlistData.watchListsArray);
     props.setAssetsListArray(obj.watchlistData.assetsListArray);
     props.setPortfolioData(obj.portfolioData);
@@ -153,7 +152,7 @@ const SettingsScreen = props => {
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
       />
-    {renderDeleteDataModal(deleteDataModal, handleClose, deleteData)}
+      {renderDeleteDataModal(deleteDataModal, handleClose, deleteData)}
     </React.Fragment>
   );
 }
