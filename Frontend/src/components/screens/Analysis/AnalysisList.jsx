@@ -41,20 +41,20 @@ const AnalysisList = props => {
                 fullWidth
                 margin='normal'
                 select
-                label='Type of analysis'
+                label='Type of allocation analysis'
                 name='assetType'
                 onChange={handleChange}
                 value={value}
             >
-                <MenuItem value={0}>Stock</MenuItem>
-                <MenuItem value={1}>Crypto</MenuItem>
-                <MenuItem value={2}>{props.keywordCollection[0]}</MenuItem>
-                <MenuItem value={3}>{props.keywordCollection[1]}</MenuItem>
-                <MenuItem value={4}>{props.keywordCollection[2]}</MenuItem>
-                <MenuItem value={5}>{props.keywordCollection[3]}</MenuItem>
-                <MenuItem value={6}>{props.keywordCollection[4]}</MenuItem>
-                <MenuItem value={7}>{props.keywordCollection[5]}</MenuItem>
-                <MenuItem value={8}>Typ</MenuItem>
+                <MenuItem value={0}>Share Allocation</MenuItem>
+                <MenuItem value={1}>Crypto Allocation</MenuItem>
+                <MenuItem value={2}>Sub Region Allocation</MenuItem>
+                <MenuItem value={3}>Country Allocation</MenuItem>
+                <MenuItem value={4}>Region Allocation</MenuItem>
+                <MenuItem value={5}>Sector Allocation</MenuItem>
+                <MenuItem value={6}>Asset Class Allocation</MenuItem>
+                <MenuItem value={7}>Industry Allocation</MenuItem>
+                <MenuItem value={8}>Typ Allocation</MenuItem>
             </StyledTextField>
 
             {
@@ -71,8 +71,7 @@ const AnalysisList = props => {
 }
 
 AnalysisList.propTypes = {
-  allArrays: PropTypes.array,
-  keywordCollection: PropTypes.array
+  allArrays: PropTypes.array
 };
 
 export default AnalysisList;

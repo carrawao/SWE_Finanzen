@@ -7,6 +7,7 @@ const AnalysisDetailItem = props => {
     const [hovered, setHovered] = useState(false);
     const toggleHover = () => setHovered(!hovered);
 
+    console.log(props)
     return (
         <ListItem
         sx={{
