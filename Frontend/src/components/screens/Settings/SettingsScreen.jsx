@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import { Container, Box, Button, Typography } from '@mui/material';
+import { Container, Box, Button, Typography, Grid, autocompleteClasses } from '@mui/material';
 import {renderDeleteDataModal} from './Modals/settingsModals'
 import PropTypes from 'prop-types';
+import { margin } from '@mui/system';
 
 
 /**
@@ -16,51 +17,45 @@ const SettingsScreen = props => {
 
   const renderBody = () => (
     <Container className='d-flex flex-column px-1 pt-2'>
-      <Box className='d-flex flex-row col-12'>
-        <Container>
-          <Box className='col-12 col-md-6 col-xl-6'>
-            <Typography
+       <Box className='d-flex flex-row col-12'>
+        <Grid container
+         sx={{
+          borderRadius: '1rem',
+          border: '1px solid black',
+          padding: '20px',
+          '@media screen and (max-width: 768px)': {
+            background: 'linear-gradient(90deg, rgb(78 185 111) 20%, #FFFFFF 0%);'
+          },
+          background: 'linear-gradient(0deg, rgb(78 185 111) 72%, #FFFFFF 50%);',
+          marginBottom: '40px'
+        }}
+        >
+          <Grid item className='col-12 col-md-9 col-xl-9' sx={{
+            paddingRight: '50px'
+          }}> 
+          <Typography
                 className='align-self-start fw-bold px-1'
-                component='span'
-                noWrap
+                component='p'
+                
                 fontSize={{
                     md: 14,
                     xs: 12
                 }}
+                
                 >
-                        Lore, Ipsum
+                       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
               </Typography>
-          </Box>
-          <Box className='col-12 col-md-6 col-xl-6'>
-            <Button
-            variant='outlined'
-            onClick={downloadFile}
-            sx={{
-              color: 'white',
-              borderColor: 'rgb(228 126 37)',
-              backgroundColor: 'rgb(228 126 37)',
-              '&:hover': {
-                backgroundColor: 'rgb(228 126 37)',
-              }
-            }}
-            >
-              Export Data
-            </Button>
-          </Box>
-        </Container>
-        
-      </Box>
-
-      <Box>
-        <input
+          </Grid>
+          <Grid item className='col-12 col-md-3 col-xl-3'>
+          <input
           accept='application/json'
           className='d-none'
           id='import-file-button'
           type='file'
           onChange={importData}
-        />
+          />
 
-        <label htmlFor='import-file-button'>
+        <label htmlFor='import-file-button' style={{display: 'block'}}>
           <Button
             className='ms-3'
             variant='outlined'
@@ -70,16 +65,93 @@ const SettingsScreen = props => {
               backgroundColor: 'rgb(78 185 111)',
               '&:hover': {
                 backgroundColor: 'rgb(78 185 111)',
-              }
+              },
+              margin: 'auto !important',
+              display: 'block'
             }}
           >
             Import Data
           </Button>
         </label>
+          </Grid>
+          
+        </Grid>
+        
       </Box>
 
-      <Box>
-        <Button
+      <Box className='d-flex flex-row col-12'>
+        <Grid container
+         sx={{
+          borderRadius: '1rem',
+          border: '1px solid black',
+          padding: '20px',
+          background: 'linear-gradient(90deg, rgb(59 151 210) 70%, #FFFFFF 50%);',
+          marginBottom: '40px'
+        }}
+        >
+          <Grid item className='col-12 col-md-9 col-xl-9' > 
+          <Typography
+                className='align-self-start fw-bold px-1'
+                component='span'
+                noWrap
+                fontSize={{
+                    md: 14,
+                    xs: 12
+                }}
+                
+                >
+                        Lore, Ipsum
+              </Typography>
+          </Grid>
+          <Grid item className='col-12 col-md-3 col-xl-3'>
+            <Button
+              variant='outlined'
+              onClick={downloadFile}
+              sx={{
+                color: 'white',
+                borderColor: 'rgb(59 151 210)',
+                backgroundColor: 'rgb(59 151 210)',
+                '&:hover': {
+                  backgroundColor: 'rgb(59 151 210)',
+                },
+                margin: 'auto',
+                display: 'block'
+              }}
+              >
+               Export Data
+            </Button>
+          </Grid>
+          
+        </Grid>
+        
+      </Box>
+     
+      <Box className='d-flex flex-row col-12'>
+        <Grid container
+         sx={{
+          borderRadius: '1rem',
+          border: '1px solid black',
+          padding: '20px',
+          background: 'linear-gradient(90deg, rgb(228 126 37) 70%, #FFFFFF 50%);',
+          marginBottom: '40px'
+        }}
+        >
+          <Grid item className='col-12 col-md-9 col-xl-9' > 
+          <Typography
+                className='align-self-start fw-bold px-1'
+                component='span'
+                noWrap
+                fontSize={{
+                    md: 14,
+                    xs: 12
+                }}
+                
+                >
+                        Lore, Ipsum
+              </Typography>
+          </Grid>
+          <Grid item className='col-12 col-md-3 col-xl-3'>
+          <Button
           className='ms-3'
           variant='outlined'
           onClick={() => setDeleteDataModal(true)}
@@ -89,12 +161,19 @@ const SettingsScreen = props => {
             backgroundColor: 'rgb(228 126 37)',
             '&:hover': {
               backgroundColor: 'rgb(228 126 37)',
-            }
+            },   
+            margin: 'auto !important',
+            display: 'block'
           }}
         >
           Delete Data
         </Button>
+          </Grid>
+          
+        </Grid>
+        
       </Box>
+
     </Container>
   );
 
