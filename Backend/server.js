@@ -13,20 +13,7 @@ const { Console } = require('console');
 
 const args = require('minimist')(process.argv.slice(2))
 
-let accessURL = '';
-
-if(JSON.stringify(args).includes('prod')){
-    console.log("Produktion");
-    accessURL = 'http://swe-bench--market.germanywestcentral.cloudapp.azure.com:3000';
-}else{
-    if(JSON.stringify(args).includes('ent')){
-        console.log("Entwicklung")
-        accessURL = '*';
-    }else{
-        console.log("Lokal");
-        accessURL = 'http://localhost:3000';
-    }
-}
+let accessURL = '*';
 
 
 const apiKeys =[

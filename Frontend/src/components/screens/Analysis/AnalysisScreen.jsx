@@ -1,13 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {Grid,
-        Button
-    } from '@mui/material';
+import {Grid} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
 import AnalysisList from './AnalysisList';
-
 
 /**
  * Component related to the analysis page
@@ -16,26 +13,37 @@ import AnalysisList from './AnalysisList';
  * @constructor
  */
 const AnalysisScreen = props => {
-
-   
     const portfolioData = props.portfolioData[props.activePortfolio];
+    const keywordCollection = ['sub_region', 'country', 'region', 'sector', 'assetClass', 'branche'];
+    let allArrays = [];
 
-    const calculateStockSplit = (keyword) => {
-        var value 
-        var stockArray = []
+    useEffect(() => {
+        allArrays.push(calculateStockSplit('shares'))
+        allArrays.push(calculateStockSplit('crypto'))
 
-        if(keyword == "shares"){
+        keywordCollection.forEach(keyword => {
+            allArrays.push(calculateKeywordSplit(keyword, false));
+        });
+
+        allArrays.push(calculateKeywordSplit('typ', true));
+    }, []);
+
+    const calculateStockSplit = keyword => {
+        let value;
+        let stockArray = [];
+
+        if (keyword === 'shares'){
             value = 825;
-        } else if (keyword == "crypto"){
-            value = 106.5
+        } else if (keyword === 'crypto'){
+            value = 106.5;
         }
 
         portfolioData[keyword].forEach(element => {
-            var percantage = element.value / value * 100;
+            const percentage = element.value / value * 100;
 
             stockArray.push({
                 asset: element.name,
-                percantage: percantage.toFixed(2)
+                percentage: percentage.toFixed(2)
             })
         });
 
@@ -44,20 +52,18 @@ const AnalysisScreen = props => {
     }
 
     const calculateKeywordSplit = (keyword, typSplit) => {
-        if(typSplit == true){
+        if (typSplit) {
             var value =  835 + 106.5;
         } else {
             var value = 825;
         }
        
-        var sectorArray = []
+        let sectorArray = []
 
         portfolioData.shares.forEach(element => {
             if( sectorArray.some(row => row.includes(element.analysisInfo[keyword])) ){
-
                 sectorArray.forEach(arrayElement => {
-                    if (arrayElement[0] == element.analysisInfo[keyword]){
-
+                    if (arrayElement[0] === element.analysisInfo[keyword]){
                         arrayElement[1] = parseFloat(arrayElement[1]);
                         arrayElement[1] += parseFloat(element.value)
                     }
@@ -66,26 +72,25 @@ const AnalysisScreen = props => {
             } else {
                 sectorArray.push([element.analysisInfo[keyword], parseFloat(element.value)])
             }
-
         });
 
-        var stockArray = []
+        let stockArray = []
 
         sectorArray.forEach(sector => {
-            var percantage = sector[1] / value * 100;
+            const percentage = sector[1] / value * 100;
 
             stockArray.push({
                 asset: sector[0],
-                percantage: percantage.toFixed(2)
+                percentage: percentage.toFixed(2)
             })
         });
 
-        if(typSplit == true){
-            var percantage = 106.5 / value * 100;
+        if (typSplit) {
+            const percentage = 106.5 / value * 100;
 
             stockArray.push({
-                asset: "Crypto",
-                percantage: percantage.toFixed(2)
+                asset: 'Crypto',
+                percentage: percentage.toFixed(2)
             })
         }
 
@@ -95,56 +100,33 @@ const AnalysisScreen = props => {
     }
 
     const getPiechartData = (splitArray) => {
-        var labelArray = [];
-        var dataArray = [];
+        let labelArray = [];
+        let dataArray = [];
 
         splitArray.forEach(arrayElement => {
             labelArray.push(arrayElement.asset)
-            dataArray.push(arrayElement.percantage)
+            dataArray.push(arrayElement.percentage)
         });
 
         return {
-            "label" : labelArray,
-            "data" : dataArray
+            'label' : labelArray,
+            'data' : dataArray
         }
     }
 
-    const orderArray = (splitArray) => {
+    const orderArray = splitArray => {
         function compare(a, b) {
-            if ( a.percantage< b.percantage){
-              return 1;
+            if (a.percentage < b.percentage) {
+                return 1;
+            } else if (a.percentage > b.percentage) {
+                return -1;
+            } else {
+                return 0;
             }
-            if ( a.percantage > b.percantage ){
-              return -1;
-            }
-            return 0;
           }
           
-        var sortetArray = splitArray.sort( compare );
-
-        return sortetArray
+        return splitArray.sort( compare );
     }
-   
-
-    var keywordCollection = ['sub_region', 'country', 'region', 'sector', "assetClass", "branche"]
-
-    var allArrays = []
-
-    allArrays.push(calculateStockSplit("shares"))
-    allArrays.push(calculateStockSplit("crypto"))
-
-    keywordCollection.forEach(keyword => {
-        allArrays.push(calculateKeywordSplit(keyword, false))
-    });
-
-    allArrays.push(calculateKeywordSplit("typ", true))
-
-    const renderHeader = () => (
-        <Typography variant='h6' noWrap component='div'>
-        Header of Analysis Page
-        </Typography>
-    );
-
 
     const renderBody = () => (
         <Grid container className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
@@ -155,12 +137,11 @@ const AnalysisScreen = props => {
             </Grid>
             <Grid item className='col-12 col-md-7 col-xl-9'>
                 <AnalysisList
-                 keywordCollection={keywordCollection}
-                 allArrays={allArrays}
-                 ></AnalysisList>
+                     keywordCollection={keywordCollection}
+                     allArrays={allArrays}
+                 />
             </Grid>      
-        </Grid>   
-         
+        </Grid>
     );
 
     return (
