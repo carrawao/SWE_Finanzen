@@ -24,7 +24,7 @@ if(JSON.stringify(args).includes('prod')){
         accessURL = '*';
     }else{
         console.log("Lokal");
-        accessURL = 'http://localhost:3000';
+        accessURL = 'http://swe-bench--market.germanywestcentral.cloudapp.azure.com:3000';
     }
 }
 
