@@ -28,7 +28,13 @@ exports[`Snapshot Test AnalysisDetailItem 1`] = `
   }
 >
   <ForwardRef(Container)
-    className="d-flex flex-row p-0 align-items-center"
+    className="d-flex flex-row p-0"
+    sx={
+      Object {
+        "margin": "0",
+        "maxWidth": "initial !important",
+      }
+    }
   >
     <ForwardRef(Box)
       className="d-flex flex-column mt-6 col-6 col-sm-6 me-6"
@@ -72,13 +78,4 @@ exports[`Snapshot Test AnalysisDetailItem 1`] = `
     </ForwardRef(Box)>
   </ForwardRef(Container)>
 </ForwardRef(ListItem)>
-`;
-
-exports[`Snapshot Test AnalysisScreen 1`] = `
-<Fragment>
-  <ScreensTemplate
-    bodyComponent={[Function]}
-    selectedNavLinkIndex={5}
-  />
-</Fragment>
 `;

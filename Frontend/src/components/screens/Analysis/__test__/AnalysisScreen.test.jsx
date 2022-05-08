@@ -24,11 +24,6 @@ it('AnalysisScreen renders without crashing', () => {
     expect(toJson(tree)).toMatchSnapshot();
 });
 
-it('Snapshot Test AnalysisScreen', () => {
-    const tree = shallow(<AnalysisScreen />);
-    expect(toJson(tree)).toMatchSnapshot();
-});
-
 it('Snapshot Test AnalysisDetailItem', () => {
     const tree = shallow(
      <AnalysisDetailItem  asset='IBM' percentage='32' />
