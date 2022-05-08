@@ -32,7 +32,7 @@ const AllocationGraph = (props) => {
   const valueData = (() => {
     let valueData = []
     assets.forEach(element => {
-      valueData.push((element["value"]*element["quantity"]).toFixed(2));
+      valueData.push((element["value"]).toFixed(2));
     });
     return valueData;
   })();
