@@ -24,29 +24,43 @@ const SettingsScreen = props => {
           border: '1px solid black',
           padding: '20px',
           '@media screen and (max-width: 768px)': {
-            background: 'linear-gradient(90deg, rgb(78 185 111) 20%, #FFFFFF 0%);'
+            background: 'linear-gradient(180deg, rgb(78 185 111) 55%, #FFFFFF 0%);'
           },
-          background: 'linear-gradient(0deg, rgb(78 185 111) 72%, #FFFFFF 50%);',
+          background: 'linear-gradient(90deg, rgb(78 185 111) 72%, #FFFFFF 50%);',
           marginBottom: '40px'
         }}
         >
           <Grid item className='col-12 col-md-9 col-xl-9' sx={{
-            paddingRight: '50px'
+            paddingRight: '50px',
+            '@media screen and (max-width: 768px)': {
+              paddingRight: '0px'
+            }
           }}> 
           <Typography
                 className='align-self-start fw-bold px-1'
-                component='p'
-                
+                component='p'           
                 fontSize={{
                     md: 14,
                     xs: 12
                 }}
+                sx={{
+                  '@media screen and (max-width: 768px)': {
+                    marginBottom: '40px'
+                  }
+                }}
                 
                 >
-                       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
               </Typography>
           </Grid>
-          <Grid item className='col-12 col-md-3 col-xl-3'>
+          <Grid item className='col-12 col-md-3 col-xl-3'
+          sx={{
+            '@media screen and (min-width: 768px)': {
+              display: 'flex !important',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }
+          }}>
           <input
           accept='application/json'
           className='d-none'
@@ -85,25 +99,43 @@ const SettingsScreen = props => {
           borderRadius: '1rem',
           border: '1px solid black',
           padding: '20px',
-          background: 'linear-gradient(90deg, rgb(59 151 210) 70%, #FFFFFF 50%);',
+          '@media screen and (max-width: 768px)': {
+            background: 'linear-gradient(180deg, rgb(59 151 210) 55%, #FFFFFF 0%);'
+          },
+          background: 'linear-gradient(90deg, rgb(59 151 210) 72%, #FFFFFF 50%);',
           marginBottom: '40px'
         }}
         >
-          <Grid item className='col-12 col-md-9 col-xl-9' > 
+          <Grid item className='col-12 col-md-9 col-xl-9' 
+           sx={{
+            paddingRight: '50px',
+            '@media screen and (max-width: 768px)': {
+              paddingRight: '0px'
+            }
+          }}> 
           <Typography
                 className='align-self-start fw-bold px-1'
-                component='span'
-                noWrap
+                component='p'
                 fontSize={{
                     md: 14,
                     xs: 12
                 }}
-                
+                sx={{
+                  '@media screen and (max-width: 768px)': {
+                    marginBottom: '40px'
+                  }
+                }}
                 >
-                        Lore, Ipsum
+                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
               </Typography>
           </Grid>
-          <Grid item className='col-12 col-md-3 col-xl-3'>
+          <Grid item className='col-12 col-md-3 col-xl-3' sx={{
+            '@media screen and (min-width: 768px)': {
+              display: 'flex !important',
+              verticalAlign: 'center',
+              justifyContent: 'center'
+            }
+          }}>
             <Button
               variant='outlined'
               onClick={downloadFile}
@@ -132,25 +164,44 @@ const SettingsScreen = props => {
           borderRadius: '1rem',
           border: '1px solid black',
           padding: '20px',
-          background: 'linear-gradient(90deg, rgb(228 126 37) 70%, #FFFFFF 50%);',
+          '@media screen and (max-width: 768px)': {
+            background: 'linear-gradient(180deg, rgb(228 126 37) 55%, #FFFFFF 0%);'
+          },
+          background: 'linear-gradient(90deg, rgb(228 126 37) 72%, #FFFFFF 50%);',
           marginBottom: '40px'
         }}
         >
-          <Grid item className='col-12 col-md-9 col-xl-9' > 
+          <Grid item className='col-12 col-md-9 col-xl-9' sx={{
+            paddingRight: '50px',
+            '@media screen and (max-width: 768px)': {
+              paddingRight: '0px'
+            }
+          }}> 
           <Typography
                 className='align-self-start fw-bold px-1'
-                component='span'
-                noWrap
+                component='p'
                 fontSize={{
                     md: 14,
                     xs: 12
                 }}
+                sx={{
+                  '@media screen and (max-width: 768px)': {
+                    marginBottom: '40px'
+                  }
+                }}
                 
                 >
-                        Lore, Ipsum
+                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
               </Typography>
           </Grid>
-          <Grid item className='col-12 col-md-3 col-xl-3'>
+          <Grid item className='col-12 col-md-3 col-xl-3'
+          sx={{
+            '@media screen and (min-width: 768px)': {
+              display: 'flex !important',
+              verticalAlign: 'center',
+              justifyContent: 'center'
+            }
+          }}>
           <Button
           className='ms-3'
           variant='outlined'
