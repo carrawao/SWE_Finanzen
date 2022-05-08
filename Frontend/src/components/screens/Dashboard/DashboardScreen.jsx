@@ -1,28 +1,25 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {Grid, Box} from '@mui/material';
+import {Grid} from '@mui/material';
 import PropTypes from 'prop-types';
 import AllocationGraph from './AllocationGraph';
 import PortfolioOverview from './PortfolioOverview';
 
-
-const DashboardScreen = (props) => {
-
+const DashboardScreen = props=> {
   const renderBody = () => (
-    
     <React.Fragment>
       <Grid 
         container
-        direction="column"
-        justifyContent="center"
-        alignItems="space-evenly"
-        marginTop= "10px"
+        direction='column'
+        justifyContent='center'
+        alignItems='space-evenly'
+        marginTop= '10px'
       >
         <Grid
           container
-          direction="row"
-          justifyContent="space-evenly"
-          alignItems="center"
+          direction='row'
+          justifyContent='space-evenly'
+          alignItems='center'
         >
           <Grid item xs={4}>
             <AllocationGraph
@@ -40,15 +37,14 @@ const DashboardScreen = (props) => {
         </Grid>
         <Grid
           container
-          direction="row"
-          justifyContent="space-evenly"
-          alignContent="center"
+          direction='row'
+          justifyContent='space-evenly'
+          alignContent='center'
         >
           <Grid item xs={6}>
             
           </Grid>
-          <Grid item xs={6}>
-            
+            <Grid item xs={6}>
           </Grid>
         </Grid>
       </Grid>

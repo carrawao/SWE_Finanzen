@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-import AnalysisScreen from '../AnalysisList';
+import AnalysisScreen from '../AnalysisScreen';
 import AnalysisDetailItem from '../AnalysisDetailitem';
-import { BrowserRouter } from 'react-router-dom';
 import { shallow, mount, configure} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from 'enzyme-to-json';
@@ -10,28 +8,25 @@ import toJson from 'enzyme-to-json';
 configure({ adapter: new Adapter() });
 
 it('AnalysisScreen renders without crashing', () => {
-    const div = document.createElement("div");
-    ReactDom.render(
-        <BrowserRouter>
-            <AnalysisScreen />
-        </BrowserRouter>
-    , div);
-});
+    const setSearchResult = jest.fn();
+    const setPortfolioData = jest.fn();
 
-it('Snapshot Test AnalysisScreen', () => {
-    const tree = shallow(<AnalysisScreen />);
+    const tree = shallow(<AnalysisScreen
+      searchResult={[]}
+      setSearchResult={setSearchResult}
+      watchListsArray={[]}
+      assetsListArray={[[]]}
+      portfolioData={{}}
+      activePortfolio={'Portfolio'}
+      setPortfolioData={setPortfolioData}
+    />);
+
     expect(toJson(tree)).toMatchSnapshot();
 });
 
 it('Snapshot Test AnalysisDetailItem', () => {
-    const share = {
-        "assettype": "share", //,crypto oder cash
-        "asset": "IBM", //symbol des assets
-        "percantage": "32"}
-    
-    const index = 0;
     const tree = shallow(
-     <AnalysisDetailItem props={share} key={`activity_${index}`} />
+     <AnalysisDetailItem  asset='IBM' percentage='32' />
     );
 
     expect(toJson(tree)).toMatchSnapshot();
@@ -39,14 +34,8 @@ it('Snapshot Test AnalysisDetailItem', () => {
 
 
 it('Hover Test AnalysisDetailItem', () => {
-    const share ={
-        "propertie" : "Germany", //Asset category
-        "percantage" : 30   //Percentage of category
-    }
-    
-    const index = 0;
     const tree = mount(
-         <AnalysisDetailItem props={share} key={`activity_${index}`} />
+      <AnalysisDetailItem asset='IBM' percentage='32' />
     );
 
     expect(tree.find('.hoverElement').first().hasClass('hovered')).toEqual(false);
