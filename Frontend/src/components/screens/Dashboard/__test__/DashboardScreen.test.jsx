@@ -1,7 +1,11 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import DashboardScreen from '../DashboardScreen';
-import { BrowserRouter } from 'react-router-dom';
+import toJson from 'enzyme-to-json';
+import Enzyme, {shallow} from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+
+Enzyme.configure({ adapter: new Adapter() })
+
 
 it('DashboardScreen renders without crashing', () => {
   const portfolioData = {
@@ -22,20 +26,20 @@ it('DashboardScreen renders without crashing', () => {
   const setSearchResult = jest.fn();
   const setPortfolioData = jest.fn();
   const setActivePortfolio = jest.fn();
+  const getAllAssets = jest.fn();
 
-    const div = document.createElement('div');
-    ReactDom.render(
-        <BrowserRouter>
-            <DashboardScreen
-              searchResult={[]}
-              setSearchResult={setSearchResult}
-              watchListsArray={[]}
-              assetsListArray={[[]]}
-              activePortfolio={'Portfolio'}
-              setActivePortfolio={setActivePortfolio}
-              portfolioData={portfolioData}
-              setPortfolioData={setPortfolioData}
-            />
-        </BrowserRouter>
-    , div);
+    const wrapper = shallow(
+        <DashboardScreen
+          searchResult={[]}
+          setSearchResult={setSearchResult}
+          watchListsArray={[]}
+          assetsListArray={[[]]}
+          activePortfolio={'Portfolio'}
+          setActivePortfolio={setActivePortfolio}
+          getAllAssets={getAllAssets}
+          portfolioData={portfolioData}
+          setPortfolioData={setPortfolioData}
+          />);
+
+  expect(toJson(wrapper)).toMatchSnapshot();
 })
