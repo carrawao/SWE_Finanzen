@@ -1,5 +1,5 @@
-import React, { lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, {lazy, useEffect, useState} from 'react';
+import {Route, Routes} from 'react-router-dom';
 import Impressum from '../components/screens/Impressum';
 import AGB from '../components/screens/AGB';
 import Privacy from '../components/screens/Privacy';
@@ -18,17 +18,17 @@ const AssetDetailsScreen = lazy(() => import('../components/screens/AssetDetails
 const AnalysisScreen = lazy(() => import('../components/screens/Analysis/AnalysisScreen'));
 
 const emptyPortfolioData = {
-  "Portfolio": {
-    "name": "Portfolio",
-    "value": 0,
-    "gains": 0,
-    "realisedGains": 0,
-    "performance": 0,
-    "shares": [],
-    "crypto": [],
-    "cash": [],
-    "activities": [],
-    "updated": "1970-01-01"
+  'Portfolio': {
+    'name': 'Portfolio',
+    'value': 0,
+    'gains': 0,
+    'realisedGains': 0,
+    'performance': 0,
+    'shares': [],
+    'crypto': [],
+    'cash': [],
+    'activities': [],
+    'updated': '1970-01-01'
   },
 };
 
@@ -73,17 +73,22 @@ const AppRoutes = () => {
   }, [watchListsArray, assetsListArray, portfolioData, activePortfolio]);
 
   const portfolio = portfolioData[activePortfolio];
-  
+
+  /**
+   * Updates all information of assets in portfolio
+   * @returns {Promise<void>}
+   */
   const updatePortfolioData = async () => {
-    const updatedShares = await getUpdatedAssetData("shares");
-    const updatedCrypto = await getUpdatedAssetData("crypto");
-    const value = getValue(updatedShares, updatedCrypto, portfolioData[activePortfolio]["cash"]);
+    const updatedShares = await getUpdatedAssetData('shares');
+    const updatedCrypto = await getUpdatedAssetData('crypto');
+    const value = getValue(updatedShares, updatedCrypto, portfolioData[activePortfolio]['cash']);
     const todayDate = new Date();
-    const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth()+1}-${todayDate.getDate()}`;
+    const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
 
     setPortfolioData(prevPortfolioData => {
       let portfolioData = {...prevPortfolioData}
-      portfolioData[activePortfolio] = {...portfolioData[activePortfolio],
+      portfolioData[activePortfolio] = {
+        ...portfolioData[activePortfolio],
         shares: updatedShares,
         crypto: updatedCrypto,
         value: value,
@@ -93,69 +98,93 @@ const AppRoutes = () => {
     });
   };
 
-  const getUpdatedAssetData = async (assettype) => {
-    const updatedAssets = (async () => {
-      let updatedAssets = portfolioData[activePortfolio][assettype];
+  /**
+   * Gets updated information of a given asset type
+   * @param assetType
+   * @returns {Promise<*>}
+   */
+  const getUpdatedAssetData = async assetType => {
+    return (async () => {
+      let updatedAssets = portfolioData[activePortfolio][assetType];
       await Promise.all(updatedAssets.map(async (asset, index) => {
-        const symbol = asset["symbol"];
+        const symbol = asset['symbol'];
         let data;
-        assettype === "shares" ? data = await getShareData(symbol) : data = await getCryptoData(symbol);
-        updatedAssets[index] = {...asset, 
+        assetType === 'shares' ? data = await getShareData(symbol) : data = await getCryptoData(symbol);
+        updatedAssets[index] = {
+          ...asset,
           name: data.name ? data.name : symbol,
           value: `${Number.parseFloat(data.value).toFixed(2)}`
         }
       }))
       return updatedAssets;
     })();
-    return updatedAssets;
   }
 
-  const getShareData = async (symbol) => {
+  /**
+   * Gets information given a share symbol
+   * @param symbol
+   * @returns {Promise<any>}
+   */
+  const getShareData = async symbol => {
     try {
-      let response = await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      let response = await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode: 'cors'});
       return await response.json();
-    }
-    catch (e) {
+    } catch (e) {
       console.log('fetching failed === ', e);
     }
   }
 
-  const getCryptoData = async (symbol) => {
+  /**
+   * Gets information given a crypto symbol
+   * @param symbol
+   * @returns {Promise<any>}
+   */
+  const getCryptoData = async symbol => {
     try {
-      let response = await fetch(`http://localhost:3001/getCryptoForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      let response = await fetch(`http://localhost:3001/getCryptoForWatchlist?symbol=${symbol}`, {mode: 'cors'});
       return await response.json();
-    }
-    catch (e) {
-      console.log('fetching failed === ', e);
+    } catch (error) {
+      console.log('fetching failed === ', error);
     }
   }
 
+  /**
+   * Returns the equivalent value to the assets in portfolio
+   * @param shares
+   * @param crypto
+   * @param cash
+   * @returns {number}
+   */
   const getValue = (shares, crypto, cash) => {
     let value = 0;
     shares.forEach(share => {
-      value = value + share["value"]*share["quantity"];
+      value = value + share['value'] * share['quantity'];
     });
     crypto.forEach(coin => {
-      value = value + coin["value"]*coin["quantity"];
+      value = value + coin['value'] * coin['quantity'];
     });
     cash.forEach(account => {
-      value = value + account["value"];
+      value = value + account['value'];
     });
     return value;
   }
 
+  /**
+   * Returns array containing all assets
+   * @returns {*[]}
+   */
   const getAllAssets = () => {
     let assets = [];
-    assets = assets.concat(portfolio["shares"]);
-    assets = assets.concat(portfolio["crypto"]);
-    assets = assets.concat(portfolio["cash"]);
+    assets = assets.concat(portfolio['shares']);
+    assets = assets.concat(portfolio['crypto']);
+    assets = assets.concat(portfolio['cash']);
     return assets;
   }
 
-  const updatedDate = new Date(portfolioData[activePortfolio]["updated"]);
-  const updated = "" + updatedDate.getDay() + updatedDate.getMonth() + updatedDate.getFullYear();
+  const updatedDate = new Date(portfolioData[activePortfolio]['updated']);
+  const updated = '' + updatedDate.getDay() + updatedDate.getMonth() + updatedDate.getFullYear();
   const todayDate = new Date();
-  const today = "" + todayDate.getDay() + todayDate.getMonth() + todayDate.getFullYear();
+  const today = '' + todayDate.getDay() + todayDate.getMonth() + todayDate.getFullYear();
 
   if (updated !== today) {
     updatePortfolioData();
@@ -166,30 +195,30 @@ const AppRoutes = () => {
       <Route
         path='/'
         element={
-        <Home
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-        />
-      }/>
-      <Route 
-        path='/dashboard' 
+          <Home
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+          />
+        }/>
+      <Route
+        path='/dashboard'
         element={
-        <DashboardScreen
-          searchResult={searchResult}
-          setSearchResult={setSearchResult}
-          watchListsArray={watchListsArray}
-          assetsListArray={assetsListArray}
-          activePortfolio={activePortfolio}
-          setActivePortfolio={setActivePortfolio}
-          portfolioData={portfolioData}
-          setPortfolioData={setPortfolioData}
-          getAllAssets={getAllAssets}
-        />}
+          <DashboardScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            setActivePortfolio={setActivePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+            getAllAssets={getAllAssets}
+          />}
       />
-      <Route 
-        path='/analysis' 
+      <Route
+        path='/analysis'
         element={
           <AnalysisScreen
             searchResult={searchResult}
@@ -203,18 +232,18 @@ const AppRoutes = () => {
           />}
       />
 
-      <Route 
-         path='/activities' 
-         element={
-         <ActivitiesScreen
-           searchResult={searchResult}
-           setSearchResult={setSearchResult}
-           watchListsArray={watchListsArray}
-           assetsListArray={assetsListArray}
-           activePortfolio={activePortfolio}
-           portfolioData={portfolioData}
-           setPortfolioData={setPortfolioData}      
-        />
+      <Route
+        path='/activities'
+        element={
+          <ActivitiesScreen
+            searchResult={searchResult}
+            setSearchResult={setSearchResult}
+            watchListsArray={watchListsArray}
+            assetsListArray={assetsListArray}
+            activePortfolio={activePortfolio}
+            portfolioData={portfolioData}
+            setPortfolioData={setPortfolioData}
+          />
         }
       />
 
@@ -286,9 +315,9 @@ const AppRoutes = () => {
             setPortfolioData={setPortfolioData}
           />}
       />
-      <Route path='/impressum' element={<Impressum />} />
-      <Route path='/privacy' element={<Privacy />} />
-      <Route path='/agb' element={<AGB />} />
+      <Route path='/impressum' element={<Impressum/>}/>
+      <Route path='/privacy' element={<Privacy/>}/>
+      <Route path='/agb' element={<AGB/>}/>
     </Routes>
   );
 }

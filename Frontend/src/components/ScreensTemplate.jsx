@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {AppBar, Box, CssBaseline, Grid, Toolbar} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
@@ -79,8 +79,8 @@ const ScreensTemplate = props => {
           padding: '1rem',
           paddingBottom: '6rem',
           width: {
-          lg: `calc(100% - ${drawerWidth}rem)`
-        },
+            lg: `calc(100% - ${drawerWidth}rem)`
+          },
           maxWidth: '100%'
         }}
       >
@@ -113,7 +113,7 @@ const ScreensTemplate = props => {
           lg: `calc(100% - ${drawerWidth}rem)`
         }
       }}>
-        <Footer />
+        <Footer/>
       </Box>
     </Box>
   );
