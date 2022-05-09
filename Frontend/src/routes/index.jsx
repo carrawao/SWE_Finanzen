@@ -82,7 +82,10 @@ const AppRoutes = () => {
   const updatePortfolioData = async () => {
     const updatedShares = await getUpdatedAssetData('shares');
     const updatedCrypto = await getUpdatedAssetData('crypto');
-    const value = getValue(updatedShares, updatedCrypto, portfolioData[activePortfolio]['cash']);
+    const shareValue = getValue(updatedShares);
+    const cryptoValue = getValue(updatedCrypto);
+    const cashValue = getValue(portfolioData[activePortfolio]['cash']);
+    const portfolioValue = shareValue + cryptoValue + cashValue;
     const todayDate = new Date();
     const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth()+1}-${todayDate.getDate()}`;
 
@@ -91,12 +94,15 @@ const AppRoutes = () => {
       portfolioData[activePortfolio] = {...portfolioData[activePortfolio],
         shares: updatedShares,
         crypto: updatedCrypto,
-        value: value,
-        updated: todayString
+        value: portfolioValue,
+        updated: todayString,
+        shareValue: shareValue,
+        cryptoValue: cryptoValue,
+        cashValue: cashValue
       };
       return portfolioData;
     });
-    console.log('Portfolio Data updated!')
+    console.log('Portfolio Data updated!');
   };
 
   const getUpdatedAssetData = async (assettype) => {
@@ -134,16 +140,10 @@ const AppRoutes = () => {
     }
   }
 
-  const getValue = (shares, crypto, cash) => {
+  const getValue = (assetArray) => {
     let value = 0;
-    shares.forEach(share => {
-      value = value + share['value']*share['quantity'];
-    });
-    crypto.forEach(coin => {
-      value = value + coin['value']*coin['quantity'];
-    });
-    cash.forEach(account => {
-      value = value + account['value'];
+    assetArray.forEach(asset => {
+      value = value + asset['value'];
     });
     return value;
   }

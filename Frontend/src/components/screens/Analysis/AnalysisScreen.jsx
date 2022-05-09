@@ -21,24 +21,16 @@ const AnalysisScreen = props => {
     const analysisTypes = ['Asset Type Allocation', 'Shares Allocation', 'Crypto Allocation', 'Region Allocation', 'Sub region Allocation', 'Country Allocation', 'Sector Allocation', 'Industry Allocation', 'Asset Class Allocation'];
     let keywordCollection = ['region', 'sub_region', 'country', 'sector', 'branche', 'assetClass'];
     let allArrays = [];
-
-    useEffect(() => {
-        allArrays.push(calculateKeywordSplit("typ", true));
-        allArrays.push(calculateStockSplit("shares"));
-        allArrays.push(calculateStockSplit("crypto"));
-        keywordCollection.forEach(keyword => {
-            allArrays.push(calculateKeywordSplit(keyword, false));
-        });
-    }, []);
+    let doughnutChartData = {};
 
     const calculateStockSplit = keyword => {
         let value;
         let stockArray = [];
 
         if (keyword === 'shares'){
-            value = 825;
+            value = portfolioData.shareValue;
         } else if (keyword === 'crypto'){
-            value = 106.5;
+            value = portfolioData.cryptoValue;
         }
 
         portfolioData[keyword].forEach(element => {
@@ -55,9 +47,9 @@ const AnalysisScreen = props => {
     }
 
     const calculateKeywordSplit = (keyword, typSplit) => {
-        let value = 825;
+        let value = portfolioData.shareValue;
         if(typSplit){
-            value =  835 + 106.5;
+            value =  portfolioData.value;
         }
        
         let sectorArray = [];
@@ -127,7 +119,14 @@ const AnalysisScreen = props => {
         return splitArray.sort( compare );
     }
 
-    const doughnutChartData = getDoughnutChartData(allArrays[analysisType]);
+    allArrays.push(calculateKeywordSplit("typ", true));
+    allArrays.push(calculateStockSplit("shares"));
+    allArrays.push(calculateStockSplit("crypto"));
+    keywordCollection.forEach(keyword => {
+        allArrays.push(calculateKeywordSplit(keyword, false));
+    });
+
+    doughnutChartData = getDoughnutChartData(allArrays[analysisType]);
 
     const renderBody = () => (
         <Grid container className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
