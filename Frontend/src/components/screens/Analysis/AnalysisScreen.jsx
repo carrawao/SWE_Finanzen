@@ -94,10 +94,11 @@ const AnalysisScreen = props => {
         let labelArray = [];
         let dataArray = [];
 
-        splitArray.forEach(arrayElement => {
-            labelArray.push(arrayElement.asset)
-            dataArray.push(arrayElement.percentage)
-        });
+      stockArray.push({
+        asset: element.name,
+        percentage: percentage.toFixed(2)
+      })
+    });
 
         return {
             'labels' : labelArray,
@@ -105,18 +106,71 @@ const AnalysisScreen = props => {
         }
     }
 
-    const orderArray = splitArray => {
-        function compare(a, b) {
-            if (a.percentage < b.percentage) {
-                return 1;
-            } else if (a.percentage > b.percentage) {
-                return -1;
-            } else {
-                return 0;
-            }
+    let sectorArray = []
+
+    portfolioData.shares.forEach(element => {
+      if (sectorArray.some(row => row.includes(element.analysisInfo[keyword]))) {
+        sectorArray.forEach(arrayElement => {
+          if (arrayElement[0] === element.analysisInfo[keyword]) {
+            arrayElement[1] = parseFloat(arrayElement[1]);
+            arrayElement[1] += parseFloat(element.value)
           }
-          
-        return splitArray.sort( compare );
+
+        })
+      } else {
+        sectorArray.push([element.analysisInfo[keyword], parseFloat(element.value)])
+      }
+    });
+
+    let stockArray = []
+
+    sectorArray.forEach(sector => {
+      const percentage = sector[1] / value * 100;
+
+      stockArray.push({
+        asset: sector[0],
+        percentage: percentage.toFixed(2)
+      })
+    });
+
+    if (typSplit) {
+      const percentage = 106.5 / value * 100;
+
+      stockArray.push({
+        asset: 'Crypto',
+        percentage: percentage.toFixed(2)
+      })
+    }
+
+    //console.log(sectorArray)
+
+    return orderArray(stockArray)
+  }
+
+  const getPiechartData = (splitArray) => {
+    let labelArray = [];
+    let dataArray = [];
+
+    splitArray.forEach(arrayElement => {
+      labelArray.push(arrayElement.asset)
+      dataArray.push(arrayElement.percentage)
+    });
+
+    return {
+      'label': labelArray,
+      'data': dataArray
+    }
+  }
+
+  const orderArray = splitArray => {
+    function compare(a, b) {
+      if (a.percentage < b.percentage) {
+        return 1;
+      } else if (a.percentage > b.percentage) {
+        return -1;
+      } else {
+        return 0;
+      }
     }
 
     allArrays.push(calculateKeywordSplit("typ", true));
@@ -164,13 +218,13 @@ const AnalysisScreen = props => {
 }
 
 AnalysisScreen.propTypes = {
-    searchResult: PropTypes.array,
-    setSearchResult: PropTypes.func,
-    watchListsArray: PropTypes.array,
-    assetsListArray: PropTypes.array,
-    activePortfolio: PropTypes.string,
-    portfolioData: PropTypes.object,
-    setPortfolioData: PropTypes.func,
+  searchResult: PropTypes.array,
+  setSearchResult: PropTypes.func,
+  watchListsArray: PropTypes.array,
+  assetsListArray: PropTypes.array,
+  activePortfolio: PropTypes.string,
+  portfolioData: PropTypes.object,
+  setPortfolioData: PropTypes.func,
 };
 
 export default AnalysisScreen;

@@ -1,5 +1,5 @@
-import React, { lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, {lazy, useEffect, useState} from 'react';
+import {Route, Routes} from 'react-router-dom';
 import Impressum from '../components/screens/Impressum';
 import AGB from '../components/screens/AGB';
 import Privacy from '../components/screens/Privacy';
@@ -78,7 +78,11 @@ const AppRoutes = () => {
   }, [watchListsArray, assetsListArray, portfolioData, activePortfolio]);
 
   const portfolio = portfolioData[activePortfolio];
-  
+
+  /**
+   * Updates all information of assets in portfolio
+   * @returns {Promise<void>}
+   */
   const updatePortfolioData = async () => {
     const updatedShares = await getUpdatedAssetData('shares');
     const updatedCrypto = await getUpdatedAssetData('crypto');
@@ -87,11 +91,12 @@ const AppRoutes = () => {
     const cashValue = getValue(portfolioData[activePortfolio]['cash']);
     const portfolioValue = shareValue + cryptoValue + cashValue;
     const todayDate = new Date();
-    const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth()+1}-${todayDate.getDate()}`;
+    const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
 
     setPortfolioData(prevPortfolioData => {
       let portfolioData = {...prevPortfolioData}
-      portfolioData[activePortfolio] = {...portfolioData[activePortfolio],
+      portfolioData[activePortfolio] = {
+        ...portfolioData[activePortfolio],
         shares: updatedShares,
         crypto: updatedCrypto,
         value: portfolioValue,
@@ -105,9 +110,14 @@ const AppRoutes = () => {
     console.log('Portfolio Data updated!');
   };
 
-  const getUpdatedAssetData = async (assettype) => {
-    const updatedAssets = (async () => {
-      let updatedAssets = portfolioData[activePortfolio][assettype];
+  /**
+   * Gets updated information of a given asset type
+   * @param assetType
+   * @returns {Promise<*>}
+   */
+  const getUpdatedAssetData = async assetType => {
+    return (async () => {
+      let updatedAssets = portfolioData[activePortfolio][assetType];
       await Promise.all(updatedAssets.map(async (asset, index) => {
         const symbol = asset['symbol'];
         const data = assettype === 'shares' ? await getShareData(symbol) : await getCryptoData(symbol);
@@ -117,29 +127,41 @@ const AppRoutes = () => {
       }))
       return updatedAssets;
     })();
-    return updatedAssets;
   }
 
-  const getShareData = async (symbol) => {
+  /**
+   * Gets information given a share symbol
+   * @param symbol
+   * @returns {Promise<any>}
+   */
+  const getShareData = async symbol => {
     try {
       let response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'});
       return await response.json();
-    }
-    catch (e) {
+    } catch (e) {
       console.log('fetching failed === ', e);
     }
   }
 
-  const getCryptoData = async (symbol) => {
+  /**
+   * Gets information given a crypto symbol
+   * @param symbol
+   * @returns {Promise<any>}
+   */
+  const getCryptoData = async symbol => {
     try {
       let response = await fetch(`${process.env.REACT_APP_BASEURL}/getCryptoForWatchlist?symbol=${symbol}`, {mode:'cors'});
       return await response.json();
-    }
-    catch (e) {
-      console.log('fetching failed === ', e);
+    } catch (error) {
+      console.log('fetching failed === ', error);
     }
   }
 
+  /**
+   * Returns the totalValue of the assetArray
+   * @param assetArray
+   * @returns {number}
+   */
   const getValue = (assetArray) => {
     let value = 0;
     assetArray.forEach(asset => {
@@ -148,6 +170,10 @@ const AppRoutes = () => {
     return value;
   }
 
+  /**
+   * Returns array containing all assets
+   * @returns {*[]}
+   */
   const getAllAssets = () => {
     let assets = [];
     assets = assets.concat(portfolio['shares']);

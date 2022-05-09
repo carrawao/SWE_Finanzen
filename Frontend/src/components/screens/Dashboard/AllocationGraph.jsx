@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DoughnutChart } from '../../common';
+import {DoughnutChart} from '../../common';
 
 /**
  * Shows the allocation of the portfolio
@@ -15,7 +15,7 @@ const AllocationGraph = props => {
   const defaultMiddleDisplayValue = `${parseFloat(props.portfolioData.value.toFixed(2)).toLocaleString()} €`;
   
   const assets = props.getAllAssets();
-  
+
   const labels = (() => {
     let labels = []
     assets.forEach(element => {
@@ -36,7 +36,7 @@ const AllocationGraph = props => {
     });
     return valueData;
   })();
-  
+
   return (
     <DoughnutChart
       data={valueData}
@@ -44,7 +44,7 @@ const AllocationGraph = props => {
       defaultMiddleDisplayValue={defaultMiddleDisplayValue}
       defaultMiddleDisplayLabel={defaultMiddleDisplayLabel}
     />
-  );        
+  );
 }
 
 AllocationGraph.propTypes = {

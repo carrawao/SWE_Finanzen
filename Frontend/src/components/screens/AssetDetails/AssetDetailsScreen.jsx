@@ -4,8 +4,14 @@ import ScreensTemplate from '../../ScreensTemplate';
 import StockchartCard from './StockchartCard';
 import PropTypes from 'prop-types';
 
+/**
+ * Component related to a specific asset (including corresponding chart)
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const AssetDetailsScreen = props => {
-  let {asset, assetType} = useParams();  
+  let {asset, assetType} = useParams();
   //data that we saved for this asset --> undefined if asset is not in the portfolio
   const savedAssetData = asset === undefined ? undefined : props.portfolioData[props.activePortfolio][assetType === 'Crypto' ? 'crypto' : 'shares'].find(element => element.symbol === asset);
   console.log(savedAssetData);

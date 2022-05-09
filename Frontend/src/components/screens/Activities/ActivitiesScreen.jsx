@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {
   Container,
   Button,
@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import ActivitiesList from './ActivitiesList';
 import ScreensTemplate from '../../ScreensTemplate';
-import { renderRemoveActivityModal } from './Modals/activityModals';
+import {renderRemoveActivityModal} from './Modals/activityModals';
 
 /**
  * Component related to the activities page
@@ -28,13 +28,13 @@ const ActivitiesScreen = props => {
     navigate(path);
   }
 
-  const clearActivities = () => {  
+  const clearActivities = () => {
     props.setPortfolioData(prevData => {
       const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]['activities']=[];
-      portfolioData[props.activePortfolio]['shares']= [];
-      portfolioData[props.activePortfolio]['crypto']= [];
-      portfolioData[props.activePortfolio]['cash']= [];
+      portfolioData[props.activePortfolio]['activities'] = [];
+      portfolioData[props.activePortfolio]['shares'] = [];
+      portfolioData[props.activePortfolio]['crypto'] = [];
+      portfolioData[props.activePortfolio]['cash'] = [];
       return portfolioData;
     });
   }
@@ -61,10 +61,10 @@ const ActivitiesScreen = props => {
       deposits: [],
       analysisInfo: undefined
     }]
-    
+
     props.setPortfolioData(prevData => {
       const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]['cash']= cash;
+      portfolioData[props.activePortfolio]['cash'] = cash;
       return portfolioData;
     });
   }

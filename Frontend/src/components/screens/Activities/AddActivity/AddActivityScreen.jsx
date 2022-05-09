@@ -1,23 +1,17 @@
-import React, {useState} from 'react';
-import {
-  Container,
-  Button,
-  Grid
-} from '@mui/material';
+import React from 'react';
+import {Container, Grid} from '@mui/material';
 import PropTypes from 'prop-types';
 
 import ScreensTemplate from '../../../ScreensTemplate';
-import {SearchField, CustomTable, SearchResultsTable} from '../../../common';
 import AddActivityForm from './AddActivityForm';
 
 /**
- * Component related to the activities page
+ * Component related to the add activities page
  * @param props
  * @returns {JSX.Element}
  * @constructor
  */
-const AddActivityScreen = (props) => {
-
+const AddActivityScreen = props => {
   const portfolioData = props.portfolioData[props.activePortfolio];
 
   const addActivity = async (assetType, asset, type, date, quantity, sum, value, taxes, fees) => {
@@ -99,7 +93,13 @@ const AddActivityScreen = (props) => {
       }
     }
   }
-  
+
+  /**
+   *
+   * @param assetData
+   * @param activityObj
+   * @returns {Promise<(*&{fees: *, performance: number, realisedGains: number, taxes: *, value: (*|number), gains: number, invested: (*|number|number)})|(*&{fees: *, performance: number, realisedGains: number, taxes: *, gains: number, invested: (*|number|number)})|*>}
+   */
   const updateAssetData = async (assetData, activityObj) => {
     if (activityObj.assetType === 'cash') {
       const firstActivity = new Date(assetData.firstActivity) > new Date(activityObj.date) ? activityObj.date : assetData.firstActivity;
@@ -508,14 +508,13 @@ const AddActivityScreen = (props) => {
         const nameResult = element1.assetName > element2.assetName ? 1 : element2.assetName > element1.assetName ? -1 : 0;
         if (nameResult === 0) {
           //if name is the same sort by activityType
-          const typeResult = element1.type > element2.type ? 1 : element2.type > element1.type ? -1 : 0;
-          return typeResult;
+          return element1.type > element2.type ? 1 : element2.type > element1.type ? -1 : 0;
         }
         return nameResult;
       }
       return dateResult;
     });
-    return activitesArray;
+    return activitiesArray;
   }
 
   const recalculatePortfolioDataFromDate = async (assetData) => {
@@ -570,11 +569,14 @@ const AddActivityScreen = (props) => {
         const json = await response.json();
         return json;
     }
-    catch (e) {
-        console.log('fetching failed === ', e);
-    };
   }
 
+  /**
+   * Retrieves daily values of assets
+   * @param symbol
+   * @param assetType
+   * @returns {Promise<any>}
+   */
   const fetchDailyValues = async (symbol, assetType) => {
     const fetchFunc = assetType === 'crypto' ? 'dailyCrypto' : 'dailyShare';
     try {
@@ -583,16 +585,13 @@ const AddActivityScreen = (props) => {
         let results = json[assetType === 'crypto' ? 'Time Series (Digital Currency Daily)' : 'Time Series (Daily)'];
         return results;
     }
-    catch (e) {
-        console.log('fetching failed === ', e);
-    };
   }
 
   const renderBody = () => (
     <Grid className='d-flex justify-content-center pt-2'>
       <Container className='p-0'>
         <AddActivityForm
-          addActivity={addActivity} 
+          addActivity={addActivity}
           portfolioData={portfolioData}
         />
       </Container>
