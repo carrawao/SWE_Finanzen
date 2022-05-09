@@ -5,7 +5,10 @@ import StockchartCard from './StockchartCard';
 import PropTypes from 'prop-types';
 
 /**
- * Screen for any Type of Asset
+ * Component related to a specific asset (including corresponding chart)
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
  */
 const AssetDetailsScreen = props => {
   let {asset, assetType} = useParams();

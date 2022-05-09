@@ -181,12 +181,13 @@ const WatchLists = props => {
               '&.Mui-selected': {
                 color: 'white',
                 backgroundColor: 'rgb(73, 63, 53)'
-            }},
+              }
+            },
             '&& .Mui-selected': {
               color: 'white',
               backgroundColor: 'rgb(73, 63, 53)'
             }
-        }}
+          }}
         >
           {props.watchListsArray.map((element, index) => (
             <ListItem
@@ -227,36 +228,35 @@ const WatchLists = props => {
                       {element}
                     </Typography>
                   }
-                  sx={{
-                  }}
+                  sx={{}}
                 />
                 <AvatarGroup
                   spacing={5}
                   appearance='stack'
                 >
                   {props.assetsListArray[index].length > 0 && props.assetsListArray[index].map((asset, assetIndex) =>
-                    asset && assetIndex < 3 && <Avatar
-                      key={`avatarGroup_${asset.name}`}
-                      alt={`${asset.name}`}
-                      sx={{
-                        '&.MuiAvatar-circular': {
-                          borderColor: props.selectedListIndex === index ? 'white' : 'black'
-                        },
-                        backgroundColor: avatarGroupColors[assetIndex],
-                        width: {
-                          md: '1.2rem',
-                          xl: '1.5rem'
-                        },
-                        height: {
-                          md: '1.2rem',
-                          xl: '1.5rem'
-                        },
-                      }}
-                    >
-                      <Typography sx={{fontSize: '12px'}}>
-                        {asset.name.slice(0, 3).toUpperCase()}
-                      </Typography>
-                    </Avatar>
+                      asset && assetIndex < 3 && <Avatar
+                        key={`avatarGroup_${asset.name}`}
+                        alt={`${asset.name}`}
+                        sx={{
+                          '&.MuiAvatar-circular': {
+                            borderColor: props.selectedListIndex === index ? 'white' : 'black'
+                          },
+                          backgroundColor: avatarGroupColors[assetIndex],
+                          width: {
+                            md: '1.2rem',
+                            xl: '1.5rem'
+                          },
+                          height: {
+                            md: '1.2rem',
+                            xl: '1.5rem'
+                          },
+                        }}
+                      >
+                        <Typography sx={{fontSize: '12px'}}>
+                          {asset.name.slice(0, 3).toUpperCase()}
+                        </Typography>
+                      </Avatar>
                   )}
                 </AvatarGroup>
               </ListItemButton>
@@ -268,7 +268,7 @@ const WatchLists = props => {
                   listDropdownIndex={listDropdownIndex}
                   setListDropdownIndex={setListDropdownIndex}
                   menuOptions={['Edit', 'Delete']}
-                  iconOptions={[<EditIcon />, <DeleteIcon />]}
+                  iconOptions={[<EditIcon/>, <DeleteIcon/>]}
                   functionOptions={[
                     () => setEditListModal(true),
                     () => setRemoveListModal(true)

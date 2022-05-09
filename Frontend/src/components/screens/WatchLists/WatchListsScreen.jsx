@@ -69,29 +69,28 @@ const WatchListsScreen = props => {
 
     try {
       return await fetch(
-      `${process.env.REACT_APP_BASEURL}/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
-      {mode:'cors'})
-      .then(response => response.json())
-      .then(data => {
-        props.setAssetsListArray(prevAssetsListArray => {
-          const assetsListArray = [...prevAssetsListArray];
-          assetsListArray[selectedListIndex] = [
-            ...assetsListArray[selectedListIndex],
-            {
-              name: data.name ? data.name : symbol,
-              symbol: symbol,
-              assetType: assetType,
-              price: `${Number.parseFloat(data.value).toFixed(2)}`,
-              change: `${Number.parseFloat(data.percentChange).toFixed(2)}`
-            }
-          ];
-          return assetsListArray;
-        })
-        props.setSearchResult([]);
+        `${process.env.REACT_APP_BASEURL}/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
+        {mode: 'cors'})
+        .then(response => response.json())
+        .then(data => {
+          props.setAssetsListArray(prevAssetsListArray => {
+            const assetsListArray = [...prevAssetsListArray];
+            assetsListArray[selectedListIndex] = [
+              ...assetsListArray[selectedListIndex],
+              {
+                name: data.name ? data.name : symbol,
+                symbol: symbol,
+                assetType: assetType,
+                price: `${Number.parseFloat(data.value).toFixed(2)}`,
+                change: `${Number.parseFloat(data.percentChange).toFixed(2)}`
+              }
+            ];
+            return assetsListArray;
+          })
+          props.setSearchResult([]);
         });
-    }
-    catch (e) {
-      console.log('fetching failed === ', e);
+    } catch (error) {
+      console.log('fetching failed === ', error);
     }
   };
 
