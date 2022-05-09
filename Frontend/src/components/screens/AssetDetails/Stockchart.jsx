@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables, } from 'chart.js';
 import { format, addDays, subDays, differenceInDays } from 'date-fns';
-import "chartjs-adapter-date-fns";
-import { CircularProgress, Container } from "@mui/material";
-import Performance from "./Perfofmance";
-import PropTypes from "prop-types";
+import 'chartjs-adapter-date-fns';
+import { CircularProgress, Container } from '@mui/material';
+import Performance from './Perfofmance';
+import PropTypes from 'prop-types';
 
 ChartJS.register(...registerables);
 
@@ -61,7 +61,7 @@ function setView(view, data, labels, options, setup) {
     let startDate = subDays(lastDate, timespan);
     let startDateIndex = -1;
     do {
-        let startDateString = format(startDate, "yyyy-MM-dd");
+        let startDateString = format(startDate, 'yyyy-MM-dd');
         startDateIndex = labels.indexOf(startDateString);
         startDate = addDays(startDate, 1);
     } while (startDateIndex === -1);
@@ -88,7 +88,7 @@ const Stockchart = (props) => {
         const base = process.env.REACT_APP_BASEURL;
         //fetch according to the type of asset
         let url = new URL(`dailyShare?symbol=${encodeURIComponent(props.symbol)}`, base);
-        if (props.assetType === "Crypto") {
+        if (props.assetType === 'Crypto') {
             url = new URL(`dailyCrypto?symbol=${encodeURIComponent(props.symbol)}`, base);
         }
         fetch(url.toString())
@@ -98,12 +98,12 @@ const Stockchart = (props) => {
                 let data;
                 // Chooses how to format different json according to type of asset
                 switch (props.assetType) {
-                    case "Crypto":
+                    case 'Crypto':
                         labels = Object.keys(json['Time Series (Digital Currency Daily)']);
                         data = Object.values(json['Time Series (Digital Currency Daily)']).map(o => Number(o['4b. close (USD)']));
                         break;
-                    case "ETF":
-                    case "Stock":
+                    case 'ETF':
+                    case 'Stock':
                     default:
                         labels = Object.keys(json['Time Series (Daily)']);
                         data = Object.values(json['Time Series (Daily)']).map(o => Number(o['4. close']));
@@ -115,7 +115,7 @@ const Stockchart = (props) => {
                 setData(data);
                 setIsLoading(false);
                 props.setStockPrice(data[0]); //First data is latest price
-                console.log("Asset fetched!");
+                console.log('Asset fetched!');
             }
             );
     }, []);

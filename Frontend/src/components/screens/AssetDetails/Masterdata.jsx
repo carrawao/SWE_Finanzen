@@ -21,57 +21,57 @@ const Masterdata = (props) => {
             .then(json => {
                 setMasterdata(json);
                 setIsLoading(false);
-                console.log("Masterdata fetched!");
+                console.log('Masterdata fetched!');
             })
     }, []);
 
     if (isLoading) {
         return <CircularProgress />
     }
-    return <Grid container flex spacing={2} alignItems="stretch" justifyContent="space-evenly">
+    return <Grid container flex spacing={2} alignItems='stretch' justifyContent='space-evenly'>
         <Grid item xs={4}>
             <List>
                 <ListItem>
                     <ListItemText
                         primary={masterdata['Name']}
-                        secondary="Name">
+                        secondary='Name'>
                     </ListItemText>
                 </ListItem>
                 <ListItem>
                     <ListItemText
                         primary={masterdata['CIK']}
-                        secondary="CIK">
+                        secondary='CIK'>
                     </ListItemText>
                 </ListItem>
             </List>
         </Grid>
         <Grid>
-            <Divider orientation="vertical" flexItem sx={1} style={{ height: '100%' }} />
+            <Divider orientation='vertical' flexItem sx={1} style={{ height: '100%' }} />
         </Grid>
         <Grid item xs={4}>
             <List>
                 <ListItem>
                     <ListItemText
                         primary={masterdata['Sector']}
-                        secondary="Sector"
+                        secondary='Sector'
                     ></ListItemText>
                 </ListItem>
                 <ListItem>
                     <ListItemText
                         primary={masterdata['Industry']}
-                        secondary="Industry"
+                        secondary='Industry'
                     ></ListItemText>
                 </ListItem>
                 <ListItem>
                     <ListItemText
                         primary={masterdata['DividendYield']}
-                        secondary="Dividend Yield"
+                        secondary='Dividend Yield'
                     ></ListItemText>
                 </ListItem>
                 <ListItem>
                     <ListItemText
                         primary={masterdata['Exchange']}
-                        secondary="Exchange"
+                        secondary='Exchange'
                     ></ListItemText>
                 </ListItem>
             </List>

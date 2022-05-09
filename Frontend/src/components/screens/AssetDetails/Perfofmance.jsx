@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables, } from 'chart.js';
-import "chartjs-adapter-date-fns";
-import PropTypes from "prop-types";
+import 'chartjs-adapter-date-fns';
+import PropTypes from 'prop-types';
 
 ChartJS.register(...registerables);
 
@@ -15,14 +15,6 @@ export const Performance = (props) => {
     const perfLabels = props.labels.slice(0,sliceIndex);
     const priceData = props.data.slice(0,sliceIndex);
     const perfData = priceData.map(price => (price/investment-1));
-    
-    // console.log(investment)
-    // console.log(startDate)
-    // console.log(sliceIndex)
-    // console.log(props.data)
-    // console.log(props.labels)
-    // console.log(perfLabels)
-    // console.log(priceData)
 
     const setup = {
         labels: perfLabels,
@@ -70,7 +62,7 @@ export const Performance = (props) => {
                     label: function (context) {
                         let label = context.dataset.label;
                         let value = context.dataset.data[context.dataIndex];
-                        label += ": " + (value * 100).toFixed(2) + '%' 
+                        label += ': ' + (value * 100).toFixed(2) + '%' 
                         return label;
                     },
                     title: function (context) {

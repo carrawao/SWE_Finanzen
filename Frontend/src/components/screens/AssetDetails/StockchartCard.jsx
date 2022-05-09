@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Stockchart from "./Stockchart";
-import ChartButtons from "./ChartButtons";
+import Stockchart from './Stockchart';
+import ChartButtons from './ChartButtons';
 import Masterdata from './Masterdata';
 import { Card, Divider, CardContent, CardHeader, Collapse, IconButton, Grid } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
@@ -30,7 +30,7 @@ const StockchartCard = (props) => {
       <Grid item xs={10}>
         <Card raised sx={{ border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3 }}>
           <CardHeader
-            title={props.assetType + " | " + props.symbol}
+            title={props.assetType + ' | ' + props.symbol}
             subheader={new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
               .format(stockPrice) + ` | ${(perf * 100).toFixed(2)}%`}
             action={<ChartButtons view={view} setView={setView}></ChartButtons>}
@@ -42,7 +42,7 @@ const StockchartCard = (props) => {
           <Divider />
           {
             // Show masterdata card
-            props.assetType === "Stock" &&
+            props.assetType === 'Stock' &&
             <>
               <IconButton onClick={handleClick}>
                 {open ? <ExpandLess /> : <ExpandMore />}
