@@ -120,7 +120,7 @@ const AppRoutes = () => {
       let updatedAssets = portfolioData[activePortfolio][assetType];
       await Promise.all(updatedAssets.map(async (asset, index) => {
         const symbol = asset['symbol'];
-        const data = assettype === 'shares' ? await getShareData(symbol) : await getCryptoData(symbol);
+        const data = assetType === 'shares' ? await getShareData(symbol) : await getCryptoData(symbol);
         updatedAssets[index] = {...asset, 
           value: data.value*updatedAssets[index].quantity
         }

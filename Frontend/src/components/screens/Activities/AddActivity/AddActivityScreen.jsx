@@ -500,8 +500,8 @@ const AddActivityScreen = props => {
   }
 
   //sort activitiesArray by date (latest date at start of array), by name (alphabetical) and by type (alphabetical)
-  const sortActivities = (activitesArray) => {
-    activitesArray.sort((element1, element2) => {
+  const sortActivities = (activitiesArray) => {
+    activitiesArray.sort((element1, element2) => {
       const dateResult = (new Date(element2.date)) - (new Date(element1.date));
       if (dateResult === 0) {
         //if date is the same sort by assetName
@@ -568,6 +568,8 @@ const AddActivityScreen = props => {
         const response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareInformationsForAnalyse?symbol=${symbol}`, {mode:'cors'})
         const json = await response.json();
         return json;
+    } catch (e) {
+      console.log('fetching failed === ', e);
     }
   }
 
@@ -584,6 +586,8 @@ const AddActivityScreen = props => {
         const json = await response.json();
         let results = json[assetType === 'crypto' ? 'Time Series (Digital Currency Daily)' : 'Time Series (Daily)'];
         return results;
+    } catch (e) {
+      console.log('fetching failed === ', e);
     }
   }
 
