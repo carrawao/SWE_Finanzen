@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { Grid, Button, Box, TextField, MenuItem, styled, InputAdornment, Autocomplete} from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -36,19 +36,19 @@ const StyledTextField = styled(TextField)({
 });
 
 const initialValues = {
-    assetType: "share",
+    assetType: 'share',
     asset: null,
-    assetInput: "",
-    typeShare: "buy",
-    typeCrypto: "buy",
-    typeCash: "deposit",
+    assetInput: '',
+    typeShare: 'buy',
+    typeCrypto: 'buy',
+    typeCash: 'deposit',
     date: new Date(),
-    quantity: 1,
+    quantity: '1',
     value: '',
     sum: '',
     sumCash: '',
-    tax: 0,
-    fee: 0
+    tax: '0',
+    fee: '0'
 }
 
 /**
@@ -64,26 +64,26 @@ const AddActivityForm = (props) => {
     const [valid, setValid] = useState(false);
     const [addAnother, setAddAnother] = useState(false);
 
-    let dateError = "";
+    let dateError = '';
     let changedByDatePicker = false;
 
     useEffect(() => {
         validate();
     }, [values]);
 
-    const shares = props.portfolioData["shares"];
-    const crypto = props.portfolioData["crypto"];
-    const cash = props.portfolioData["cash"];
+    const shares = props.portfolioData['shares'];
+    const crypto = props.portfolioData['crypto'];
+    const cash = props.portfolioData['cash'];
 
     const handleInputChange = e => {
         const { name, value } = e.target;
-        if (name==="quantity") {
+        if (name==='quantity') {
             setValues({
                 ...values,
                 sum: (value*values.value).toFixed(2),
                 [name]:value
             })
-        } else if (name==="value") {
+        } else if (name==='value') {
             setValues({
                 ...values,
                 sum: (value*values.quantity).toFixed(2),
@@ -99,102 +99,147 @@ const AddActivityForm = (props) => {
 
     const numberRegex = /^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/
     const numberWithZeroRegex = /^(\d+|\d*\.\d+)$/
-
+    
     const validate = () => {
-        const newDateError = changedByDatePicker ? (dateError ? "Not a valid date" : "") : (errors.date === undefined ? "" : errors.date);
+        let newDateError = changedByDatePicker ? (dateError ? 'Not a valid date' : '') : (errors.date === undefined ? '' : errors.date);
+        newDateError = values.date === null ? 'Not a valid date' : newDateError;
         let newErrors = {date: newDateError};
-        newErrors.asset = values.asset ? "" : "This field is required";
+        newErrors.asset = values.asset ? '' : 'This field is required';
         if(values.asset) {
-            if (values.assetType === "share") newErrors = {...newErrors, ...validateShare()};
-            if (values.assetType === "crypto") newErrors = {...newErrors, ...validateCrypto()};
-            if (values.assetType === "cash") newErrors = {...newErrors, ...validateCash()};
-            newErrors.fee = (numberWithZeroRegex).test(values.fee) ? "" : "Not a valid number";
-            newErrors.date = values.date === null ? "Not a valid date" : newErrors.date;
+            if (values.assetType === 'share') newErrors = {...newErrors, ...validateShare(newErrors.date)};
+            if (values.assetType === 'crypto') newErrors = {...newErrors, ...validateCrypto(newErrors.date)};
+            if (values.assetType === 'cash') newErrors = {...newErrors, ...validateCash(newErrors.date)};
+            newErrors.fee = (numberWithZeroRegex).test(values.fee) ? '' : 'Not a valid number';
         }
         setErrors({...newErrors});
-        const valid = Object.values(newErrors).every(x => x === "");
+        const valid = Object.values(newErrors).every(x => x === '');
         setValid(valid);
         return valid;
     }
 
-    const validateShare = () => {
+    Date.prototype.getFormattedString = function() {
+      const date = new Date(this.valueOf());
+      const year = date.getFullYear();
+      let month = `${date.getMonth()+1}`;
+      if (month.length === 1) {
+        month = `0${month}`;
+      }
+      let day = `${date.getDate()}`;
+      if (day.length === 1) {
+        day = `0${day}`;
+      }
+      return `${year}-${month}-${day}`;
+    }
+
+    const getQuantityAtDate = (dailyData, date) => {
+      const dateString = date.getFormattedString();
+      if (dailyData[dateString] === undefined) {
+        const firstDateWithData = (Object.keys(dailyData))[0];
+        if (new Date (dateString) > new Date (firstDateWithData)) {
+          return dailyData[firstDateWithData].quantity;
+        } else {
+          return 0;
+        }
+      } else {
+        return dailyData[dateString].quantity;
+      }
+    }
+    
+    const validateShare = (dateError) => {
         let errors = {};
-        errors.quantity = "";
-        if (values.typeShare === "sell" || values.typeShare === "dividend") {
+        errors.quantity = '';
+        if (values.typeShare === 'sell' || values.typeShare === 'dividend') {
             const share = shares.find(element => element.symbol === values.asset.symbol);
             if (share === undefined) {
-                errors.typeShare = "Sell/Dividend not valid for this share"
+                errors.typeShare = 'Sell/Dividend not valid for this share'
             } else {
                 if (!(numberRegex).test(values.quantity)) {
-                    errors.quantity = "Not a valid number";
-                } else {
-                    errors.quantity = share.quantity >= values.quantity ? "" : "Can't be greater than quantity in your portfolio"
+                    errors.quantity = 'Not a valid number';
+                } else if (dateError === '') {
+                  const shareQuantityAtDate = getQuantityAtDate(share.dailyDataForValueDevelopment, values.date);
+                  errors.quantity = shareQuantityAtDate >= values.quantity ? '' : "Can't be greater than bought quantity at date";
                 }
             }
         } else {
             if (!(numberRegex).test(values.quantity)) {
-                errors.quantity = "Not a valid number";
+                errors.quantity = 'Not a valid number';
             }
         }
-        errors.value = (numberRegex).test(values.value) ? "" : "Not a valid number";
+        errors.value = (numberRegex).test(values.value) ? '' : 'Not a valid number';
         if (!(numberWithZeroRegex).test(values.tax)) {
-            errors.tax = "Not a valid number";
+            errors.tax = 'Not a valid number';
         } else {
-            const checkTaxGreaterThanSum = errors.value === "" ? errors.quantity === "" : false;
-            errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? "Can't be greater than sum" : "";
+            const checkTaxGreaterThanSum = errors.value === '' ? errors.quantity === '' : false;
+            errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? "Can't be greater than sum" : '';
         }
         return errors;
     }
 
-    const validateCrypto = () => {
+    const validateCrypto = (dateError) => {
         let errors = {};
-        if (values.typeCrypto === "sell") {
+        if (values.typeCrypto === 'sell') {
             let coin = crypto.find(element => element.symbol === values.asset.symbol);
             if (coin === undefined) {
-                errors.typeCrypto = "Sell not valid for this coin"
+                errors.typeCrypto = 'Sell not valid for this coin'
             } else {
                 if (!(numberRegex).test(values.quantity)) {
-                    errors.quantity = "Not a valid number";
-                } else {
-                    errors.quantity = coin.quantity >= values.quantity ? "" : "Can't be greater than quantity in your portfolio"
+                    errors.quantity = 'Not a valid number';
+                } else if (dateError === '') {
+                  const coinQuantityAtDate = getQuantityAtDate(coin.dailyDataForValueDevelopment, values.date);
+                  errors.quantity = coinQuantityAtDate >= values.quantity ? '' : "Can't be greater than bought quantity at date";
                 }
             };
         } else {
             if (!(numberRegex).test(values.quantity)) {
-                errors.quantity = "Not a valid number";
+                errors.quantity = 'Not a valid number';
             }
         }
-        errors.value = (numberRegex).test(values.value) ? "" : "Not a valid number";
+        errors.value = (numberRegex).test(values.value) ? '' : 'Not a valid number';
         if (!(numberWithZeroRegex).test(values.tax)) {
-            errors.tax = "Not a valid number";
+            errors.tax = 'Not a valid number';
         } else {
-            const checkTaxGreaterThanSum = errors.value === "" ? errors.quantity === "" : false;
-            errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? "Can't be greater than sum" : "";
+            const checkTaxGreaterThanSum = errors.value === '' ? errors.quantity === '' : false;
+            errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? "Can't be greater than sum" : '';
         }
         return errors;
     }
 
-    const validateCash = () => {
+    const getSumAtDate = (dailyData, date) => {
+      const dateString = date.getFormattedString();
+      if (dailyData[dateString] === undefined) {
+        const firstDateWithData = (Object.keys(dailyData))[0];
+        if (new Date (dateString) > new Date (firstDateWithData)) {
+          return dailyData[firstDateWithData].value;
+        } else {
+          return 0;
+        }
+      } else {
+        return dailyData[dateString].value;
+      }
+    }
+
+    const validateCash = (dateError) => {
         let errors = {};
-        if (values.typeCash !== "deposit") {
+        if (values.typeCash !== 'deposit') {
             let account = cash.find(element => element.symbol === values.asset.symbol);
             if (account.value === 0) {
-                errors.typeCash = "Payout/Interest not valid for this account"
+                errors.typeCash = 'Payout not valid for this account'
             } else {
                 if (!(numberRegex).test(values.sumCash)) {
-                    errors.sumCash = "Not a valid number";
-                } else {
-                    errors.sumCash = account.value >= values.sumCash ? "" : "Can't be greater than deposited amount"
+                    errors.sumCash = 'Not a valid number';
+                } else if (dateError === '') {
+                  const accountValueAtDate = getSumAtDate(account.dailyDataForValueDevelopment, values.date);  
+                  errors.sumCash = accountValueAtDate >= values.sumCash ? '' : "Can't be greater than deposited amount at date";
                 }
             };
         } else {
-            errors.sumCash = !(numberRegex).test(values.sumCash) ? "Not a valid number" : "";
+            errors.sumCash = !(numberRegex).test(values.sumCash) ? 'Not a valid number' : '';
         }
         if (!(numberWithZeroRegex).test(values.tax)) {
-            errors.tax = "Not a valid number";
+            errors.tax = 'Not a valid number';
         } else {
-            const checkTaxGreaterThanSum = errors.sumCash === "";
-            errors.tax = checkTaxGreaterThanSum && (values.sumCash < values.tax) ? "Can't be greater than sum" : "";
+            const checkTaxGreaterThanSum = errors.sumCash === '';
+            errors.tax = checkTaxGreaterThanSum && (values.sumCash < values.tax) ? "Can't be greater than sum" : '';
         }
         return errors;
     }
@@ -207,13 +252,13 @@ const AddActivityForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(validate()) {
-            if (values.assetType === "share") props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
-            if (values.assetType === "crypto") props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
-            if (values.assetType === "cash") props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sumCash, undefined, values.tax, values.fee);
+            if (values.assetType === 'share') props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
+            if (values.assetType === 'crypto') props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
+            if (values.assetType === 'cash') props.addActivity(values.assetType, values.asset, values.typeCash, values.date, '1', values.sumCash, values.sumCash, values.tax, values.fee);
             if (!addAnother) {
                 routeChange('../activities');
             } else {
-                alert("Activity saved!");
+                alert('Activity saved!');
             }
         }
     }
@@ -221,33 +266,33 @@ const AddActivityForm = (props) => {
   return (
     <Grid 
         container 
-        direction="column"
-        justifyContent="center"
-        alignItems="stretch"
-        component="form" 
-        autoComplete="off"
+        direction='column'
+        justifyContent='center'
+        alignItems='stretch'
+        component='form' 
+        autoComplete='off'
         onSubmit={handleSubmit}
         noValidate
     >
         <Grid 
             container 
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-start"
+            direction='row'
+            justifyContent='center'
+            alignItems='flex-start'
         >
             <Grid item xs={1.5} sx={{ marginRight: '0rem'}}>
                 <StyledTextField
                     fullWidth
-                    margin="normal"
+                    margin='normal'
                     select
-                    label="type of asset"
-                    name="assetType"
+                    label='type of asset'
+                    name='assetType'
                     onChange = {handleInputChange}
                     value={values.assetType}
                 >
-                    <MenuItem value={"share"}>Share</MenuItem>
-                    <MenuItem value={"crypto"}>Crypto</MenuItem>
-                    <MenuItem value={"cash"}>Cash</MenuItem>
+                    <MenuItem value={'share'}>Share</MenuItem>
+                    <MenuItem value={'crypto'}>Crypto</MenuItem>
+                    <MenuItem value={'cash'}>Cash</MenuItem>
                 </StyledTextField>
             </Grid>
             <Grid item xs={8} sx={{ marginLeft: '0rem'}}>
@@ -263,60 +308,59 @@ const AddActivityForm = (props) => {
         </Grid>
         <Grid 
             container 
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-start"
+            direction='row'
+            justifyContent='center'
+            alignItems='flex-start'
         >
-                {values.assetType === "share" &&
+                {values.assetType === 'share' &&
                     <Grid item xs={4}>
                         <StyledTextField
                         fullWidth
                         select
-                        margin="normal"
-                        label="type"
-                        name="typeShare"
+                        margin='normal'
+                        label='type'
+                        name='typeShare'
                         onChange = {handleInputChange}
                         value={values.typeShare}
                         {...(errors.typeShare && {error: true, helperText: errors.typeShare})}
                         >
-                            <MenuItem value={"buy"}>Buy</MenuItem>
-                            <MenuItem value={"sell"}>Sell</MenuItem>
-                            <MenuItem value={"dividend"}>Dividend</MenuItem>
+                            <MenuItem value={'buy'}>Buy</MenuItem>
+                            <MenuItem value={'sell'}>Sell</MenuItem>
+                            <MenuItem value={'dividend'}>Dividend</MenuItem>
                         </StyledTextField>
                     </Grid>
                 }
-                {values.assetType === "crypto" &&
+                {values.assetType === 'crypto' &&
                     <Grid item xs={4}>
                         <StyledTextField
                         fullWidth
                         select
-                        margin="normal"
-                        label="type"
-                        name="typeCrypto"
+                        margin='normal'
+                        label='type'
+                        name='typeCrypto'
                         onChange = {handleInputChange}
                         value={values.typeCrypto}
                         {...(errors.typeCrypto && {error: true, helperText: errors.typeCrypto})}
                         >
-                            <MenuItem value={"buy"}>Buy</MenuItem>
-                            <MenuItem value={"sell"}>Sell</MenuItem>
+                            <MenuItem value={'buy'}>Buy</MenuItem>
+                            <MenuItem value={'sell'}>Sell</MenuItem>
                         </StyledTextField>
                     </Grid>
                 }
-                {values.assetType === "cash" &&
+                {values.assetType === 'cash' &&
                     <Grid item xs={4}>
                         <StyledTextField
                         fullWidth
                         select
-                        margin="normal"
-                        label="type"
-                        name="typeCash"
+                        margin='normal'
+                        label='type'
+                        name='typeCash'
                         onChange = {handleInputChange}
                         value={values.typeCash}
                         {...(errors.typeCash && {error: true, helperText: errors.typeCash})}
                         >
-                            <MenuItem value={"deposit"}>Deposit</MenuItem>
-                            <MenuItem value={"payout"}>Payout</MenuItem>
-                            <MenuItem value={"interest"}>Interest</MenuItem>
+                            <MenuItem value={'deposit'}>Deposit</MenuItem>
+                            <MenuItem value={'payout'}>Payout</MenuItem>
                         </StyledTextField>
                     </Grid>
                 }
@@ -324,9 +368,9 @@ const AddActivityForm = (props) => {
                     <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>    
                         <DatePicker
                             disableFuture
-                            label="Date"
-                            name="date"
-                            id="add-activity-date"
+                            label='date'
+                            name='date'
+                            id='add-activity-date'
                             mask = '__.__.____'
                             views={['day']}
                             value={values.date}
@@ -341,34 +385,34 @@ const AddActivityForm = (props) => {
                                     date: newValue
                                 });
                             }}
-                            renderInput={(params) => <TextField {...params} margin="normal" fullWidth {...(errors.date && {error: true, helperText: errors.date})}/>}
+                            renderInput={(params) => <TextField {...params} margin='normal' fullWidth {...(errors.date && {error: true, helperText: errors.date})}/>}
                         />
                     </LocalizationProvider>
                 </Grid>
         </Grid>
-        {(values.assetType === "share" || values.assetType === "crypto") &&
+        {(values.assetType === 'share' || values.assetType === 'crypto') &&
             <Grid 
                 container 
-                direction="row"
-                justifyContent="center"
-                alignItems="flex-start"
+                direction='row'
+                justifyContent='center'
+                alignItems='flex-start'
             >
                 <StyledTextField
-                    margin="normal"
-                    label="Value per Item"
-                    name="value"
-                    id="add-activity-value"
+                    margin='normal'
+                    label='value per item'
+                    name='value'
+                    id='add-activity-value'
                     onChange = {handleInputChange}
                     value={values.value}
                     {...(errors.value && {error: true, helperText: errors.value})}
-                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position='end'>€</InputAdornment>}} 
                 ></StyledTextField>
                 <ClearIcon style={{fontSize: 'medium', margin: '1rem', marginTop: '2rem', color: '#493f35'}}></ClearIcon>
                 <StyledTextField
-                    margin="normal"
-                    label="Quantity"
-                    name="quantity"
-                    id="add-activity-quantity"
+                    margin='normal'
+                    label='quantity'
+                    name='quantity'
+                    id='add-activity-quantity'
                     onChange = {handleInputChange}
                     value={values.quantity}
                     {...(errors.quantity && {error: true, helperText: errors.quantity})}
@@ -376,71 +420,71 @@ const AddActivityForm = (props) => {
                 ></StyledTextField>
                 <DragHandleIcon style={{fontSize: 'medium', margin: '1rem', marginTop: '2rem', color: '#493f35'}}></DragHandleIcon>
                 <StyledTextField
-                    margin="normal"
+                    margin='normal'
                     disabled
-                    label="Sum"
-                    name="sum"
-                    id="add-activity-sum"
+                    label='sum'
+                    name='sum'
+                    id='add-activity-sum'
                     onChange = {handleInputChange}
                     value={values.sum}
-                    InputProps={{ required: true, inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                    InputProps={{ required: true, inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position='end'>€</InputAdornment>}} 
                 ></StyledTextField>
             </Grid>
         }
-        {values.assetType === "cash" &&
+        {values.assetType === 'cash' &&
             <Grid
                 container 
-                direction="row"
-                justifyContent="center"
-                alignItems="flex-start"
+                direction='row'
+                justifyContent='center'
+                alignItems='flex-start'
             >
                 <StyledTextField
-                    margin="normal"
-                    label="Sum"
-                    name="sumCash"
-                    id="add-activity-sum-cash"
+                    margin='normal'
+                    label='sum'
+                    name='sumCash'
+                    id='add-activity-sum-cash'
                     onChange = {handleInputChange}
                     value={values.sumCash}
                     {...(errors.sumCash && {error: true, helperText: errors.sumCash})}
-                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                    InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position='end'>€</InputAdornment>}} 
                 ></StyledTextField>
             </Grid>
         }
         <Grid
             container 
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-start"
+            direction='row'
+            justifyContent='center'
+            alignItems='flex-start'
         >        
             <StyledTextField
-                margin="normal"
-                label="Fees"
-                name="fee"
-                id="add-activity-fee"
+                margin='normal'
+                label='fees'
+                name='fee'
+                id='add-activity-fee'
                 onChange = {handleInputChange}
                 value={values.fee}
                 {...(errors.fee && {error: true, helperText: errors.fee})}
-                InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position='end'>€</InputAdornment>}} 
             ></StyledTextField>
             <StyledTextField
-                margin="normal"
-                label="Taxes"
-                name="tax"
-                id="add-activity-tax"
+                margin='normal'
+                label='taxes'
+                name='tax'
+                id='add-activity-tax'
                 onChange = {handleInputChange}
                 value={values.tax}
                 {...(errors.tax && {error: true, helperText: errors.tax})}
-                InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position="end">€</InputAdornment>}} 
+                InputProps={{ inputMode: 'numeric', pattern: '[0-9]*', endAdornment: <InputAdornment position='end'>€</InputAdornment>}} 
             ></StyledTextField>
         </Grid>
         <Grid
             container 
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-start"
+            direction='row'
+            justifyContent='center'
+            alignItems='flex-start'
         >    
-            <Button disabled={!valid ? true : false} type="submit" onClick={() => setAddAnother(false)}>Save</Button>
-            <Button disabled={!valid ? true : false} type="submit" onClick={() => setAddAnother(true)}>Save and add another</Button>
+            <Button disabled={!valid ? true : false} type='submit' onClick={() => setAddAnother(false)}>Save</Button>
+            <Button disabled={!valid ? true : false} type='submit' onClick={() => setAddAnother(true)}>Save and add another</Button>
         </Grid>
     </Grid>
   );

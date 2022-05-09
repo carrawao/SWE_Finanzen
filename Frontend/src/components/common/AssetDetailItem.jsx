@@ -125,7 +125,7 @@ const AssetDetailItem = props => (
                   xs: 15
                 }}
               >
-                {`${parseFloat(props.row.fee).toFixed(2)}€`}
+                {`${parseFloat(props.row.fees).toFixed(2)}€`}
               </Typography>
               <Typography
                 className='align-self-end'
@@ -136,7 +136,7 @@ const AssetDetailItem = props => (
                   xs: 15
                 }}
               >
-                {`${parseFloat(props.row.tax).toFixed(2)}€`}
+                {`${parseFloat(props.row.taxes).toFixed(2)}€`}
               </Typography>
             </Box>}
 
