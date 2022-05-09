@@ -23,7 +23,7 @@ const Impressum = () => (
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
-    Bench:market
+      Bench:market
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
@@ -74,15 +74,17 @@ const Impressum = () => (
     <Typography variant='h7' className='pt-4 ps-3'>
       <a href='https://app.currencyapi.com/dashboard'>https://app.currencyapi.com/dashboard</a> <br/>
       <a href='https://www.alphavantage.co'>https://www.alphavantage.co</a>
-    </Typography> 
+    </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
       Infromation gemäß § 36 VSBG
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3 pb-5'>
-    gemäß § 36 VSBG (Verbraucherstreitbeilegungsgesetz – Gesetz über die alternative Streitbeilegung in Verbrauchersachen) erklärt der Betreiber dieser Website: <br/>
-    Wir sind weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+      gemäß § 36 VSBG (Verbraucherstreitbeilegungsgesetz – Gesetz über die alternative Streitbeilegung in
+      Verbrauchersachen) erklärt der Betreiber dieser Website: <br/>
+      Wir sind weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+      teilzunehmen.
     </Typography>
 
   </Container>

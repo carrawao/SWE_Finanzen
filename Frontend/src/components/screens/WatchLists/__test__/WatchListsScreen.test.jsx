@@ -7,16 +7,16 @@ import Watchlists from '../WatchLists';
 import {FormControl, ListItem, Stack} from '@mui/material';
 import AssetsList from '../AssetsList';
 
-Enzyme.configure({ adapter: new Adapter() })
+Enzyme.configure({adapter: new Adapter()})
 
 const watchListsArray = ['Crypto'];
 const assetsListArray = [
   [
-    {"name":"Bitcoin","symbol":"BTC","price":"37890.48","change":"0.54"},
-    {"name":"Ethereum","symbol":"ETH","price":"2815.80","change":"0.47"},
-    {"name":"EOS","symbol":"EOS","price":"2.21","change":"-0.81"},
-    {"name":"Binance-USD","symbol":"BUSD","price":"0.93","change":"0.00"},
-    {"name":"Binance-Coin","symbol":"BNB","price":"385.86","change":"-0.15"}
+    {'name': 'Bitcoin', 'symbol': 'BTC', 'price': '37890.48', 'change': '0.54'},
+    {'name': 'Ethereum', 'symbol': 'ETH', 'price': '2815.80', 'change': '0.47'},
+    {'name': 'EOS', 'symbol': 'EOS', 'price': '2.21', 'change': '-0.81'},
+    {'name': 'Binance-USD', 'symbol': 'BUSD', 'price': '0.93', 'change': '0.00'},
+    {'name': 'Binance-Coin', 'symbol': 'BNB', 'price': '385.86', 'change': '-0.15'}
   ]
 ];
 
@@ -37,17 +37,21 @@ describe('Tests regarding WatchList screen', () => {
       onClose={onClose}
     />);
 
-    expect(wrapper.find(<ListItem />).exists()).toBeFalsy();
+    expect(wrapper.find(<ListItem/>).exists()).toBeFalsy();
   });
 
   it('search results are shown', () => {
     const searchResult = [
-      {symbol: 'A', name: 'Agilent Technologies Inc',
+      {
+        symbol: 'A', name: 'Agilent Technologies Inc',
         exchange: 'NYSE', assetType: 'Stock',
-        ipoDate: '1999-11-18', delistingDate: 'null', status: 'Active'},
-      {symbol: 'A', name: 'Agilent Technologies Inc',
+        ipoDate: '1999-11-18', delistingDate: 'null', status: 'Active'
+      },
+      {
+        symbol: 'A', name: 'Agilent Technologies Inc',
         exchange: 'NYSE', assetType: 'Stock',
-        ipoDate: '1999-11-18', delistingDate: 'null', status: 'Active'}
+        ipoDate: '1999-11-18', delistingDate: 'null', status: 'Active'
+      }
     ]
 
     const wrapper = shallow(<SearchResultsTable

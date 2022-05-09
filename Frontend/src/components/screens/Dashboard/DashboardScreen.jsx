@@ -5,15 +5,21 @@ import PropTypes from 'prop-types';
 import AllocationGraph from './AllocationGraph';
 import PortfolioOverview from './PortfolioOverview';
 
-const DashboardScreen = props=> {
+/**
+ * Component related to the dashboard screen
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const DashboardScreen = props => {
   const renderBody = () => (
     <React.Fragment>
-      <Grid 
+      <Grid
         container
         direction='column'
         justifyContent='center'
         alignItems='space-evenly'
-        marginTop= '10px'
+        marginTop='10px'
       >
         <Grid
           container
@@ -42,14 +48,14 @@ const DashboardScreen = props=> {
           alignContent='center'
         >
           <Grid item xs={6}>
-            
+
           </Grid>
-            <Grid item xs={6}>
+          <Grid item xs={6}>
           </Grid>
         </Grid>
       </Grid>
     </React.Fragment>
-    );
+  );
 
   return (
     <React.Fragment>
