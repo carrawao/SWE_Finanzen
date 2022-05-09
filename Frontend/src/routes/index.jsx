@@ -116,7 +116,7 @@ const AppRoutes = () => {
 
   const getShareData = async (symbol) => {
     try {
-      let response = await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      let response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'});
       return await response.json();
     }
     catch (e) {
@@ -126,7 +126,7 @@ const AppRoutes = () => {
 
   const getCryptoData = async (symbol) => {
     try {
-      let response = await fetch(`http://localhost:3001/getCryptoForWatchlist?symbol=${symbol}`, {mode:'cors'});
+      let response = await fetch(`${process.env.REACT_APP_BASEURL}/getCryptoForWatchlist?symbol=${symbol}`, {mode:'cors'});
       return await response.json();
     }
     catch (e) {
