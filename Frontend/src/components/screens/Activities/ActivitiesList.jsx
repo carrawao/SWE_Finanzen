@@ -15,7 +15,7 @@ import {AssetDetailItem} from '../../common';
  * @constructor
  */
 const ActivitiesList = (props) => {
-  const [listDropdownIndex, setListDropdownIndex] = useState(0);
+  const [, setListDropdownIndex] = useState(0);
   const colorsArray = [{
     'buy': ['blue', 'rgb(59, 151, 210, .2)'],
     'deposit': ['green', 'rgb(78, 185, 111, .2)'],
@@ -39,7 +39,7 @@ const ActivitiesList = (props) => {
               selectedListIndex={0}
               setListDropdownIndex={setListDropdownIndex}
               menuOptions={['Delete']}
-              iconOptions={[<DeleteIcon />]}
+              iconOptions={[<DeleteIcon/>]}
               functionOptions={[
                 () => {
                   props.setDeleteActivityModal(true);
