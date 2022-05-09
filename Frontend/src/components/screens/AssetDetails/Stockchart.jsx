@@ -168,7 +168,7 @@ const Stockchart = (props) => {
                 callbacks: {
                     label: function (context) {
                         let label = context.dataset.label;
-                        label += ": " + new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', })
+                        label += ': ' + new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', })
                             .format(context.dataset.data[context.dataIndex]);
                         return label;
                     },

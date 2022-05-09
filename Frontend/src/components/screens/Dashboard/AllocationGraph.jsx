@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { DoughnutChart } from '../../common';
 
@@ -8,10 +8,8 @@ import { DoughnutChart } from '../../common';
  * @returns {JSX.Element}
  * @constructor
  */
-
-const AllocationGraph = (props) => {
-
-  const defaultMiddleDisplayLabel = "Total Value";
+const AllocationGraph = props => {
+  const defaultMiddleDisplayLabel = 'Total Value';
   const defaultMiddleDisplayValue = props.portfolioData.value;
   
   const assets = props.getAllAssets();
@@ -19,7 +17,7 @@ const AllocationGraph = (props) => {
   const labels = (() => {
     let labels = []
     assets.forEach(element => {
-      labels.push(element["name"]);
+      labels.push(element['name']);
     });
     return labels;
   })();
@@ -27,7 +25,7 @@ const AllocationGraph = (props) => {
   const valueData = (() => {
     let valueData = []
     assets.forEach(element => {
-      valueData.push(element["value"]*element["quantity"]);
+      valueData.push(element['value']*element['quantity']);
     });
     return valueData;
   })();
@@ -38,7 +36,7 @@ const AllocationGraph = (props) => {
       labels={labels}
       defaultMiddleDisplayValue={defaultMiddleDisplayValue}
       defaultMiddleDisplayLabel={defaultMiddleDisplayLabel}
-    ></DoughnutChart>
+    />
   );        
 }
 

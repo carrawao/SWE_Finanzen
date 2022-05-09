@@ -82,4 +82,8 @@ Masterdata.propTypes = {
     symbol: PropTypes.string
 }
 
+Masterdata.propTypes = {
+    symbol: PropTypes.string
+};
+
 export default Masterdata;

@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    stages {
+        stage ("Build Frontend"){
+            steps{
+                script {
+                    sh "pwd"
+                    echo "INFO: Building React Frontend Docker Image"
+                    dir('Frontend'){
+                        echo"CHANGED VERZEICHNIS"
+                        sh "pwd"
+                        sh "docker build -t swe-react-nginx ."    
+                    }
+                    echo "INFO: Docker Build Frontend Image built"
+                }
+            }
+        }
+        stage ("Deploy Frontend"){
+            steps{
+                script {
+                    echo "INFO: Running new Docker image"
+                    sh "docker rm -f swe-react-nginx || true"
+                    sh "docker run --restart always -p 80:80 -d --name swe-react-nginx swe-react-nginx:latest"
+                     echo "INFO: Deployed Frontend"
+                }
+            }
+        }
+    }
+}

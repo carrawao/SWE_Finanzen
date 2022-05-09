@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
-import StockchartCard from '../AssetDetails/StockchartCard';
+import StockchartCard from './StockchartCard';
 import PropTypes from 'prop-types';
 
 /**
