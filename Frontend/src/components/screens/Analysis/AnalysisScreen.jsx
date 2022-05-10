@@ -91,32 +91,32 @@ const AnalysisScreen = props => {
     }
 
     const getDoughnutChartData = (splitArray) => {
-        let labelArray = [];
-        let dataArray = [];
+      let labelArray = [];
+      let dataArray = [];
 
-        splitArray.forEach(arrayElement => {
-            labelArray.push(arrayElement.asset)
-            dataArray.push(arrayElement.percentage)
-        });
+      splitArray.forEach(arrayElement => {
+          labelArray.push(arrayElement.asset)
+          dataArray.push(arrayElement.percentage)
+      });
 
-        return {
-            'labels' : labelArray,
-            'data' : dataArray
-        }
+      return {
+          'labels' : labelArray,
+          'data' : dataArray
+      }
     }
 
     const orderArray = splitArray => {
-        function compare(a, b) {
-            if (a.percentage < b.percentage) {
-                return 1;
-            } else if (a.percentage > b.percentage) {
-                return -1;
-            } else {
-                return 0;
-            }
+      function compare(a, b) {
+          if (a.percentage < b.percentage) {
+              return 1;
+          } else if (a.percentage > b.percentage) {
+              return -1;
+          } else {
+              return 0;
           }
-          
-        return splitArray.sort( compare );
+        }
+        
+      return splitArray.sort( compare );
     }
 
     allArrays.push(calculateKeywordSplit("typ", true));
