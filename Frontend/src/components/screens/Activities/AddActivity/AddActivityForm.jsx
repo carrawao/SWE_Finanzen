@@ -256,9 +256,9 @@ const AddActivityForm = props => {
     >
       <Grid
         container
-        className='flex-row justify-content-center align-items-start'
+        className='flex-row justify-content-between align-items-start'
       >
-        <Grid item className='col-4 me-3'>
+        <Grid item className='col-5'>
           <StyledTextField
             fullWidth
             margin='normal'
@@ -273,7 +273,7 @@ const AddActivityForm = props => {
             <MenuItem value='cash'>Cash</MenuItem>
           </StyledTextField>
         </Grid>
-        <Grid item className='col-7'>
+        <Grid item className='col-6'>
           <SearchAssetInput
             values={values}
             errors={errors}
@@ -287,10 +287,10 @@ const AddActivityForm = props => {
 
       <Grid
         container
-        className='flex-row justify-content-center align-items-start'
+        className='flex-row justify-content-between align-items-start'
       >
         {values.assetType === 'share' &&
-          <Grid item className='col-5 me-5'>
+          <Grid item className='col-5'>
             <StyledTextField
               fullWidth
               select
@@ -308,7 +308,7 @@ const AddActivityForm = props => {
           </Grid>
         }
         {values.assetType === 'crypto' &&
-          <Grid item className='col-5 me-5'>
+          <Grid item className='col-5'>
             <StyledTextField
               fullWidth
               select
@@ -325,7 +325,7 @@ const AddActivityForm = props => {
           </Grid>
         }
         {values.assetType === 'cash' &&
-          <Grid item className='col-5 me-5'>
+          <Grid item className='col-5'>
             <StyledTextField
               fullWidth
               select
@@ -376,8 +376,8 @@ const AddActivityForm = props => {
           container
           className='flex-row justify-content-center align-items-start'
         >
-          <Grid item className='d-flex flex-row justify-content-center col-12'>
-            <Box className='d-flex col-5'>
+          <Grid item className='d-flex flex-row justify-content-between col-12'>
+            <Box className='col-5 col-lg-3'>
               <StyledTextField
                 fullWidth
                 margin='normal'
@@ -395,8 +395,9 @@ const AddActivityForm = props => {
               />
             </Box>
             <ClearIcon style={{fontSize: 'medium', margin: '1rem', marginTop: '2rem', color: '#493f35'}}/>
-            <Box className='col-3'>
+            <Box className='col-5 col-lg-3'>
               <StyledTextField
+                fullWidth
                 margin='normal'
                 label='Quantity'
                 name='quantity'
@@ -407,8 +408,27 @@ const AddActivityForm = props => {
                 InputProps={{inputMode: 'numeric', pattern: '[0-9]*'}}
               />
             </Box>
+            <DragHandleIcon className='d-none d-lg-block' style={{fontSize: 'medium', margin: '1rem', marginTop: '2rem', color: '#493f35'}}/>
+            <Box className='d-none d-lg-block col-5 col-lg-3'>
+              <StyledTextField
+                fullWidth
+                margin='normal'
+                disabled
+                label='Sum'
+                name='sum'
+                id='add-activity-sum'
+                onChange={handleInputChange}
+                value={values.sum}
+                InputProps={{
+                  required: true,
+                  inputMode: 'numeric',
+                  pattern: '[0-9]*',
+                  endAdornment: <InputAdornment position='end'>€</InputAdornment>
+                }}
+              />
+            </Box>
           </Grid>
-          <Grid item className='d-flex flex-column justify-content-center align-items-center col-5'>
+          <Grid item className='d-flex flex-column d-lg-none justify-content-center align-items-center col-5'>
             <DragHandleIcon className='mt-3 mb-1' style={{fontSize: 'medium', color: '#493f35'}}/>
             <StyledTextField
               fullWidth
@@ -455,9 +475,9 @@ const AddActivityForm = props => {
       }
       <Grid
         container
-        className='flex-row justify-content-center align-items-start col-12'
+        className='flex-row justify-content-between align-items-start col-12'
       >
-        <Box className='col-5 me-3'>
+        <Box className='col-5'>
           <StyledTextField
             fullWidth
             margin='normal'
