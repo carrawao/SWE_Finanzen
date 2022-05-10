@@ -33,7 +33,10 @@ const emptyPortfolioData = {
     'activitiesLastId': -1,
     'dailyDataForValueDevelopment': {},
     'dailyDataForPerformanceGraph': {},
-    'updated': '1970-01-01'
+    'updated': '1970-01-01',
+    'shareValue': 0,
+    'cryptoValue': 0,
+    'cashValue': 0
   }
 };
 
