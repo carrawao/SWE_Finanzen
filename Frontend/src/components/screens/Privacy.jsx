@@ -10,33 +10,33 @@ const Privacy = () => (
     />
 
     <Typography variant='h2' className='pt-4 ps-3 fw-bold'>
-      Datenschutzerklärung
+      Privacy policy
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      1. Grundlegendes
+      1. Fundamental
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Mit dieser Datenschutzerklärung informieren wir Sie über die Art, den Umfang und den Zweck der Erhebung und Verwendung personenbezogener Daten durch den Websitebetreiber [Ihre Kontaktdaten einfügen].
+      With this privacy policy we inform you about the nature, scope and purpose of the collection and use of personal data by the website operator.
       </p>
       <p>
-        Der Websitebetreiber nimmt Ihren Datenschutz sehr ernst und behandelt Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Vorschriften. Da durch neue Technologien und die ständige Weiterentwicklung dieser Webseite änderungen an dieser Datenschutzerklärung vorgenommen werden können, empfehlen wir Ihnen sich die Datenschutzerklärung in regelmä&szlig;igen Abständen wieder durchzulesen.
+      The website operator takes your privacy very seriously and treats your personal data confidentially and in accordance with the statutory provisions. Since new technologies and the constant further development of this website may result in changes to this data protection declaration, we recommend that you read through the data protection declaration again at regular intervals.
       </p>
       <p>
-        Der Begriff "personenbezogene Daten" meint alle Daten, die auf Sie persönlich beziehbar sind. Darunter fallen beispielsweise Name, Adresse, E-Mailadressen, Nutzerverhalten. Hinsichtlich der übrigen Begrifflichkeiten, insbesondere der Begriffe "Verarbeitung" und "Einwilligung" verweisen wir auf die gesetzlichen datenschutzrechtlichen Definitionen.
+      The term "personal data" means all data that can be related to you personally. This includes, for example, name, address, e-mail addresses, user behavior. With regard to the other terms, in particular the terms "processing" and "consent", we refer to the legal data protection definitions.
       </p>
       <p>
-        Weitere Definitionen von Begriffen finden Sie in Art. 4 DSGVO.
+        Further definitions of terms can be found in Art. 4 DSGVO.
       </p>
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      2. Name und Anschrift des Verantwortlichen
+      2. Name and address of the responsible person
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Der Verantwortliche im Sinne der Datenschutz-Grundverordnung und anderer nationaler Datenschutzgesetze der Mitgliedsstaaten sowie sonstiger datenschutzrechtlicher Bestimmungen ist die:
+      The controller within the meaning of the General Data Protection Regulation and other national data protection laws of the member states as well as other data protection provisions is the:
       </p>
       <p>
         Bench:Market
@@ -47,21 +47,21 @@ const Privacy = () => (
         12345 Musterstadt
       </p>
       <p>
-        Kontakt:
+        Contact:
       </p>
       <p>
-        Telefon: 01234-789456 <br/>
+        Telephone: 01234-789456 <br/>
         Telefax: 1234-56789 <br/>
         E-Mail: max@muster.de
       </p>
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      3. Name und Anschrift des Datenschutzbeauftragten
+      3. Name and address of the data protection officer
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Der Datenschutzbeauftragte des Verantwortlichen ist:
+        The data protection officer of the controller is:
       </p>
       <p>
         Max Mustermann <br/>
@@ -70,150 +70,144 @@ const Privacy = () => (
         Deutschland<br/>
       </p>
       <p>
-        Kontakt:
+        Contact:
       </p>
       <p>
-        Telefon: 01234-789456 <br/>
+        Telephone: 01234-789456 <br/>
         E-Mail: max@muster.de<br/>
         Website: Bench:marked
       </p>
     </Typography>
     
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      4. Allgemeines zur Datenverarbeitung
+      4. General information on data processing
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Umfang der Verarbeitung personenbezogener Daten
+      Scope of the processing of personal data
       </p>
       <p>
-        Wir verarbeiten personenbezogene Daten unserer Nutzer grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung personenbezogener Daten unserer Nutzer erfolgt regelmäßig nur nach Einwilligung des Nutzers. Eine Ausnahme gilt in solchen Fällen, in denen eine vorherige Einholung einer Einwilligung aus tatsächlichen Gründen nicht möglich ist und die Verarbeitung der Daten durch gesetzliche Vorschriften gestattet ist.
+      We process personal data of our users only insofar as this is necessary for the provision of a functional website and our content and services. The processing of personal data of our users is regularly only carried out with the consent of the user. An exception applies in those cases where obtaining prior consent is not possible for actual reasons and the processing of the data is permitted by legal regulations.
       </p>
       <p>
-        Rechtsgrundlage für die Verarbeitung personenbezogener Daten
+      Legal basis for the processing of personal data
       </p>
       <p>
-        Soweit wir für Verarbeitungsvorgänge personenbezogener Daten eine Einwilligung der betroffenen Person einholen, dient Art. 6 Abs. 1 lit. a EU-Datenschutzgrundverordnung (DSGVO) als Rechtsgrundlage. Bei der Verarbeitung von personenbezogenen Daten, die zur Erfüllung eines Vertrages, dessen Vertragspartei die betroffene Person ist, erforderlich ist, dient Art. 6 Abs. 1 lit. b DSGVO als Rechtsgrundlage. Dies gilt auch für Verarbeitungsvorgänge, die zur Durchführung vorvertraglicher Maßnahmen erforderlich sind. Soweit eine Verarbeitung personenbezogener Daten zur Erfüllung einer rechtlichen Verpflichtung erforderlich ist, der unser Unternehmen unterliegt, dient Art. 6 Abs. 1 lit. c DSGVO als Rechtsgrundlage. Für den Fall, dass lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person eine Verarbeitung personenbezogener Daten erforderlich machen, dient Art. 6 Abs. 1 lit. d DSGVO als Rechtsgrundlage.
+      Insofar as we obtain the consent of the data subject for processing operations involving personal data, Art. 6 (1) (a) of the EU General Data Protection Regulation (GDPR) serves as the legal basis. When processing personal data that is necessary for the performance of a contract to which the data subject is a party, Art. 6 (1) lit. b DSGVO serves as the legal basis. This also applies to processing operations that are necessary for the performance of pre-contractual measures. Insofar as processing of personal data is necessary for compliance with a legal obligation to which our company is subject, Art. 6 (1) lit. c DSGVO serves as the legal basis. In the event that vital interests of the data subject or another natural person make processing of personal data necessary, Art. 6 (1) (d) DSGVO serves as the legal basis.
       </p>
       <p>
-        Ist die Verarbeitung zur Wahrung eines berechtigten Interesses unseres Unternehmens oder eines Dritten erforderlich und überwiegen die Interessen, Grundrechte und Grundfreiheiten des Betroffenen das erstgenannte Interesse nicht, so dient Art. 6 Abs. 1 lit. f DSGVO als Rechtsgrundlage für die Verarbeitung.
+      If the processing is necessary to protect a legitimate interest of our company or a third party and the interests, fundamental rights and freedoms of the data subject do not override the former interest, Art. 6 (1) lit. f DSGVO serves as the legal basis for the processing.
       </p>
       <p>
-      Datenlöschung und Speicherdauer
+      Data deletion and storage duration
       </p>
       <p>
-      Die personenbezogenen Daten der betroffenen Person werden gelöscht oder gesperrt, sobald der Zweck der Speicherung entfällt. Eine Speicherung kann darüber hinaus erfolgen, wenn dies durch den europäischen oder nationalen Gesetzgeber in unionsrechtlichen Verordnungen, Gesetzen oder sonstigen Vorschriften, denen der Verantwortliche unterliegt, vorgesehen wurde. Eine Sperrung oder Löschung der Daten erfolgt auch dann, wenn eine durch die genannten Normen vorgeschriebene Speicherfrist abläuft, es sei denn, dass eine Erforderlichkeit zur weiteren Speicherung der Daten für einen Vertragsabschluss oder eine Vertragserfüllung besteht.
+      The personal data of the data subject shall be deleted or blocked as soon as the purpose of the storage no longer applies. Storage may also take place if this has been provided for by the European or national legislator in Union regulations, laws or other provisions to which the controller is subject. Data will also be blocked or deleted if a storage period prescribed by the aforementioned standards expires, unless there is a need for further storage of the data for the conclusion or performance of a contract.
       </p>
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      5. Zugriffsdaten
+      5. Access data
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-      Wir, der Websitebetreiber bzw. Seitenprovider, erheben aufgrund unseres berechtigten Interesses (s. Art. 6 Abs. 1 lit. f. DSGVO) Daten über Zugriffe auf die Website und speichern diese als „Server-Logfiles“ auf dem Server der Website ab. Folgende Daten werden so protokolliert:
+      We, the website operator or page provider, collect data about accesses to the website based on our legitimate interest (see Art. 6 para. 1 lit. f. DSGVO) and store them as "server log files" on the website server. The following data is logged in this way:
       </p>
       <p>
         <List>
           <ListItem>
-            - Abgefragte Aktien
+            - Shares queried
           </ListItem>
           <ListItem>
-            - Abgefragte Crypo Währung
+            - Queried Crypo Currency
           </ListItem>
           <ListItem>
-            - Abgefragte Unternehmensinfo
+            - Requested company info
           </ListItem>
         </List>
       </p>
       <p>
-      Die Server-Logfiles werden für maximal 7 Tage gespeichert und anschließend gelöscht. Die Speicherung der Daten erfolgt aus Sicherheitsgründen, um z. B. Missbrauchsfälle aufklären zu können. Müssen Daten aus Beweisgründen aufgehoben werden, sind sie solange von der Löschung ausgenommen bis der Vorfall endgültig geklärt ist.
+      The server log files are stored for a maximum of 7 days and then deleted. The data is stored for security reasons, e.g. to be able to clarify cases of abuse. If data must be retained for evidentiary reasons, it is exempt from deletion until the incident has been finally clarified.
       </p>
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      6. Reichweitenmessung & Cookies
+      6. Reach measurement & cookies
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Diese Website verwendet Cookies zur pseudonymisierten Reichweitenmessung, die entweder von unserem Server oder dem Server Dritter an den Browser des Nutzers übertragen werden. Bei Cookies handelt es sich um kleine Dateien, welche auf Ihrem Endgerät gespeichert werden. Ihr Browser greift auf diese Dateien zu. Durch den Einsatz von Cookies erhöht sich die Benutzerfreundlichkeit und Sicherheit dieser Website.
+      This website uses cookies for pseudonymized reach measurement, which are transferred to the user's browser either from our server or the server of a third party. Cookies are small files that are stored on your terminal device. Your browser accesses these files. The use of cookies increases the user-friendliness and security of this website.
       </p>
       <p>
-        Falls Sie nicht möchten, dass Cookies zur Reichweitenmessung auf Ihrem Endgerät gespeichert werden, können Sie dem Einsatz dieser Dateien hier widersprechen:
+      If you do not want cookies to be stored on your end device for the purpose of measuring reach, you can object to the use of these files here:
       </p>
       <List>
         <ListItem>
-          - Cookie-Deaktivierungsseite der Netzwerkwerbeinitiative: <a href='http://optout.networkadvertising.org/?c=1#!/'>http://optout.networkadvertising.org/?c=1#!/</a>
+          - Cookie deactivation page of the Network Advertising Initiative:: <a href='http://optout.networkadvertising.org/?c=1#!/'>http://optout.networkadvertising.org/?c=1#!/</a>
         </ListItem>
         <ListItem>
-          - Cookie-Deaktivierungsseite der US-amerikanischen Website: <a href='http://optout.aboutads.info/?c=2#!/'>http://optout.aboutads.info/?c=2#!/</a>
+          - Cookie deactivation page of the US website: <a href='http://optout.aboutads.info/?c=2#!/'>http://optout.aboutads.info/?c=2#!/</a>
         </ListItem>
         <ListItem>
-          - Cookie-Deaktivierungsseite der europäischen Website: <a href='http://optout.networkadvertising.org/?c=1#!/'>http://optout.networkadvertising.org/?c=1#!/</a>
+          - Cookie deactivation page of the European website: <a href='http://optout.networkadvertising.org/?c=1#!/'>http://optout.networkadvertising.org/?c=1#!/</a>
         </ListItem>
       </List>
       <p>
-      Gängige Browser bieten die Einstellungsoption, Cookies nicht zuzulassen. Hinweis: Es ist nicht gewährleistet, dass Sie auf alle Funktionen dieser Website ohne Einschränkungen zugreifen können, wenn Sie entsprechende Einstellungen vornehmen.
+      Common browsers offer the setting option to not allow cookies. Note: It is not guaranteed that you will be able to access all functions of this website without restrictions if you make the appropriate settings.
       </p>
     </Typography>
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-      Erfassung und Verarbeitung personenbezogener Daten
+    Collection and processing of personal data
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Der Websitebetreiber erhebt, nutzt und gibt Ihre personenbezogenen Daten nur dann weiter, wenn dies im gesetzlichen Rahmen erlaubt ist oder Sie in die Datenerhebung einwilligen.
+      The website operator collects, uses and discloses your personal data only if this is permitted by law or if you consent to the collection of data.
       </p>
       <p>
-        Als personenbezogene Daten gelten sämtliche Informationen, welche dazu dienen, Ihre Person zu bestimmen und welche zu Ihnen zurückverfolgt werden können – also beispielsweise Ihr Name, Ihre E-Mail-Adresse und Telefonnummer.
+      Personal data is any information that can be used to identify you and that can be traced back to you - for example, your name, e-mail address and telephone number.
       </p>
       <p>
-        Diese Website können Sie auch besuchen, ohne Angaben zu Ihrer Person zu machen. Zur Verbesserung unseres Online-Angebotes speichern wir jedoch (ohne Personenbezug) Ihre Zugriffsdaten auf diese Website. Zu diesen Zugriffsdaten gehören z. B. die von Ihnen angeforderte Datei oder der Name Ihres Internet-Providers. Durch die Anonymisierung der Daten sind Rückschlüsse auf Ihre Person nicht möglich.
+      You can also visit this website without providing any personal information. However, in order to improve our online offer, we store (without personal reference) your access data to this website. This access data includes, for example, the file you requested or the name of your Internet provider. By anonymizing the data, it is not possible to draw conclusions about your person.
       </p>
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      7. Umgang mit Kontaktdaten
+      7. Contact details handling
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-       Nehmen Sie mit uns als Websitebetreiber durch die angebotenen Kontaktmöglichkeiten Verbindung auf, werden Ihre Angaben gespeichert, damit auf diese zur Bearbeitung und Beantwortung Ihrer Anfrage zurückgegriffen werden kann. Ohne Ihre Einwilligung werden diese Daten nicht an Dritte weitergegeben.
+      If you contact us as the website operator through the contact options offered, your information will be stored so that we can use it to process and respond to your request. Without your consent, this data will not be disclosed to third parties.
       </p>
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      8. Rechte des Nutzers
+      8. Rights of the user
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-      Sie haben als Nutzer das Recht, auf Antrag eine kostenlose Auskunft darüber zu erhalten, welche personenbezogenen Daten über Sie gespeichert wurden. Sie haben außerdem das Recht auf Berichtigung falscher Daten und auf die Verarbeitungseinschränkung oder Löschung Ihrer personenbezogenen Daten. Falls zutreffend, können Sie auch Ihr Recht auf Datenportabilität geltend machen. Sollten Sie annehmen, dass Ihre Daten unrechtmäßig verarbeitet wurden, können Sie eine Beschwerde bei der zuständigen Aufsichtsbehörde einreichen.
+      As a user, you have the right to request free information about what personal data has been stored about you. You also have the right to have incorrect data corrected and to have your personal data processed restricted or deleted. If applicable, you may also exercise your right to data portability. If you believe that your data has been processed unlawfully, you may lodge a complaint with the competent supervisory authority.
       </p>
     </Typography>
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-      Löschung von Daten
+    Data deletion
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Sofern Ihr Wunsch nicht mit einer gesetzlichen Pflicht zur Aufbewahrung von Daten (z. B. Vorratsdatenspeicherung) kollidiert, haben Sie ein Anrecht auf Löschung Ihrer Daten. Von uns gespeicherte Daten werden, sollten sie für ihre Zweckbestimmung nicht mehr vonnöten sein und es keine gesetzlichen Aufbewahrungsfristen geben, gelöscht. Falls eine Löschung nicht durchgeführt werden kann, da die Daten für zulässige gesetzliche Zwecke erforderlich sind, erfolgt eine Einschränkung der Datenverarbeitung. In diesem Fall werden die Daten gesperrt und nicht für andere Zwecke verarbeitet.
+      Unless your request conflicts with a legal obligation to retain data (e.g. data retention), you have a right to have your data deleted. Data stored by us will be deleted if it is no longer required for its intended purpose and there are no legal retention periods. If deletion cannot be carried out because the data is required for permissible legal purposes, data processing will be restricted. In this case, the data will be blocked and not processed for other purposes.
       </p>
     </Typography>
    
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      9.Widerspruchsrecht
+      9. Right of objection
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        Nutzer dieser Webseite können von ihrem Widerspruchsrecht Gebrauch machen und der Verarbeitung ihrer personenbezogenen Daten zu jeder Zeit widersprechen.
+      Users of this website may exercise their right to object to the processing of their personal data at any time.
       </p>
       <p>
-        Wenn Sie eine Berichtigung, Sperrung, Löschung oder Auskunft über die zu Ihrer Person gespeicherten personenbezogenen Daten wünschen oder Fragen bzgl. der Erhebung, Verarbeitung oder Verwendung Ihrer personenbezogenen Daten haben oder erteilte Einwilligungen widerrufen möchten, wenden Sie sich bitte an folgende E-Mail-Adresse: max@muster.de
+      If you wish to have your personal data corrected, blocked, deleted or informed about the personal data stored about you, or if you have any questions regarding the collection, processing or use of your personal data, or if you wish to revoke any consent you have given, please contact us at the following e-mail address: max@muster.de
       </p>
     </Typography>
-    
-    
-    
-    
-    
-    
   </Container>
 );
 

@@ -14,7 +14,7 @@ const Impressum = () => (
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      Angaben gemäß § 5 TMG:
+      Data according to § 5 TMG:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
@@ -22,7 +22,7 @@ const Impressum = () => (
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-      Postanschrift:
+    Postal address:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
@@ -31,25 +31,25 @@ const Impressum = () => (
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-      Kontakt
+      Contact
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
-      Telefon: 01234-789456 <br/>
+      Telephone: 01234-789456 <br/>
       Telefax: 1234-56789 <br/>
       E-Mail: max@muster.de
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-      Vertreten durch:
+    Represented by:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
-      Ma Mustermann
+      Max Mustermann
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-      Eingetragen:
+      Registered:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
@@ -59,11 +59,11 @@ const Impressum = () => (
 
 
     <Typography variant='h5' className='pt-4 ps-3 fw-bold'>
-      Hinweise zur Website
+    Website references
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-      Urheberrechtliche Hinweise:
+    Copyright notice:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
@@ -72,12 +72,12 @@ const Impressum = () => (
     </Typography> 
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      Infromation gemäß § 36 VSBG
+    Information according to § 36 VSBG
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
-    gemäß § 36 VSBG (Verbraucherstreitbeilegungsgesetz – Gesetz über die alternative Streitbeilegung in Verbrauchersachen) erklärt der Betreiber dieser Website: <br/>
-    Wir sind weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+    in accordance with § 36 VSBG (Consumer Dispute Settlement Act - Act on Alternative Dispute Resolution in Consumer Matters), the operator of this website declares:  <br/>
+    We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board.
     </Typography>
 
   </Container>
