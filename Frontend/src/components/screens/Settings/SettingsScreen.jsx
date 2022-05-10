@@ -195,7 +195,7 @@ const SettingsScreen = props => {
               paddingRight: '0px'
             }
           }}> 
-          getDoughnutChartData
+           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
           sx={{
