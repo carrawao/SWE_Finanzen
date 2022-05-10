@@ -99,12 +99,12 @@ const AddActivityForm = props => {
     }
   }
 
-    const numberRegex = /^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/
-    const numberWithZeroRegex = /^(\d+|\d*\.\d+)$/
+  const numberRegex = /^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/
+  const numberWithZeroRegex = /^(\d+|\d*\.\d+)$/
     
   /**
    * Encapsulates all the individual field's validations
-   * @returns {this is (string|*)[]}
+   * @returns boolean
    */
   const validate = () => {
     let newDateError = changedByDatePicker ? (dateError ? 'Not a valid date' : '') : (errors.date === undefined ? '' : errors.date);
@@ -182,6 +182,7 @@ const AddActivityForm = props => {
       const checkTaxGreaterThanSum = errors.value === '' ? errors.quantity === '' : false;
       errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? "Can't be greater than sum" : '';
     }
+    return errors;
   }
 
   /**
