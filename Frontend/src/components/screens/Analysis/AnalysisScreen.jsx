@@ -23,8 +23,6 @@ const AnalysisScreen = props => {
     let allArrays = [];
     let doughnutChartData = {};
 
-    console.log(portfolioData)
-
     const calculateStockSplit = keyword => {
         let value;
         let stockArray = [];
@@ -46,7 +44,6 @@ const AnalysisScreen = props => {
             })
         });
         
-        console.log(orderArray(stockArray))
         return orderArray(stockArray);
     }
 
@@ -105,7 +102,7 @@ const AnalysisScreen = props => {
               percentage: percentage.toFixed(2)
             })
         }
-        //console.log(sectorArray)
+        
         return orderArray(stockArray);
     }
 
@@ -174,7 +171,7 @@ const AnalysisScreen = props => {
         <React.Fragment>
           <ScreensTemplate
             bodyComponent={renderBody}
-            selectedNavLinkIndex={5}
+            selectedNavLinkIndex={4}
             assetsListArray={props.assetsListArray}
             searchResult={props.searchResult}
             setSearchResult={props.setSearchResult}
