@@ -3,8 +3,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables, } from 'chart.js';
 import { format, addDays, subDays, differenceInDays } from 'date-fns';
 import 'chartjs-adapter-date-fns';
-import { CircularProgress, Container } from '@mui/material';
-import Performance from './Perfofmance';
+import { CircularProgress} from '@mui/material';
 import PropTypes from 'prop-types';
 
 ChartJS.register(...registerables);
@@ -29,7 +28,7 @@ const crosshair = {
     }
 }
 // Manipulates chart data to only show from views timespan / range
-function setView(view, data, labels, options, setup) {
+function changeData(view, data, labels, options, setup) {
     let lastDate = new Date(labels[0]);
     //Timespan in days default = from first to last datapoints date
     let timespan = differenceInDays(lastDate, new Date(labels[labels.length - 1]));
@@ -77,7 +76,8 @@ function setView(view, data, labels, options, setup) {
  * @param string assetType
  * @returns {JSX.Element}
  */
-const Stockchart = (props) => {
+export const AssetChart = (props) => {
+
     //To check if data is still fetching
     const [isLoading, setIsLoading] = useState(true);
     const [labels, setLabels] = useState([]);
@@ -199,20 +199,19 @@ const Stockchart = (props) => {
     if (isLoading) {
         return <CircularProgress />
     }
-
-    setView(props.view, data, labels, options, setup);
-    props.setPerf(1 - (setup.datasets[0].data[setup.datasets[0].data.length - 1] / setup.datasets[0].data[0]));
-    return <>
-        <Line data={setup} options={options} plugins={[crosshair]} />
-        <Performance data={data} labels={labels} activity={props.activity}/>
-        </>
+    
+    // Manipulate data according to view
+    changeData(props.view, data, labels, options, setup);
+    // End / Start    
+    console.log(props.activity);
+    return <Line data={setup} options={options} plugins={[crosshair]} />
 };
 
-Stockchart.propTypes = {
+AssetChart.propTypes = {
     symbol: PropTypes.string,
     setStockPrice: PropTypes.func,
     view: PropTypes.string,
     setPerf: PropTypes.func,
 };
 
-export default Stockchart;
+export default AssetChart;

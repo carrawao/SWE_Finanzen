@@ -4,6 +4,7 @@ import {Grid} from '@mui/material';
 import PropTypes from 'prop-types';
 import AllocationGraph from './AllocationGraph';
 import PortfolioOverview from './PortfolioOverview';
+import PortfolioCharts from './PortfolioCharts';
 
 /**
  * Component related to the dashboard screen
@@ -41,20 +42,9 @@ const DashboardScreen = props => {
               setActivePortfolio={props.setActivePortfolio}
             />
           </Grid>
-        </Grid>
-        <Grid
-          container
-          direction='row'
-          justifyContent='space-evenly'
-          alignContent='center'
-        >
-          <Grid item xs={6}>
-
-          </Grid>
-          <Grid item xs={6}>
-          </Grid>
-        </Grid>
-      </Grid>
+        </Grid>        
+      </Grid>         
+      <PortfolioCharts {...props}/>
     </React.Fragment>
   );
 

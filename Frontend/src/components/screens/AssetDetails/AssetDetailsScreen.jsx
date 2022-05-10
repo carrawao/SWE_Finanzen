@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
-import StockchartCard from './StockchartCard';
+import AssetCard from './AssetCard';
 import PropTypes from 'prop-types';
 
 /**
@@ -15,7 +15,12 @@ const AssetDetailsScreen = props => {
   //data that we saved for this asset --> undefined if asset is not in the portfolio
   const savedAssetData = props.portfolioData[props.activePortfolio][assetType === 'Crypto' ? 'crypto' : 'shares'].find(element => element.symbol === asset);  
   console.log(savedAssetData);
-  const renderBody = () => <StockchartCard assetType={assetType} symbol={asset} activity={savedAssetData}/>;
+  const renderBody = () => <AssetCard
+    {...props}
+    assetType={assetType}
+    symbol={asset}
+    portfolioData={savedAssetData}
+  />;
 
   return (
     <React.Fragment>

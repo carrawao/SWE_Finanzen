@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Stockchart from './Stockchart';
+import AssetChart from './AssetChart';
 import ChartButtons from './ChartButtons';
 import Masterdata from './Masterdata';
 import { Card, Divider, CardContent, CardHeader, Collapse, IconButton, Grid } from '@mui/material';
@@ -11,13 +11,12 @@ import PropTypes from 'prop-types';
  * performance of selected range,
  * and if it's a stock masterdata 
  */
-const StockchartCard = (props) => {
+const AssetCard = (props) => {
 
-  //Displayed after stockchart componet has loaded its data
+  //Displayed after AssetChart componet has loaded its data
   //Chartview Variables
   const [stockPrice, setStockPrice] = useState(0);
   const [view, setView] = useState('month');
-  const [perf, setPerf] = useState(0);
   const [open, setOpen] = useState(true);
 
   //Expandbutton handler
@@ -32,12 +31,12 @@ const StockchartCard = (props) => {
           <CardHeader
             title={props.assetType + ' | ' + props.symbol}
             subheader={new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' })
-              .format(stockPrice) + ` | ${(perf * 100).toFixed(2)}%`}
+              .format(stockPrice)}
             action={<ChartButtons view={view} setView={setView}></ChartButtons>}
           />
           <Divider />
           <CardContent>
-            <Stockchart {...props} view={view} setStockPrice={setStockPrice} setPerf={setPerf} />
+            <AssetChart {...props} view={view} setStockPrice={setStockPrice} />
           </CardContent>
           <Divider />
           {
@@ -58,7 +57,7 @@ const StockchartCard = (props) => {
   )
 }
 
-StockchartCard.propTypes = {  
+AssetCard.propTypes = {
   /**
    * Symbol, Abbrevation of Asset
    */
@@ -69,4 +68,4 @@ StockchartCard.propTypes = {
   assetType: PropTypes.string
 };
 
-export default StockchartCard;
+export default AssetCard;
