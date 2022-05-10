@@ -5,17 +5,16 @@ import PortfolioValuechart from './PortfolioValuechart';
 import ChartButtons from '../AssetDetails/ChartButtons';
 
 export const PortfolioCharts = (props) => {    
-    const [view, setView] = useState('month');
     return (
-    <Card raised sx={{border: 3,borderColor: 'rgb(0,0,100)', borderRadius: 3}}>
-        <CardHeader style={{textAlign: 'center'}} title={<ChartButtons view={view} setView={setView}/>}/>
+    <Card raised xs={12} sx={{border: 3,borderColor: 'rgb(0,0,100)', borderRadius: 3}}>
+        <CardHeader style={{textAlign: 'center'}}/>
         <CardContent>
             <Grid container spacing={5} direction='row' justifyContent='center'>
-                <Grid item xs={4}>            
-                    <PortfolioValuechart {...props} view={view}/>            
+                <Grid item xs={6}>            
+                    <PortfolioValuechart {...props} view={props.view}/>            
                 </Grid>
-                <Grid item xs={4}>            
-                    <PortfolioPerformance {...props} view={view}/>            
+                <Grid item xs={6}>            
+                    <PortfolioPerformance {...props} view={props.view}/>            
                 </Grid>
             </Grid>
         </CardContent>
