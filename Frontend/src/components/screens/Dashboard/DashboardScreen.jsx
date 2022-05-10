@@ -30,6 +30,7 @@ const DashboardScreen = props => {
           <Grid item xs={4}>
             <AllocationGraph
               portfolioData={props.portfolioData[props.activePortfolio]}
+              activePortfolio={props.activePortfolio}
               getAllAssets={props.getAllAssets}
             />
           </Grid>
