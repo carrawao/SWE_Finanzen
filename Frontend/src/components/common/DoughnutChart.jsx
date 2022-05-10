@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
@@ -19,6 +19,10 @@ const DoughnutChart = props => {
   const [middleDisplayValue, setMiddleDisplayValue] = useState(defaultMiddleDisplayValue);
 
   ChartJS.register(ArcElement, Tooltip, Legend);
+
+  useEffect(() => {
+    setDefaultValues();
+  }, [defaultMiddleDisplayLabel]);
 
   const setDefaultValues = () => {
     setMiddleDisplayLabel(defaultMiddleDisplayLabel);
@@ -63,18 +67,21 @@ const DoughnutChart = props => {
   };
 
   return (
-    <Grid
+    <Grid 
+      container
+      justifyContent="center"
       sx={{
         position: 'relative',
         padding: '1rem'
       }}
     >
-      <Grid
-        id='doughnutGraph-middleDisplay'
+      <Grid 
         container
-        direction='column'
-        justifyContent='center'
-        alignItems='center'
+        id="doughnutGraph-middleDisplay" 
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        maxWidth="50%"
         sx={{
           position: 'absolute',
           left: '50%',
@@ -83,13 +90,15 @@ const DoughnutChart = props => {
           zIndex: '100'
         }}
       >
-        <Paper sx={{marginBottom: '0.5rem'}}>
-          <Typography>{middleDisplayLabel}</Typography>
+        <Paper sx={{margin: '0.25rem', zIndex: '100'}}>
+          <Typography sx={{textAlign: "center"}}>{middleDisplayLabel}</Typography>
         </Paper>
-        <Typography>{middleDisplayValue}</Typography>
+        <Paper elevation={0} sx={{margin: '0.25rem', zIndex: '100'}}>
+          <Typography sx={{textAlign: "center"}}>{middleDisplayValue}</Typography>
+        </Paper>
       </Grid>
-      <Doughnut
-        data={data}
+      <Doughnut 
+        data={data} 
         options={{
           responsive: true,
           cutoutPercentage: 90,
@@ -99,14 +108,14 @@ const DoughnutChart = props => {
             },
             tooltip: {
               enabled: false,
-              external: function (context) {
+              external: function(context) {
                 const tooltipModel = context.tooltip;
                 //Set to default values if no tooltip
                 if (tooltipModel.opacity === 0) {
                   setDefaultValues();
                   return;
                 }
-
+                
                 function getBody(bodyItem) {
                   return bodyItem.lines;
                 }
@@ -114,11 +123,11 @@ const DoughnutChart = props => {
                 // Set Text
                 if (tooltipModel.body) {
                   const bodyLines = tooltipModel.body.map(getBody);
-
-                  bodyLines.forEach(function (body, i) {
-                    const bodyparts = body[0].split(':');
+                  
+                  bodyLines.forEach(function(body, i) {
+                    const bodyparts = body[0].split(":");
                     setMiddleDisplayLabel(bodyparts[0]);
-                    setMiddleDisplayValue(`${bodyparts[1].trim()} €`);
+                    setMiddleDisplayValue(`${bodyparts[1].trim()} ${props.analysis ? '%' : '€'}`);
                   });
                 }
               }
@@ -131,6 +140,7 @@ const DoughnutChart = props => {
 }
 
 DoughnutChart.propTypes = {
+  analysis: PropTypes.bool,
   defaultMiddleDisplayLabel: PropTypes.string,
   defaultMiddleDisplayValue: PropTypes.string,
   data: PropTypes.array,

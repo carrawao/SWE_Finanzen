@@ -23,13 +23,21 @@ const emptyPortfolioData = {
     'value': 0,
     'gains': 0,
     'realisedGains': 0,
-    'performance': 0,
+    'totalGains': 0,
+    'performanceWithRealisedGains': 0,
+    'performanceWithoutRealisedGains': 0,
     'shares': [],
     'crypto': [],
     'cash': [],
     'activities': [],
-    'updated': '1970-01-01'
-  },
+    'activitiesLastId': -1,
+    'dailyDataForValueDevelopment': {},
+    'dailyDataForPerformanceGraph': {},
+    'updated': '1970-01-01',
+    'shareValue': 0,
+    'cryptoValue': 0,
+    'cashValue': 0
+  }
 };
 
 /**
@@ -81,7 +89,10 @@ const AppRoutes = () => {
   const updatePortfolioData = async () => {
     const updatedShares = await getUpdatedAssetData('shares');
     const updatedCrypto = await getUpdatedAssetData('crypto');
-    const value = getValue(updatedShares, updatedCrypto, portfolioData[activePortfolio]['cash']);
+    const shareValue = getValue(updatedShares);
+    const cryptoValue = getValue(updatedCrypto);
+    const cashValue = getValue(portfolioData[activePortfolio]['cash']);
+    const portfolioValue = shareValue + cryptoValue + cashValue;
     const todayDate = new Date();
     const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
 
@@ -91,11 +102,15 @@ const AppRoutes = () => {
         ...portfolioData[activePortfolio],
         shares: updatedShares,
         crypto: updatedCrypto,
-        value: value,
-        updated: todayString
+        value: portfolioValue,
+        updated: todayString,
+        shareValue: shareValue,
+        cryptoValue: cryptoValue,
+        cashValue: cashValue
       };
       return portfolioData;
     });
+    console.log('Portfolio Data updated!');
   };
 
   /**
@@ -108,12 +123,9 @@ const AppRoutes = () => {
       let updatedAssets = portfolioData[activePortfolio][assetType];
       await Promise.all(updatedAssets.map(async (asset, index) => {
         const symbol = asset['symbol'];
-        let data;
-        assetType === 'shares' ? data = await getShareData(symbol) : data = await getCryptoData(symbol);
-        updatedAssets[index] = {
-          ...asset,
-          name: data.name ? data.name : symbol,
-          value: `${Number.parseFloat(data.value).toFixed(2)}`
+        const data = assetType === 'shares' ? await getShareData(symbol) : await getCryptoData(symbol);
+        updatedAssets[index] = {...asset, 
+          value: data.value*updatedAssets[index].quantity
         }
       }))
       return updatedAssets;
@@ -127,7 +139,7 @@ const AppRoutes = () => {
    */
   const getShareData = async symbol => {
     try {
-      let response = await fetch(`http://localhost:3001/getShareForWatchlist?symbol=${symbol}`, {mode: 'cors'});
+      let response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareForWatchlist?symbol=${symbol}`, {mode:'cors'});
       return await response.json();
     } catch (e) {
       console.log('fetching failed === ', e);
@@ -141,7 +153,7 @@ const AppRoutes = () => {
    */
   const getCryptoData = async symbol => {
     try {
-      let response = await fetch(`http://localhost:3001/getCryptoForWatchlist?symbol=${symbol}`, {mode: 'cors'});
+      let response = await fetch(`${process.env.REACT_APP_BASEURL}/getCryptoForWatchlist?symbol=${symbol}`, {mode:'cors'});
       return await response.json();
     } catch (error) {
       console.log('fetching failed === ', error);
@@ -149,22 +161,14 @@ const AppRoutes = () => {
   }
 
   /**
-   * Returns the equivalent value to the assets in portfolio
-   * @param shares
-   * @param crypto
-   * @param cash
+   * Returns the totalValue of the assetArray
+   * @param assetArray
    * @returns {number}
    */
-  const getValue = (shares, crypto, cash) => {
+  const getValue = (assetArray) => {
     let value = 0;
-    shares.forEach(share => {
-      value = value + share['value'] * share['quantity'];
-    });
-    crypto.forEach(coin => {
-      value = value + coin['value'] * coin['quantity'];
-    });
-    cash.forEach(account => {
-      value = value + account['value'];
+    assetArray.forEach(asset => {
+      value = value + asset['value'];
     });
     return value;
   }
@@ -191,10 +195,10 @@ const AppRoutes = () => {
   }
 
   return (
-    <Routes>
-      <Route
-        path='/'
-        element={
+      <Routes>
+        <Route
+          path='/'
+          element={
           <Home
             searchResult={searchResult}
             setSearchResult={setSearchResult}
@@ -202,9 +206,9 @@ const AppRoutes = () => {
             assetsListArray={assetsListArray}
           />
         }/>
-      <Route
-        path='/dashboard'
-        element={
+        <Route 
+          path='/dashboard' 
+          element={
           <DashboardScreen
             searchResult={searchResult}
             setSearchResult={setSearchResult}
@@ -216,25 +220,25 @@ const AppRoutes = () => {
             setPortfolioData={setPortfolioData}
             getAllAssets={getAllAssets}
           />}
-      />
-      <Route
-        path='/analysis'
-        element={
-          <AnalysisScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            setActivePortfolio={setActivePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
-          />}
-      />
+        />
+        <Route 
+          path='/analysis' 
+          element={
+            <AnalysisScreen
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+              watchListsArray={watchListsArray}
+              assetsListArray={assetsListArray}
+              activePortfolio={activePortfolio}
+              setActivePortfolio={setActivePortfolio}
+              portfolioData={portfolioData}
+              setPortfolioData={setPortfolioData}
+            />}
+        />
 
-      <Route
-        path='/activities'
-        element={
+        <Route 
+          path='/activities' 
+          element={
           <ActivitiesScreen
             searchResult={searchResult}
             setSearchResult={setSearchResult}
@@ -242,83 +246,84 @@ const AppRoutes = () => {
             assetsListArray={assetsListArray}
             activePortfolio={activePortfolio}
             portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
+            setPortfolioData={setPortfolioData}      
           />
-        }
-      />
+          }
+        />
 
-      <Route
-        path='/activities/addActivity'
-        element={
-          <AddActivityScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
-          />}
-      />
-      <Route
-        path='/watchlists'
-        element={
-          <WatchListsScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            setWatchListsArray={setWatchListsArray}
-            assetsListArray={assetsListArray}
-            setAssetsListArray={setAssetsListArray}
-          />
-        }
-      />
-      <Route
-        path='/settings'
-        element={
-          <SettingsScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            portfolioData={portfolioData}
-            activePortfolio={activePortfolio}
-            emptyPortfolioData={emptyPortfolioData}
-            setWatchListsArray={setWatchListsArray}
-            setAssetsListArray={setAssetsListArray}
-            setPortfolioData={setPortfolioData}
-            setActivePortfolio={setActivePortfolio}
-          />}
-      />
-      <Route
-        path='/asset/:assetType/:asset'
-        element={
-          <AssetDetailsScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            portfolioData={portfolioData}
-            activePortfolio={activePortfolio}
-          />}
-      />
-      <Route
-        path='/analysis'
-        element={
-          <AnalysisScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
-          />}
-      />
-      <Route path='/impressum' element={<Impressum/>}/>
-      <Route path='/privacy' element={<Privacy/>}/>
-      <Route path='/agb' element={<AGB/>}/>
-    </Routes>
+        <Route
+          path='/activities/addActivity'
+          element={
+            <AddActivityScreen
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+              watchListsArray={watchListsArray}
+              assetsListArray={assetsListArray}
+              activePortfolio={activePortfolio}
+              portfolioData={portfolioData}
+              setPortfolioData={setPortfolioData}
+              getAllAssets={getAllAssets}
+            />}
+        />
+        <Route
+          path='/watchlists'
+          element={
+            <WatchListsScreen
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+              watchListsArray={watchListsArray}
+              setWatchListsArray={setWatchListsArray}
+              assetsListArray={assetsListArray}
+              setAssetsListArray={setAssetsListArray}
+            />
+          }
+        />
+        <Route
+          path='/settings'
+          element={
+            <SettingsScreen
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+              watchListsArray={watchListsArray}
+              assetsListArray={assetsListArray}
+              portfolioData={portfolioData}
+              activePortfolio={activePortfolio}
+              emptyPortfolioData={emptyPortfolioData}
+              setWatchListsArray={setWatchListsArray}
+              setAssetsListArray={setAssetsListArray}
+              setPortfolioData={setPortfolioData}
+              setActivePortfolio={setActivePortfolio}
+            />}
+        />
+        <Route
+          path='/asset/:assetType/:asset'
+          element={
+            <AssetDetailsScreen
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+              watchListsArray={watchListsArray}
+              assetsListArray={assetsListArray}
+              portfolioData={portfolioData}
+              activePortfolio={activePortfolio}
+            />}
+        />
+        <Route
+          path='/analysis'
+          element={
+            <AnalysisScreen
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+              watchListsArray={watchListsArray}
+              assetsListArray={assetsListArray}
+              activePortfolio={activePortfolio}
+              portfolioData={portfolioData}
+              setPortfolioData={setPortfolioData}
+            />}
+        />
+        <Route path='/impressum' element={<Impressum />} />
+        <Route path='/privacy' element={<Privacy />} />
+        <Route path='/agb' element={<AGB />} />
+      </Routes>
   );
 }
 
