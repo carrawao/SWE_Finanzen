@@ -138,30 +138,43 @@ const SearchAssetInput = props => {
   const fetchShareOptions = async (query) => {
     let slice = true;
     if (query.length > 2) {
-      slice = false;
+        slice = false;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchShare?text=${query}`, {mode: 'cors'})
-      const json = await response.json();
-      let results;
-      if (slice === true) {
-        results = json.slice(0, 20);
-      } else {
-        results = json;
-      }
-      return results;
-    } catch (e) {
-      console.log('fetching failed === ', e);
+        const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchShare?text=${query}`, {mode:'cors'})
+        const json = await response.json();
+        let results;
+        if (slice === true) {
+            results = json.slice(0, 10);
+        } else {
+            results = json.slice(0, 100);
+        }
+        return results;
     }
-  }
+    catch (e) {
+        console.log('fetching failed === ', e);
+    };
+}
 
-  const fetchCryptoOptions = async (query) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchCrypto?text=${query}`, {mode: 'cors'})
-      return await response.json();
-    } catch (e) {
-      console.log('fetching failed === ', e);
+const fetchCryptoOptions = async (query) => {
+    let slice = true;
+    if (query.length > 1) {
+        slice = false;
     }
+    try {
+        const response = await fetch(`${process.env.REACT_APP_BASEURL}/searchCrypto?text=${query}`, {mode:'cors'})
+        const json = await response.json();
+        let results;
+        if (slice === true) {
+            results = json.slice(0, 20);
+        } else {
+            results = json;
+        }
+        return results;
+    }
+    catch (e) {
+        console.log('fetching failed === ', e);
+    };
   }
 
   return (

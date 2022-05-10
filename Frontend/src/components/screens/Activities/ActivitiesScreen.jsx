@@ -41,23 +41,24 @@ const ActivitiesScreen = props => {
 
   const dummyCash = () => {
     const cash = [{
+      firstActivity: '2900-01-01',     
       id: 0,
       symbol: 'ING',
       name: 'ING Konto',
       assetTypeForDisplay: 'Cash',
       value: 0,
       quantity: 1,
-      invested: 0,
-      unrealisedGains: 0,
+      gains: 0,
       realisedGains: 0,
       totalGains: 0,
       performanceWithRealisedGains: 0,
       performanceWithOutRealisedGains: 0,
       taxes: 0,
       fees: 0,
-      dailyValues: [],
       dailyDataForPerformanceGraph: [],
       dailyDataForValueDevelopment: [],
+      stateChanges: [],
+      deposits: [],
       analysisInfo: undefined
     }]
 

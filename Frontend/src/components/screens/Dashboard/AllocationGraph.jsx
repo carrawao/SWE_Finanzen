@@ -8,16 +8,23 @@ import {DoughnutChart} from '../../common';
  * @returns {JSX.Element}
  * @constructor
  */
-const AllocationGraph = props => {
-  const defaultMiddleDisplayLabel = 'Total Value';
-  const defaultMiddleDisplayValue = props.portfolioData.value;
 
+const AllocationGraph = props => {
+
+  const defaultMiddleDisplayLabel = `Value of ${props.activePortfolio}`;
+  const defaultMiddleDisplayValue = `${parseFloat(props.portfolioData.value.toFixed(2)).toLocaleString()} €`;
+  
   const assets = props.getAllAssets();
 
   const labels = (() => {
     let labels = []
     assets.forEach(element => {
-      labels.push(element['name']);
+      let label = element["name"];
+      if (label.length > 50) {
+        label = label.slice(0,50);
+        label += "...";
+      }
+      labels.push(label);
     });
     return labels;
   })();
@@ -25,7 +32,7 @@ const AllocationGraph = props => {
   const valueData = (() => {
     let valueData = []
     assets.forEach(element => {
-      valueData.push(element['value'] * element['quantity']);
+      valueData.push((element["value"]).toFixed(2));
     });
     return valueData;
   })();
@@ -42,6 +49,7 @@ const AllocationGraph = props => {
 
 AllocationGraph.propTypes = {
   portfolioData: PropTypes.object,
+  activePortfolio: PropTypes.string,
   getAllAssets: PropTypes.func,
 };
 
