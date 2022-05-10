@@ -18,10 +18,12 @@ const AnalysisScreen = props => {
     const [analysisType, setAnalysisType] = useState(0);
     
     const portfolioData = props.portfolioData[props.activePortfolio];
-    const analysisTypes = ['Asset Type Allocation', 'Shares Allocation', 'Crypto Allocation', 'Region Allocation', 'Sub region Allocation', 'Country Allocation', 'Sector Allocation', 'Industry Allocation', 'Asset Class Allocation'];
+    const analysisTypes = ['Asset Type Allocation', 'Shares Allocation', 'Crypto Allocation', 'Cash Allocation', 'Region Allocation', 'Sub region Allocation', 'Country Allocation', 'Sector Allocation', 'Industry Allocation', 'Asset Class Allocation'];
     let keywordCollection = ['region', 'sub_region', 'country', 'sector', 'branche', 'assetClass'];
     let allArrays = [];
     let doughnutChartData = {};
+
+    console.log(portfolioData)
 
     const calculateStockSplit = keyword => {
         let value;
@@ -31,6 +33,8 @@ const AnalysisScreen = props => {
             value = portfolioData.shareValue;
         } else if (keyword === 'crypto'){
             value = portfolioData.cryptoValue;
+        } else if(keyword === 'cash'){
+            value = portfolioData.cashValue
         }
 
         portfolioData[keyword].forEach(element => {
@@ -38,24 +42,32 @@ const AnalysisScreen = props => {
 
             stockArray.push({
                 asset: element.name,
-                percentage: percentage.toFixed(2)
+                percentage: parseFloat(percentage.toFixed(2))
             })
         });
-
-        //console.log(stockArray)
+        
+        console.log(orderArray(stockArray))
         return orderArray(stockArray);
     }
 
     const calculateKeywordSplit = (keyword, typSplit) => {
         let value = portfolioData.shareValue;
+
         if(typSplit){
-            value =  portfolioData.value;
+          value =  portfolioData.value;
         }
-       
+
+  
         let sectorArray = [];
 
         portfolioData.shares.forEach(element => {
+  
+          if(element.assetTypeForDisplay === 'ETF'){
+            value -= element.value;
+            return;
+          }
             if(sectorArray.some(row => row.includes(element.analysisInfo[keyword]))){
+          
                 sectorArray.forEach(arrayElement => {
                     if (arrayElement[0] === element.analysisInfo[keyword]){
                         arrayElement[1] = parseFloat(arrayElement[1]);
@@ -79,11 +91,18 @@ const AnalysisScreen = props => {
         });
 
         if (typSplit) {
-            const percentage = 106.5 / value * 100;
+            let percentage = portfolioData.cryptoValue / value * 100;
 
             stockArray.push({
                 asset: 'Crypto',
                 percentage: percentage.toFixed(2)
+            })
+
+            percentage = portfolioData.cashValue / value * 100;
+
+            stockArray.push({
+              asset: 'Cash',
+              percentage: percentage.toFixed(2)
             })
         }
         //console.log(sectorArray)
@@ -122,6 +141,7 @@ const AnalysisScreen = props => {
     allArrays.push(calculateKeywordSplit("typ", true));
     allArrays.push(calculateStockSplit("shares"));
     allArrays.push(calculateStockSplit("crypto"));
+    allArrays.push(calculateStockSplit("cash"));
     keywordCollection.forEach(keyword => {
         allArrays.push(calculateKeywordSplit(keyword, false));
     });
