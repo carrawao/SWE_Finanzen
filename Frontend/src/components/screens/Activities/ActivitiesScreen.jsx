@@ -84,13 +84,11 @@ const ActivitiesScreen = props => {
       (element) => element.asset === assetData.symbol
     );
     assetRelatedActivities = SortActivitiesService.sortActivities(assetRelatedActivities);
-    console.log('assetRelatedActivities', assetRelatedActivities)
     //get activities without activities related to assetData
     let activitiesWithoutAssetActivities = newActivities.filter(
       (element) => element.asset !== assetData.symbol
     );
     activitiesWithoutAssetActivities = SortActivitiesService.sortActivities(activitiesWithoutAssetActivities);
-    console.log('activitiesWithoutAssetActivities', activitiesWithoutAssetActivities);
     //clear assetData
     let clearedAssetData = clearAssetData(assetData);
 
@@ -143,13 +141,11 @@ const ActivitiesScreen = props => {
     return clearedAssetData;
   }
 
-  const buildUpAssetDataFromActivities = (activitiesArray) => {
-    console.log("called")
+  const buildUpAssetDataFromActivities = async (activitiesArray) => {
     for (let index = 0; index < activitiesArray.length; index++) {
       const activity = activitiesArray[index];
-      console.log(activity);
       const assetObj = {assetType: activity.assetTypeForDisplay, symbol: activity.asset, name: activity.assetName};
-      props.addActivity(activity.assetType, assetObj, activity.type, new Date(activity.date), `${activity.quantity}`, `${activity.sum}`, `${activity.value}`, `${activity.taxes}`, `${activity.fees}`);
+      await props.addActivity(activity.assetType, assetObj, activity.type, new Date(activity.date), `${activity.quantity}`, `${activity.sum}`, `${activity.value}`, `${activity.taxes}`, `${activity.fees}`);
     }
   }
 
