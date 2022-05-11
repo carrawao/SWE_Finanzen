@@ -74,7 +74,9 @@ const PortfolioOverview = props => {
       >
         <Grid item>
           <Typography variant='h5' gutterBottom component='div'>Gains</Typography>
-          <Typography variant='h5' gutterBottom component='div'>{portfolio['gains']}</Typography>
+          <Typography variant='h5' gutterBottom component='div'>{
+            new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', }).format(portfolio['gains'])
+            }</Typography>
         </Grid>
         <Grid item>
           <Typography variant='h5' gutterBottom component='div'>Realized Gains</Typography>
