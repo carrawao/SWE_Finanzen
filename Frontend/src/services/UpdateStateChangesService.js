@@ -5,19 +5,20 @@ class UpdateStateChangesService {
     //no previousState
     if (previousStateObj.index === -1) {
       //can only be a buy
-      const stateChange = {quantity: activityObj.quantity, sum: activityObj.sum, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees};
-      stateChanges.unshift({date: activityObj.date, assetType: activityObj.assetType, quantity: 0, sum: 0, realisedGains: 0, taxes: 0, fees: 0});
+      const stateChange = {quantity: activityObj.quantity, sum: activityObj.sum, realisedGains: 0, dividends: 0, taxes: activityObj.taxes, fees: activityObj.fees};
+      stateChanges.unshift({date: activityObj.date, assetType: activityObj.assetType, quantity: 0, sum: 0, realisedGains: 0, dividends: 0, taxes: 0, fees: 0});
       stateChanges = UpdateStateChangesService.addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, 0);
       return [stateChanges, 0];
     }
     const quantityChange = activityObj.type === 'buy' ? activityObj.quantity : activityObj.type === 'sell' ? -activityObj.quantity : 0;
     let investedChange = activityObj.type === 'buy' ? activityObj.sum : 0;
     let realisedGains = activityObj.type === 'dividend' ? activityObj.sum : 0;
+    let dividends = activityObj.type === 'dividend' ? activityObj.sum : 0;
     if (activityObj.type === 'sell') {
       investedChange = UpdateStateChangesService.calculateInvestedChange(assetData.buys, activityObj.quantity);
       realisedGains = (activityObj.sum + investedChange);
     }
-    const stateChange = {quantity: quantityChange, sum: investedChange, realisedGains: realisedGains, taxes: activityObj.taxes, fees: activityObj.fees};
+    const stateChange = {quantity: quantityChange, sum: investedChange, realisedGains: realisedGains, dividends: dividends, taxes: activityObj.taxes, fees: activityObj.fees};
     //previous State is on the same date
     if (previousStateObj.overwrite) {
       stateChanges = UpdateStateChangesService.addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, previousStateObj.index);
@@ -36,13 +37,13 @@ class UpdateStateChangesService {
     //no previousState
     if (previousStateObj.index === -1) {
       //can only be a deposit
-      const stateChange = {sum: activityObj.sum, quantity: 0, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees};
-      stateChanges.unshift({date: activityObj.date, assetType: activityObj.assetType, quantity: 1, sum: 0, realisedGains: 0, taxes: 0, fees: 0});
+      const stateChange = {sum: activityObj.sum, quantity: 0, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees, dividends: 0};
+      stateChanges.unshift({date: activityObj.date, assetType: activityObj.assetType, quantity: 1, sum: 0, realisedGains: 0, taxes: 0, fees: 0, dividends: 0});
       stateChanges = UpdateStateChangesService.addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, 0);
       return [stateChanges, 0];
     }
     const sumChange = activityObj.type === 'deposit' ? activityObj.sum : -activityObj.sum;
-    const stateChange = {sum: sumChange, quantity: 0, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees};
+    const stateChange = {sum: sumChange, quantity: 0, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees, dividends: 0};
     //previous State is on the same date
     if (previousStateObj.overwrite) {
       stateChanges = UpdateStateChangesService.addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, previousStateObj.index);

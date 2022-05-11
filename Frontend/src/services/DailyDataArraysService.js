@@ -61,6 +61,7 @@ class DailyDataArraysService {
       const invested = state.sum;
       const gains = value - invested;
       const realisedGains = state.realisedGains ? -state.fees + state.realisedGains : -state.fees;
+      const dividends = state.dividends ? state.dividends : 0;
       
       dailyDataForValueDevelopment[key] = {
         value: value,
@@ -70,7 +71,8 @@ class DailyDataArraysService {
         realisedGains: realisedGains,
         totalGains: gains+realisedGains,
         taxes: state.taxes,
-        fees: state.fees
+        fees: state.fees,
+        dividends: dividends
       }
     });
     return dailyDataForValueDevelopment;
@@ -95,8 +97,8 @@ class DailyDataArraysService {
     const dailyDataForPerformanceGraph = {};
     dailyDataKeys.forEach((key) => {
       const dailyDataFVD = dailyDataForValueDevelopment[key];
-      const performanceWithRealisedGains = (dailyDataFVD.totalGains/dailyDataFVD.invested)*100;
-      const performanceWithoutRealisedGains = (dailyDataFVD.gains/dailyDataFVD.invested)*100;
+      const performanceWithRealisedGains = dailyDataFVD.invested !== 0 ? (dailyDataFVD.gains/dailyDataFVD.invested)*100 : 0;
+      const performanceWithoutRealisedGains = dailyDataFVD.invested !== 0 ? (dailyDataFVD.gains/dailyDataFVD.invested)*100 : 0;
       dailyDataForPerformanceGraph[key] = {
         performanceWithRealisedGains: performanceWithRealisedGains,
         performanceWithoutRealisedGains: performanceWithoutRealisedGains

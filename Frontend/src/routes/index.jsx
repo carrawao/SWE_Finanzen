@@ -31,6 +31,7 @@ const emptyPortfolioData = {
     'gains': 0,
     'realisedGains': 0,
     'totalGains': 0,
+    'dividens': 0,
     'performanceWithRealisedGains': 0,
     'performanceWithoutRealisedGains': 0,
     'shares': [],
@@ -210,7 +211,7 @@ const AppRoutes = () => {
       fees: parseFloat(fees),
       dependsOn: dependsOn
     }
-    console.log("activityObj", activityObj);
+    console.log("new activityObj", activityObj);
 
     //update assetData
     let updatedAssetData = assetData === undefined ? await createNewAssetData(activityObj) : //create newAssetData if doesn't exist
@@ -330,7 +331,7 @@ const AppRoutes = () => {
       fees: activityObj.fees,
       dailyDataForValueDevelopment: dailyDataForValueDevelopment,
       dailyDataForPerformanceGraph: dailyDataForPerformanceGraph,
-      stateChanges: [{date: activityObj.date, assetType: activityObj.assetType, quantity: activityObj.quantity, sum: activityObj.sum, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees}],
+      stateChanges: [{date: activityObj.date, assetType: activityObj.assetType, quantity: activityObj.quantity, sum: activityObj.sum, realisedGains: 0, dividends: 0, taxes: activityObj.taxes, fees: activityObj.fees}],
       buys: [{id: activityObj.id, date: activityObj.date, price: activityObj.value, quantity: activityObj.quantity}],
       analysisInfo: analysisInfo
     }
@@ -360,6 +361,7 @@ const AppRoutes = () => {
 			tempPortfolioData[activePortfolio]['gains'] = dailyDataForValueDevelopment[latestDateWithData]['gains'];
 			tempPortfolioData[activePortfolio]['realisedGains'] = dailyDataForValueDevelopment[latestDateWithData]['realisedGains'];
 			tempPortfolioData[activePortfolio]['totalGains'] = dailyDataForValueDevelopment[latestDateWithData]['totalGains'];
+      tempPortfolioData[activePortfolio]['dividens'] = dailyDataForValueDevelopment[latestDateWithData]['dividens'];
       tempPortfolioData[activePortfolio]['fees'] = dailyDataForValueDevelopment[latestDateWithData]['fees'];
 			tempPortfolioData[activePortfolio]['taxes'] = dailyDataForValueDevelopment[latestDateWithData]['taxes'];
 			tempPortfolioData[activePortfolio]['performanceWithRealisedGains'] = dailyDataForPerformanceGraph[latestDateWithData]['performanceWithRealisedGains'];
@@ -379,7 +381,7 @@ const AppRoutes = () => {
 				if (assetDailyDataForValueDevelopment[dateKey] === undefined) return; //return equals continue in a forEach loop
       
         const portfolioDateData = dailyDataForValueDevelopment[dateKey] ? dailyDataForValueDevelopment[dateKey] :
-														      {value: 0 , invested: 0, gains: 0, realisedGains: 0, totalGains: 0, taxes: 0, fees: 0};
+														      {value: 0 , invested: 0, gains: 0, realisedGains: 0, totalGains: 0, dividens: 0, taxes: 0, fees: 0};
         let assetDateData = assetDailyDataForValueDevelopment[dateKey];
         dailyDataForValueDevelopment[dateKey] = {};
 				Object.keys(assetDateData).forEach(attribute => {
