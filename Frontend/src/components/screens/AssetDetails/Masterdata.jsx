@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
  * @param string symbol 
  * @returns 
  */
-const Masterdata = (props) => {
+const Masterdata = (props) => {    
+
     const [isLoading, setIsLoading] = useState(true);
     const [masterdata, setMasterdata] = useState({});
 
@@ -21,6 +22,7 @@ const Masterdata = (props) => {
             .then(json => {
                 setMasterdata(json);
                 setIsLoading(false);
+                props.setName(json['Name']);
                 console.log('Masterdata fetched!');
             })
     }, []);
@@ -28,8 +30,9 @@ const Masterdata = (props) => {
     if (isLoading) {
         return <CircularProgress />
     }
-    return <Grid container flex spacing={2} alignItems='stretch' justifyContent='space-evenly'>
-        <Grid item xs={4}>
+    return (
+    <Grid container spacing={2} alignItems='stretch' justifyContent='space-evenly' direction="row">
+        <Grid item xs={5}>
             <List>
                 <ListItem>
                     <ListItemText
@@ -45,10 +48,10 @@ const Masterdata = (props) => {
                 </ListItem>
             </List>
         </Grid>
-        <Grid>
+        <Grid item>
             <Divider orientation='vertical' flexItem sx={1} style={{ height: '100%' }} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
             <List>
                 <ListItem>
                     <ListItemText
@@ -77,13 +80,7 @@ const Masterdata = (props) => {
             </List>
         </Grid>
     </Grid>
+    )
 }
-Masterdata.propTypes = {
-    symbol: PropTypes.string
-}
-
-Masterdata.propTypes = {
-    symbol: PropTypes.string
-};
 
 export default Masterdata;

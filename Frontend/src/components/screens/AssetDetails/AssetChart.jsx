@@ -3,7 +3,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables, } from 'chart.js';
 import { format, addDays, subDays, differenceInDays } from 'date-fns';
 import 'chartjs-adapter-date-fns';
-import { CircularProgress} from '@mui/material';
+import { CircularProgress, Card, CardContent, CardHeader} from '@mui/material';
 import PropTypes from 'prop-types';
 
 ChartJS.register(...registerables);
@@ -77,7 +77,8 @@ function changeData(view, data, labels, options, setup) {
  * @returns {JSX.Element}
  */
 export const AssetChart = (props) => {
-
+    
+    const [price, setPrice] = useState(0);
     //To check if data is still fetching
     const [isLoading, setIsLoading] = useState(true);
     const [labels, setLabels] = useState([]);
@@ -88,7 +89,7 @@ export const AssetChart = (props) => {
         const base = process.env.REACT_APP_BASEURL;
         //fetch according to the type of asset
         let url = new URL(`dailyShare?symbol=${encodeURIComponent(props.symbol)}`, base);
-        if (props.assetType === 'Crypto') {
+        if (props.assetType === 'crypto') {
             url = new URL(`dailyCrypto?symbol=${encodeURIComponent(props.symbol)}`, base);
         }
         fetch(url.toString())
@@ -97,24 +98,18 @@ export const AssetChart = (props) => {
                 let labels;
                 let data;
                 // Chooses how to format different json according to type of asset
-                switch (props.assetType) {
-                    case 'Crypto':
-                        labels = Object.keys(json['Time Series (Digital Currency Daily)']);
-                        data = Object.values(json['Time Series (Digital Currency Daily)']).map(o => Number(o['4b. close (USD)']));
-                        break;
-                    case 'ETF':
-                    case 'Stock':
-                    default:
-                        labels = Object.keys(json['Time Series (Daily)']);
-                        data = Object.values(json['Time Series (Daily)']).map(o => Number(o['4. close']));
-                        break;
-
+                if(props.assetType === 'crypto'){
+                    labels = Object.keys(json['Time Series (Digital Currency Daily)']);
+                    data = Object.values(json['Time Series (Digital Currency Daily)']).map(o => Number(o['4a. close (EUR)']));
+                    props.setName(json['Meta Data']['3. Digital Currency Name']);
+                } else {
+                    labels = Object.keys(json['Time Series (Daily)']);
+                    data = Object.values(json['Time Series (Daily)']).map(o => Number(o['4. close']));
                 }
-
                 setLabels(labels);
                 setData(data);
                 setIsLoading(false);
-                props.setStockPrice(data[0]); //First data is latest price
+                setPrice(data[0]); //First data is latest price
                 console.log('Asset fetched!');
             }
             );
@@ -202,14 +197,18 @@ export const AssetChart = (props) => {
     
     // Manipulate data according to view
     changeData(props.view, data, labels, options, setup);
-    // End / Start    
-    console.log(props.activity);
-    return <Line data={setup} options={options} plugins={[crosshair]} />
+    return (
+        <Card raised sx={{ border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3 }}>
+            <CardHeader title={"Price | "+props.name} subheader={Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', }).format(price)}/>
+            <CardContent>
+                <Line data={setup} options={options} plugins={[crosshair]} />
+            </CardContent>
+        </Card>
+    )
 };
 
 AssetChart.propTypes = {
-    symbol: PropTypes.string,
-    setStockPrice: PropTypes.func,
+    symbol: PropTypes.string,    
     view: PropTypes.string,
     setPerf: PropTypes.func,
 };

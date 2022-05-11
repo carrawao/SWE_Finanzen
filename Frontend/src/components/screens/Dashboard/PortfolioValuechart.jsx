@@ -53,8 +53,8 @@ function changeData(view, data, labels, options, setup, datasetIndex) {
 
 export const ProtfolioValuechart = (props) => {
 
-    console.log(props.portfolioData.Portfolio.dailyDataForValueDevelopment);
-    const dailyValueData = props.portfolioData.Portfolio.dailyDataForValueDevelopment;
+    console.log(props.portfolioData[props.activePortfolio].dailyDataForValueDevelopment);
+    const dailyValueData = props.portfolioData[props.activePortfolio].dailyDataForValueDevelopment;
     const labels = Object.keys(dailyValueData);
     const valueData = Object.values(dailyValueData).map(data => data.value);
     const investedData = Object.values(dailyValueData).map(data => data.invested);
@@ -93,7 +93,7 @@ export const ProtfolioValuechart = (props) => {
                 }
             },
             y: {
-                //beginAtZero: true,
+                beginAtZero: true,
                 position: 'left',
                 grid: {
                     drawOnChartArea: true

@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables, } from 'chart.js';
 import { format, addDays, subDays, differenceInDays } from 'date-fns';
 import 'chartjs-adapter-date-fns';
-import { Card, CardHeader, CardContent, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Card, CardHeader, CardContent } from '@mui/material';
 import PropTypes from 'prop-types';
 
 ChartJS.register(...registerables);
 
-function changeData(view, data, labels, options, setup) {
+function changeData(view, data, labels, options, setup, datasetIndex) {
     let lastDate = new Date(labels[0]);
     //Timespan in days default = from first to last datapoints date
     let timespan = differenceInDays(lastDate, new Date(labels[labels.length - 1]));
@@ -46,28 +46,32 @@ function changeData(view, data, labels, options, setup) {
     } while (startDateIndex === -1);
 
     // slicing out original data accordingly and replacing ONLY the graph data
-    setup.datasets[0].data = data.slice(0, startDateIndex + 1);
+    // must specify which dataset should be cut thats why we have datasetIndex
+    setup.datasets[datasetIndex].data = data.slice(0, startDateIndex + 1);
     setup.labels = labels.slice(0, startDateIndex + 1);
 }
 
-export const AssetPerformance = (props) => {    
-         
-    const dailyPerfData = props.assetData.dailyDataForPerformanceGraph;
-    console.log(dailyPerfData);
-    const labels = Object.keys(dailyPerfData);
-    let perfData = Object.values(dailyPerfData).map(data => data.performanceWithRealisedGains);
-    const [realised, setRealised] = useState(true);
-    // If user want unrealised data
-    if(!realised){
-        perfData = Object.values(dailyPerfData).map(data => data.performanceWithoutRealisedGains);
-    }
+export const AssetValue = (props) => {
+    
+    const dailyValueData = props.assetData.dailyDataForValueDevelopment;
+    const labels = Object.keys(dailyValueData);
+    const valueData = Object.values(dailyValueData).map(data => data.value);
+    const investedData = Object.values(dailyValueData).map(data => data.invested);
+    const gainData = Object.values(dailyValueData).map(data => data.gains);
+
     const setup = {
         labels: labels,
         datasets: [{
-            label: 'Performance',
-            data: perfData,
+            label: 'Value',
+            data: valueData,
             borderColor: 'rgb(153, 102, 51)',
             backgroundColor: 'rgb(153, 102, 51)',
+            pointRadius: 0
+        }, {
+            label: 'Invested',
+            data: investedData,
+            borderColor: 'rgb(0, 102, 51)',
+            backgroundColor: 'rgb(0, 102, 51)',
             pointRadius: 0
         }]
     }
@@ -95,7 +99,7 @@ export const AssetPerformance = (props) => {
                 },
                 ticks: {
                     callback: function (value) {
-                        return value.toFixed(2) + '%';
+                        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', }).format(value);
                     }
                 }
             }
@@ -108,14 +112,17 @@ export const AssetPerformance = (props) => {
                     label: function (context) {
                         let label = context.dataset.label;
                         let value = context.dataset.data[context.dataIndex];
-                        label += ': '+ value.toFixed(2) + '%';
+                        label += ': ' + new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', }).format(value);
                         return label;
                     },
                     title: function (context) {
                         let title = context[0].label.split(',');
                         title = title[0] + title[1];
                         return title;
-                    },                    
+                    },
+                    afterLabel: function (context) {
+                        return "Gain: " + new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', }).format(gainData[context.dataIndex]);
+                    }
                 }
             },
             legend: {
@@ -123,20 +130,17 @@ export const AssetPerformance = (props) => {
             }
         }
     }
-    changeData(props.view, perfData, labels, options, setup)
+    changeData(props.view, valueData, labels, options, setup, 0)
+    changeData(props.view, investedData, labels, options, setup, 1)
     return (
         <Card raised sx={{ border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3 }}>
-            <CardHeader title={"Performance | "+props.name} action={
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox checked={realised} onChange={e => {setRealised(!realised)}} />} label="Realised Performance" />  
-                </FormGroup>
-            }/>        
+            <CardHeader title={"Value | "+props.name}/>
             <CardContent>
-                <Line data={setup} options={options} />
+                <Line data={setup} options={options}/>
             </CardContent>
         </Card>
     )
 
 }
 
-export default AssetPerformance;
+export default AssetValue;

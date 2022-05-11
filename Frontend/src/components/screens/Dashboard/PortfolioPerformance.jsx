@@ -52,8 +52,8 @@ function changeData(view, data, labels, options, setup) {
 
 export const ProtfolioValuechart = (props) => {    
      
-    console.log(props.portfolioData.Portfolio.dailyDataForPerformanceGraph);
-    const dailyPerfData = props.portfolioData.Portfolio.dailyDataForPerformanceGraph;
+    console.log(props.portfolioData[props.activePortfolio].dailyDataForPerformanceGraph);
+    const dailyPerfData = props.portfolioData[props.activePortfolio].dailyDataForPerformanceGraph;
     const labels = Object.keys(dailyPerfData);
     let perfData = Object.values(dailyPerfData).map(data => data.performanceWithRealisedGains);
     const [realised, setRealised] = useState(true);
