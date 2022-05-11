@@ -93,7 +93,7 @@ export const ProtfolioValuechart = (props) => {
                 }
             },
             y: {
-                beginAtZero: true,
+                //beginAtZero: true,
                 position: 'left',
                 grid: {
                     drawOnChartArea: true
