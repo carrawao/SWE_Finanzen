@@ -195,7 +195,21 @@ const SettingsScreen = props => {
               paddingRight: '0px'
             }
           }}> 
-           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+            <Typography
+                className='align-self-start fw-bold px-1'
+                component='p'
+                fontSize={{
+                    md: 14,
+                    xs: 12
+                }}
+                sx={{
+                  '@media screen and (max-width: 768px)': {
+                    marginBottom: '40px'
+                  }
+                }}
+                >
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+              </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
           sx={{
