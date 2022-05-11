@@ -59,6 +59,7 @@ const initialValues = {
 const AddActivityForm = props => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
+  const [valueUpdated, setValueUpdated] = useState(false);
   const [valid, setValid] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
 
@@ -68,6 +69,16 @@ const AddActivityForm = props => {
   useEffect(() => {
     validate();
   }, [values]);
+
+  useEffect(() => {
+    setValueUpdated(false);
+  }, [values.assetType, values.date]);
+
+  useEffect(async () => {
+    if (valueUpdated === false) {
+      updateValue();
+    }
+  }, [errors]);
 
   const shares = props.portfolioData['shares'];
   const crypto = props.portfolioData['crypto'];
@@ -121,20 +132,6 @@ const AddActivityForm = props => {
     const valid = Object.values(newErrors).every(x => x === '');
     setValid(valid);
     return valid;
-  }
-
-  Date.prototype.getFormattedString = function() {
-    const date = new Date(this.valueOf());
-    const year = date.getFullYear();
-    let month = `${date.getMonth()+1}`;
-    if (month.length === 1) {
-      month = `0${month}`;
-    }
-    let day = `${date.getDate()}`;
-    if (day.length === 1) {
-      day = `0${day}`;
-    }
-    return `${year}-${month}-${day}`;
   }
 
   const getQuantityAtDate = (dailyData, date) => {
@@ -262,6 +259,34 @@ const AddActivityForm = props => {
     return errors;
   }
 
+  const updateValue = async () => {
+    if (errors.date !== '' || values.asset === null) {
+      return;
+    }
+    if (values.assetType === 'cash') {
+      return;
+    }
+    if (values.assetType === 'share' && values.typeShare === 'dividend') {
+      return;
+    }
+    let fetchDate = values.date;
+    let dateString = fetchDate.getFormattedString();
+    let today = new Date();
+    const todayString = today.getFormattedString();
+    if (dateString === todayString) {
+      fetchDate = fetchDate.addDays(-1);
+      dateString = fetchDate.getFormattedString();
+    }
+    let valueForDate = undefined;
+    while (valueForDate === undefined) {
+      valueForDate = await fetchValueForDate(values.assetType, values.asset.symbol, dateString);
+      fetchDate = fetchDate.addDays(-1);
+      dateString = fetchDate.getFormattedString();
+    }
+    setValues({...values, value: parseFloat(valueForDate).toFixed(2), sum: (valueForDate * values.quantity).toFixed(2)});
+    setValueUpdated(true);
+  }
+
   let navigate = useNavigate();
   const routeChange = path => {
     navigate(path);
@@ -283,6 +308,36 @@ const AddActivityForm = props => {
             alert('Activity saved!');
         }
     }
+  }
+
+  const fetchValueForDate = async (assetType, symbol, dateString) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_BASEURL}/get${assetType === 'share' ? 'Share' : 'Crypto'}DataFromDateForActivities?symbol=${symbol}&date=${dateString}`, {mode:'cors'});
+        const json = await response.json();
+        return json['4. close'];
+    } catch (e) {
+      console.log(`No data for symbol ${symbol} at ${dateString}`);
+    }
+  }
+
+  Date.prototype.getFormattedString = function() {
+    const date = new Date(this.valueOf());
+    const year = date.getFullYear();
+    let month = `${date.getMonth()+1}`;
+    if (month.length === 1) {
+      month = `0${month}`;
+    }
+    let day = `${date.getDate()}`;
+    if (day.length === 1) {
+      day = `0${day}`;
+    }
+    return `${year}-${month}-${day}`;
+  }
+
+  Date.prototype.addDays = function(days) {
+    let date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
   }
 
   return (
