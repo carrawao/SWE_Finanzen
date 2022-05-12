@@ -129,7 +129,7 @@ export const PortfolioPerformance = props => {
       <CardHeader
         title='Performance'
         action={
-        <FormGroup className='d-none d-sm-block'>
+        <FormGroup className='d-none d-sm-flex'>
           <FormControlLabel
             control={<Checkbox checked={realised} onChange={e => {
             setRealised(!realised)
