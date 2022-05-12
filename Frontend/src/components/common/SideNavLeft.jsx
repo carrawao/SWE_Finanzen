@@ -14,7 +14,7 @@ import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import ShutterSpeedIcon from '@mui/icons-material/ShutterSpeed';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-import { PieChart } from '@mui/icons-material';
+import {PieChart} from '@mui/icons-material';
 
 const drawerWidth = 14; // This is the value in rem units, for responsiveness
 const routesArray = [

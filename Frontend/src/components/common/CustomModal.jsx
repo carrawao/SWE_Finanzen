@@ -22,7 +22,7 @@ const CustomModal = props => (
     aria-labelledby={props.labelledby}
     className='p-0'
   >
-    <Box sx={props.size === 'big' ? {...bigStyle} : {...normalStyle}}>
+    <Box sx={{...normalStyle}}>
       <Container
         className='d-flex justify-content-between px-0 align-self-center'
       >
@@ -69,28 +69,6 @@ const normalStyle = {
     lg: '30vw'
   },
   minHeight: '10vh',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  backgroundColor: 'background.paper',
-  border: '2px solid white',
-  borderRadius: '0.5rem',
-  boxShadow: 24,
-  padding: '1.5rem'
-};
-
-const bigStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: {
-    xs: '90vw',
-    sm: '75vw',
-    md: '60vw',
-    lg: '50vw'
-  },
-  minHeight: '80vh',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',

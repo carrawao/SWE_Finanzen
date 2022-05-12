@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element}
  * @constructor
  */
-const SearchAssetInput = props => {
+const SearchAssetInput = props => { 
   const getSharesInPortfolioOptions = () => {
     const shares = props.portfolioData.shares;
     const shareOptions = [];
@@ -98,6 +98,10 @@ const SearchAssetInput = props => {
   }, [open]);
 
   useEffect(() => {
+    if (props.initialLoading) {
+      props.setInitialLoading(false);
+      return;
+    }
     props.setValues({
       ...props.values,
       asset: null
@@ -190,6 +194,7 @@ const fetchCryptoOptions = async (query) => {
       loading={loading}
       key={props.values.assetType} //component rerenderes on change of key
       name='asset'
+      defaultValue={props.initialLoading ? props.initialAssetObj : null}
       onChange={(event, newValue) => {
         //gefaktes event e zur Anpassung an funktionsweise von handleInputChange, das event welches als parameter reingegeben wird kann nicht genommen werden
         const e = {
@@ -239,7 +244,7 @@ const fetchCryptoOptions = async (query) => {
         <props.StyledTextField
           {...params}
           margin='normal'
-          label='asset/account'
+          label='Asset/Account'
           name='assetInput'
           onChange={props.handleInputChange}
           value={props.values.assetInput}
@@ -267,6 +272,9 @@ SearchAssetInput.propTypes = {
   handleInputChange: PropTypes.func,
   StyledTextField: PropTypes.object,
   setValues: PropTypes.func,
+  initialAssetObj: PropTypes.object,
+  initialLoading: PropTypes.bool,
+  setInitialLoading: PropTypes.func
 };
 
 export default SearchAssetInput;

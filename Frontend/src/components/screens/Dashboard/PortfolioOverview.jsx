@@ -61,8 +61,8 @@ const PortfolioOverview = props => {
             </FormControl>
           </Grid>
           <Grid item>
-            <AddIcon></AddIcon>
-            <SettingsIcon></SettingsIcon>
+            <AddIcon/>
+            <SettingsIcon/>
           </Grid>
         </Grid>
       </Box>
@@ -74,7 +74,9 @@ const PortfolioOverview = props => {
       >
         <Grid item>
           <Typography variant='h5' gutterBottom component='div'>Gains</Typography>
-          <Typography variant='h5' gutterBottom component='div'>{portfolio['gains']}</Typography>
+          <Typography variant='h5' gutterBottom component='div'>{
+            new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR',}).format(portfolio['gains'])
+          }</Typography>
         </Grid>
         <Grid item>
           <Typography variant='h5' gutterBottom component='div'>Realized Gains</Typography>
@@ -83,7 +85,6 @@ const PortfolioOverview = props => {
         <Grid item>
           <Typography variant='h5' gutterBottom component='div'>Dividends</Typography>
           <Typography variant='h5' gutterBottom component='div'>0,00€</Typography>
-          {/* <Typography>{portfolio["totalDividends"]}</Typography>      */}
         </Grid>
       </Grid>
     </Grid>

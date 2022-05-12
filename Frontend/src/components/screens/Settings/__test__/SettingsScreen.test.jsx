@@ -3,6 +3,7 @@ import SettingsScreen from '../SettingsScreen';
 import toJson from 'enzyme-to-json';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import {BrowserRouter} from 'react-router-dom';
 
 Enzyme.configure({adapter: new Adapter()})
 
@@ -30,21 +31,23 @@ it('SettingsScreen renders without crashing', () => {
   const setStatusMessage = jest.fn();
   const setMessageType = jest.fn();
 
-  const wrapper = shallow(<SettingsScreen
-    searchResult={[]}
-    setSearchResult={setSearchResult}
-    watchListsArray={[]}
-    assetsListArray={[[]]}
-    portfolioData={{}}
-    activePortfolio={'Portfolio'}
-    emptyPortfolioData={emptyPortfolioData}
-    setWatchListsArray={setWatchListsArray}
-    setAssetsListArray={setAssetsListArray}
-    setPortfolioData={setPortfolioData}
-    setActivePortfolio={setActivePortfolio}
-    setStatusMessage={setStatusMessage}
-    setMessageType={setMessageType}
-  />);
+  const wrapper = shallow(<BrowserRouter>
+    <SettingsScreen
+      searchResult={[]}
+      setSearchResult={setSearchResult}
+      watchListsArray={[]}
+      assetsListArray={[[]]}
+      portfolioData={{}}
+      activePortfolio={'Portfolio'}
+      emptyPortfolioData={emptyPortfolioData}
+      setWatchListsArray={setWatchListsArray}
+      setAssetsListArray={setAssetsListArray}
+      setPortfolioData={setPortfolioData}
+      setActivePortfolio={setActivePortfolio}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
+    />
+  </BrowserRouter>);
 
   expect(toJson(wrapper)).toMatchSnapshot();
 })
