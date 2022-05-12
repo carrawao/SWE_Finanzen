@@ -125,12 +125,17 @@ export const PortfolioPerformance = props => {
   }
   changeData(props.view, perfData, labels, options, setup)
   return (
-    <Card raised sx={{border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3}}>
-      <CardHeader title='Performance' action={
-        <FormGroup>
-          <FormControlLabel control={<Checkbox checked={realised} onChange={e => {
+    <Card className='col-xl-12' raised sx={{border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3}}>
+      <CardHeader
+        title='Performance'
+        action={
+        <FormGroup className='d-none d-sm-flex'>
+          <FormControlLabel
+            control={<Checkbox checked={realised} onChange={e => {
             setRealised(!realised)
-          }}/>} label='Realised Performance'/>
+          }}/>}
+            label='Realised Performance'
+          />
         </FormGroup>
       }/>
       <CardContent>

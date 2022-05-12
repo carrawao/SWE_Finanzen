@@ -137,7 +137,7 @@ export const PortfolioValueChart = props => {
   changeData(props.view, valueData, labels, options, setup, 0)
   changeData(props.view, investedData, labels, options, setup, 1)
   return (
-    <Card raised sx={{border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3}}>
+    <Card className='col-xl-12' raised sx={{border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3}}>
       <CardHeader title='Value'/>
       <CardContent>
         <Line data={setup} options={options}/>

@@ -23,13 +23,9 @@ const PortfolioOverview = props => {
   return (
     <Grid
       container
-      direction='column'
-      justifyContent='space-evenly'
-      alignContent='center'
-      height='100%'
-      padding='1rem'
+      className='d-flex flex-column justify-content-evenly p-0 p-lg-4'
     >
-      <Box sx={{marin: '10px', borderBottom: '1px solid #493f35'}}>
+      <Box className='m-3' sx={{borderBottom: '1px solid #493f35'}}>
         <Grid
           container
           direction='row'
@@ -68,23 +64,21 @@ const PortfolioOverview = props => {
       </Box>
       <Grid
         container
-        direction='row'
-        justifyContent='space-around'
-        alignContent='center'
+        className='d-flex flex-row justify-content-around align-items-center ps-0'
       >
-        <Grid item>
-          <Typography variant='h5' gutterBottom component='div'>Gains</Typography>
-          <Typography variant='h5' gutterBottom component='div'>{
+        <Grid item className='d-flex flex-column col-3 align-items-center'>
+          <Typography variant='h6' gutterBottom display='block'>Gains</Typography>
+          <Typography variant='h6' gutterBottom >{
             new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR',}).format(portfolio['gains'])
           }</Typography>
         </Grid>
-        <Grid item>
-          <Typography variant='h5' gutterBottom component='div'>Realized Gains</Typography>
-          <Typography variant='h5' gutterBottom component='div'>{portfolio['realisedGains']}</Typography>
+        <Grid item className='d-flex flex-column col-5 align-items-center'>
+          <Typography variant='h6' gutterBottom display='block'>Realised Gains</Typography>
+          <Typography variant='h6' gutterBottom>{portfolio['realisedGains']}</Typography>
         </Grid>
-        <Grid item>
-          <Typography variant='h5' gutterBottom component='div'>Dividends</Typography>
-          <Typography variant='h5' gutterBottom component='div'>0,00€</Typography>
+        <Grid item className='d-flex flex-column col-3 align-items-center'>
+          <Typography variant='h6' gutterBottom>Dividends</Typography>
+          <Typography variant='h6' gutterBottom>0,00€</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -92,7 +86,7 @@ const PortfolioOverview = props => {
 }
 
 PortfolioOverview.propTypes = {
-  activePortfolio: PropTypes.string,
+  activePortfolio: PropTypes.any,
   setActivePortfolio: PropTypes.func,
   portfolioData: PropTypes.object,
 };
