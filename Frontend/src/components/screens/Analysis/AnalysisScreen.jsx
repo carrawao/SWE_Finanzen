@@ -225,45 +225,18 @@ const AnalysisScreen = props => {
    
         <Grid container
               sx={{
-                borderRadius: '1rem',
-                border: '1px solid black',
-                padding: '20px',
-                '@media screen and (max-width: 768px)': {
-                  background: 'linear-gradient(180deg, rgb(78 185 111) 55%, #FFFFFF 0%);'
-                },
-                background: 'linear-gradient(90deg, rgb(78 185 111) 72%, #FFFFFF 50%);',
+           
                 marginTop: '30px'
               }}
         >
-          <Grid item className='col-12 col-md-9 col-xl-9' sx={{
-            paddingRight: '50px',
-            '@media screen and (max-width: 768px)': {
-              paddingRight: '0px'
-            }
-          }}>
-            <Typography
-              className='align-self-start fw-bold px-1'
-              variant='h6'
-              fontSize={{
-                lg: 18,
-                xs: 14
-              }}
-              sx={{
-                '@media screen and (max-width: 768px)': {
-                  marginBottom: '40px'
-                }
-              }}
-            >
-              Please add activites to your Portfolio to see your Analysis Page 
-            </Typography>
-          </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
                 sx={{
                   '@media screen and (min-width: 768px)': {
                     display: 'flex !important',
                     verticalAlign: 'center',
                     justifyContent: 'center'
-                  }
+                  },
+                  marginBottom: '50px'
                 }}>
                   
             <Button
@@ -283,6 +256,41 @@ const AnalysisScreen = props => {
             >
               Add Activities
             </Button>
+          </Grid>
+          <Grid item className='col-12 col-md-9 col-xl-9' sx={{
+            paddingRight: '50px',
+            '@media screen and (max-width: 768px)': {
+              paddingRight: '0px'
+            }
+          }}>
+           <Typography
+            variant='h6'
+            fontWeight='bold'
+            fontSize={{
+              lg: 24,
+              xs: 18
+            }}
+          >
+              Start off by adding a Activity
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              With activities you can fill your portfolio with your diffrent types of assets.
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+            </Typography>
           </Grid>
 
         </Grid>
