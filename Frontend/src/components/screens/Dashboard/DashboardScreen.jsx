@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {Grid} from '@mui/material';
+import {Grid, Box} from '@mui/material';
 import PropTypes from 'prop-types';
 import AllocationGraph from './AllocationGraph';
 import PortfolioOverview from './PortfolioOverview';
-
+import PortfolioCharts from './PortfolioCharts';
+import ChartButtons from '../AssetDetails/ChartButtons';
 /**
  * Component related to the dashboard screen
  * @param props
@@ -12,49 +13,36 @@ import PortfolioOverview from './PortfolioOverview';
  * @constructor
  */
 const DashboardScreen = props => {
+  const [view, setView] = useState('month');
+
   const renderBody = () => (
-    <React.Fragment>
-      <Grid
-        container
-        direction='column'
-        justifyContent='center'
-        alignItems='space-evenly'
-        marginTop='10px'
-      >
+    <React.Fragment>      
         <Grid
           container
           direction='row'
-          justifyContent='space-evenly'
-          alignItems='center'
+          xs={12}
         >
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <AllocationGraph
               portfolioData={props.portfolioData[props.activePortfolio]}
               activePortfolio={props.activePortfolio}
               getAllAssets={props.getAllAssets}
             />
           </Grid>
-          <Grid item xs={8}>
-            <PortfolioOverview
-              portfolioData={props.portfolioData}
-              activePortfolio={props.activePortfolio}
-              setActivePortfolio={props.setActivePortfolio}
-            />
+          <Grid item container direction='column' xs={9}>
+            <Grid item textAlign={"right"}>              
+                <ChartButtons view={view} setView={setView}/>              
+            </Grid>
+            <Grid item>
+              <PortfolioOverview
+                portfolioData={props.portfolioData}
+                activePortfolio={props.activePortfolio}
+                setActivePortfolio={props.setActivePortfolio}
+              />          
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid
-          container
-          direction='row'
-          justifyContent='space-evenly'
-          alignContent='center'
-        >
-          <Grid item xs={6}>
-
-          </Grid>
-          <Grid item xs={6}>
-          </Grid>
-        </Grid>
-      </Grid>
+      </Grid>         
+      <PortfolioCharts view={view} {...props}/>
     </React.Fragment>
   );
 
