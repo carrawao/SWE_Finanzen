@@ -24,7 +24,7 @@ const ScreensTemplate = props => {
     props.setSearchResult([]);
     setSearchQuery('');
     if (props.statusMessage !== '') {
-      showStatusMessage(props.messageType, props.statusMessage)
+      showStatusMessage(props.messageType, props.statusMessage);
       setTimeout(() => {
         props.setStatusMessage(undefined);
         props.setMessageType(undefined);

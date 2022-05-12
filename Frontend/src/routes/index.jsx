@@ -640,6 +640,10 @@ const AppRoutes = () => {
             portfolioData={portfolioData}
             setPortfolioData={setPortfolioData}
             getAllAssets={getAllAssets}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />}
       />
       <Route path='/about' element={<Home/>}/>
