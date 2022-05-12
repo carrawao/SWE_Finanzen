@@ -300,6 +300,11 @@ const SettingsScreen = props => {
     document.getElementById('import-file-button').click();
   }
 
+  let navigate = useNavigate();
+  const routeChange = path => {
+    navigate(path);
+  }  
+
   // Delete all user data
   const deleteData = () => {
     props.setWatchListsArray([]);
@@ -307,12 +312,7 @@ const SettingsScreen = props => {
     props.setPortfolioData(props.emptyPortfolioData);
     props.setActivePortfolio('Portfolio');
     setDeleteDataModal(false);
-    
     //redirect to dashboard
-    let navigate = useNavigate();
-    const routeChange = path => {
-      navigate(path);
-    }  
     routeChange('/dashboard');
   }
 
