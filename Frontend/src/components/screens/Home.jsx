@@ -27,22 +27,22 @@ const Home = () => {
       'Save your favorite shares and crypto to always have an overview of the course. This way you can decide in a flash if it is time to buy or sell!'
     ],
     'activities': [
-      'rgb(228 126 37)',
+      'rgb(241 155 31)',
       '/activities',
       `${process.env.PUBLIC_URL}/assets/images/activities.png`,
       'Activities',
       'Add new purchases, sales, and dividend distributions to your activities to get an overview of previous payments!'
     ],
     'analysis': [
-      'rgb(241 155 31)',
-      '/activities',
+      'rgb(228 126 37)',
+      '/analysis',
       `${process.env.PUBLIC_URL}/assets/images/activities.png`,
       'Analysis',
       'If you want to get a deeper insight into your portfolio, you are at the right place. You can have your assets broken down by different criteria to get a feeling about the distribution of your portfolio!'
     ],
     'benchi': [
-      'rgb(59 151 210)',
-      '/activities',
+      'rgb(239, 195, 25)',
+      '/benchi',
       `${process.env.PUBLIC_URL}/assets/images/activities.png`,
       'Benchi',
       'Do you want to take a new direction or are you still unsure what the perfect investment strategy for you looks like? Let our analysis bot Benchi advice you free of charge and find out what suits you best!'
