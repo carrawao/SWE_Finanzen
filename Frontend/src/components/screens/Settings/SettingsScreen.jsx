@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { margin } from '@mui/system';
 import {Grid} from '@mui/material';
 import Typography from '@mui/material/Typography';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 /**
  * Component related to the Settings screen
@@ -18,6 +19,22 @@ const SettingsScreen = props => {
 
   const renderBody = () => (
     <Container className='d-flex flex-column px-1 pt-2'>
+        <Box className='col-12'>
+          <Typography
+             variant='h6'
+             fontSize={{
+               lg: 24,
+               xs: 18
+             }}
+             sx={{
+               marginBottom : '40px'
+             }}
+            
+            >
+                    Settings <SettingsIcon></SettingsIcon>
+      </Typography>
+
+        </Box>
        <Box className='d-flex flex-row col-12'>
         <Grid container
          sx={{
@@ -178,7 +195,7 @@ const SettingsScreen = props => {
               paddingRight: '0px'
             }
           }}> 
-          <Typography
+            <Typography
                 className='align-self-start fw-bold px-1'
                 component='p'
                 fontSize={{
@@ -190,9 +207,8 @@ const SettingsScreen = props => {
                     marginBottom: '40px'
                   }
                 }}
-                
                 >
-                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
               </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
@@ -301,7 +317,7 @@ const SettingsScreen = props => {
     <React.Fragment>
       <ScreensTemplate
         bodyComponent={renderBody}
-        selectedNavLinkIndex={4}
+        selectedNavLinkIndex={5}
         assetsListArray={props.assetsListArray}
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
