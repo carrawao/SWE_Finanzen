@@ -15,6 +15,8 @@ import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import ShutterSpeedIcon from '@mui/icons-material/ShutterSpeed';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import PieChartIcon from '@mui/icons-material/PieChart';
+import { PieChart } from '@mui/icons-material';
 
 const drawerWidth = 14; // This is the value in rem units, for responsiveness
 const routesArray = [
@@ -22,8 +24,8 @@ const routesArray = [
   {routeName: 'Dashboard', path: '/dashboard', icon: <AutoGraphIcon/>},
   {routeName: 'Watchlists', path: '/watchlists', icon: <ShutterSpeedIcon/>},
   {routeName: 'Activities', path: '/activities', icon: <LocalActivityIcon/>},
-  {routeName: 'Settings', path: '/settings', icon: <SettingsIcon/>},
-  {routeName: 'Analysis', path: '/analysis', icon: <SettingsIcon/>}
+  {routeName: 'Analysis', path: '/analysis', icon: <PieChart/>},
+  {routeName: 'Settings', path: '/settings', icon: <SettingsIcon/>}
 ];
 
 /**
