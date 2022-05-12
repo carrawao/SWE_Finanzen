@@ -1,21 +1,20 @@
 import React from 'react';
-import {Grid, Card, CardHeader, CardContent} from '@mui/material';
+import {Card, Container, CardContent, Box} from '@mui/material';
 import PortfolioPerformance from './PortfolioPerformance';
 import PortfolioValueChart from './PortfolioValuechart';
 
 export const PortfolioCharts = props => {
   return (
-    <Card raised xs={12} sx={{border: 3, borderColor: 'rgb(0,0,100)', borderRadius: 3}}>
-      <CardHeader style={{textAlign: 'center'}}/>
-      <CardContent>
-        <Grid container spacing={5} direction='row' justifyContent='center'>
-          <Grid item xs={6}>
+    <Card raised className='col-12' sx={{border: 3, borderColor: 'rgb(0,0,100)', borderRadius: 3}}>
+      <CardContent className='d-flex col-12 py-4'>
+        <Container className='d-flex flex-column flex-xl-row justify-content-center align-items-center'>
+          <Box className='col-12 col-xl-6 mb-4 mb-xl-0 me-xl-4'>
             <PortfolioValueChart {...props} view={props.view}/>
-          </Grid>
-          <Grid item xs={6}>
+          </Box>
+          <Box className='col-12 col-xl-6 ms-xl-4 align-self-center'>
             <PortfolioPerformance {...props} view={props.view}/>
-          </Grid>
-        </Grid>
+          </Box>
+        </Container>
       </CardContent>
     </Card>
   )
