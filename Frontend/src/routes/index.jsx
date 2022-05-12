@@ -243,6 +243,9 @@ const AppRoutes = () => {
       tempPortfolioData[activePortfolio]['updated'] = new Date(activityObj.date).addDays(-1).getFormattedString(); //update Portfolio Data automatically recalculates the dailyValues for the whole portfolio from this date on
       return tempPortfolioData;
     });
+
+    setStatusMessage('Activity saved');
+    setMessageType('success');
   }
 
   /**
@@ -358,6 +361,8 @@ const AppRoutes = () => {
       const response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareInformationsForAnalyse?symbol=${symbol}`, {mode: 'cors'})
       return await response.json();
     } catch (e) {
+      setStatusMessage('Lost connection to server. Please try again later');
+      setMessageType('error');
       console.log('fetching failed === ', e);
     }
   }
