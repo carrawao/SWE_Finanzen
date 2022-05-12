@@ -18,11 +18,11 @@ const Impressum = () => (
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
-    Bench:market
+      Bench:market
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-    Postal address:
+      Postal address:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
@@ -41,7 +41,7 @@ const Impressum = () => (
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-    Represented by:
+      Represented by:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
@@ -59,25 +59,27 @@ const Impressum = () => (
 
 
     <Typography variant='h5' className='pt-4 ps-3 fw-bold'>
-    Website references
+      Website references
     </Typography>
 
     <Typography variant='h6' className='pt-4 ps-3 fw-bold'>
-    Copyright notice:
+      Copyright notice:
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
       <a href='https://app.currencyapi.com/dashboard'>https://app.currencyapi.com/dashboard</a> <br/>
       <a href='https://www.alphavantage.co'>https://www.alphavantage.co</a>
-    </Typography> 
+    </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-    Information according to § 36 VSBG
+      Information according to § 36 VSBG
     </Typography>
 
     <Typography variant='h7' className='pt-4 ps-3'>
-    in accordance with § 36 VSBG (Consumer Dispute Settlement Act - Act on Alternative Dispute Resolution in Consumer Matters), the operator of this website declares:  <br/>
-    We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board.
+      in accordance with § 36 VSBG (Consumer Dispute Settlement Act - Act on Alternative Dispute Resolution in Consumer
+      Matters), the operator of this website declares: <br/>
+      We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration
+      board.
     </Typography>
 
   </Container>

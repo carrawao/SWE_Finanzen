@@ -28,6 +28,8 @@ const WatchListsScreen = props => {
           setAssetsListArray={props.setAssetsListArray}
           selectedListIndex={selectedListIndex}
           setSelectedListIndex={setSelectedListIndex}
+          setStatusMessage={props.setStatusMessage}
+          setMessageType={props.setMessageType}
         />
       </Grid>
       <Grid item className='col-12 col-md-8 col-xl-9 pt-0'>
@@ -38,6 +40,8 @@ const WatchListsScreen = props => {
           setAssetsListArray={props.setAssetsListArray}
           selectedListIndex={selectedListIndex}
           setSelectedListIndex={setSelectedListIndex}
+          setStatusMessage={props.setStatusMessage}
+          setMessageType={props.setMessageType}
         />
       </Grid>
     </Grid>
@@ -71,7 +75,10 @@ const WatchListsScreen = props => {
       return await fetch(
         `${process.env.REACT_APP_BASEURL}/${assetType === 'Crypto' ? 'getCryptoForWatchlist' : 'getShareForWatchlist'}?symbol=${symbol}`,
         {mode: 'cors'})
-        .then(response => response.json())
+        .then(response => {
+          props.setSearchResult([]);
+          return response.json()
+        })
         .then(data => {
           props.setAssetsListArray(prevAssetsListArray => {
             const assetsListArray = [...prevAssetsListArray];
@@ -87,9 +94,12 @@ const WatchListsScreen = props => {
             ];
             return assetsListArray;
           })
-          props.setSearchResult([]);
+          props.setStatusMessage('Asset was successfully added to Watchlist');
+          props.setMessageType('success');
         });
     } catch (error) {
+      props.setStatusMessage('Asset couldn\'t be added to Watchlist. Lost connection with the server');
+      props.setMessageType('error');
       console.log('fetching failed === ', error);
     }
   };
@@ -98,7 +108,7 @@ const WatchListsScreen = props => {
     <React.Fragment>
       <ScreensTemplate
         bodyComponent={renderBody}
-        selectedNavLinkIndex={2}
+        selectedNavLinkIndex={1}
         addToWatchList={index => {
           setAddToWatchlistModal(true);
           setSearchResultIndex(index);
@@ -107,6 +117,10 @@ const WatchListsScreen = props => {
         assetsListArray={props.assetsListArray}
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
+        statusMessage={props.statusMessage}
+        setStatusMessage={props.setStatusMessage}
+        messageType={props.messageType}
+        setMessageType={props.setMessageType}
       />
       <RenderAddToWatchlistModal
         open={addToWatchlistModal}
@@ -128,7 +142,11 @@ WatchListsScreen.propTypes = {
   watchListsArray: PropTypes.array,
   setWatchListsArray: PropTypes.func,
   assetsListArray: PropTypes.array,
-  setAssetsListArray: PropTypes.func
+  setAssetsListArray: PropTypes.func,
+  statusMessage: PropTypes.string,
+  setStatusMessage: PropTypes.func,
+  messageType: PropTypes.string,
+  setMessageType: PropTypes.func
 };
 
 export default WatchListsScreen;
