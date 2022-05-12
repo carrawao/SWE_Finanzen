@@ -69,8 +69,7 @@ const SettingsScreen = props => {
               }}
 
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Upload your previously saved data in the form of a Jason file to get back to your current state. This way you have complete control over your data!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
@@ -146,8 +145,7 @@ const SettingsScreen = props => {
                 }
               }}
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Download your data here to back it up or use it on another device. Keep the file safe, we have no way to restore your data!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3' sx={{
@@ -211,8 +209,7 @@ const SettingsScreen = props => {
                 }
               }}
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Delete your data to get an empty portfolio. Your watchlist will be reset as well. Be careful that we can't restore your data, so download it first if you still need it!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
