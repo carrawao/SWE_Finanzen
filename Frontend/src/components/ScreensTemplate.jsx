@@ -63,7 +63,7 @@ const ScreensTemplate = props => {
         }
       }}
     >
-      <Alert className='col-10 col-md-9 col-xl-7 text-center' variant='filled' severity={type}>
+      <Alert className='col-10 col-xl-7 text-center' variant='filled' severity={type}>
         {message}
       </Alert>
     </Box>
@@ -139,9 +139,6 @@ const ScreensTemplate = props => {
                   props.setSearchResult([]);
                   setSearchQuery('');
                 }}
-                setStatusMessage={props.setStatusMessage}
-                setMessageType={props.setMessageType}
-                showStatusMessage={() => showStatusMessage()}
               />
             </Grid>
             :

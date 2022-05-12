@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
 import {Grid} from '@mui/material';
-import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
 import AnalysisList from './AnalysisList';
+import {DoughnutChart} from '../../common';
 
 /**
  * Component related to the analysis page
@@ -13,29 +13,25 @@ import AnalysisList from './AnalysisList';
  * @constructor
  */
 const AnalysisScreen = props => {
+
+  const [analysisType, setAnalysisType] = useState(0);
+
   const portfolioData = props.portfolioData[props.activePortfolio];
-  const keywordCollection = ['sub_region', 'country', 'region', 'sector', 'assetClass', 'branche'];
+  const analysisTypes = ['Asset Type Allocation', 'Shares Allocation', 'Crypto Allocation', 'Cash Allocation', 'Region Allocation', 'Sub region Allocation', 'Country Allocation', 'Sector Allocation', 'Industry Allocation', 'Asset Class Allocation'];
+  let keywordCollection = ['region', 'sub_region', 'country', 'sector', 'branche', 'assetClass'];
   let allArrays = [];
+  let doughnutChartData = {};
 
-  useEffect(() => {
-    allArrays.push(calculateStockSplit('shares'))
-    allArrays.push(calculateStockSplit('crypto'))
-
-    keywordCollection.forEach(keyword => {
-      allArrays.push(calculateKeywordSplit(keyword, false));
-    });
-
-    allArrays.push(calculateKeywordSplit('typ', true));
-  }, []);
-
-  const calculateStockSplit = keyword => {
+  const calculateStockSplit = keyword => {  //Calculate Stock, Crypto and Cash Allocation 
     let value;
     let stockArray = [];
 
     if (keyword === 'shares') {
-      value = 825;
+      value = portfolioData.shareValue;
     } else if (keyword === 'crypto') {
-      value = 106.5;
+      value = portfolioData.cryptoValue;
+    } else if (keyword === 'cash') {
+      value = portfolioData.cashValue;
     }
 
     portfolioData[keyword].forEach(element => {
@@ -43,63 +39,99 @@ const AnalysisScreen = props => {
 
       stockArray.push({
         asset: element.name,
-        percentage: percentage.toFixed(2)
+        percentage: parseFloat(percentage.toFixed(2))
       })
     });
 
-    //console.log(stockArray)
-    return orderArray(stockArray)
+    return orderArray(stockArray);
   }
 
-  const calculateKeywordSplit = (keyword, typSplit) => {
+  const calculateKeywordSplit = (keyword, typSplit) => { //Calculate Typ Allocation if typSplit True otherwise calculate Keyword Allocation for the passed keyword
+    let value = portfolioData.shareValue;
+    let stockArray = [];
+
     if (typSplit) {
-      var value = 835 + 106.5;
+      value = portfolioData.value;
     } else {
-      var value = 825;
+      let sectorArray = [];
+
+      portfolioData.shares.forEach(element => {
+
+        if (element.assetTypeForDisplay === 'ETF') {
+          value -= element.value;
+          return;
+        }
+        if (sectorArray.some(row => row.includes(element.analysisInfo[keyword]))) {
+
+          sectorArray.forEach(arrayElement => {
+            if (arrayElement[0] === element.analysisInfo[keyword]) {
+              arrayElement[1] = parseFloat(arrayElement[1]);
+              arrayElement[1] += parseFloat(element.value);
+            }
+          })
+        } else {
+          sectorArray.push([element.analysisInfo[keyword], parseFloat(element.value)]);
+        }
+      });
+
+
+      sectorArray.forEach(sector => {
+        const percentage = sector[1] / value * 100;
+
+        stockArray.push({
+          asset: sector[0],
+          percentage: percentage.toFixed(2)
+        })
+      });
     }
 
-    let sectorArray = []
+    if (typSplit) {
+      let stockValue = portfolioData.shareValue;
+      let etfValue = 0;
+      let percentage;
 
-    portfolioData.shares.forEach(element => {
-      if (sectorArray.some(row => row.includes(element.analysisInfo[keyword]))) {
-        sectorArray.forEach(arrayElement => {
-          if (arrayElement[0] === element.analysisInfo[keyword]) {
-            arrayElement[1] = parseFloat(arrayElement[1]);
-            arrayElement[1] += parseFloat(element.value)
-          }
+      portfolioData.shares.forEach(element => {
+        if (element.assetTypeForDisplay === 'ETF') {
+          stockValue -= element.value;
+          etfValue += element.value;
+        }
+      })
 
-        })
-      } else {
-        sectorArray.push([element.analysisInfo[keyword], parseFloat(element.value)])
-      }
-    });
-
-    let stockArray = []
-
-    sectorArray.forEach(sector => {
-      const percentage = sector[1] / value * 100;
+      percentage = stockValue / value * 100;
 
       stockArray.push({
-        asset: sector[0],
+        asset: 'Stock',
         percentage: percentage.toFixed(2)
       })
-    });
 
-    if (typSplit) {
-      const percentage = 106.5 / value * 100;
+
+      percentage = etfValue / value * 100;
+
+      stockArray.push({
+        asset: 'ETF',
+        percentage: percentage.toFixed(2)
+      })
+
+
+      percentage = portfolioData.cryptoValue / value * 100;
 
       stockArray.push({
         asset: 'Crypto',
         percentage: percentage.toFixed(2)
       })
+
+      percentage = portfolioData.cashValue / value * 100;
+
+      stockArray.push({
+        asset: 'Cash',
+        percentage: percentage.toFixed(2)
+      })
     }
 
-    //console.log(sectorArray)
-
-    return orderArray(stockArray)
+    return orderArray(stockArray);
   }
 
-  const getPiechartData = (splitArray) => {
+  const getDoughnutChartData = (splitArray) => { //Perpare data for the doughnut chart
     let labelArray = [];
     let dataArray = [];
 
@@ -109,12 +141,12 @@ const AnalysisScreen = props => {
     });
 
     return {
-      'label': labelArray,
+      'labels': labelArray,
       'data': dataArray
     }
   }
 
-  const orderArray = splitArray => {
+  const orderArray = splitArray => { //Sort an array according to percentage (descending)
     function compare(a, b) {
       if (a.percentage < b.percentage) {
         return 1;
@@ -128,18 +160,34 @@ const AnalysisScreen = props => {
     return splitArray.sort(compare);
   }
 
+  allArrays.push(calculateKeywordSplit("typ", true));
+  allArrays.push(calculateStockSplit("shares"));
+  allArrays.push(calculateStockSplit("crypto"));
+  allArrays.push(calculateStockSplit("cash"));
+  keywordCollection.forEach(keyword => {
+    allArrays.push(calculateKeywordSplit(keyword, false));
+  });
+
+  doughnutChartData = getDoughnutChartData(allArrays[analysisType]);
+
   const renderBody = () => (
     <Grid container
           className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
       <Grid item className='col-12 col-md-5 col-xl-3'>
-        <Typography variant='h6' noWrap component='div'>
-          Placeholder piechart
-        </Typography>
+        <DoughnutChart
+          analysis
+          data={doughnutChartData['data']}
+          labels={doughnutChartData['labels']}
+          defaultMiddleDisplayLabel={analysisTypes[analysisType]}
+          defaultMiddleDisplayValue={''}
+        />
       </Grid>
       <Grid item className='col-12 col-md-7 col-xl-9'>
         <AnalysisList
-          keywordCollection={keywordCollection}
           allArrays={allArrays}
+          analysisType={analysisType}
+          setAnalysisType={setAnalysisType}
+          analysisTypes={analysisTypes}
         />
       </Grid>
     </Grid>
@@ -149,10 +197,14 @@ const AnalysisScreen = props => {
     <React.Fragment>
       <ScreensTemplate
         bodyComponent={renderBody}
-        selectedNavLinkIndex={5}
+        selectedNavLinkIndex={3}
         assetsListArray={props.assetsListArray}
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
+        statusMessage={props.statusMessage}
+        setStatusMessage={props.setStatusMessage}
+        messageType={props.messageType}
+        setMessageType={props.setMessageType}
       />
     </React.Fragment>
   );
@@ -166,6 +218,10 @@ AnalysisScreen.propTypes = {
   activePortfolio: PropTypes.string,
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
+  statusMessage: PropTypes.string,
+  setStatusMessage: PropTypes.func,
+  messageType: PropTypes.string,
+  setMessageType: PropTypes.func
 };
 
 export default AnalysisScreen;

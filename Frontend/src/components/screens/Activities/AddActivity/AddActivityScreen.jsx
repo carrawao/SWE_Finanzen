@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import ScreensTemplate from '../../../ScreensTemplate';
 import AddActivityForm from './AddActivityForm';
 
+import { DailyDataArraysService } from '../../../../services';
+
 /**
  * Component related to the add activities page
  * @param props
@@ -14,49 +16,42 @@ import AddActivityForm from './AddActivityForm';
 const AddActivityScreen = props => {
   const portfolioData = props.portfolioData[props.activePortfolio];
 
-  /**
-   * Adds new activity to the array
-   * @param assetType
-   * @param asset
-   * @param type
-   * @param date
-   * @param quantity
-   * @param sum
-   * @param value
-   * @param tax
-   * @param fee
-   * @returns {Promise<void>}
-   */
-  const addActivity = async (assetType, asset, type, date, quantity, sum, value, tax, fee) => {
+  const addActivity = async (assetType, asset, type, date, quantity, sum, value, taxes, fees) => {
+    
     //find assetData related to activity
     let assetData = portfolioData[assetType === 'share' ? 'shares' : assetType].find(element => element.symbol === asset.symbol);
+
     //format the date to YYYY-MM-DD string
-    const formattedDateString = ((new Date(date)).toISOString()).slice(0, 10);
-    const dependsOn = type === 'sell' ? findDependsOn(assetData, quantity) :
-      type === 'dividend' ? findDependsOn(assetData, quantity) :
-        type === 'payout' ? findDependsOnCash(assetData, sum) :
-          type === 'interest' ? findDependsOnCash(assetData, sum) :
-            []; //leer für buy oder deposit
+    const formattedDateString = date.getFormattedString();
+    const dependsOn = type === 'sell' ? findDependsOn(assetData.buys, quantity) : 
+                      type === 'dividend' ? findDependsOn(assetData.buys, quantity) : 
+                      type === 'payout' ? findDependsOnCash(assetData.deposits, sum) :
+                      type === 'interest' ? findDependsOnCash(assetData.deposits, sum) :
+                      []; //leer für buy oder deposit
 
     //define activityObject to push into activity array
     const activityObj = {
-      id: portfolioData['activities'].length,
+      id: portfolioData['activitiesLastId']+1,
       assetType: assetType,
       assetTypeForDisplay: asset.assetType,
       asset: asset.symbol,
       assetName: asset.name ? asset.name : asset.symbol,
       type: type,
       date: formattedDateString,
-      quantity: quantity,
-      value: value,
-      sum: sum,
-      tax: tax,
-      fee: fee,
-      dependsOn: []
+      quantity: parseFloat(quantity),
+      value: parseFloat(value),
+      sum: parseFloat(sum),
+      taxes: parseFloat(taxes),
+      fees: parseFloat(fees),
+      dependsOn: dependsOn
     }
+    console.log("activityObj", activityObj);
 
     //update assetData
-    let updatedAssetData = assetData === undefined ? await newAssetData(activityObj) : await updateAssetData(assetData, activityObj);
+    let updatedAssetData = assetData === undefined ? await createNewAssetData(activityObj) : //create newAssetData if doesn't exist
+                           await updateAssetData(assetData, activityObj); //update existing assetData
+
+    console.log("updatedAssetData", updatedAssetData);
 
     //update activitesArray
     let newActivities = portfolioData['activities'];
@@ -64,24 +59,41 @@ const AddActivityScreen = props => {
     newActivities = sortActivities(newActivities);
 
     props.setPortfolioData(prevData => {
-      const tempPortfolioData = {...prevData};
+      let tempPortfolioData = {...prevData};
       tempPortfolioData[props.activePortfolio]['activities'] = newActivities;
+      tempPortfolioData[props.activePortfolio]['activitiesLastId'] = activityObj.id;
       if (assetData === undefined) {
         tempPortfolioData[props.activePortfolio][assetType === 'share' ? 'shares' : assetType].push(updatedAssetData);
       } else {
         tempPortfolioData[props.activePortfolio][assetType === 'share' ? 'shares' : assetType][assetData.id] = updatedAssetData;
       }
-      tempPortfolioData[props.activePortfolio]['updated'] = '1970-01-01';
       return tempPortfolioData;
     });
+    recalculatePortfolioDataForDates(Object.keys(updatedAssetData['dailyDataForValueDevelopment']));
   }
 
-  const findDependsOn = () => {
-
+  const findDependsOn = (buys, quantity) => {
+    let dependsOn = [];
+    for (let index = 0; index < buys.length; index++) {
+      const buy = buys[index];
+      quantity -= buy.quantity;
+      dependsOn.push(buy.id);
+      if (quantity <= 0) {
+        return dependsOn;
+      }
+    }
   }
 
-  const findDependsOnCash = () => {
-
+  const findDependsOnCash = (deposits, sum) => {
+    let dependsOn = [];
+    for (let index = 0; index < deposits.length; index++) {
+      const deposit = deposits[index];
+      sum -= deposit.sum;
+      dependsOn.push(deposit.id);
+      if (sum <= 0) {
+        return dependsOn;
+      }
+    }
   }
 
   /**
@@ -91,173 +103,280 @@ const AddActivityScreen = props => {
    * @returns {Promise<(*&{fees: *, performance: number, realisedGains: number, taxes: *, value: (*|number), gains: number, invested: (*|number|number)})|(*&{fees: *, performance: number, realisedGains: number, taxes: *, gains: number, invested: (*|number|number)})|*>}
    */
   const updateAssetData = async (assetData, activityObj) => {
-    if (activityObj.assetType === "cash") {
-      //Work in progress...
-      const newValue = activityObj.type === "payout" ? (assetData.value + activityObj.sum) : (assetData.value - activityObj.sum);
-      const newInvested = activityObj.type === "deposit" ? (assetData.invested + activityObj.sum) : activityObj.type === "payout" ? (assetData.invested - activityObj.sum) : assetData.invested;
-      let newGains = activityObj.type === "interest" ? (assetData.gains + activityObj.sum) : assetData.gains;
-      //tax and fees are negative gains
-      newGains = newGains - activityObj.tax - activityObj.fee;
-      //realisedGains same as gains for cash
-      const newRealisedGains = newGains;
-      const newPerformance = (newGains / newInvested) * 100;
+    if (activityObj.assetType === 'cash') {
+      const firstActivity = new Date(assetData.firstActivity) > new Date(activityObj.date) ? activityObj.date : assetData.firstActivity;
+      //update stateChangesArray
+      const [newStateChanges, newStateIndex] = updateStateChangesCash(assetData, activityObj);
+      console.log('newStateChanges', newStateChanges);
+      //updateDailyDataArrays
+      const dailyDataForValueDevelopment = DailyDataArraysService.updateDailyDataForValueDevelopmentCash(assetData, newStateChanges, newStateIndex);
 
-      return {
-        ...assetData,
-        value: newValue,
-        invested: newInvested,
-        gains: newGains,
-        realisedGains: newRealisedGains,
-        performance: newPerformance,
-        taxes: assetData.taxes + activityObj.tax,
-        fees: assetData.fees + activityObj.fee
-      };
+      //update deposits
+      const newDeposits = updateDepositsArray(assetData.deposits, activityObj);
+
+      const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+    
+      const updatedAssetData = {...assetData,
+        firstActivity: firstActivity, 
+        value: dailyDataForValueDevelopment[latestDateWithData]['value'],
+        realisedGains: dailyDataForValueDevelopment[latestDateWithData]['realisedGains'],
+        totalGains: dailyDataForValueDevelopment[latestDateWithData]['realisedGains'],
+        taxes: dailyDataForValueDevelopment[latestDateWithData]['taxes'],
+        fees: dailyDataForValueDevelopment[latestDateWithData]['fees'],
+        dailyDataForValueDevelopment: dailyDataForValueDevelopment,
+        stateChanges: newStateChanges,
+        deposits: newDeposits
+      }
+      return updatedAssetData;
     } else {
-      //Work in progress...
-      return assetData;
       //Crypto or Share
-      const newInvested = activityObj.type === 'buy' ? (assetData.invested + activityObj.sum) : activityObj.type === 'payout' ? (assetData.invested - activityObj.sum) : assetData.invested;
-      let newGains = activityObj.type === 'dividend' ? (assetData.gains + activityObj.sum) : assetData.gains;
-      //tax and fees are negative gains
-      newGains = newGains - activityObj.tax - activityObj.fee;
-      //realisedGains same as gains for cash
-      const newRealisedGains = newGains;
-      const newPerformance = (newGains / newInvested) * 100;
+      const firstActivity = new Date(assetData.firstActivity) > new Date(activityObj.date) ? activityObj.date : assetData.firstActivity;
+      //update stateChangesArray
+      const [newStateChanges, newStateIndex] = updateStateChanges(assetData, activityObj);
+      console.log('newStateChanges', newStateChanges);
+      //updateDailyDataArrays
+      const dailyDataArrays = await DailyDataArraysService.updateDailyDataArrays(assetData, newStateChanges, newStateIndex, activityObj);
+      const dailyDataForValueDevelopment = dailyDataArrays['dailyDataForValueDevelopment'];
+      const dailyDataForPerformanceGraph = dailyDataArrays['dailyDataForPerformanceGraph'];
 
-      return {
-        ...assetData,
-        invested: newInvested,
-        gains: newGains,
-        realisedGains: newRealisedGains,
-        performance: newPerformance,
-        taxes: assetData.taxes + activityObj.tax,
-        fees: assetData.fees + activityObj.fee
-      };
+      //update buys and sort it by date
+      const newBuys = updateBuysArray(assetData.buys, activityObj);
+
+      const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+    
+      const updatedAssetData = {...assetData,
+        firstActivity: firstActivity, 
+        value: dailyDataForValueDevelopment[latestDateWithData]['value'],
+        quantity: dailyDataForValueDevelopment[latestDateWithData]['quantity'],
+        invested: dailyDataForValueDevelopment[latestDateWithData]['invested'],
+        gains: dailyDataForValueDevelopment[latestDateWithData]['gains'],
+        realisedGains: dailyDataForValueDevelopment[latestDateWithData]['realisedGains'],
+        totalGains: dailyDataForValueDevelopment[latestDateWithData]['totalGains'],
+        performanceWithRealisedGains: dailyDataForPerformanceGraph[latestDateWithData]['performanceWithRealisedGains'],
+        performanceWithoutRealisedGains: dailyDataForPerformanceGraph[latestDateWithData]['performanceWithoutRealisedGains'],
+        taxes: dailyDataForValueDevelopment[latestDateWithData]['taxes'],
+        fees: dailyDataForValueDevelopment[latestDateWithData]['fees'],
+        dailyDataForValueDevelopment: dailyDataForValueDevelopment,
+        dailyDataForPerformanceGraph: dailyDataForPerformanceGraph,
+        stateChanges: newStateChanges,
+        buys: newBuys
+      }
+      return updatedAssetData;
     }
   }
 
-  /**
-   * Creates new asset data in case it hasn't been added before
-   * @param activityObj
-   * @returns {Promise<{symbol: *, fees: (number|string|*), dailyDataForPerformanceGraph: {}, quantity: (number|string|*), bought: [{date, quantity: (number|string|*), price: (string|string|*)}], assetTypeForDisplay: (string|*), totalGains: number, taxes: (number|string|*), analysisInfo: any, firstActivity, dailyDataForValueDevelopment: {}, realisedGains: number, name, performanceWithOutRealisedGains: number, id, unrealisedGains: number, value: (string|*), invested: (string|*), performanceWithRealisedGains: number}>}
-   */
-  const newAssetData = async activityObj => {
-    const analysisInfo = activityObj.assetType === 'share' ? await fetchAnalysisInfo(activityObj.asset) : undefined;
-    const dailyDataArrays = await createDailyDataArrays(activityObj);
-    const dailyDataForPerformanceGraph = dailyDataArrays['dailyDataForPerformanceGraph'];
-    const dailyDataForValueDevelopment = dailyDataArrays['dailyDataForValueDevelopment'];
+  const updateStateChanges = (assetData, activityObj) => {
+    let stateChanges = assetData.stateChanges;
+    const previousStateObj = findPreviousState(stateChanges, activityObj);
+    //no previousState
+    if (previousStateObj.index === -1) {
+      //can only be a buy
+      const stateChange = {quantity: activityObj.quantity, sum: activityObj.sum, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees};
+      stateChanges.unshift({date: activityObj.date, assetType: activityObj.assetType, quantity: 0, sum: 0, realisedGains: 0, taxes: 0, fees: 0});
+      stateChanges = addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, 0);
+      return [stateChanges, 0];
+    }
+    const quantityChange = activityObj.type === 'buy' ? activityObj.quantity : activityObj.type === 'sell' ? -activityObj.quantity : 0;
+    let investedChange = activityObj.type === 'buy' ? activityObj.sum : 0;
+    let realisedGains = activityObj.type === 'dividend' ? activityObj.sum : 0;
+    if (activityObj.type === 'sell') {
+      investedChange = calculateInvestedChange(assetData.buys, activityObj.quantity);
+      realisedGains = (activityObj.sum + investedChange);
+    }
+    const stateChange = {quantity: quantityChange, sum: investedChange, realisedGains: realisedGains, taxes: activityObj.taxes, fees: activityObj.fees};
+    //previous State is on the same date
+    if (previousStateObj.overwrite) {
+      stateChanges = addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, previousStateObj.index);
+      return [stateChanges, previousStateObj.index];
+    } else {
+      const newState = {...stateChanges[previousStateObj.index], date: activityObj.date};
+      stateChanges.splice(previousStateObj.index+1, 0, newState);
+      stateChanges = addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, previousStateObj.index+1);
+      return [stateChanges, previousStateObj.index+1];
+    }
+  }
 
-    return {
+  const updateStateChangesCash = (assetData, activityObj) => {
+    let stateChanges = assetData.stateChanges;
+    const previousStateObj = findPreviousState(stateChanges, activityObj);
+    //no previousState
+    if (previousStateObj.index === -1) {
+      //can only be a deposit
+      const stateChange = {sum: activityObj.sum, quantity: 0, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees};
+      stateChanges.unshift({date: activityObj.date, assetType: activityObj.assetType, quantity: 1, sum: 0, realisedGains: 0, taxes: 0, fees: 0});
+      stateChanges = addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, 0);
+      return [stateChanges, 0];
+    }
+    const sumChange = activityObj.type === 'deposit' ? activityObj.sum : -activityObj.sum;
+    const stateChange = {sum: sumChange, quantity: 0, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees};
+    //previous State is on the same date
+    if (previousStateObj.overwrite) {
+      stateChanges = addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, previousStateObj.index);
+      return [stateChanges, previousStateObj.index];
+    } else {
+      const newState = {...stateChanges[previousStateObj.index], date: activityObj.date};
+      stateChanges.splice(previousStateObj.index+1, 0, newState);
+      stateChanges = addStateChangeToEachStateFromIndexOn(stateChange, stateChanges, previousStateObj.index+1);
+      return [stateChanges, previousStateObj.index+1];
+    }
+  }
+
+  const findPreviousState = (stateChanges, activityObj) => {
+    if (stateChanges.length === 0) {
+      const returnObj = {index: -1, overwrite: false};
+      return returnObj;
+    }
+    for (let index = 0; index < stateChanges.length; index++) {
+      const state = stateChanges[index];
+      const activityDate = new Date(activityObj.date);
+      const stateDate = new Date(state.date);
+      if (activityDate < stateDate) {
+        //state before this state is the previous state
+        const returnObj = {index: index-1, overwrite: false};
+        return returnObj;
+      } else if (activityDate.valueOf() === stateDate.valueOf()) {
+        //this state is the previous state
+        const returnObj = {index: index, overwrite: true};
+        return returnObj;
+      }
+      if (index === (stateChanges.length-1)) {
+        //if previous state wasn't found until the last state is reached then it must be the previous state
+        const returnObj = {index: index, overwrite: false};
+        return returnObj;
+      }
+    }
+  }
+
+  const addStateChangeToEachStateFromIndexOn = (stateChange, stateChanges, index) => {
+    for (let i = index; i < stateChanges.length; i++) {
+      let state = stateChanges[i];
+      Object.keys(state).forEach(attribute => {
+        if (attribute==='date' || attribute==='assetType') return; //equal to continue in forEach
+        stateChanges[i][attribute] = state[attribute] + stateChange[attribute];
+      });
+    }
+    return stateChanges;
+  }
+
+  const calculateInvestedChange = (buys, quantity) => {
+    let investedChange = 0;
+    for (let i = 0; i < buys.length; i++) {
+      const buy = buys[i];
+      let newQuantity = quantity - buy.quantity;
+      if (newQuantity <= 0) {
+        investedChange = investedChange - buy.price*quantity;
+        return investedChange;
+      } else {
+        investedChange = investedChange - buy.price*buy.quantity;
+        quantity = newQuantity;
+      }
+    }
+  }
+
+  const updateBuysArray = (oldBuys, activityObj) => {
+    let newBuys = oldBuys;
+    if (activityObj.type === "buy") {
+      newBuys = addToBuysArray(oldBuys, activityObj);
+    } else if (activityObj.type === "sell") {
+      newBuys = deleteFromBuysArray(oldBuys, activityObj.quantity);
+    }
+    console.log("newBuys", newBuys)
+    return newBuys;
+  }
+
+  const addToBuysArray = (buys, activityObj) => {
+    buys.push({id: activityObj.id, date: activityObj.date, price: activityObj.value, quantity: activityObj.quantity});
+    buys.sort((buy1, buy2) => new Date(buy1.date) - new Date(buy2.date));
+    return buys;
+  }
+
+  const deleteFromBuysArray = (buys, quantity) => {
+    const buysInitialLength = buys.length;
+    for (let index = 0; index < buysInitialLength; index++) {
+      //we work with the first buy in every iteration (because we only get to the next iteration when the original first buy in the array is deleted)
+      const buy = buys[0];
+      if (buy.quantity <= quantity) {
+        quantity -= buy.quantity;
+        buys.shift();
+        if(quantity === 0) {
+          return buys;
+        }
+      } else {
+        buys[0].quantity = buys[0].quantity - quantity;
+        return buys;
+      }
+    }
+  }
+
+  const updateDepositsArray = (oldDeposits, activityObj) => {
+    let newDeposits = oldDeposits;
+    if (activityObj.type === "deposit") {
+      newDeposits = addToDepositsArray(oldDeposits, activityObj);
+    } else if (activityObj.type === "payout") {
+      newDeposits = deleteFromDepositsArray(oldDeposits, activityObj.sum);
+    }
+    console.log("newDeposits", newDeposits)
+    return newDeposits;
+  }
+
+  const addToDepositsArray = (deposits, activityObj) => {
+    deposits.push({id: activityObj.id, date: activityObj.date, sum: activityObj.sum});
+    deposits.sort((deposit1, deposit2) => new Date(deposit1.date) - new Date(deposit2.date));
+    return deposits;
+  }
+
+  const deleteFromDepositsArray = (deposits, sum) => {
+    const depositsInitialLength = deposits.length;
+    for (let index = 0; index < depositsInitialLength; index++) {
+      //we work with the first buy in every iteration (because we only get to the next iteration when the original first buy in the array is deleted)
+      const deposit = deposits[0];
+      if (deposit.sum <= sum) {
+        sum -= deposit.sum;
+        deposits.shift();
+        if(sum === 0) {
+          return deposits;
+        }
+      } else {
+        deposits[0].sum = deposits[0].sum - sum;
+        return deposits;
+      }
+    }
+  }
+  
+  const createNewAssetData = async (activityObj) => {
+    const analysisInfo = activityObj.assetType === 'share' ? await fetchAnalysisInfo(activityObj.asset) : undefined;
+    const dailyDataArrays = await DailyDataArraysService.createDailyDataArrays(activityObj);
+    const dailyDataForValueDevelopment = dailyDataArrays['dailyDataForValueDevelopment'];
+    const dailyDataForPerformanceGraph = dailyDataArrays['dailyDataForPerformanceGraph'];
+
+    const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+    const newAssetData = {
       id: portfolioData[activityObj.assetType === 'share' ? 'shares' : activityObj.assetType].length,
-      firstActivity: activityObj.date,
+      firstActivity: activityObj.date, 
       symbol: activityObj.asset,
       name: activityObj.assetName,
       assetTypeForDisplay: activityObj.assetTypeForDisplay,
-      value: activityObj.sum,
+      value: dailyDataForValueDevelopment[latestDateWithData]['value'],
       quantity: activityObj.quantity,
       invested: activityObj.sum,
-      unrealisedGains: 0,
-      realisedGains: 0,
-      totalGains: 0,
-      performanceWithRealisedGains: 0,
-      performanceWithOutRealisedGains: 0,
-      taxes: activityObj.tax,
-      fees: activityObj.fee,
-      dailyDataForPerformanceGraph: dailyDataForPerformanceGraph,
+      gains: dailyDataForValueDevelopment[latestDateWithData]['gains'],
+      realisedGains: dailyDataForValueDevelopment[latestDateWithData]['realisedGains'],
+      totalGains: dailyDataForValueDevelopment[latestDateWithData]['totalGains'],
+      performanceWithRealisedGains: dailyDataForPerformanceGraph[latestDateWithData]['performanceWithRealisedGains'],
+      performanceWithoutRealisedGains: dailyDataForPerformanceGraph[latestDateWithData]['performanceWithoutRealisedGains'],
+      taxes: activityObj.taxes,
+      fees: activityObj.fees,
       dailyDataForValueDevelopment: dailyDataForValueDevelopment,
-      bought: [{date: activityObj.date, price: activityObj.price, quantity: activityObj.quantity}],
-      analysisInfo: analysisInfo
-    };
-  }
-
-  /**
-   * Creates an array containing daily data
-   * @param activityObj
-   * @returns {Promise<{dailyDataForPerformanceGraph: {}, dailyDataForValueDevelopment: {}}>}
-   */
-  const createDailyDataArrays = async activityObj => {
-    const dailyValuesData = await fetchDailyValues(activityObj.asset, activityObj.assetType);
-    const dailyValues = dailyValuesData['Time Series (Daily)'];
-    const dailyDataForValueDevelopment = await createDailyDataForValueDevelopment(dailyValues, activityObj);
-    const dailyDataForPerformanceGraph = await createDailyDataForPerformanceGraph(dailyDataForValueDevelopment);
-    const dailyDataArrays = {
       dailyDataForPerformanceGraph: dailyDataForPerformanceGraph,
-      dailyDataForValueDevelopment: dailyDataForValueDevelopment
+      stateChanges: [{date: activityObj.date, assetType: activityObj.assetType, quantity: activityObj.quantity, sum: activityObj.sum, realisedGains: 0, taxes: activityObj.taxes, fees: activityObj.fees}],
+      buys: [{id: activityObj.id, date: activityObj.date, price: activityObj.value, quantity: activityObj.quantity}],
+      analysisInfo: analysisInfo
     }
-    console.log(dailyDataArrays);
-    return dailyDataArrays;
+    return newAssetData;
   }
 
-  /**
-   * Creates the data with the recent daily value
-   * @param dailyValues
-   * @param activityObj
-   * @returns {Promise<{}>}
-   */
-  const createDailyDataForValueDevelopment = async (dailyValues, activityObj) => {
-    const dailyValuesKeys = Object.keys(dailyValues);
-    let dateString = activityObj.date;
-    if (dateString === ((new Date()).toISOString()).slice(0, 10)) {
-      const date = new Date(dateString);
-      let yesterday = new Date(date.getTime());
-      yesterday.setDate(date.getDate() - 1);
-      dateString = yesterday.toISOString().slice(0, 10);
-    }
-    const dailyDataKeys = sliceKeysAtDate(dailyValuesKeys, dateString);
-    let dailyDataForValueDevelopment = {};
-    await dailyDataKeys.forEach((key) => {
-      const value = (dailyValues[key]['4. close'] * activityObj.quantity).toFixed(2);
-      const invested = activityObj.sum;
-      const gains = (value - invested - activityObj.tax - activityObj.fee).toFixed(2);
-
-      dailyDataForValueDevelopment[key] = {
-        value: value,
-        invested: invested,
-        gains: gains,
-        realisedGains: 0,
-        totalGains: gains,
-        taxes: activityObj.tax,
-        fees: activityObj.fee
-      }
-    });
-    return dailyDataForValueDevelopment;
-  }
-
-  /**
-   * Creates data in regard of the performance graph
-   * @param dailyDataForValueDevelopment
-   * @returns {Promise<{}>}
-   */
-  const createDailyDataForPerformanceGraph = async dailyDataForValueDevelopment => {
-    const dailyDataKeys = Object.keys(dailyDataForValueDevelopment);
-    const dailyDataForPerformanceGraph = {};
-    await dailyDataKeys.forEach((key) => {
-      const dailyDataFVD = dailyDataForValueDevelopment[key];
-      const performanceWithRealisedGains = (dailyDataFVD.totalGains / dailyDataFVD.invested * 100).toFixed(2);
-      const performanceWithoutRealisedGains = (dailyDataFVD.gains / dailyDataFVD.invested * 100).toFixed(2);
-      dailyDataForPerformanceGraph[key] = {
-        performanceWithRealisedGains: performanceWithRealisedGains,
-        performanceWithoutRealisedGains: performanceWithoutRealisedGains
-      }
-    });
-    return dailyDataForPerformanceGraph;
-  }
-
-  const sliceKeysAtDate = (keys, date) => {
-    const index = keys.indexOf(date);
-    return keys.slice(0, index + 1);
-  }
-
-  const updateDailyDataArrays = async activityObj => {
-
-  }
-
-  /**
-   * Sorts activitiesArray by date (the latest date at start of array), by name (alphabetical) and by type (alphabetical)
-   * @param activitiesArray
-   * @returns {*}
-   */
-  const sortActivities = activitiesArray => {
+  //sort activitiesArray by date (latest date at start of array), by name (alphabetical) and by type (alphabetical)
+  const sortActivities = (activitiesArray) => {
     activitiesArray.sort((element1, element2) => {
       const dateResult = (new Date(element2.date)) - (new Date(element1.date));
       if (dateResult === 0) {
@@ -274,34 +393,63 @@ const AddActivityScreen = props => {
     return activitiesArray;
   }
 
-  /**
-   * Fetches the required information for further analysis
-   * @param symbol
-   * @returns {Promise<any>}
-   */
-  const fetchAnalysisInfo = async symbol => {
+  const recalculatePortfolioDataForDates = async (dateKeys) => {
+		const dailyDataForValueDevelopment = await recalculateDailyDataForValueDevelopmentForDates(dateKeys);
+		const dailyDataForPerformanceGraph = DailyDataArraysService.createDailyDataForPerformanceGraph(dailyDataForValueDevelopment);
+    const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+		props.setPortfolioData(prevData => {
+      let tempPortfolioData = {...prevData};
+      tempPortfolioData[props.activePortfolio]['dailyDataForValueDevelopment'] = {...tempPortfolioData[props.activePortfolio]['dailyDataForValueDevelopment'], ...dailyDataForValueDevelopment};
+			tempPortfolioData[props.activePortfolio]['dailyDataForPerformanceGraph'] = {...tempPortfolioData[props.activePortfolio]['dailyDataForPerformanceGraph'], ...dailyDataForPerformanceGraph};
+      tempPortfolioData[props.activePortfolio]['updated'] = '1970-01-01';
+      return tempPortfolioData;
+    });
+	}
+
+	const recalculateDailyDataForValueDevelopmentForDates = async (dateKeys) => {
+		const allAssetsArray = props.getAllAssets();
+
+		const dailyDataForValueDevelopment = {};
+		await allAssetsArray.forEach(asset => {
+			const assetDailyDataForValueDevelopment = asset['dailyDataForValueDevelopment'];
+			dateKeys.forEach((dateKey, index) => {
+				if (assetDailyDataForValueDevelopment[dateKey] === undefined) return; //return equals continue in a forEach loop
+      
+        const portfolioDateData = dailyDataForValueDevelopment[dateKey] ? dailyDataForValueDevelopment[dateKey] :
+														      {value: 0 , invested: 0, gains: 0, realisedGains: 0, totalGains: 0, taxes: 0, fees: 0};
+        let assetDateData = assetDailyDataForValueDevelopment[dateKey];
+        dailyDataForValueDevelopment[dateKey] = {};
+				Object.keys(assetDateData).forEach(attribute => {
+          if (attribute==='quantity') return; //equal to continue in forEach
+          dailyDataForValueDevelopment[dateKey][attribute] = portfolioDateData[attribute] + assetDateData[attribute];
+				});
+			});
+		});
+    return dailyDataForValueDevelopment;
+	}
+
+  const fetchAnalysisInfo = async (symbol) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareInformationsForAnalyse?symbol=${symbol}`, {mode: 'cors'})
-      return await response.json();
-    } catch (error) {
-      console.log('fetching failed === ', error);
+        const response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareInformationsForAnalyse?symbol=${symbol}`, {mode:'cors'})
+        const json = await response.json();
+        return json;
+    } catch (e) {
+      console.log('fetching failed === ', e);
     }
   }
 
-  /**
-   * Retrieves daily values of assets
-   * @param symbol
-   * @param assetType
-   * @returns {Promise<any>}
-   */
-  const fetchDailyValues = async (symbol, assetType) => {
-    const fetchFunc = assetType === 'crypto' ? 'dailyCrypto' : 'dailyShar';
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BASEURL}/${fetchFunc}?symbol=${symbol}`, {mode: 'cors'})
-      return await response.json();
-    } catch (error) {
-      console.log('fetching failed === ', error);
+  Date.prototype.getFormattedString = function() {
+    const date = new Date(this.valueOf());
+    const year = date.getFullYear();
+    let month = `${date.getMonth()+1}`;
+    if (month.length === 1) {
+      month = `0${month}`;
     }
+    let day = `${date.getDate()}`;
+    if (day.length === 1) {
+      day = `0${day}`;
+    }
+    return `${year}-${month}-${day}`;
   }
 
   const renderBody = () => (
@@ -334,7 +482,8 @@ AddActivityScreen.propTypes = {
   activePortfolio: PropTypes.string,
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
-  assetsListArray: PropTypes.array
+  getAllAssets: PropTypes.func,
+  assetsListArray: PropTypes.array,
 };
 
 export default AddActivityScreen;

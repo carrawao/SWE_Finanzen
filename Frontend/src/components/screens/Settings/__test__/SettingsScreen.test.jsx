@@ -27,6 +27,8 @@ it('SettingsScreen renders without crashing', () => {
   const setAssetsListArray = jest.fn();
   const setPortfolioData = jest.fn();
   const setActivePortfolio = jest.fn();
+  const setStatusMessage = jest.fn();
+  const setMessageType = jest.fn();
 
   const wrapper = shallow(<SettingsScreen
     searchResult={[]}
@@ -40,6 +42,8 @@ it('SettingsScreen renders without crashing', () => {
     setAssetsListArray={setAssetsListArray}
     setPortfolioData={setPortfolioData}
     setActivePortfolio={setActivePortfolio}
+    setStatusMessage={setStatusMessage}
+    setMessageType={setMessageType}
   />);
 
   expect(toJson(wrapper)).toMatchSnapshot();

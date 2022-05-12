@@ -126,7 +126,7 @@ const AssetDetailItem = props => (
                 xs: 15
               }}
             >
-              {`${parseFloat(props.row.fee).toFixed(2)}€`}
+              {`${parseFloat(props.row.fees).toFixed(2)}€`}
             </Typography>
             <Typography
               className='align-self-end'
@@ -137,7 +137,7 @@ const AssetDetailItem = props => (
                 xs: 15
               }}
             >
-              {`${parseFloat(props.row.tax).toFixed(2)}€`}
+              {`${parseFloat(props.row.taxes).toFixed(2)}€`}
             </Typography>
           </Box>}
 
@@ -204,7 +204,7 @@ const AssetDetailItem = props => (
 
         <Box className='d-flex px-1'>
           <DropdownMenu
-            tooltip={`${props.activities ? 'Edit Activity': 'Edit Asset'}`}
+            tooltip={`${props.activities ? 'Edit Activity' : 'Edit Asset'}`}
             selectedListIndex={props.selectedListIndex}
             listName={props.listName}
             setListDropdownIndex={props.setListDropdownIndex}

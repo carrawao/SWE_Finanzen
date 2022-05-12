@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Grid, Button, Box, TextField, MenuItem, styled, InputAdornment} from '@mui/material';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import { useNavigate } from 'react-router-dom';
+import { Grid, Button, Box, TextField, MenuItem, styled, InputAdornment, Autocomplete} from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import deLocale from 'date-fns/locale/de';
 import ClearIcon from '@mui/icons-material/Clear';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
@@ -35,19 +35,19 @@ const StyledTextField = styled(TextField)({
 });
 
 const initialValues = {
-  assetType: 'share',
-  asset: null,
-  assetInput: '',
-  typeShare: 'buy',
-  typeCrypto: 'buy',
-  typeCash: 'deposit',
-  date: new Date(),
-  quantity: 1,
-  value: '',
-  sum: '',
-  sumCash: '',
-  tax: 0,
-  fee: 0
+    assetType: 'share',
+    asset: null,
+    assetInput: '',
+    typeShare: 'buy',
+    typeCrypto: 'buy',
+    typeCash: 'deposit',
+    date: new Date(),
+    quantity: '1',
+    value: '',
+    sum: '',
+    sumCash: '',
+    tax: '0',
+    fee: '0'
 }
 
 /**
@@ -99,23 +99,23 @@ const AddActivityForm = props => {
     }
   }
 
-  const numberRegex = /^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/;
-  const numberWithZeroRegex = /^(\d+|\d*\.\d+)$/;
-
+  const numberRegex = /^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$/
+  const numberWithZeroRegex = /^(\d+|\d*\.\d+)$/
+    
   /**
    * Encapsulates all the individual field's validations
-   * @returns {this is (string|*)[]}
+   * @returns boolean
    */
   const validate = () => {
-    const newDateError = changedByDatePicker ? (dateError ? 'Not a valid date' : '') : (errors.date === undefined ? '' : errors.date);
+    let newDateError = changedByDatePicker ? (dateError ? 'Not a valid date' : '') : (errors.date === undefined ? '' : errors.date);
+    newDateError = values.date === null ? 'Not a valid date' : newDateError;
     let newErrors = {date: newDateError};
     newErrors.asset = values.asset ? '' : 'This field is required';
-    if (values.asset) {
-      if (values.assetType === 'share') newErrors = {...newErrors, ...validateShare()};
-      if (values.assetType === 'crypto') newErrors = {...newErrors, ...validateCrypto()};
-      if (values.assetType === 'cash') newErrors = {...newErrors, ...validateCash()};
-      newErrors.fee = (numberWithZeroRegex).test(values.fee) ? '' : 'Not a valid number';
-      newErrors.date = values.date === null ? 'Not a valid date' : newErrors.date;
+    if(values.asset) {
+        if (values.assetType === 'share') newErrors = {...newErrors, ...validateShare(newErrors.date)};
+        if (values.assetType === 'crypto') newErrors = {...newErrors, ...validateCrypto(newErrors.date)};
+        if (values.assetType === 'cash') newErrors = {...newErrors, ...validateCash(newErrors.date)};
+        newErrors.fee = (numberWithZeroRegex).test(values.fee) ? '' : 'Not a valid number';
     }
     setErrors({...newErrors});
     const valid = Object.values(newErrors).every(x => x === '');
@@ -123,37 +123,64 @@ const AddActivityForm = props => {
     return valid;
   }
 
+  Date.prototype.getFormattedString = function() {
+    const date = new Date(this.valueOf());
+    const year = date.getFullYear();
+    let month = `${date.getMonth()+1}`;
+    if (month.length === 1) {
+      month = `0${month}`;
+    }
+    let day = `${date.getDate()}`;
+    if (day.length === 1) {
+      day = `0${day}`;
+    }
+    return `${year}-${month}-${day}`;
+  }
+
+  const getQuantityAtDate = (dailyData, date) => {
+    const dateString = date.getFormattedString();
+    if (dailyData[dateString] === undefined) {
+      const firstDateWithData = (Object.keys(dailyData))[0];
+      if (new Date (dateString) > new Date (firstDateWithData)) {
+        return dailyData[firstDateWithData].quantity;
+      } else {
+        return 0;
+      }
+    } else {
+      return dailyData[dateString].quantity;
+    }
+  }
+  
   /**
    * Occurs validation of shares actions
    * @returns {{}}
    */
-  const validateShare = () => {
+  const validateShare = (dateError) => {
     let errors = {};
     errors.quantity = '';
     if (values.typeShare === 'sell' || values.typeShare === 'dividend') {
-      const share = shares.find(element => element.symbol === values.asset.symbol);
-      if (share === undefined) {
-        errors.typeShare = 'Sell/Dividend not valid for this share';
-      } else {
-        if (!(numberRegex).test(values.quantity)) {
-          errors.quantity = 'Not a valid number';
+        const share = shares.find(element => element.symbol === values.asset.symbol);
+        if (share === undefined) {
+            errors.typeShare = 'Sell/Dividend not valid for this share'
         } else {
-          errors.quantity = share.quantity >= values.quantity ? '' : 'Can\'t be greater than quantity in your portfolio';
+            if (!(numberRegex).test(values.quantity)) {
+                errors.quantity = 'Not a valid number';
+            } else if (dateError === '') {
+              const shareQuantityAtDate = getQuantityAtDate(share.dailyDataForValueDevelopment, values.date);
+              errors.quantity = shareQuantityAtDate >= values.quantity ? '' : "Can't be greater than bought quantity at date";
+            }
         }
-      }
     } else {
-      if (!(numberRegex).test(values.quantity)) {
-        errors.quantity = 'Not a valid number';
-      }
+        if (!(numberRegex).test(values.quantity)) {
+            errors.quantity = 'Not a valid number';
+        }
     }
-
     errors.value = (numberRegex).test(values.value) ? '' : 'Not a valid number';
-
     if (!(numberWithZeroRegex).test(values.tax)) {
       errors.tax = 'Not a valid number';
     } else {
       const checkTaxGreaterThanSum = errors.value === '' ? errors.quantity === '' : false;
-      errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? 'Can\'t be greater than sum' : '';
+      errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? "Can't be greater than sum" : '';
     }
     return errors;
   }
@@ -162,62 +189,75 @@ const AddActivityForm = props => {
    * Occurs validation of crypto actions
    * @returns {{}}
    */
-  const validateCrypto = () => {
+  const validateCrypto = (dateError) => {
     let errors = {};
     if (values.typeCrypto === 'sell') {
-      let coin = crypto.find(element => element.symbol === values.asset.symbol);
-      if (coin === undefined) {
-        errors.typeCrypto = 'Sell not valid for this coin';
-      } else {
-        if (!(numberRegex).test(values.quantity)) {
-          errors.quantity = 'Not a valid number';
+        let coin = crypto.find(element => element.symbol === values.asset.symbol);
+        if (coin === undefined) {
+            errors.typeCrypto = 'Sell not valid for this coin'
         } else {
-          errors.quantity = coin.quantity >= values.quantity ? '' : 'Can\'t be greater than quantity in your portfolio';
+            if (!(numberRegex).test(values.quantity)) {
+                errors.quantity = 'Not a valid number';
+            } else if (dateError === '') {
+              const coinQuantityAtDate = getQuantityAtDate(coin.dailyDataForValueDevelopment, values.date);
+              errors.quantity = coinQuantityAtDate >= values.quantity ? '' : "Can't be greater than bought quantity at date";
+            }
+        };
+    } else {
+        if (!(numberRegex).test(values.quantity)) {
+            errors.quantity = 'Not a valid number';
         }
-      }
-    } else {
-      if (!(numberRegex).test(values.quantity)) {
-        errors.quantity = 'Not a valid number';
-      }
     }
-
     errors.value = (numberRegex).test(values.value) ? '' : 'Not a valid number';
-
     if (!(numberWithZeroRegex).test(values.tax)) {
-      errors.tax = 'Not a valid number';
+        errors.tax = 'Not a valid number';
     } else {
-      const checkTaxGreaterThanSum = errors.value === '' ? errors.quantity === '' : false;
-      errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? 'Can\'t be greater than sum' : '';
+        const checkTaxGreaterThanSum = errors.value === '' ? errors.quantity === '' : false;
+        errors.tax = checkTaxGreaterThanSum && (values.sum < values.tax) ? "Can't be greater than sum" : '';
     }
     return errors;
+  }
+
+  const getSumAtDate = (dailyData, date) => {
+    const dateString = date.getFormattedString();
+    if (dailyData[dateString] === undefined) {
+      const firstDateWithData = (Object.keys(dailyData))[0];
+      if (new Date (dateString) > new Date (firstDateWithData)) {
+        return dailyData[firstDateWithData].value;
+      } else {
+        return 0;
+      }
+    } else {
+      return dailyData[dateString].value;
+    }
   }
 
   /**
    * Occurs validation of cash actions
    * @returns {{}}
    */
-  const validateCash = () => {
+  const validateCash = (dateError) => {
     let errors = {};
     if (values.typeCash !== 'deposit') {
-      let account = cash.find(element => element.symbol === values.asset.symbol);
-      if (account.value === 0) {
-        errors.typeCash = 'Payout/Interest not valid for this account';
-      } else {
-        if (!(numberRegex).test(values.sumCash)) {
-          errors.sumCash = 'Not a valid number';
+        let account = cash.find(element => element.symbol === values.asset.symbol);
+        if (account.value === 0) {
+            errors.typeCash = 'Payout not valid for this account'
         } else {
-          errors.sumCash = account.value >= values.sumCash ? '' : 'Can\'t be greater than deposited amount';
-        }
-      }
+            if (!(numberRegex).test(values.sumCash)) {
+                errors.sumCash = 'Not a valid number';
+            } else if (dateError === '') {
+              const accountValueAtDate = getSumAtDate(account.dailyDataForValueDevelopment, values.date);  
+              errors.sumCash = accountValueAtDate >= values.sumCash ? '' : "Can't be greater than deposited amount at date";
+            }
+        };
     } else {
-      errors.sumCash = !(numberRegex).test(values.sumCash) ? 'Not a valid number' : '';
+        errors.sumCash = !(numberRegex).test(values.sumCash) ? 'Not a valid number' : '';
     }
-
     if (!(numberWithZeroRegex).test(values.tax)) {
-      errors.tax = 'Not a valid number';
+        errors.tax = 'Not a valid number';
     } else {
-      const checkTaxGreaterThanSum = errors.sumCash === '';
-      errors.tax = checkTaxGreaterThanSum && (values.sumCash < values.tax) ? 'Can\'t be greater than sum' : '';
+        const checkTaxGreaterThanSum = errors.sumCash === '';
+        errors.tax = checkTaxGreaterThanSum && (values.sumCash < values.tax) ? "Can't be greater than sum" : '';
     }
     return errors;
   }
@@ -225,7 +265,7 @@ const AddActivityForm = props => {
   let navigate = useNavigate();
   const routeChange = path => {
     navigate(path);
-  }
+  }  
 
   /**
    * Submits the form once the buttons are enabled
@@ -233,15 +273,15 @@ const AddActivityForm = props => {
    */
   const handleSubmit = event => {
     event.preventDefault();
-    if (validate()) {
-      if (values.assetType === 'share') props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
-      if (values.assetType === 'crypto') props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
-      if (values.assetType === 'cash') props.addActivity(values.assetType, values.asset, values.typeCash, values.date, 1, values.sumCash, undefined, values.tax, values.fee);
-      if (!addAnother) {
-        routeChange('../activities');
-      } else {
-        alert('Activity saved!');
-      }
+    if(validate()) {
+        if (values.assetType === 'share') props.addActivity(values.assetType, values.asset, values.typeShare, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
+        if (values.assetType === 'crypto') props.addActivity(values.assetType, values.asset, values.typeCrypto, values.date, values.quantity, values.sum, values.value, values.tax, values.fee);
+        if (values.assetType === 'cash') props.addActivity(values.assetType, values.asset, values.typeCash, values.date, '1', values.sumCash, values.sumCash, values.tax, values.fee);
+        if (!addAnother) {
+            routeChange('../activities');
+        } else {
+            alert('Activity saved!');
+        }
     }
   }
 
@@ -263,7 +303,7 @@ const AddActivityForm = props => {
             fullWidth
             margin='normal'
             select
-            label='asset type'
+            label='type of asset'
             name='assetType'
             onChange={handleInputChange}
             value={values.assetType}
@@ -338,7 +378,6 @@ const AddActivityForm = props => {
             >
               <MenuItem value='deposit'>Deposit</MenuItem>
               <MenuItem value='payout'>Payout</MenuItem>
-              <MenuItem value='interest'>Interest</MenuItem>
             </StyledTextField>
           </Grid>
         }
@@ -381,7 +420,7 @@ const AddActivityForm = props => {
               <StyledTextField
                 fullWidth
                 margin='normal'
-                label='Item Value'
+                label='Value per item'
                 name='value'
                 id='add-activity-value'
                 onChange={handleInputChange}

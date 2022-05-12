@@ -30,6 +30,7 @@ const DashboardScreen = props => {
           <Grid item xs={4}>
             <AllocationGraph
               portfolioData={props.portfolioData[props.activePortfolio]}
+              activePortfolio={props.activePortfolio}
               getAllAssets={props.getAllAssets}
             />
           </Grid>
@@ -61,10 +62,14 @@ const DashboardScreen = props => {
     <React.Fragment>
       <ScreensTemplate
         bodyComponent={renderBody}
-        selectedNavLinkIndex={1}
+        selectedNavLinkIndex={0}
         assetsListArray={props.assetsListArray}
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
+        statusMessage={props.statusMessage}
+        setStatusMessage={props.setStatusMessage}
+        messageType={props.messageType}
+        setMessageType={props.setMessageType}
       />
     </React.Fragment>
 
@@ -80,7 +85,11 @@ DashboardScreen.propTypes = {
   searchResult: PropTypes.array,
   setSearchResult: PropTypes.func,
   watchListsArray: PropTypes.array,
-  assetsListArray: PropTypes.array
+  assetsListArray: PropTypes.array,
+  statusMessage: PropTypes.string,
+  setStatusMessage: PropTypes.func,
+  messageType: PropTypes.string,
+  setMessageType: PropTypes.func
 };
 
 export default DashboardScreen;

@@ -10,15 +10,42 @@ configure({adapter: new Adapter()});
 it('AnalysisScreen renders without crashing', () => {
   const setSearchResult = jest.fn();
   const setPortfolioData = jest.fn();
+  const setStatusMessage = jest.fn();
+  const setMessageType = jest.fn();
+
+  const portfolioData = {
+    'Portfolio': {
+      'name': 'Portfolio',
+      'value': 0,
+      'gains': 0,
+      'realisedGains': 0,
+      'totalGains': 0,
+      'performanceWithRealisedGains': 0,
+      'performanceWithoutRealisedGains': 0,
+      'shares': [],
+      'crypto': [],
+      'cash': [],
+      'activities': [],
+      'activitiesLastId': -1,
+      'dailyDataForValueDevelopment': {},
+      'dailyDataForPerformanceGraph': {},
+      'updated': '1970-01-01',
+      'shareValue': 0,
+      'cryptoValue': 0,
+      'cashValue': 0
+    }
+  }
 
   const tree = shallow(<AnalysisScreen
     searchResult={[]}
     setSearchResult={setSearchResult}
     watchListsArray={[]}
     assetsListArray={[[]]}
-    portfolioData={{}}
+    portfolioData={portfolioData}
     activePortfolio={'Portfolio'}
     setPortfolioData={setPortfolioData}
+    setStatusMessage={setStatusMessage}
+    setMessageType={setMessageType}
   />);
 
   expect(toJson(tree)).toMatchSnapshot();

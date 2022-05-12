@@ -108,7 +108,7 @@ const WatchListsScreen = props => {
     <React.Fragment>
       <ScreensTemplate
         bodyComponent={renderBody}
-        selectedNavLinkIndex={2}
+        selectedNavLinkIndex={1}
         addToWatchList={index => {
           setAddToWatchlistModal(true);
           setSearchResultIndex(index);

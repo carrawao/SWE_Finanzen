@@ -10,8 +10,10 @@ exports[`SettingsScreen renders without crashing 1`] = `
     }
     bodyComponent={[Function]}
     searchResult={Array []}
-    selectedNavLinkIndex={4}
+    selectedNavLinkIndex={5}
+    setMessageType={[MockFunction]}
     setSearchResult={[MockFunction]}
+    setStatusMessage={[MockFunction]}
   />
   <CustomModal
     describedby="delete_data-modal-description"
