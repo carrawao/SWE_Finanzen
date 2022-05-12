@@ -32,8 +32,22 @@ const CustomModal = props => (
         <IconButton
           onClick={() => props.handleClose()}
           className='px-0 py-1 align-self-start'
+          sx={{
+            '&:hover': {
+              backgroundColor: 'white',
+            }
+          }}
         >
-          <CloseIcon style={{color: 'rgb(228 126 37)'}}/>
+          <CloseIcon
+            style={{color: 'rgb(228 126 37)'}}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'white',
+                border: '1px solid #493f35',
+                borderRadius: '5px'
+              }
+            }}
+          />
         </IconButton>
       </Container>
 

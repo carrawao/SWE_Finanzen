@@ -13,7 +13,8 @@ import {
   Avatar,
   FormControl,
   Button,
-  TextField
+  TextField,
+  Tooltip
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -67,6 +68,8 @@ const WatchLists = props => {
       setErrorModal(false);
       setWatchlist('');
       props.setSelectedListIndex(props.watchListsArray.length);
+      props.setStatusMessage('Watchlist was successfully created');
+      props.setMessageType('success');
     } else {
       setErrorModal(true);
     }
@@ -81,6 +84,8 @@ const WatchLists = props => {
         setEditListModal(false);
         setErrorModal(false);
         setWatchlist('');
+        props.setStatusMessage('Watchlist was successfully edited');
+        props.setMessageType('success');
       } else {
         setErrorModal(true);
       }
@@ -102,6 +107,8 @@ const WatchLists = props => {
       props.selectedListIndex > 0 ?
         props.setSelectedListIndex(props.selectedListIndex - 1) :
         props.setSelectedListIndex(0)
+      props.setStatusMessage('Watchlist was successfully removed');
+      props.setMessageType('success');
     }
   };
 
@@ -151,9 +158,28 @@ const WatchLists = props => {
         </Typography>
         <IconButton
           onClick={() => setAddListModal(true)}
-          className='pe-0'
+          className='pe-0 py-0'
         >
-          <AddIcon style={{color: '#493f35'}}/>
+          <Tooltip
+            title='Create Watchlist'
+            arrow
+            placement='right'
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  color: 'white',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  backgroundColor: '#30302f',
+                  '& .MuiTooltip-arrow': {
+                    color: '#30302f'
+                  },
+                },
+              },
+            }}
+          >
+            <AddIcon style={{color: '#493f35'}}/>
+          </Tooltip>
         </IconButton>
       </Stack>
 
@@ -254,7 +280,7 @@ const WatchLists = props => {
                         }}
                       >
                         <Typography sx={{fontSize: '12px'}}>
-                          {asset.name.slice(0, 3).toUpperCase()}
+                          {asset.symbol.slice(0, 3).toUpperCase()}
                         </Typography>
                       </Avatar>
                   )}
@@ -262,6 +288,7 @@ const WatchLists = props => {
               </ListItemButton>
               {props.watchListsArray.length > 0 && (
                 <DropdownMenu
+                  tooltip='Edit Watchlist'
                   listIndex={index}
                   selectedListIndex={props.selectedListIndex}
                   listName={props.watchListsArray[index]}
@@ -299,7 +326,9 @@ WatchLists.propTypes = {
   selectedListIndex: PropTypes.number,
   setSelectedListIndex: PropTypes.func,
   assetsListArray: PropTypes.array,
-  setAssetsListArray: PropTypes.func
+  setAssetsListArray: PropTypes.func,
+  setStatusMessage: PropTypes.func,
+  setMessageType: PropTypes.func
 };
 
 export default WatchLists;

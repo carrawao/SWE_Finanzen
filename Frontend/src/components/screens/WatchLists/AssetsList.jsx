@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import {
   Container,
   Typography,
-  Stack,
-  IconButton,
+  Stack
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 import AssetListItem from './AssetListItem';
 import {renderRemoveAssetModal, renderAddAssetModal} from './Modals/assetModals';
@@ -35,6 +33,8 @@ const AssetsList = props => {
       setShowAssetModal(false);
       setErrorModal(false);
       setAsset('');
+      props.setStatusMessage('Asset was successfully added');
+      props.setMessageType('success');
     } else {
       setErrorModal(true);
     }
@@ -52,6 +52,8 @@ const AssetsList = props => {
       });
       setRemoveAssetModal(false);
       setSelectedAssetIndex(0);
+      props.setStatusMessage('Asset was successfully removed');
+      props.setMessageType('success');
     }
   };
 
@@ -133,22 +135,7 @@ const AssetsList = props => {
         <Typography variant='h6' noWrap>
           {props.watchListsArray[props.selectedListIndex]}:
         </Typography>
-        <IconButton
-          onClick={() => {
-          }}
-        >
-          <AddIcon style={{color: '#493f35'}}/>
-        </IconButton>
       </Stack>
-
-      <Container className='d-flex d-md-none col-12 justify-content-end pe-2'>
-        <IconButton
-          onClick={() => setShowAssetModal(true)}
-          className='pe-0'
-        >
-          <AddIcon style={{color: '#493f35'}}/>
-        </IconButton>
-      </Container>
 
       <AssetListItem
         assetsListArray={props.assetsListArray}
@@ -170,7 +157,9 @@ AssetsList.propTypes = {
   assetsListArray: PropTypes.array,
   setAssetsListArray: PropTypes.func,
   selectedListIndex: PropTypes.number,
-  setSelectedListIndex: PropTypes.func
+  setSelectedListIndex: PropTypes.func,
+  setStatusMessage: PropTypes.func,
+  setMessageType: PropTypes.func
 };
 
 export default AssetsList;

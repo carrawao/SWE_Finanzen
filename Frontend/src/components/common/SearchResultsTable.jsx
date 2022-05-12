@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Avatar, Button, Grid, List, ListItem, ListItemButton, Typography} from '@mui/material';
+import {Avatar, Button, Grid, List, ListItem, ListItemButton, Typography, Tooltip} from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AddIcon from '@mui/icons-material/Add';
@@ -130,23 +130,59 @@ const SearchResultsTable = props => {
                 className='p-0 ms-3 flex-grow-0 justify-content-end'
                 onClick={() => props.addToWatchList(index)}
               >
-                <Avatar
-                  sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                <Tooltip
+                  title='Add to Watchlist'
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        backgroundColor: '#30302f',
+                        '& .MuiTooltip-arrow': {
+                          color: '#30302f'
+                        },
+                      },
+                    },
+                  }}
                 >
-                  <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/>
-                </Avatar>
+                  <Avatar
+                    sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                  >
+                    <BookmarkBorderIcon className='p-1' sx={{color: '#493f35', fontSize: '25px'}}/>
+                  </Avatar>
+                </Tooltip>
               </ListItemButton>
               <ListItemButton
                 className='p-0 ms-3 flex-grow-0 justify-content-end'
                 onClick={() => {
                 }}
               >
-                <Avatar
-                  className='me-2'
-                  sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                <Tooltip
+                  title='Add Activity'
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        backgroundColor: '#30302f',
+                        '& .MuiTooltip-arrow': {
+                          color: '#30302f'
+                        },
+                      },
+                    },
+                  }}
                 >
-                  <AddIcon sx={{color: '#493f35', fontSize: '20px'}}/>
-                </Avatar>
+                  <Avatar
+                    className='me-2'
+                    sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                  >
+                    <AddIcon sx={{color: '#493f35', fontSize: '20px'}}/>
+                  </Avatar>
+                </Tooltip>
               </ListItemButton>
             </Grid>
           }

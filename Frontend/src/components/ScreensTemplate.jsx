@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-import {AppBar, Box, CssBaseline, Grid, Toolbar} from '@mui/material';
+import {AppBar, Box, CssBaseline, Grid, Toolbar, Alert} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
@@ -23,12 +23,51 @@ const ScreensTemplate = props => {
   useEffect(() => {
     props.setSearchResult([]);
     setSearchQuery('');
-  }, [location]);
+    if (props.statusMessage !== '') {
+      showStatusMessage(props.messageType, props.statusMessage)
+      setTimeout(() => {
+        props.setStatusMessage(undefined);
+        props.setMessageType(undefined);
+      }, 3000)
+    }
+  }, [location, props.statusMessage]);
 
   // Shows and hides the drawer navigation menu
   const handleDrawerToggle = () => {
     setOpenInMobile(!openInMobile);
   };
+
+  /**
+   * Renders status messages of different actions for a few seconds
+   * @param type
+   * @param message
+   * @returns {JSX.Element}
+   */
+  const showStatusMessage = (type, message) => (
+    <Box
+      className='d-flex flex-grow-1 justify-content-center'
+      sx={{
+        position: 'fixed',
+        zIndex: 1000,
+        bottom: {
+          xs: 80,
+          md: 70
+        },
+        right: {
+          xs: 0,
+          lg: `${drawerWidth}rem`
+        },
+        left: {
+          xs: 0,
+          lg: `calc(2 * ${drawerWidth}rem)`
+        }
+      }}
+    >
+      <Alert className='col-10 col-md-9 col-xl-7 text-center' variant='filled' severity={type}>
+        {message}
+      </Alert>
+    </Box>
+  );
 
   return (
     <Box className='d-flex' sx={{position: 'relative', minHeight: '100vh'}}>
@@ -61,6 +100,8 @@ const ScreensTemplate = props => {
           <SearchField
             searchQuery={searchQuery}
             onQueryChange={props.setSearchResult}
+            setStatusMessage={props.setStatusMessage}
+            setMessageType={props.setMessageType}
           />
         </Toolbar>
       </AppBar>
@@ -98,11 +139,15 @@ const ScreensTemplate = props => {
                   props.setSearchResult([]);
                   setSearchQuery('');
                 }}
+                setStatusMessage={props.setStatusMessage}
+                setMessageType={props.setMessageType}
+                showStatusMessage={() => showStatusMessage()}
               />
             </Grid>
             :
             props.bodyComponent()}
         </Box>
+        {props.messageType !== undefined && props.statusMessage !== undefined && showStatusMessage(props.messageType, props.statusMessage)}
       </Box>
       <Box sx={{
         position: 'absolute',
@@ -126,7 +171,11 @@ ScreensTemplate.propTypes = {
   selectedNavLinkIndex: PropTypes.number,
   addToWatchList: PropTypes.func,
   watchListsArray: PropTypes.array,
-  assetsListArray: PropTypes.array
+  assetsListArray: PropTypes.array,
+  statusMessage: PropTypes.string,
+  setStatusMessage: PropTypes.func,
+  messageType: PropTypes.string,
+  setMessageType: PropTypes.func
 };
 
 export default ScreensTemplate;

@@ -88,6 +88,7 @@ const CustomSelectField = props => {
 
       <Grid item className='col-3 ps-3 justify-content-start'>
         <DropdownMenu
+          tooltip='Edit Watchlist'
           selectedListIndex={props.selectedListIndex}
           listName={props.watchListsArray[props.selectedListIndex]}
           setListDropdownIndex={props.setListDropdownIndex}

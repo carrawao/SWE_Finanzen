@@ -64,6 +64,8 @@ const AppRoutes = () => {
   const [portfolioData, setPortfolioData] = useState(() => persistState('portfolioData', emptyPortfolioData));
   const [activePortfolio, setActivePortfolio] = useState(() => persistString('activePortfolio', 'Portfolio'));
   const [searchResult, setSearchResult] = useState([]);
+  const [statusMessage, setStatusMessage] = useState(undefined);
+  const [messageType, setMessageType] = useState(undefined);
 
   useEffect(() => {
     localStorage.setItem('watchListsArray', JSON.stringify(watchListsArray));
@@ -215,6 +217,10 @@ const AppRoutes = () => {
             portfolioData={portfolioData}
             setPortfolioData={setPortfolioData}
             getAllAssets={getAllAssets}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />}
       />
       <Route
@@ -229,6 +235,10 @@ const AppRoutes = () => {
             setActivePortfolio={setActivePortfolio}
             portfolioData={portfolioData}
             setPortfolioData={setPortfolioData}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />}
       />
 
@@ -243,6 +253,10 @@ const AppRoutes = () => {
             activePortfolio={activePortfolio}
             portfolioData={portfolioData}
             setPortfolioData={setPortfolioData}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />
         }
       />
@@ -270,6 +284,10 @@ const AppRoutes = () => {
             setWatchListsArray={setWatchListsArray}
             assetsListArray={assetsListArray}
             setAssetsListArray={setAssetsListArray}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />
         }
       />
@@ -288,6 +306,10 @@ const AppRoutes = () => {
             setAssetsListArray={setAssetsListArray}
             setPortfolioData={setPortfolioData}
             setActivePortfolio={setActivePortfolio}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />}
       />
       <Route
@@ -300,6 +322,10 @@ const AppRoutes = () => {
             assetsListArray={assetsListArray}
             portfolioData={portfolioData}
             activePortfolio={activePortfolio}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />}
       />
       <Route
@@ -313,6 +339,10 @@ const AppRoutes = () => {
             activePortfolio={activePortfolio}
             portfolioData={portfolioData}
             setPortfolioData={setPortfolioData}
+            statusMessage={statusMessage}
+            setStatusMessage={setStatusMessage}
+            messageType={messageType}
+            setMessageType={setMessageType}
           />}
       />
       <Route path='/impressum' element={<Impressum/>}/>

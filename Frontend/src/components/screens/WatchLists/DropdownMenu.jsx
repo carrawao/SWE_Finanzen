@@ -6,7 +6,8 @@ import {
   MenuItem,
   Divider,
   Typography,
-  Container
+  Container,
+  Tooltip
 } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
@@ -55,21 +56,47 @@ const DropdownMenu = props => {
 
   return (
     <React.Fragment>
-      <Button
-        className='d-flex py-2 px-1'
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup='true'
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-        sx={{
-          textAlign: 'right',
-          padding: 0,
-          color: `${props.selectedListIndex === props.listIndex ? 'white' : '#493f35'}`,
-          minWidth: 0
+      <Tooltip
+        title={props.tooltip}
+        arrow
+        componentsProps={{
+          tooltip: {
+            sx: {
+              color: `${props.selectedListIndex === props.listIndex ? '#30302f' : 'white'}`,
+              fontSize: '14px',
+              fontWeight: 'bold',
+              backgroundColor: `${props.selectedListIndex === props.listIndex ? '#bdbab7' : '#30302f'}`,
+              '& .MuiTooltip-arrow': {
+                color: `${props.selectedListIndex === props.listIndex ? '#bdbab7' : '#30302f'}`
+              },
+            },
+          },
         }}
       >
-        <MoreHorizIcon fontSize='medium'/>
-      </Button>
+        <Button
+          className='d-flex py-2 px-1'
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup='true'
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+          sx={{
+            textAlign: 'right',
+            padding: 0,
+            color: `${props.selectedListIndex === props.listIndex ? 'white' : '#493f35'}`,
+            minWidth: 0,
+            '&:hover': {
+              backgroundColor: `${props.selectedListIndex === props.listIndex ? '#493f35' : 'white'}`,
+            }
+          }}
+        >
+          <MoreHorizIcon fontSize='medium' sx={{
+            '&:hover': {
+              border: `1px solid ${props.selectedListIndex === props.listIndex ? 'white' : '#493f35'}`,
+              borderRadius: '5px'
+            }
+          }}/>
+        </Button>
+      </Tooltip>
       <Menu
         anchorEl={anchorEl}
         open={open}
@@ -122,7 +149,8 @@ DropdownMenu.propTypes = {
   setListDropdownIndex: PropTypes.func,
   menuOptions: PropTypes.array,
   iconOptions: PropTypes.array,
-  functionOptions: PropTypes.array
+  functionOptions: PropTypes.array,
+  tooltip: PropTypes.string
 };
 
 export default DropdownMenu;
