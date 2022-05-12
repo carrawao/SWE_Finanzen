@@ -239,7 +239,7 @@ const fetchCryptoOptions = async (query) => {
         <props.StyledTextField
           {...params}
           margin='normal'
-          label='asset/account'
+          label='Asset/Account'
           name='assetInput'
           onChange={props.handleInputChange}
           value={props.values.assetInput}

@@ -44,12 +44,22 @@ class DailyDataArraysService {
       const today = new Date();
       cutOffDate = today.getFormattedString();
     }
-    let dailyDataKeys = this.createDailyKeys(state.date, cutOffDate);
+
     let dailyValueKeys = Object.keys(dailyValues);
+    let startDate = state.date;
+
+    //check if state.date is smaller than smallest dailyValue from api
+    if (new Date(dailyValueKeys[dailyValueKeys.length-1]) > new Date(state.date)) {
+      startDate = dailyValueKeys[dailyValueKeys.length-1];
+    }
+
+    let dailyDataKeys = this.createDailyKeys(startDate, cutOffDate);
+    
     let dailyDataForValueDevelopment = {};
     dailyDataKeys.forEach((key, index) => {
       let dateData = dailyValues[key];
       if (dateData === undefined) {
+        //take data from most previous date with data to key
         for (let i = 0; i < dailyValueKeys.length; i++) {
           if (new Date(key) > new Date(dailyValueKeys[i])) {
             dateData = dailyValues[dailyValueKeys[i]];

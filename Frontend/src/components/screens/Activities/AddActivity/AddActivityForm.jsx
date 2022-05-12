@@ -278,12 +278,16 @@ const AddActivityForm = props => {
       dateString = fetchDate.getFormattedString();
     }
     let valueForDate = undefined;
-    while (valueForDate === undefined) {
+    let iteration = 1;
+    while (valueForDate === undefined && iteration < 6) {
       valueForDate = await fetchValueForDate(values.assetType, values.asset.symbol, dateString);
       fetchDate = fetchDate.addDays(-1);
       dateString = fetchDate.getFormattedString();
+      iteration++;
     }
-    setValues({...values, value: parseFloat(valueForDate).toFixed(2), sum: (valueForDate * values.quantity).toFixed(2)});
+    if (valueForDate !== undefined) {
+      setValues({...values, value: parseFloat(valueForDate).toFixed(2), sum: (valueForDate * values.quantity).toFixed(2)});
+    }
     setValueUpdated(true);
   }
 
@@ -353,12 +357,12 @@ const AddActivityForm = props => {
         container
         className='flex-row justify-content-between align-items-start'
       >
-        <Grid item className='col-5'>
+        <Grid item className='col-4'>
           <StyledTextField
             fullWidth
             margin='normal'
             select
-            label='type of asset'
+            label='Type of asset'
             name='assetType'
             onChange={handleInputChange}
             value={values.assetType}
@@ -368,7 +372,7 @@ const AddActivityForm = props => {
             <MenuItem value='cash'>Cash</MenuItem>
           </StyledTextField>
         </Grid>
-        <Grid item className='col-6'>
+        <Grid item className='col-7'>
           <SearchAssetInput
             values={values}
             errors={errors}
@@ -385,12 +389,12 @@ const AddActivityForm = props => {
         className='flex-row justify-content-between align-items-start'
       >
         {values.assetType === 'share' &&
-          <Grid item className='col-5'>
+          <Grid item className='col-4'>
             <StyledTextField
               fullWidth
               select
               margin='normal'
-              label='type'
+              label='Type'
               name='typeShare'
               onChange={handleInputChange}
               value={values.typeShare}
@@ -403,12 +407,12 @@ const AddActivityForm = props => {
           </Grid>
         }
         {values.assetType === 'crypto' &&
-          <Grid item className='col-5'>
+          <Grid item className='col-4'>
             <StyledTextField
               fullWidth
               select
               margin='normal'
-              label='type'
+              label='Type'
               name='typeCrypto'
               onChange={handleInputChange}
               value={values.typeCrypto}
@@ -420,12 +424,12 @@ const AddActivityForm = props => {
           </Grid>
         }
         {values.assetType === 'cash' &&
-          <Grid item className='col-5'>
+          <Grid item className='col-4'>
             <StyledTextField
               fullWidth
               select
               margin='normal'
-              label='type'
+              label='Type'
               name='typeCash'
               onChange={handleInputChange}
               value={values.typeCash}
@@ -436,7 +440,7 @@ const AddActivityForm = props => {
             </StyledTextField>
           </Grid>
         }
-        <Grid item className='col-5'>
+        <Grid item className='col-7'>
           <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>
             <DatePicker
               disableFuture
