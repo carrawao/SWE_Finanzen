@@ -22,17 +22,17 @@ const SettingsScreen = props => {
     <Container className='d-flex flex-column px-1 pt-2'>
       <Box className='col-12'>
         <Typography
-          variant='h6'
+          variant='h3'
           fontSize={{
-            lg: 24,
-            xs: 18
+            lg: 36,
+            xs: 24
           }}
           sx={{
-            marginBottom: '40px'
+            marginBottom: '2rem'
           }}
 
         >
-          Settings <SettingsIcon/>
+          Settings <SettingsIcon sx={{ fontSize: {lg: 36, xs: 24} }}/>
         </Typography>
 
       </Box>
@@ -41,12 +41,12 @@ const SettingsScreen = props => {
               sx={{
                 borderRadius: '1rem',
                 border: '1px solid black',
-                padding: '20px',
+                padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(78 185 111) 55%, #FFFFFF 0%);'
                 },
                 background: 'linear-gradient(90deg, rgb(78 185 111) 72%, #FFFFFF 50%);',
-                marginBottom: '40px'
+                marginBottom: '2rem'
               }}
         >
           <Grid item className='col-12 col-md-9 col-xl-9' sx={{
@@ -118,12 +118,12 @@ const SettingsScreen = props => {
               sx={{
                 borderRadius: '1rem',
                 border: '1px solid black',
-                padding: '20px',
+                padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(59 151 210) 55%, #FFFFFF 0%);'
                 },
                 background: 'linear-gradient(90deg, rgb(59 151 210) 72%, #FFFFFF 50%);',
-                marginBottom: '40px'
+                marginBottom: '2rem'
               }}
         >
           <Grid item className='col-12 col-md-9 col-xl-9'
@@ -184,12 +184,12 @@ const SettingsScreen = props => {
               sx={{
                 borderRadius: '1rem',
                 border: '1px solid black',
-                padding: '20px',
+                padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(228 126 37) 55%, #FFFFFF 0%);'
                 },
                 background: 'linear-gradient(90deg, rgb(228 126 37) 72%, #FFFFFF 50%);',
-                marginBottom: '40px'
+                marginBottom: '2rem'
               }}
         >
           <Grid item className='col-12 col-md-9 col-xl-9' sx={{
