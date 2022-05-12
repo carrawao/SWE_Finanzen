@@ -31,7 +31,7 @@ const Home = () => {
       '/activities',
       `${process.env.PUBLIC_URL}/assets/images/activities.png`,
       'Activities',
-      'Add new purchases, sales, and dividend distributions to your activities to get an overview of previous payments!'
+      'Add new purchases, sales, and dividend distributions to your activities to get an overview of previous activities!'
     ],
     'analysis': [
       'rgb(228 126 37)',

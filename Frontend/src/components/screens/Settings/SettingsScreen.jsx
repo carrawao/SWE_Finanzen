@@ -69,7 +69,7 @@ const SettingsScreen = props => {
               }}
 
             >
-              Upload your previously saved data in the form of a Jason file to get back to your current state. This way you have complete control over your data!
+              Upload your previously saved data in the form of a Json file to get back to your current state. This way you have complete control over your data!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
