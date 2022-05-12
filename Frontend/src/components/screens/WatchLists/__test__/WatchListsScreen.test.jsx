@@ -26,6 +26,8 @@ describe('Tests regarding WatchList screen', () => {
   const setAssetsListArray = jest.fn();
   const setSelectedListIndex = jest.fn();
   const onClose = jest.fn();
+  const setStatusMessage = jest.fn();
+  const setMessageType = jest.fn();
 
   it('search results are not shown', () => {
     const wrapper = shallow(<SearchResultsTable
@@ -74,6 +76,8 @@ describe('Tests regarding WatchList screen', () => {
       setAssetsListArray={setAssetsListArray}
       selectedListIndex={0}
       setSelectedListIndex={setSelectedListIndex}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
     />);
 
     expect(wrapper.find(Stack).exists()).toBeTruthy();
@@ -87,6 +91,8 @@ describe('Tests regarding WatchList screen', () => {
       setAssetsListArray={setAssetsListArray}
       selectedListIndex={0}
       setSelectedListIndex={setSelectedListIndex}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
     />);
 
     expect(wrapper.find(FormControl).exists()).toBeTruthy();
@@ -100,6 +106,8 @@ describe('Tests regarding WatchList screen', () => {
       setAssetsListArray={setAssetsListArray}
       selectedListIndex={0}
       setSelectedListIndex={setSelectedListIndex}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
     />);
 
     expect(wrapper.find('#assets-stack').exists()).toBeTruthy();
@@ -113,6 +121,8 @@ describe('Tests regarding WatchList screen', () => {
       setAssetsListArray={setAssetsListArray}
       selectedListIndex={0}
       setSelectedListIndex={setSelectedListIndex}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
     />);
 
     expect(wrapper.find('#assets-stack').exists()).toBeFalsy();

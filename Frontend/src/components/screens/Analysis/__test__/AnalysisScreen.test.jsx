@@ -10,6 +10,8 @@ configure({adapter: new Adapter()});
 it('AnalysisScreen renders without crashing', () => {
   const setSearchResult = jest.fn();
   const setPortfolioData = jest.fn();
+  const setStatusMessage = jest.fn();
+  const setMessageType = jest.fn();
 
   const portfolioData = {
     'Portfolio': {
@@ -42,6 +44,8 @@ it('AnalysisScreen renders without crashing', () => {
     portfolioData={portfolioData}
     activePortfolio={'Portfolio'}
     setPortfolioData={setPortfolioData}
+    setStatusMessage={setStatusMessage}
+    setMessageType={setMessageType}
   />);
 
   expect(toJson(tree)).toMatchSnapshot();

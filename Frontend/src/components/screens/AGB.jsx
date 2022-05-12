@@ -1,11 +1,6 @@
 import React from 'react';
 import {Typography, Container, List, ListItem} from '@mui/material';
 
-/**
- * Component related to AGB external page
- * @returns {JSX.Element}
- * @constructor
- */
 const AGB = () => (
   <Container className='d-flex flex-column col-12 mx-0 px-3 pt-4 justify-content-start'>
     <img
@@ -19,47 +14,40 @@ const AGB = () => (
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      § 1 Geltungsbereich
+      § 1 Area of Validity
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <List>
         <ListItem>
-          1. Diese Verkaufsbedingungen gelten ausschließlich gegenüber Unternehmern, juristischen Personen des
-          öffentlichen Rechts oder öffentlich-rechtlichen Sondervermögen im Sinne von § 310 Absatz 1 BGB.
-          Entgegenstehende oder von unseren Verkaufsbedingungen abweichende Bedingungen des Bestellers erkennen wir nur
-          an, wenn wir ausdrücklich schriftlich der Geltung zustimmen.
+          1. These Terms and Conditions of Sale shall apply exclusively to entrepreneurs, legal entities under public
+          law or special funds under public law within the meaning of § 310 (1) of the German Civil Code (BGB). We shall
+          only recognize terms and conditions of the Purchaser that conflict with or deviate from our Terms and
+          Conditions of Sale if we expressly agree to their validity in writing.
         </ListItem>
         <ListItem>
-          2. Diese Verkaufsbedingungen gelten auch für alle zukünftigen Geschäfte mit dem Besteller, soweit es sich um
-          Rechtsgeschäfte verwandter Art handelt (vorsorglich sollten die Verkaufsbedingungen in jedem Fall der
-          Auftragsbestätigung beigefügt werden).
+          2. These Terms and Conditions of Sale shall also apply to all future transactions with the Purchaser, insofar
+          as legal transactions of a related nature are concerned (as a precaution, the Terms and Conditions of Sale
+          should be attached to the order confirmation in any case).
         </ListItem>
         <ListItem>
-          3. Im Einzelfall getroffene, individuelle Vereinbarungen mit dem Käufer (einschließlich Nebenabreden,
-          Ergänzungen und Änderungen) haben in jedem Fall Vorrang vor diesen Verkaufsbedingungen. Für den Inhalt
-          derartiger Vereinbarungen ist, vorbehaltlich des Gegenbeweises, ein schriftlicher Vertrag bzw. unsere
-          schriftliche Bestätigung maßgebend.
+          3. Individual agreements made with the Buyer in individual cases (including ancillary agreements, supplements
+          and amendments) shall in any case take precedence over these Terms and Conditions of Sale. Subject to proof to
+          the contrary, a written contract or our written confirmation shall be authoritative for the content of such
+          agreements.
         </ListItem>
       </List>
     </Typography>
 
     <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      § 2 Angebot und Vertragsabschluss
+      § 2 Offer and conclusion of contract
     </Typography>
     <Typography variant='h7' className='pt-4 ps-3'>
       <p>
-        An allen in Zusammenhang mit der Auftragserteilung dem Besteller überlassenen Unterlagen – auch in
-        elektronischer Form –, wie z. B. Kalkulationen, Zeichnungen etc., behalten wir uns Eigentums- und Urheberrechte
-        vor. Diese Unterlagen dürfen Dritten nicht zugänglich gemacht werden, es sei denn, wir erteilen dazu dem
-        Besteller unsere ausdrückliche schriftliche Zustimmung. Soweit wir das Angebot des Bestellers nicht innerhalb
-        der Frist von § 2 annehmen, sind diese Unterlagen uns unverzüglich zurückzusenden.
+        We reserve the property rights and copyrights to all documents provided to the purchaser in connection with the
+        placing of the order - also in electronic form - such as calculations, drawings, etc.. These documents may not
+        be made accessible to third parties unless we give our express written consent to do so. If we do not accept the
+        orderer's offer within the period of § 2, these documents shall be returned to us without delay.
       </p>
-    </Typography>
-
-    <Typography variant='h4' className='pt-4 ps-3 fw-bold'>
-      § 3 Überlassene Unterlagen
-    </Typography>
-    <Typography variant='h7' className='pt-4 ps-3'>
     </Typography>
   </Container>
 );

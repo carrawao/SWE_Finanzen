@@ -204,6 +204,7 @@ const AssetDetailItem = props => (
 
         <Box className='d-flex px-1'>
           <DropdownMenu
+            tooltip={`${props.activities ? 'Edit Activity' : 'Edit Asset'}`}
             selectedListIndex={props.selectedListIndex}
             listName={props.listName}
             setListDropdownIndex={props.setListDropdownIndex}

@@ -36,39 +36,39 @@ const StyledTextField = styled(TextField)({
  */
 const AnalysisList = (props) => {
 
-    const handleChange = (event) => {
-        props.setAnalysisType(event.target.value);
-    };
+  const handleChange = (event) => {
+    props.setAnalysisType(event.target.value);
+  };
 
-    const analysisType = props.analysisType;
+  const analysisType = props.analysisType;
 
-    return (
-      <List>
-          <StyledTextField
-            fullWidth
-            margin="normal"
-            select
-            label="Type of analysis"
-            name="analysisType"
-            onChange = {handleChange}
-            value={analysisType}
-          >
-            {props.analysisTypes.map((type, index) => (
-              <MenuItem key={index} value={index}>{type}</MenuItem>
-            ))}
-          </StyledTextField>
-          
-          {
-              props.allArrays[analysisType] && props.allArrays[analysisType].map((share, index) => (
-                    <AnalysisDetailItem
-                        key={`activity_${index}`}
-                        asset={share.asset}
-                        percentage={share.percentage}
-                    />
-                ))
-            }
-        </List>
-    );
+  return (
+    <List>
+      <StyledTextField
+        fullWidth
+        margin='normal'
+        select
+        label='Type of analysis'
+        name='analysisType'
+        onChange={handleChange}
+        value={analysisType}
+      >
+        {props.analysisTypes.map((type, index) => (
+          <MenuItem key={index} value={index}>{type}</MenuItem>
+        ))}
+      </StyledTextField>
+
+      {
+        props.allArrays[analysisType] && props.allArrays[analysisType].map((share, index) => (
+          <AnalysisDetailItem
+            key={`activity_${index}`}
+            asset={share.asset}
+            percentage={share.percentage}
+          />
+        ))
+      }
+    </List>
+  );
 }
 
 AnalysisList.propTypes = {

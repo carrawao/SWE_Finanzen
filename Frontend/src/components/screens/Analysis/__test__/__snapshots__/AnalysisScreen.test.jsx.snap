@@ -10,8 +10,10 @@ exports[`AnalysisScreen renders without crashing 1`] = `
     }
     bodyComponent={[Function]}
     searchResult={Array []}
-    selectedNavLinkIndex={5}
+    selectedNavLinkIndex={3}
+    setMessageType={[MockFunction]}
     setSearchResult={[MockFunction]}
+    setStatusMessage={[MockFunction]}
   />
 </Fragment>
 `;

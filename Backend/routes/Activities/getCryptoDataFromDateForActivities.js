@@ -11,7 +11,7 @@ const userRoutes = (app, fs, apiKey, accessURL) => {
 
             fs.access(dataPath, fs.F_OK, (err) => {
                 if (err) {
-                    updateDataFromAPI.updateDailySeriesCrypt(symbol, apiKey).then(() => {
+                    updateDataFromAPI.updateDailySeriesCrypto(symbol, apiKey).then(() => {
                         safeNewSymbol.saveCryptoSymbol(symbol);
                     }).then(() => {
                         setData();

@@ -10,19 +10,18 @@ import {DoughnutChart} from '../../common';
  */
 
 const AllocationGraph = props => {
-
   const defaultMiddleDisplayLabel = `Value of ${props.activePortfolio}`;
   const defaultMiddleDisplayValue = `${parseFloat(props.portfolioData.value.toFixed(2)).toLocaleString()} €`;
-  
+
   const assets = props.getAllAssets();
 
   const labels = (() => {
-    let labels = []
+    let labels = [];
     assets.forEach(element => {
-      let label = element["name"];
+      let label = element['name'];
       if (label.length > 50) {
-        label = label.slice(0,50);
-        label += "...";
+        label = label.slice(0, 50);
+        label += '...';
       }
       labels.push(label);
     });
@@ -32,7 +31,7 @@ const AllocationGraph = props => {
   const valueData = (() => {
     let valueData = []
     assets.forEach(element => {
-      valueData.push((element["value"]).toFixed(2));
+      valueData.push(parseFloat(element.value).toFixed(2));
     });
     return valueData;
   })();

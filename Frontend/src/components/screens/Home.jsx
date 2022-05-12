@@ -9,14 +9,12 @@ import {
   CardContent,
   Typography
 } from '@mui/material';
-import ScreensTemplate from '../ScreensTemplate';
-import PropTypes from 'prop-types';
 
-const Home = props => {
+const Home = () => {
   const infoArray = {
     'dashboard': [
       'rgb(78 185 111)',
-      '/dashboard',
+      '/',
       `${process.env.PUBLIC_URL}/assets/images/dashboard.jpeg`,
       'Dashboard',
       'Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica'
@@ -39,87 +37,68 @@ const Home = props => {
 
   const keys = Object.keys(infoArray);
 
-  const renderBody = () => (
-    <Container className='d-flex flex-column justify-content-center'>
-      <img
-        src={`${process.env.PUBLIC_URL}/assets/images/benchmarkt-logo.png`}
-        alt='Application logo'
-        width='70%'
-        className='align-self-center'
-      />
-
-      {keys.map(key => (
-        <Box key={`${infoArray[key][1]}`} className='mt-5 d-flex justify-content-center'>
-          <Card
-            className='col-10 col-md-12'
-            sx={{
-              backgroundColor: `${infoArray[key][0]}`,
-              borderRadius: '1rem',
-              border: '1px solid black'
-            }}
-          >
-            <CardActionArea
-              className='d-md-flex flex-row'
-              component={Link}
-              to={`${infoArray[key][1]}`}
+  return (
+    <Container>
+      <Box className='d-flex flex-column mx-0 px-3 pt-4 align-items-center'>
+        <img
+          src={`${process.env.PUBLIC_URL}/assets/images/benchmarkt-logo.png`}
+          alt='Application logo'
+          width='70%'
+          className='align-self-center'
+        />
+        {keys.map(key => (
+          <Box key={`${infoArray[key][1]}`} className='mt-5 d-flex justify-content-center'>
+            <Card
+              className='col-10 col-md-12'
               sx={{
-                '&.MuiCardActionArea-root': {
-                  '&:hover': {
-                    color: 'black'
-                  }
-                },
+                backgroundColor: `${infoArray[key][0]}`,
+                borderRadius: '1rem',
+                border: '1px solid black'
               }}
             >
-              <CardMedia
-                component='img'
-                image={infoArray[key][2]}
-                alt={`${infoArray[key][0]}_product`}
+              <CardActionArea
+                className='d-md-flex flex-row'
+                component={Link}
+                to={`${infoArray[key][1]}`}
                 sx={{
-                  width: {
-                    sm: '100%',
-                    md: '56%',
-                    lg: '50%',
-                    xl: '55%'
+                  '&.MuiCardActionArea-root': {
+                    '&:hover': {
+                      color: 'black'
+                    }
                   },
-                  '&.MuiCardMedia-img': {
-                    objectFit: 'fill'
-                  }
                 }}
-              />
-              <CardContent>
-                <Typography gutterBottom variant='h4' component='div'>
-                  {infoArray[key][3]}
-                </Typography>
-                <Typography variant='h6'>
-                  {infoArray[key][4]}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Box>
-      ))}
+              >
+                <CardMedia
+                  component='img'
+                  image={infoArray[key][2]}
+                  alt={`${infoArray[key][0]}_product`}
+                  sx={{
+                    width: {
+                      sm: '100%',
+                      md: '56%',
+                      lg: '50%',
+                      xl: '55%'
+                    },
+                    '&.MuiCardMedia-img': {
+                      objectFit: 'fill'
+                    }
+                  }}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant='h4' component='div'>
+                    {infoArray[key][3]}
+                  </Typography>
+                  <Typography variant='h6'>
+                    {infoArray[key][4]}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Box>
+        ))}
+      </Box>
     </Container>
   );
-
-  return (
-    <React.Fragment>
-      <ScreensTemplate
-        bodyComponent={renderBody}
-        selectedNavLinkIndex={0}
-        assetsListArray={props.assetsListArray}
-        searchResult={props.searchResult}
-        setSearchResult={props.setSearchResult}
-      />
-    </React.Fragment>
-
-  );
 }
-
-Home.propTypes = {
-  searchResult: PropTypes.array,
-  setSearchResult: PropTypes.func,
-  watchListsArray: PropTypes.array,
-  assetsListArray: PropTypes.array,
-};
 
 export default Home;
