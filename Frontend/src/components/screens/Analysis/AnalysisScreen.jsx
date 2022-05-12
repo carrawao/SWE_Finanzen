@@ -20,7 +20,7 @@ const AnalysisScreen = props => {
   let navigate = useNavigate(); 
 
   const routeChange = () =>{ 
-    let path = `/activities`; 
+    let path = `/activities/addActivity`; 
     navigate(path);
   }
 
