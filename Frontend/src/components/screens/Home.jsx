@@ -45,7 +45,7 @@ const Home = () => {
       '/activities',
       `${process.env.PUBLIC_URL}/assets/images/activities.png`,
       'Benchi',
-      '		○ Do you want to take a new direction or are you still unsure what the perfect investment strategy for you looks like? Let our analysis bot Benchi advice you free of charge and find out what suits you best!'
+      'Do you want to take a new direction or are you still unsure what the perfect investment strategy for you looks like? Let our analysis bot Benchi advice you free of charge and find out what suits you best!'
     ]
   }
 
