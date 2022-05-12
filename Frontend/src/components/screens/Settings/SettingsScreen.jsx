@@ -31,7 +31,7 @@ const SettingsScreen = props => {
              }}
             
             >
-                    Einstellungen <SettingsIcon></SettingsIcon>
+                    Settings <SettingsIcon></SettingsIcon>
       </Typography>
 
         </Box>
