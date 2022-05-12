@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {Grid} from '@mui/material';
+import {Grid, Box} from '@mui/material';
 import PropTypes from 'prop-types';
 import AllocationGraph from './AllocationGraph';
 import PortfolioOverview from './PortfolioOverview';
@@ -20,27 +20,27 @@ const DashboardScreen = props => {
     <React.Fragment>
       <Grid
         container
-        direction='row'
+        className=' col-12 d-flex flex-column flex-xl-row justify-content-center align-items-center'
       >
-        <Grid item xs={3}>
+        <Grid item className='col-11 col-sm-7 col-md-5 col-xl-4'>
           <AllocationGraph
             portfolioData={props.portfolioData[props.activePortfolio]}
             activePortfolio={props.activePortfolio}
             getAllAssets={props.getAllAssets}
           />
         </Grid>
-        <Grid item container direction='column' xs={9}>
-          <Grid item textAlign={"right"}>
+        <Box className='col-12 col-md-10 flex-xl-column col-xl-8'>
+          <Box className='d-flex justify-content-center mb-2'>
             <ChartButtons view={view} setView={setView}/>
-          </Grid>
-          <Grid item>
+          </Box>
+          <Box className='d-flex justify-content-center mb-4'>
             <PortfolioOverview
               portfolioData={props.portfolioData}
               activePortfolio={props.activePortfolio}
               setActivePortfolio={props.setActivePortfolio}
             />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Grid>
       <PortfolioCharts view={view} {...props}/>
     </React.Fragment>
