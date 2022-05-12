@@ -20,7 +20,7 @@ const ErrorPage = () => (
       
     </Typography>
     
-    <Typography variant='h7' className='pt-4 ps-3'>
+    <Typography variant='h5' className='pt-4 ps-3'>
       <Link className='text-decoration-none text-black' to='/' target='_blank'>Click here to go back!</Link>
     </Typography>
   </Container>
