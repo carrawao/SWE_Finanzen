@@ -153,7 +153,25 @@ const ActivitiesScreen = props => {
     <Grid className='d-flex justify-content-center pt-2'>
       <Container className='p-0'>
         <Button onClick={() => dummyCash()}>Add a dummy cash account</Button>
-        <Button onClick={() => routeChange('addActivity')}>Add Activity</Button>
+        <Button
+          className='my-3'
+          variant='outlined'
+          onClick={() => routeChange('addActivity')}
+          sx={{
+            color: 'white',
+            borderColor: '#4eb96f',
+            backgroundColor: '#4eb96f',
+            '&:hover': {
+              borderColor: '#068930',
+              backgroundColor: '#4eb96f',
+            },
+            '&.Mui-disabled': {
+              backgroundColor: 'rgb(228 231 235)',
+            }
+          }}
+        >
+          Add Activity
+        </Button>
         <ActivitiesList
           activePortfolio={props.activePortfolio}
           portfolioData={props.portfolioData}

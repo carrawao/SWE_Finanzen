@@ -1,4 +1,5 @@
 import React from 'react';
+import {useParams} from 'react-router-dom';
 import {Container, Grid} from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -13,6 +14,18 @@ import AddActivityForm from './AddActivityForm';
  */
 const AddActivityScreen = props => {
   
+  const params = useParams();
+
+  let initialAssetObj = {
+    name: params.assetName,
+    symbol: params.asset,
+    assetType: params.assetType
+  };
+
+  if (!props.useParams) {
+    initialAssetObj = null;
+  }
+  
   const portfolioData = props.portfolioData[props.activePortfolio];
 
   const renderBody = () => (
@@ -21,6 +34,7 @@ const AddActivityScreen = props => {
         <AddActivityForm
           addActivity={props.addActivity}
           portfolioData={portfolioData}
+          initialAssetObj={initialAssetObj}
         />
       </Container>
     </Grid>
@@ -40,6 +54,7 @@ const AddActivityScreen = props => {
 }
 
 AddActivityScreen.propTypes = {
+  useParams: PropTypes.bool,
   searchResult: PropTypes.array,
   setSearchResult: PropTypes.func,
   activePortfolio: PropTypes.string,
