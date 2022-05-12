@@ -16,7 +16,7 @@ const Masterdata = (props) => {
     useEffect(() => {
         console.log(`Fetching masterdata of ${props.symbol}...`);
         const base = process.env.REACT_APP_BASEURL;
-        let url = new URL(`companyOverview?symbol=${encodeURIComponent(props.symbol)}`, base);
+        let url = new URL(`companyOverview?symbol=${encodeURIComponent(props.symbol)}`, base);        
         fetch(url.toString())
             .then(res => res.json())
             .then(json => {

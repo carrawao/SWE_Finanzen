@@ -20,7 +20,7 @@ const AssetCard = (props) => {
   //Displayed after AssetChart componet has loaded its data
   //Chartview Variables  
   const [view, setView] = useState('month');  
-  const [name, setName] = useState("Asset Name");
+  const [name, setName] = useState(props.symbol);
 
   const [containsAssetData, setContainsAssetData] = useState(false);
   const [chartType, setChartType] = useState('price');
@@ -51,7 +51,7 @@ const AssetCard = (props) => {
         return <AssetChart assetType={assetType} name={name} setName={setName} view={view} symbol={props.symbol}/>
     }
   }
-
+  
   return (
     <Container className='d-flex flex-column px-1 pt-2 sm'>
     <Card>
