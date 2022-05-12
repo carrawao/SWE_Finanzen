@@ -156,7 +156,9 @@ const SearchAssetInput = props => {
         return results;
     }
     catch (e) {
-        console.log('fetching failed === ', e);
+      props.setStatusMessage('Lost connection to server. Please try again later');
+      props.setMessageType('error');
+      console.log('fetching failed === ', e);
     };
 }
 
@@ -177,7 +179,9 @@ const fetchCryptoOptions = async (query) => {
         return results;
     }
     catch (e) {
-        console.log('fetching failed === ', e);
+      props.setStatusMessage('Lost connection to server. Please try again later');
+      props.setMessageType('error');
+      console.log('fetching failed === ', e);
     };
   }
 
@@ -274,7 +278,9 @@ SearchAssetInput.propTypes = {
   setValues: PropTypes.func,
   initialAssetObj: PropTypes.object,
   initialLoading: PropTypes.bool,
-  setInitialLoading: PropTypes.func
+  setInitialLoading: PropTypes.func,
+  setStatusMessage: PropTypes.func,
+  setMessageType: PropTypes.func
 };
 
 export default SearchAssetInput;

@@ -315,8 +315,6 @@ const AddActivityForm = props => {
       if (values.assetType === 'cash') props.addActivity(values.assetType, values.asset, values.typeCash, values.date, '1', values.sumCash, values.sumCash, values.tax, values.fee);
       if (!addAnother) {
         routeChange('../activities');
-      } else {
-        alert('Activity saved!');
       }
     }
   }
@@ -412,6 +410,8 @@ const AddActivityForm = props => {
               setValues={setValues}
               initialLoading={initialLoading}
               setInitialLoading={setInitialLoading}
+              setStatusMessage={props.setStatusMessage}
+              setMessageType={props.setMessageType}
             />
           }
         </Grid>
@@ -699,7 +699,11 @@ const AddActivityForm = props => {
 AddActivityForm.propTypes = {
   addActivity: PropTypes.func,
   portfolioData: PropTypes.object,
-  initialAssetObj: PropTypes.object
+  initialAssetObj: PropTypes.object,
+  statusMessage: PropTypes.string,
+  setStatusMessage: PropTypes.func,
+  messageType: PropTypes.string,
+  setMessageType: PropTypes.func
 };
 
 export default AddActivityForm;
