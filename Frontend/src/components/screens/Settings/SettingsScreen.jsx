@@ -245,11 +245,6 @@ const SettingsScreen = props => {
 
     </Container>
   );
-
-  let navigate = useNavigate();
-    const routeChange = path => {
-      navigate(path);
-  }  
   
   /**
    * Export/Download the portfolio summary to a json-file
@@ -312,7 +307,12 @@ const SettingsScreen = props => {
     props.setPortfolioData(props.emptyPortfolioData);
     props.setActivePortfolio('Portfolio');
     setDeleteDataModal(false);
+    
     //redirect to dashboard
+    let navigate = useNavigate();
+    const routeChange = path => {
+      navigate(path);
+    }  
     routeChange('/dashboard');
   }
 
