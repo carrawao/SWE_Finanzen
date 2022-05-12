@@ -506,7 +506,7 @@ const AppRoutes = () => {
         />
 
         <Route
-          path='/activities/addActivity'
+          path='/activities/addActivity/'
           element={
             <AddActivityScreen
               searchResult={searchResult}
@@ -518,6 +518,21 @@ const AppRoutes = () => {
               addActivity={addActivity}
               getAllAssets={getAllAssets}
             />}
+        />
+        <Route 
+            path="/activities/addActivity/:assetType/:asset/:assetName" 
+            element={
+              <AddActivityScreen
+                useParams  
+                searchResult={searchResult}
+                setSearchResult={setSearchResult}
+                watchListsArray={watchListsArray}
+                assetsListArray={assetsListArray}
+                activePortfolio={activePortfolio}
+                portfolioData={portfolioData}
+                addActivity={addActivity}
+                getAllAssets={getAllAssets}
+              />}
         />
         <Route
           path='/watchlists'

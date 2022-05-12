@@ -34,9 +34,17 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const initialValues = {
+/**
+ * Form for adding an activity
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const AddActivityForm = props => {
+  
+  const initialValues = {
     assetType: 'share',
-    asset: null,
+    asset: props.initialAssetObj,
     assetInput: '',
     typeShare: 'buy',
     typeCrypto: 'buy',
@@ -48,20 +56,14 @@ const initialValues = {
     sumCash: '',
     tax: '0',
     fee: '0'
-}
+  }
 
-/**
- * Form for adding an activity
- * @param props
- * @returns {JSX.Element}
- * @constructor
- */
-const AddActivityForm = props => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [valueUpdated, setValueUpdated] = useState(false);
   const [valid, setValid] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   let dateError = '';
   let changedByDatePicker = false;
@@ -121,7 +123,7 @@ const AddActivityForm = props => {
     let newDateError = changedByDatePicker ? (dateError ? 'Not a valid date' : '') : (errors.date === undefined ? '' : errors.date);
     newDateError = values.date === null ? 'Not a valid date' : newDateError;
     let newErrors = {date: newDateError};
-    newErrors.asset = values.asset ? '' : 'This field is required';
+    newErrors.asset = values.asset !== null ? '' : 'This field is required';
     if(values.asset) {
         if (values.assetType === 'share') newErrors = {...newErrors, ...validateShare(newErrors.date)};
         if (values.assetType === 'crypto') newErrors = {...newErrors, ...validateCrypto(newErrors.date)};
@@ -373,14 +375,40 @@ const AddActivityForm = props => {
           </StyledTextField>
         </Grid>
         <Grid item className='col-7'>
-          <SearchAssetInput
-            values={values}
-            errors={errors}
-            portfolioData={props.portfolioData}
-            handleInputChange={handleInputChange}
-            StyledTextField={StyledTextField}
-            setValues={setValues}
-          />
+          {(values.assetType === 'cash' && cash.length === 0) ?
+            <Button
+              className='my-3'
+              variant='outlined'
+              size='large'
+              onClick={() => routeChange('../dashboard')}
+              sx={{
+                color: 'white',
+                borderColor: '#4eb96f',
+                backgroundColor: '#4eb96f',
+                '&:hover': {
+                  borderColor: '#068930',
+                  backgroundColor: '#4eb96f',
+                },
+                '&.Mui-disabled': {
+                  backgroundColor: 'rgb(228 231 235)',
+                }
+              }}
+            >
+              Go to dashboard and add a cash account
+            </Button>
+          : 
+            <SearchAssetInput
+              initialAssetObj={props.initialAssetObj}
+              values={values}
+              errors={errors}
+              portfolioData={props.portfolioData}
+              handleInputChange={handleInputChange}
+              StyledTextField={StyledTextField}
+              setValues={setValues}
+              initialLoading={initialLoading}
+              setInitialLoading={setInitialLoading}
+            />
+          }
         </Grid>
       </Grid>
 
@@ -622,11 +650,12 @@ const AddActivityForm = props => {
           type='submit'
           onClick={() => setAddAnother(false)}
           sx={{
-            color: 'black',
-            borderColor: 'rgb(78 185 111)',
-            backgroundColor: 'rgb(78 185 111)',
+            color: 'white',
+            borderColor: '#4eb96f',
+            backgroundColor: '#4eb96f',
             '&:hover': {
-              backgroundColor: 'rgb(78 185 111)',
+              borderColor: '#068930',
+              backgroundColor: '#4eb96f',
             },
             '&.Mui-disabled': {
               backgroundColor: 'rgb(228 231 235)',
@@ -641,11 +670,13 @@ const AddActivityForm = props => {
           type='submit'
           onClick={() => setAddAnother(true)}
           sx={{
-            color: 'black',
-            borderColor: 'rgb(59 151 210)',
-            backgroundColor: 'rgb(59 151 210)',
+            color: '#4eb96f',
+            borderColor: '#4eb96f',
+            backgroundColor: 'white',
             '&:hover': {
-              backgroundColor: 'rgb(59 151 210)',
+              borderColor: '#068930',
+              backgroundColor: 'white',
+              color: '#068930',
             },
             '&.Mui-disabled': {
               backgroundColor: 'rgb(228 231 235)',
@@ -661,7 +692,8 @@ const AddActivityForm = props => {
 
 AddActivityForm.propTypes = {
   addActivity: PropTypes.func,
-  portfolioData: PropTypes.object
+  portfolioData: PropTypes.object,
+  initialAssetObj: PropTypes.object
 };
 
 export default AddActivityForm;
