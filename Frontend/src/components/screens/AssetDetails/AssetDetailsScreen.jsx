@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
  */
 const AssetDetailsScreen = props => {
   let {asset, assetType} = useParams();
-  
+
   const renderBody = () => <AssetCard
     {...props}
     assetType={assetType}

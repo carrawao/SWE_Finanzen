@@ -23,6 +23,8 @@ it('AssetDetailsScreen renders without crashing', () => {
   };
 
   const setSearchResult = jest.fn();
+  const setStatusMessage = jest.fn();
+  const setMessageType = jest.fn();
 
   const wrapper = shallow(
     <AssetDetailsScreen
@@ -32,6 +34,8 @@ it('AssetDetailsScreen renders without crashing', () => {
       assetsListArray={[[]]}
       portfolioData={portfolioData}
       activePortfolio={'Portfolio'}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
     />);
 
   expect(toJson(wrapper)).toMatchSnapshot();

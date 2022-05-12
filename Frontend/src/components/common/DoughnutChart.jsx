@@ -34,8 +34,8 @@ const DoughnutChart = props => {
   const valueData = props.data;
   const colorOffset = 50;
   const colors = labels.map((_, index) => {
-    const hue = colorOffset + index * 137.503; // rotates for distinguishable colors
-    return `hsl(${hue},60%,60%)`;
+      const hue = colorOffset + index * 137.503; // rotates for distinguishable colors
+      return `hsl(${hue},60%,60%)`;
     }
   );
 
@@ -55,21 +55,21 @@ const DoughnutChart = props => {
   };
 
   return (
-    <Grid 
+    <Grid
       container
-      justifyContent="center"
+      justifyContent='center'
       sx={{
         position: 'relative',
         padding: '1rem'
       }}
     >
-      <Grid 
+      <Grid
         container
-        id="doughnutGraph-middleDisplay" 
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        maxWidth="50%"
+        id='doughnutGraph-middleDisplay'
+        direction='column'
+        justifyContent='center'
+        alignItems='center'
+        maxWidth='50%'
         sx={{
           position: 'absolute',
           left: '50%',
@@ -79,14 +79,14 @@ const DoughnutChart = props => {
         }}
       >
         <Paper sx={{margin: '0.25rem', zIndex: '100'}}>
-          <Typography sx={{textAlign: "center"}}>{middleDisplayLabel}</Typography>
+          <Typography sx={{textAlign: 'center'}}>{middleDisplayLabel}</Typography>
         </Paper>
         <Paper elevation={0} sx={{margin: '0.25rem', zIndex: '100'}}>
-          <Typography sx={{textAlign: "center"}}>{middleDisplayValue}</Typography>
+          <Typography sx={{textAlign: 'center'}}>{middleDisplayValue}</Typography>
         </Paper>
       </Grid>
-      <Doughnut 
-        data={data} 
+      <Doughnut
+        data={data}
         options={{
           responsive: true,
           cutoutPercentage: 90,
@@ -96,14 +96,14 @@ const DoughnutChart = props => {
             },
             tooltip: {
               enabled: false,
-              external: function(context) {
+              external: function (context) {
                 const tooltipModel = context.tooltip;
                 //Set to default values if no tooltip
                 if (tooltipModel.opacity === 0) {
                   setDefaultValues();
                   return;
                 }
-                
+
                 function getBody(bodyItem) {
                   return bodyItem.lines;
                 }
@@ -111,11 +111,11 @@ const DoughnutChart = props => {
                 // Set Text
                 if (tooltipModel.body) {
                   const bodyLines = tooltipModel.body.map(getBody);
-                  
-                  bodyLines.forEach(function(body, i) {
-                    const bodyparts = body[0].split(":");
-                    setMiddleDisplayLabel(bodyparts[0]);
-                    setMiddleDisplayValue(`${bodyparts[1].trim()} ${props.analysis ? '%' : '€'}`);
+
+                  bodyLines.forEach(function (body, i) {
+                    const bodyParts = body[0].split(':');
+                    setMiddleDisplayLabel(bodyParts[0]);
+                    setMiddleDisplayValue(`${bodyParts[1].trim()} ${props.analysis ? '%' : '€'}`);
                   });
                 }
               }

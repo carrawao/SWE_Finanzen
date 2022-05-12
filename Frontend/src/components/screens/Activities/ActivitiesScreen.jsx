@@ -187,10 +187,14 @@ const ActivitiesScreen = props => {
     <React.Fragment>
       <ScreensTemplate
         bodyComponent={renderBody}
-        selectedNavLinkIndex={3}
+        selectedNavLinkIndex={2}
         assetsListArray={props.assetsListArray}
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
+        statusMessage={props.statusMessage}
+        setStatusMessage={props.setStatusMessage}
+        messageType={props.messageType}
+        setMessageType={props.setMessageType}
       />
       {renderRemoveActivityModal(deleteActivityModal, deleteActivity, setDeleteActivityModal)}
     </React.Fragment>
@@ -204,7 +208,11 @@ ActivitiesScreen.propTypes = {
   portfolioData: PropTypes.object,
   setPortfolioData: PropTypes.func,
   assetsListArray: PropTypes.array,
-  addActivity: PropTypes.func
+  addActivity: PropTypes.func,
+  statusMessage: PropTypes.string,
+  setStatusMessage: PropTypes.func,
+  messageType: PropTypes.string,
+  setMessageType: PropTypes.func
 };
 
 export default ActivitiesScreen;

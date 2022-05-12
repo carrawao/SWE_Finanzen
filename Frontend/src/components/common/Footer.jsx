@@ -24,7 +24,7 @@ const Footer = () => (
       </Box>
       <Container className='d-flex flex-row justify-content-between justify-content-md-evenly'>
         <Box>
-          <Link className='text-decoration-none text-black' to='/' target='_blank'>About us</Link>
+          <Link className='text-decoration-none text-black' to='/about' target='_blank'>About us</Link>
         </Box>
         <Divider flexItem orientation='vertical' style={{height: 25}}/>
         <Box>

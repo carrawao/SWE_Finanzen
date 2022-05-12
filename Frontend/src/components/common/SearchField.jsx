@@ -26,6 +26,8 @@ const SearchField = props => {
             props.onQueryChange(firstResults);
           });
       } catch (error) {
+        props.setStatusMessage('Lost connection to server. Please try again later');
+        props.setMessageType('error');
         console.log('fetching failed === ', error);
       }
     } else {
@@ -73,6 +75,8 @@ const SearchField = props => {
 SearchField.propTypes = {
   searchQuery: PropTypes.string,
   onQueryChange: PropTypes.func,
+  setStatusMessage: PropTypes.func,
+  setMessageType: PropTypes.func
 };
 
 export default SearchField;

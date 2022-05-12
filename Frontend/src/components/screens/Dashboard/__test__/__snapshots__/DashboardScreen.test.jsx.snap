@@ -10,8 +10,10 @@ exports[`DashboardScreen renders without crashing 1`] = `
     }
     bodyComponent={[Function]}
     searchResult={Array []}
-    selectedNavLinkIndex={1}
+    selectedNavLinkIndex={0}
+    setMessageType={[MockFunction]}
     setSearchResult={[MockFunction]}
+    setStatusMessage={[MockFunction]}
   />
 </Fragment>
 `;
