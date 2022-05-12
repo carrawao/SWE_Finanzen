@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {
   Container,
   Box,
-  List
+  List,
+  Typography
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PropTypes from 'prop-types';
@@ -24,32 +25,79 @@ const ActivitiesList = (props) => {
     'payout': ['brown', 'rgb(241, 155, 31, .2)']
   }];
 
+  const findYears = activities => {
+    let yearsArray = [];
+    for (let index = 0; index < activities.length; index++) {
+      const activity = activities[index];
+      const activityYear = activity.date.slice(0, 4);
+      let alreadyIncluded = false;
+      for (let i = 0; i < yearsArray.length; i++) {
+        const year = yearsArray[i];
+        if (year === activityYear) {
+          alreadyIncluded = true;
+        }
+      }
+      if (!alreadyIncluded) {
+        yearsArray.push(activityYear);
+      }
+    }
+    return yearsArray;
+  }
+
+  const findActivitiesForYears = (years, activities) => {
+    let activitiesForEachYearArray = [];
+    for (let index = 0; index < years.length; index++) {
+      const year = years[index];
+      const activitiesForYear = []
+      for (let i = 0; i < activities.length; i++) {
+        const activity = activities[i];
+        const activityYear = activity.date.slice(0, 4);
+        if (year === activityYear) {
+          activitiesForYear.push(activity);
+        }
+      }
+      activitiesForEachYearArray.push(activitiesForYear);
+    }
+    return activitiesForEachYearArray;
+  }
+
+  const activities = props.portfolioData[props.activePortfolio]['activities'];
+  
+  const years = findYears(activities);
+
+  const activitiesForEachYearArray = findActivitiesForYears(years, activities);
+
   return (
     <Container className='p-0'>
-      <Box>
-        <List className='d-flex flex-column'>
-          {props.portfolioData[props.activePortfolio]['activities'].map((element, index) => (
-            <AssetDetailItem
-              key={`activity_${index}`}
-              activities
-              row={element}
-              index={index}
-              itemsArray={props.portfolioData[props.activePortfolio]['activities']}
-              colorsArray={colorsArray}
-              selectedListIndex={0}
-              setListDropdownIndex={setListDropdownIndex}
-              menuOptions={['Delete']}
-              iconOptions={[<DeleteIcon/>]}
-              functionOptions={[
-                () => {
-                  props.setDeleteActivityModal(true);
-                  props.setSelectedActivityId(element.id);
-                }
-              ]}
-            />
-          ))}
-        </List>
-      </Box>
+      {years.map((year, index) => (
+      <Container className='p-0' key={`activitiesList_${year}`}>
+        <Typography variant='h4' sx={{margin: '1rem', marginBottom: '0rem'}}>{year}</Typography>
+        <Box>
+          <List className='d-flex flex-column'>
+            {activitiesForEachYearArray[index].map((element, i) => (
+              <AssetDetailItem
+                key={`activity_${element.id}`}
+                activities
+                row={element}
+                index={i}
+                itemsArray={activitiesForEachYearArray[index]}
+                colorsArray={colorsArray}
+                selectedListIndex={0}
+                setListDropdownIndex={setListDropdownIndex}
+                menuOptions={['Delete']}
+                iconOptions={[<DeleteIcon/>]}
+                functionOptions={[
+                  () => {
+                    props.setDeleteActivityModal(true);
+                    props.setSelectedActivityId(element.id);
+                  }
+                ]}
+              />
+            ))}
+          </List>
+        </Box>
+      </Container>
+      ))}
     </Container>
   );
 }

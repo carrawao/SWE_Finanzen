@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
 import {Container, Box, Button} from '@mui/material';
 import {renderDeleteDataModal} from './Modals/settingsModals'
@@ -244,7 +245,7 @@ const SettingsScreen = props => {
 
     </Container>
   );
-
+  
   /**
    * Export/Download the portfolio summary to a json-file
    * @returns {Promise<void>}
@@ -299,6 +300,11 @@ const SettingsScreen = props => {
     document.getElementById('import-file-button').click();
   }
 
+  let navigate = useNavigate();
+  const routeChange = path => {
+    navigate(path);
+  }  
+
   // Delete all user data
   const deleteData = () => {
     props.setWatchListsArray([]);
@@ -306,6 +312,8 @@ const SettingsScreen = props => {
     props.setPortfolioData(props.emptyPortfolioData);
     props.setActivePortfolio('Portfolio');
     setDeleteDataModal(false);
+    //redirect to dashboard
+    routeChange('/dashboard');
   }
 
   // Closes the modal for deleting user data

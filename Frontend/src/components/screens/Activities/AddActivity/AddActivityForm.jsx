@@ -34,9 +34,17 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const initialValues = {
+/**
+ * Form for adding an activity
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const AddActivityForm = props => {
+  
+  const initialValues = {
     assetType: 'share',
-    asset: null,
+    asset: props.initialAssetObj,
     assetInput: '',
     typeShare: 'buy',
     typeCrypto: 'buy',
@@ -48,19 +56,14 @@ const initialValues = {
     sumCash: '',
     tax: '0',
     fee: '0'
-}
+  }
 
-/**
- * Form for adding an activity
- * @param props
- * @returns {JSX.Element}
- * @constructor
- */
-const AddActivityForm = props => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
+  const [valueUpdated, setValueUpdated] = useState(false);
   const [valid, setValid] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   let dateError = '';
   let changedByDatePicker = false;
@@ -68,6 +71,16 @@ const AddActivityForm = props => {
   useEffect(() => {
     validate();
   }, [values]);
+
+  useEffect(() => {
+    setValueUpdated(false);
+  }, [values.assetType, values.date]);
+
+  useEffect(async () => {
+    if (valueUpdated === false) {
+      updateValue();
+    }
+  }, [errors]);
 
   const shares = props.portfolioData['shares'];
   const crypto = props.portfolioData['crypto'];
@@ -110,7 +123,7 @@ const AddActivityForm = props => {
     let newDateError = changedByDatePicker ? (dateError ? 'Not a valid date' : '') : (errors.date === undefined ? '' : errors.date);
     newDateError = values.date === null ? 'Not a valid date' : newDateError;
     let newErrors = {date: newDateError};
-    newErrors.asset = values.asset ? '' : 'This field is required';
+    newErrors.asset = values.asset !== null ? '' : 'This field is required';
     if(values.asset) {
         if (values.assetType === 'share') newErrors = {...newErrors, ...validateShare(newErrors.date)};
         if (values.assetType === 'crypto') newErrors = {...newErrors, ...validateCrypto(newErrors.date)};
@@ -121,20 +134,6 @@ const AddActivityForm = props => {
     const valid = Object.values(newErrors).every(x => x === '');
     setValid(valid);
     return valid;
-  }
-
-  Date.prototype.getFormattedString = function() {
-    const date = new Date(this.valueOf());
-    const year = date.getFullYear();
-    let month = `${date.getMonth()+1}`;
-    if (month.length === 1) {
-      month = `0${month}`;
-    }
-    let day = `${date.getDate()}`;
-    if (day.length === 1) {
-      day = `0${day}`;
-    }
-    return `${year}-${month}-${day}`;
   }
 
   const getQuantityAtDate = (dailyData, date) => {
@@ -262,6 +261,38 @@ const AddActivityForm = props => {
     return errors;
   }
 
+  const updateValue = async () => {
+    if (errors.date !== '' || values.asset === null) {
+      return;
+    }
+    if (values.assetType === 'cash') {
+      return;
+    }
+    if (values.assetType === 'share' && values.typeShare === 'dividend') {
+      return;
+    }
+    let fetchDate = values.date;
+    let dateString = fetchDate.getFormattedString();
+    let today = new Date();
+    const todayString = today.getFormattedString();
+    if (dateString === todayString) {
+      fetchDate = fetchDate.addDays(-1);
+      dateString = fetchDate.getFormattedString();
+    }
+    let valueForDate = undefined;
+    let iteration = 1;
+    while (valueForDate === undefined && iteration < 6) {
+      valueForDate = await fetchValueForDate(values.assetType, values.asset.symbol, dateString);
+      fetchDate = fetchDate.addDays(-1);
+      dateString = fetchDate.getFormattedString();
+      iteration++;
+    }
+    if (valueForDate !== undefined) {
+      setValues({...values, value: parseFloat(valueForDate).toFixed(2), sum: (valueForDate * values.quantity).toFixed(2)});
+    }
+    setValueUpdated(true);
+  }
+
   let navigate = useNavigate();
   const routeChange = path => {
     navigate(path);
@@ -285,6 +316,36 @@ const AddActivityForm = props => {
     }
   }
 
+  const fetchValueForDate = async (assetType, symbol, dateString) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_BASEURL}/get${assetType === 'share' ? 'Share' : 'Crypto'}DataFromDateForActivities?symbol=${symbol}&date=${dateString}`, {mode:'cors'});
+        const json = await response.json();
+        return json['4. close'];
+    } catch (e) {
+      console.log(`No data for symbol ${symbol} at ${dateString}`);
+    }
+  }
+
+  Date.prototype.getFormattedString = function() {
+    const date = new Date(this.valueOf());
+    const year = date.getFullYear();
+    let month = `${date.getMonth()+1}`;
+    if (month.length === 1) {
+      month = `0${month}`;
+    }
+    let day = `${date.getDate()}`;
+    if (day.length === 1) {
+      day = `0${day}`;
+    }
+    return `${year}-${month}-${day}`;
+  }
+
+  Date.prototype.addDays = function(days) {
+    let date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+
   return (
     <Grid
       container
@@ -298,12 +359,12 @@ const AddActivityForm = props => {
         container
         className='flex-row justify-content-between align-items-start'
       >
-        <Grid item className='col-5'>
+        <Grid item className='col-4'>
           <StyledTextField
             fullWidth
             margin='normal'
             select
-            label='type of asset'
+            label='Type of asset'
             name='assetType'
             onChange={handleInputChange}
             value={values.assetType}
@@ -313,15 +374,41 @@ const AddActivityForm = props => {
             <MenuItem value='cash'>Cash</MenuItem>
           </StyledTextField>
         </Grid>
-        <Grid item className='col-6'>
-          <SearchAssetInput
-            values={values}
-            errors={errors}
-            portfolioData={props.portfolioData}
-            handleInputChange={handleInputChange}
-            StyledTextField={StyledTextField}
-            setValues={setValues}
-          />
+        <Grid item className='col-7'>
+          {(values.assetType === 'cash' && cash.length === 0) ?
+            <Button
+              className='my-3'
+              variant='outlined'
+              size='large'
+              onClick={() => routeChange('../dashboard')}
+              sx={{
+                color: 'white',
+                borderColor: '#4eb96f',
+                backgroundColor: '#4eb96f',
+                '&:hover': {
+                  borderColor: '#068930',
+                  backgroundColor: '#4eb96f',
+                },
+                '&.Mui-disabled': {
+                  backgroundColor: 'rgb(228 231 235)',
+                }
+              }}
+            >
+              Go to dashboard and add a cash account
+            </Button>
+          : 
+            <SearchAssetInput
+              initialAssetObj={props.initialAssetObj}
+              values={values}
+              errors={errors}
+              portfolioData={props.portfolioData}
+              handleInputChange={handleInputChange}
+              StyledTextField={StyledTextField}
+              setValues={setValues}
+              initialLoading={initialLoading}
+              setInitialLoading={setInitialLoading}
+            />
+          }
         </Grid>
       </Grid>
 
@@ -330,12 +417,12 @@ const AddActivityForm = props => {
         className='flex-row justify-content-between align-items-start'
       >
         {values.assetType === 'share' &&
-          <Grid item className='col-5'>
+          <Grid item className='col-4'>
             <StyledTextField
               fullWidth
               select
               margin='normal'
-              label='type'
+              label='Type'
               name='typeShare'
               onChange={handleInputChange}
               value={values.typeShare}
@@ -348,12 +435,12 @@ const AddActivityForm = props => {
           </Grid>
         }
         {values.assetType === 'crypto' &&
-          <Grid item className='col-5'>
+          <Grid item className='col-4'>
             <StyledTextField
               fullWidth
               select
               margin='normal'
-              label='type'
+              label='Type'
               name='typeCrypto'
               onChange={handleInputChange}
               value={values.typeCrypto}
@@ -365,12 +452,12 @@ const AddActivityForm = props => {
           </Grid>
         }
         {values.assetType === 'cash' &&
-          <Grid item className='col-5'>
+          <Grid item className='col-4'>
             <StyledTextField
               fullWidth
               select
               margin='normal'
-              label='type'
+              label='Type'
               name='typeCash'
               onChange={handleInputChange}
               value={values.typeCash}
@@ -381,7 +468,7 @@ const AddActivityForm = props => {
             </StyledTextField>
           </Grid>
         }
-        <Grid item className='col-5'>
+        <Grid item className='col-7'>
           <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>
             <DatePicker
               disableFuture
@@ -563,11 +650,12 @@ const AddActivityForm = props => {
           type='submit'
           onClick={() => setAddAnother(false)}
           sx={{
-            color: 'black',
-            borderColor: 'rgb(78 185 111)',
-            backgroundColor: 'rgb(78 185 111)',
+            color: 'white',
+            borderColor: '#4eb96f',
+            backgroundColor: '#4eb96f',
             '&:hover': {
-              backgroundColor: 'rgb(78 185 111)',
+              borderColor: '#068930',
+              backgroundColor: '#4eb96f',
             },
             '&.Mui-disabled': {
               backgroundColor: 'rgb(228 231 235)',
@@ -582,11 +670,13 @@ const AddActivityForm = props => {
           type='submit'
           onClick={() => setAddAnother(true)}
           sx={{
-            color: 'black',
-            borderColor: 'rgb(59 151 210)',
-            backgroundColor: 'rgb(59 151 210)',
+            color: '#4eb96f',
+            borderColor: '#4eb96f',
+            backgroundColor: 'white',
             '&:hover': {
-              backgroundColor: 'rgb(59 151 210)',
+              borderColor: '#068930',
+              backgroundColor: 'white',
+              color: '#068930',
             },
             '&.Mui-disabled': {
               backgroundColor: 'rgb(228 231 235)',
@@ -602,7 +692,8 @@ const AddActivityForm = props => {
 
 AddActivityForm.propTypes = {
   addActivity: PropTypes.func,
-  portfolioData: PropTypes.object
+  portfolioData: PropTypes.object,
+  initialAssetObj: PropTypes.object
 };
 
 export default AddActivityForm;
