@@ -78,6 +78,15 @@ class ActionProvider {
       questionNr = 0;
       userPreferences = {experience: '', risk: '', active: false, effort: '', duration: ''};
     }
+    if (questionNr === -1) {
+      const botAnswer = this.createChatBotMessage(`Hi! I'm Benchi! Are you interested in finding the right investment strategy for you together?`);
+      this.setState((prev) => ({
+        ...prev,
+        messages: [...prev.messages, botAnswer],
+        'questionNr': (questionNr + 1)
+      }));
+      return;
+    }
     if (questionNr === 5) {
       userPreferences = {...userPreferences, duration: answer};
       const Strategy = this.findStrategyForUser(userPreferences);
@@ -103,16 +112,6 @@ class ActionProvider {
       }));
       return;
     }
-
-    if (questionNr === -1) {
-      const botAnswer = this.createChatBotMessage(`Hi! I'm Benchi! Are you interested in finding the right investment strategy for you together?`);
-      this.setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, botAnswer],
-        'questionNr': (questionNr + 1)
-      }));
-      return;
-    }
     
     if (this.preferencesArray[questionNr-1] === 'active') {
       answer = answer === 'medium' ? false : answer;
@@ -129,12 +128,11 @@ class ActionProvider {
       }));
     } else {
       if (questionNr === 0 && answer === 'false') {
-        questionNr = -2;
         this.setState((prev) => ({
           ...prev,
-          messages: [...prev.messages, botAnswer, botNewQuestion],
-          'questionNr': questionNr,
-        }));
+          messages: [...prev.messages, botAnswer],
+          'questionNr': -1,
+        }));  
         return;
       }
       this.setState((prev) => ({
