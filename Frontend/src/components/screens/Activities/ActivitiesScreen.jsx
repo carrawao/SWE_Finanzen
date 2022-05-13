@@ -3,7 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import {
   Container,
   Button,
-  Grid
+  Grid,
+  Typography
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -30,44 +31,16 @@ const ActivitiesScreen = props => {
     navigate(path);
   }
 
-  const dummyCash = () => {
-    const cash = [{
-      firstActivity: '2900-01-01',     
-      id: 0,
-      symbol: 'ING',
-      name: 'ING Konto',
-      assetTypeForDisplay: 'Cash',
-      value: 0,
-      quantity: 1,
-      gains: 0,
-      realisedGains: 0,
-      totalGains: 0,
-      performanceWithRealisedGains: 0,
-      performanceWithOutRealisedGains: 0,
-      taxes: 0,
-      fees: 0,
-      dailyDataForPerformanceGraph: [],
-      dailyDataForValueDevelopment: [],
-      stateChanges: [],
-      deposits: [],
-      analysisInfo: undefined
-    }]
-
-    props.setPortfolioData(prevData => {
-      const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]['cash'] = cash;
-      return portfolioData;
-    });
-  }
-
   const deleteActivity = async () => {
     if (portfolioData['activities'].length <= 1) {
-      alert(`You need at least one activity in your portfolio!`);
+      props.setStatusMessage('You need at least one activity in your portfolio!');
+      props.setMessageType('error');
       return;
     }
     const dependedOn = checkIfDependedOn(selectedActivityId);
     if (dependedOn) {
-      alert(`Activity can't be deleted because others depend on it!`);
+      props.setStatusMessage(`Activity can't be deleted because others depend on it!`);
+      props.setMessageType('error');
       return;
     }
     
@@ -152,26 +125,37 @@ const ActivitiesScreen = props => {
   const renderBody = () => (
     <Grid className='d-flex justify-content-center pt-2'>
       <Container className='p-0'>
-        <Button onClick={() => dummyCash()}>Add a dummy cash account</Button>
-        <Button
-          className='my-3'
-          variant='outlined'
-          onClick={() => routeChange('addActivity')}
-          sx={{
-            color: 'white',
-            borderColor: '#4eb96f',
-            backgroundColor: '#4eb96f',
-            '&:hover': {
-              borderColor: '#068930',
-              backgroundColor: '#4eb96f',
-            },
-            '&.Mui-disabled': {
-              backgroundColor: 'rgb(228 231 235)',
-            }
-          }}
+        <Grid 
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          Add Activity
-        </Button>
+          <Typography
+            variant='h3'
+          >
+            Activities 
+          </Typography>
+          <Button
+            className='my-3'
+            variant='outlined'
+            onClick={() => routeChange('addActivity')}
+            sx={{
+              color: 'white',
+              borderColor: '#4eb96f',
+              backgroundColor: '#4eb96f',
+              '&:hover': {
+                borderColor: '#068930',
+                backgroundColor: '#4eb96f',
+              },
+              '&.Mui-disabled': {
+                backgroundColor: 'rgb(228 231 235)',
+              }
+            }}
+          >
+            Add Activity
+          </Button>
+        </Grid>
         <ActivitiesList
           activePortfolio={props.activePortfolio}
           portfolioData={props.portfolioData}

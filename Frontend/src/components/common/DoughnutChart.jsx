@@ -32,12 +32,13 @@ const DoughnutChart = props => {
   const labels = props.labels;
 
   const valueData = props.data;
-  const colorOffset = 50;
-  const colors = labels.map((_, index) => {
-      const hue = colorOffset + index * 137.503; // rotates for distinguishable colors
-      return `hsl(${hue},60%,60%)`;
-    }
-  );
+  const colors = [
+    'rgba(59, 151, 210, 1)',
+    'rgba(241, 155, 31, 1)',
+    'rgba(229, 126, 37, 1)',
+    'rgba(239, 195, 25, 1)',
+    'rgba(78, 185, 111, 1)',
+  ]
 
   const data = {
     labels: labels,

@@ -66,8 +66,8 @@ export const AssetPerformance = props => {
     datasets: [{
       label: 'Performance',
       data: perfData,
-      borderColor: 'rgb(153, 102, 51)',
-      backgroundColor: 'rgb(153, 102, 51)',
+      borderColor: ' rgb(78, 185, 111)',
+      backgroundColor: ' rgb(78, 185, 111)',
       pointRadius: 0
     }]
   }
@@ -125,7 +125,7 @@ export const AssetPerformance = props => {
   }
   changeData(props.view, perfData, labels, options, setup)
   return (
-    <Card raised sx={{border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3}}>
+    <Card raised sx={{border: 3, borderColor: ' rgb(73, 63, 53)', borderRadius: 3}}>
       <CardHeader title={'Performance | ' + props.name} action={
         <FormGroup>
           <FormControlLabel control={<Checkbox checked={realised} onChange={e => {
