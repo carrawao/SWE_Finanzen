@@ -1,10 +1,11 @@
 class MessageParser {
   constructor(actionProvider, state) {
     this.actionProvider = actionProvider;
-    this.state = {...state, questionNr: 0};
+    this.state = {...state};
   }
 
   parse(message) {
+    console.log(this.state)
     this.fetchAnswer(message);
   }
 
@@ -12,11 +13,11 @@ class MessageParser {
     const chitChatAnswer = data[0].answer;
     const answer = data[1] !== undefined ? data[1].answer : undefined;
     if (answer !== undefined) {
-      this.actionProvider.handleAnswer(answer, this.state.questionNr);
+      this.actionProvider.handleAnswer(answer, this.state.questionNr, this.state.userPreferences);
       return;
     }
     if (chitChatAnswer === 'true' || chitChatAnswer === 'false' || chitChatAnswer === 'medium') {
-      this.actionProvider.handleAnswer(chitChatAnswer, this.state.questionNr);
+      this.actionProvider.handleAnswer(chitChatAnswer, this.state.questionNr, this.state.userPreferences);
       return;
     }
     if (chitChatAnswer === 'No answer found') {
