@@ -4,7 +4,7 @@ import {AppBar, Box, CssBaseline, Grid, Toolbar, Alert} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
-import {SideNavLeft, Footer, SearchField} from './common/index';
+import {SideNavLeft, Footer, SearchField, Benchi} from './common/index';
 import SearchResultsTable from './common/SearchResultsTable';
 
 const drawerWidth = 14; // This is the value in rem units, for responsiveness
@@ -18,6 +18,7 @@ const ScreensTemplate = props => {
   const location = useLocation()
   const [openInMobile, setOpenInMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  
 
   // Resetting the search when changing routes
   useEffect(() => {
@@ -145,6 +146,15 @@ const ScreensTemplate = props => {
             props.bodyComponent()}
         </Box>
         {props.messageType !== undefined && props.statusMessage !== undefined && showStatusMessage(props.messageType, props.statusMessage)}
+      </Box>
+      <Box sx={{
+        position: 'fixed',
+        bottom: '5%',
+        right: '5%',
+        zIndex: '20000',
+        transform: 'translate(0 0)',
+      }}>
+        <Benchi/>
       </Box>
       <Box sx={{
         position: 'absolute',

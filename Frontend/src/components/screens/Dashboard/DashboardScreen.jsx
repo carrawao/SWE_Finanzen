@@ -42,7 +42,7 @@ const DashboardScreen = props => {
           </Box>
         </Box>
       </Grid>
-      <PortfolioCharts view={view} {...props}/>
+      <PortfolioCharts view={view} {...props}/> 
     </React.Fragment>
   );
 
