@@ -5,7 +5,7 @@ import Masterdata from './Masterdata';
 import {Container, Card, Grid} from '@mui/material';
 import PropTypes from 'prop-types';
 import SwitchButtons from './SwitchButtons';
-import AssetPerformance from './AssetPerfofmance';
+import AssetPerformance from './AssetPerformance';
 import AssetValue from './AssetValue';
 
 /**
