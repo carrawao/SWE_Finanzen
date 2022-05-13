@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import AssetChart from './AssetChart';
 import ChartButtons from './ChartButtons';
 import Masterdata from './Masterdata';
-import {Container, Card, Grid} from '@mui/material';
+import {Container, Card, Grid, Box} from '@mui/material';
 import PropTypes from 'prop-types';
 import SwitchButtons from './SwitchButtons';
 import AssetPerformance from './AssetPerfofmance';
@@ -50,25 +50,23 @@ const AssetCard = props => {
   }
 
   return (
-    <Container className='d-flex flex-column px-1 pt-2 sm'>
+    <Container className='d-flex flex-column px-1 pt-2'>
       <Card>
-        <Grid container direction='column'>
-          <Grid xs={2} item container direction='row' justifyContent='space-between'>
-            <>
+        <Box container direction='column'>
+          <Box className='d-flex flex-row justify-content-space-between'>
               <SwitchButtons containsAssetData={containsAssetData} setChartType={setChartType} chartType={chartType}/>
               <ChartButtons view={view} setView={setView}/>
-            </>
-          </Grid>
-          <Grid item xs={6} className='mt-2 mb-2'>
+          </Box>
+          <Box className='mt-2 mb-2'>
             {renderContent()}
-          </Grid>
-          <Grid item xs={4}>
+          </Box>
+          <Box>
             {
               props.assetType === 'Stock' &&
               <Masterdata assetType={props.assetType} symbol={props.symbol} setName={setName}/>
             }
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Card>
     </Container>
   )
