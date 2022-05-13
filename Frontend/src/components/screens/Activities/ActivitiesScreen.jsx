@@ -31,36 +31,6 @@ const ActivitiesScreen = props => {
     navigate(path);
   }
 
-  const dummyCash = () => {
-    const cash = [{
-      firstActivity: '2900-01-01',     
-      id: 0,
-      symbol: 'ING',
-      name: 'ING Konto',
-      assetTypeForDisplay: 'Cash',
-      value: 0,
-      quantity: 1,
-      gains: 0,
-      realisedGains: 0,
-      totalGains: 0,
-      performanceWithRealisedGains: 0,
-      performanceWithOutRealisedGains: 0,
-      taxes: 0,
-      fees: 0,
-      dailyDataForPerformanceGraph: [],
-      dailyDataForValueDevelopment: [],
-      stateChanges: [],
-      deposits: [],
-      analysisInfo: undefined
-    }]
-
-    props.setPortfolioData(prevData => {
-      const portfolioData = {...prevData};
-      portfolioData[props.activePortfolio]['cash'] = cash;
-      return portfolioData;
-    });
-  }
-
   const deleteActivity = async () => {
     if (portfolioData['activities'].length <= 1) {
       props.setStatusMessage('You need at least one activity in your portfolio!');
