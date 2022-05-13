@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {Avatar, Button, Grid, List, ListItem, ListItemButton, Typography, Tooltip} from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
@@ -31,6 +31,11 @@ const SearchResultsTable = props => {
     });
     return isAssetInWatchList;
   }
+
+  let navigate = useNavigate();
+  const routeChange = path => {
+    navigate(path);
+  } 
 
   /**
    * Renders each item if the search results table
@@ -88,17 +93,23 @@ const SearchResultsTable = props => {
           <Grid
             item
             className={`d-flex flex-column ${props.watchListsArray && props.watchListsArray.length > 0 ? 'flex-xl-row flex-grow-1 col-1 pe-4' : 'col-9 col-sm-10'}`}>
-            <Typography
-              noWrap
-              className={`${props.watchListsArray && props.watchListsArray.length > 0 && 'col-xl-8'}`}
-              fontSize={{
-                lg: 16,
-                md: 15,
-                xs: 14
-              }}
+            <Link
+              className='col-12 text-decoration-none text-black'
+              to={`/asset/${element.assetType}/${element.symbol}`}
+              key={`search_result_links_${index}`}
             >
-              {element.name ? element.name : element.symbol}
-            </Typography>
+              <Typography
+                noWrap
+                className={`${props.watchListsArray && props.watchListsArray.length > 0 && 'col-xl-8'}`}
+                fontSize={{
+                  lg: 16,
+                  md: 15,
+                  xs: 14
+                }}
+              >
+                {element.name ? element.name : element.symbol}
+              </Typography>
+            </Link>
 
             <Typography
               className={`fw-bold ${props.watchListsArray && props.watchListsArray.length > 0 && 'ms-xl-3 text-xl-center'} col-lg-4`}
@@ -112,7 +123,39 @@ const SearchResultsTable = props => {
               {element.assetType}
             </Typography>
           </Grid>
-
+          {!props.watchListsArray && 
+            <Grid item className='d-flex flex-row justify-content-end'>
+              <ListItemButton
+                className='p-0 ms-3 flex-grow-0 justify-content-end'
+                onClick={() => {routeChange(`../activities/addActivity/${element.assetType}/${element.symbol}/${element.name}`)}}
+              >
+                <Tooltip
+                  title='Add Activity'
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        backgroundColor: '#30302f',
+                        '& .MuiTooltip-arrow': {
+                          color: '#30302f'
+                        },
+                      },
+                    },
+                  }}
+                >
+                  <Avatar
+                    className='me-2'
+                    sx={{width: '1.4rem', height: '1.4rem', backgroundColor: 'white', border: 'solid 2px #493f35'}}
+                  >
+                    <AddIcon sx={{color: '#493f35', fontSize: '20px'}}/>
+                  </Avatar>
+                </Tooltip>
+              </ListItemButton>
+            </Grid>
+          }
           {props.watchListsArray && props.watchListsArray.length > 0 &&
             <Grid item className='d-flex flex-row justify-content-end'>
               <Avatar
@@ -156,8 +199,7 @@ const SearchResultsTable = props => {
               </ListItemButton>
               <ListItemButton
                 className='p-0 ms-3 flex-grow-0 justify-content-end'
-                onClick={() => {
-                }}
+                onClick={() => {routeChange(`../activities/addActivity/${element.assetType}/${element.symbol}/${element.name}`)}}
               >
                 <Tooltip
                   title='Add Activity'
@@ -196,17 +238,7 @@ const SearchResultsTable = props => {
       <List
         className={`d-flex flex-column ${props.watchListsArray && props.watchListsArray.length > 0 ? 'col-12 col-sm-10 col-lg-9 col-xl-11' : 'col-12 col-sm-11 col-md-10 col-lg-11 col-xl-9'}`}>
         {props.searchResult.map((element, index) => {
-          return props.watchListsArray && props.watchListsArray.length > 0 ?
-            renderSearchResultList(element, index)
-            : (
-              <Link
-                className='col-12 text-decoration-none text-black'
-                to={`/asset/${element.assetType}/${element.symbol}`}
-                key={`search_result_links_${index}`}
-              >
-                {renderSearchResultList(element, index)}
-              </Link>
-            )
+          return renderSearchResultList(element, index)
         })}
       </List>
       <Button

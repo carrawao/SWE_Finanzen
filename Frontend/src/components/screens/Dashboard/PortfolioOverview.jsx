@@ -5,7 +5,8 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Typography
+  Typography,
+  IconButton
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -57,7 +58,13 @@ const PortfolioOverview = props => {
             </FormControl>
           </Grid>
           <Grid item>
-            <AddIcon/>
+            <IconButton
+              aria-label='add a portfolio'
+              size='medium'
+              onClick={() => {}}
+            >
+              <AddIcon/>
+            </IconButton>
             <SettingsIcon/>
           </Grid>
         </Grid>
@@ -74,11 +81,11 @@ const PortfolioOverview = props => {
         </Grid>
         <Grid item className='d-flex flex-column col-5 align-items-center'>
           <Typography variant='h6' gutterBottom display='block'>Realised Gains</Typography>
-          <Typography variant='h6' gutterBottom>{portfolio['realisedGains']}</Typography>
+          <Typography variant='h6' gutterBottom>{new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR',}).format(portfolio['realisedGains'])}</Typography>
         </Grid>
         <Grid item className='d-flex flex-column col-3 align-items-center'>
           <Typography variant='h6' gutterBottom>Dividends</Typography>
-          <Typography variant='h6' gutterBottom>0,00€</Typography>
+          <Typography variant='h6' gutterBottom>{new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR',}).format(portfolio['dividends'])}</Typography>
         </Grid>
       </Grid>
     </Grid>
