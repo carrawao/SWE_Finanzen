@@ -611,24 +611,6 @@ const AppRoutes = () => {
             setMessageType={setMessageType}
           />}
       />
-      <Route
-        path='/activities/addActivity'
-        element={
-          <AddActivityScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
-            getAllAssets={getAllAssets}
-            statusMessage={statusMessage}
-            setStatusMessage={setStatusMessage}
-            messageType={messageType}
-            setMessageType={setMessageType}
-          />}
-      />
       <Route path='/about' element={<Home/>}/>
       <Route path='/impressum' element={<Impressum/>}/>
       <Route path='/privacy' element={<Privacy/>}/>
