@@ -3,6 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 import Impressum from '../components/screens/Impressum';
 import AGB from '../components/screens/AGB';
 import Privacy from '../components/screens/Privacy';
+import ErrorPage from '../components/screens/ErrorPage';
 
 import {
   DailyDataArraysService,
@@ -484,24 +485,6 @@ const AppRoutes = () => {
           />}
       />
       <Route
-        path='/analysis'
-        element={
-          <AnalysisScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            setActivePortfolio={setActivePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
-            statusMessage={statusMessage}
-            setStatusMessage={setStatusMessage}
-            messageType={messageType}
-            setMessageType={setMessageType}
-          />}
-      />
-      <Route
         path='/activities'
         element={
           <ActivitiesScreen
@@ -628,28 +611,11 @@ const AppRoutes = () => {
             setMessageType={setMessageType}
           />}
       />
-      <Route
-        path='/activities/addActivity'
-        element={
-          <AddActivityScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
-            getAllAssets={getAllAssets}
-            statusMessage={statusMessage}
-            setStatusMessage={setStatusMessage}
-            messageType={messageType}
-            setMessageType={setMessageType}
-          />}
-      />
       <Route path='/about' element={<Home/>}/>
       <Route path='/impressum' element={<Impressum/>}/>
       <Route path='/privacy' element={<Privacy/>}/>
       <Route path='/agb' element={<AGB/>}/>
+      <Route path='*' element={<ErrorPage/>}/>
     </Routes>
   );
 }
