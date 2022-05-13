@@ -71,7 +71,21 @@ const ActivitiesList = (props) => {
     <Container className='p-0'>
       {years.map((year, index) => (
       <Container className='p-0' key={`activitiesList_${year}`}>
-        <Typography variant='h4' sx={{margin: '1rem', marginBottom: '0rem'}}>{year}</Typography>
+        <Box className='d-flex flex-row justify-content-between align-items-start'>
+          <Typography variant='h4' sx={{margin: '1rem', marginBottom: '0rem'}}>
+            {year}
+          </Typography>
+          <Box className='d-none d-md-flex'>
+            <Typography variant='h6' sx={{margin: '1rem', marginBottom: '0rem'}}> 
+            {activitiesForEachYearArray[index].length} total ·&nbsp; 
+              {activitiesForEachYearArray[index].filter(activity => activity.type === 'buy').length} buys ·&nbsp; 
+              {activitiesForEachYearArray[index].filter(activity => activity.type === 'sell').length} sells ·&nbsp;
+              {activitiesForEachYearArray[index].filter(activity => activity.type === 'dividend').length} dividends ·&nbsp; 
+              {activitiesForEachYearArray[index].filter(activity => activity.type === 'deposit').length} deposits ·&nbsp; 
+              {activitiesForEachYearArray[index].filter(activity => activity.type === 'payout').length} payouts 
+            </Typography>
+          </Box>
+        </Box>
         <Box>
           <List className='d-flex flex-column'>
             {activitiesForEachYearArray[index].map((element, i) => (

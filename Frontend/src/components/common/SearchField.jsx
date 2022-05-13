@@ -38,6 +38,7 @@ const SearchField = props => {
   return (
     <TextField
       id='search-field'
+      autoComplete='off'
       variant='standard'
       placeholder='Search Asset'
       className='d-flex flex-grow-1'
