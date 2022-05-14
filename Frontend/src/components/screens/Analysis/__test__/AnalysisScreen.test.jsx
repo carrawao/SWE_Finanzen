@@ -1,4 +1,5 @@
 import React from 'react';
+import {BrowserRouter} from 'react-router-dom';
 import AnalysisScreen from '../AnalysisScreen';
 import AnalysisDetailItem from '../AnalysisDetailitem';
 import {shallow, mount, configure} from 'enzyme';
@@ -36,17 +37,19 @@ it('AnalysisScreen renders without crashing', () => {
     }
   }
 
-  const tree = shallow(<AnalysisScreen
-    searchResult={[]}
-    setSearchResult={setSearchResult}
-    watchListsArray={[]}
-    assetsListArray={[[]]}
-    portfolioData={portfolioData}
-    activePortfolio={'Portfolio'}
-    setPortfolioData={setPortfolioData}
-    setStatusMessage={setStatusMessage}
-    setMessageType={setMessageType}
-  />);
+  const tree = shallow(<BrowserRouter>
+    <AnalysisScreen
+      searchResult={[]}
+      setSearchResult={setSearchResult}
+      watchListsArray={[]}
+      assetsListArray={[[]]}
+      portfolioData={portfolioData}
+      activePortfolio={'Portfolio'}
+      setPortfolioData={setPortfolioData}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
+    />
+  </BrowserRouter>);
 
   expect(toJson(tree)).toMatchSnapshot();
 });

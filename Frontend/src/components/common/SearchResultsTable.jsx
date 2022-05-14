@@ -21,7 +21,7 @@ const SearchResultsTable = props => {
    * @returns {boolean}
    */
   const checkAssetInWatchLists = asset => {
-    let isAssetInWatchList = false
+    let isAssetInWatchList = false;
     props.assetsListArray.forEach(innerArray => {
       innerArray.forEach(assetInWatchList => {
         if (assetInWatchList.name === asset.name || assetInWatchList.name === asset.symbol) {
@@ -32,7 +32,6 @@ const SearchResultsTable = props => {
     return isAssetInWatchList;
   }
 
-  let navigate = useNavigate();
   const routeChange = path => {
     navigate(path);
   } 
@@ -94,13 +93,12 @@ const SearchResultsTable = props => {
             item
             className={`d-flex flex-column ${props.watchListsArray && props.watchListsArray.length > 0 ? 'flex-xl-row flex-grow-1 col-1 pe-4' : 'col-9 col-sm-10'}`}>
             <Link
-              className='col-12 text-decoration-none text-black'
+              className={`d-flex flex-grow-1 text-decoration-none text-black ${props.watchListsArray && props.watchListsArray.length > 0 && 'col-xl-8'}`}
               to={`/asset/${element.assetType}/${element.symbol}`}
               key={`search_result_links_${index}`}
             >
               <Typography
                 noWrap
-                className={`${props.watchListsArray && props.watchListsArray.length > 0 && 'col-xl-8'}`}
                 fontSize={{
                   lg: 16,
                   md: 15,
