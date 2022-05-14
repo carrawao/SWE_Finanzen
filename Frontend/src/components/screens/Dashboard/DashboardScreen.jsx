@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {Grid, Box} from '@mui/material';
+import {Grid, Typography, Box, Button} from '@mui/material';
 import PropTypes from 'prop-types';
 import AllocationGraph from './AllocationGraph';
 import PortfolioOverview from './PortfolioOverview';
@@ -16,6 +16,36 @@ import ChartButtons from '../AssetDetails/ChartButtons';
 const DashboardScreen = props => {
   const [view, setView] = useState('month');
 
+  const dummyCash = () => {
+    const cash = [{
+      firstActivity: '2900-01-01',     
+      id: 0,
+      symbol: 'ING',
+      name: 'ING Konto',
+      assetTypeForDisplay: 'Cash',
+      value: 0,
+      quantity: 1,
+      gains: 0,
+      realisedGains: 0,
+      totalGains: 0,
+      performanceWithRealisedGains: 0,
+      performanceWithOutRealisedGains: 0,
+      taxes: 0,
+      fees: 0,
+      dailyDataForPerformanceGraph: [],
+      dailyDataForValueDevelopment: [],
+      stateChanges: [],
+      deposits: [],
+      analysisInfo: undefined
+    }]
+
+    props.setPortfolioData(prevData => {
+      const portfolioData = {...prevData};
+      portfolioData[props.activePortfolio]['cash'] = cash;
+      return portfolioData;
+    });
+  }
+
   const renderBody = () => (
     <React.Fragment>
       <Grid
@@ -30,9 +60,6 @@ const DashboardScreen = props => {
           />
         </Grid>
         <Box className='col-12 col-md-10 flex-xl-column col-xl-8'>
-          <Box className='d-flex justify-content-center mb-2'>
-            <ChartButtons view={view} setView={setView}/>
-          </Box>
           <Box className='d-flex justify-content-center mb-4'>
             <PortfolioOverview
               portfolioData={props.portfolioData}
@@ -40,9 +67,34 @@ const DashboardScreen = props => {
               setActivePortfolio={props.setActivePortfolio}
             />
           </Box>
+          <Box className='d-flex justify-content-center mb-2'>
+            <ChartButtons view={view} setView={setView}/>
+          </Box>
         </Box>
       </Grid>
-      <PortfolioCharts view={view} {...props}/>
+      {props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment'] && Object.keys(props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment']).length === 0 ?
+        <Typography/>
+        :
+        <PortfolioCharts view={view} {...props}/>
+      }
+      <Button
+        variant='outlined'
+        type='submit'
+        onClick={() => dummyCash()}
+        sx={{
+          margin: '1rem',
+          color: '#4eb96f',
+          borderColor: '#4eb96f',
+          backgroundColor: 'white',
+          '&:hover': {
+            borderColor: '#068930',
+            backgroundColor: 'white',
+            color: '#068930',
+          },
+        }}
+      >
+        Add a dummy cash account
+      </Button>
     </React.Fragment>
   );
 

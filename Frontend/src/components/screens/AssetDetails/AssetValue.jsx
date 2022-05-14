@@ -63,14 +63,14 @@ export const AssetValue = props => {
     datasets: [{
       label: 'Value',
       data: valueData,
-      borderColor: 'rgb(153, 102, 51)',
-      backgroundColor: 'rgb(153, 102, 51)',
+      borderColor: ' rgb(78, 185, 111)',
+      backgroundColor: ' rgb(78, 185, 111)',
       pointRadius: 0
     }, {
       label: 'Invested',
       data: investedData,
-      borderColor: 'rgb(0, 102, 51)',
-      backgroundColor: 'rgb(0, 102, 51)',
+      borderColor: 'rgb(59, 151, 210)',
+      backgroundColor: 'rgb(59, 151, 210)',
       pointRadius: 0
     }]
   }
@@ -135,7 +135,7 @@ export const AssetValue = props => {
   changeData(props.view, valueData, labels, options, setup, 0)
   changeData(props.view, investedData, labels, options, setup, 1)
   return (
-    <Card raised sx={{border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3}}>
+    <Card raised sx={{border: 3, borderColor: 'rgb(73, 63, 53)', borderRadius: 3}}>
       <CardHeader title={'Value | ' + props.name}/>
       <CardContent>
         <Line data={setup} options={options}/>

@@ -120,7 +120,7 @@ export const AssetChart = props => {
     datasets: [{
       label: props.symbol,
       data: data,
-      borderColor: 'rgb(59 151 210)', // light blue
+      borderColor: 'rgb(78, 185, 111)', // green
       backgroundColor: 'rgb(78 185 111)',// light green
       yAxisId: 'stockpriceAxis',
       pointRadius: 0
@@ -173,9 +173,9 @@ export const AssetChart = props => {
             return title;
           },
           labelTextColor: function (context) {
-            let color = 'red';
+            let color = 'rgb(211, 116, 34)';
             if (context.dataset.data[context.dataIndex] > context.dataset.data[context.dataIndex + 1]) {
-              color = 'green';
+              color = 'rgb(78, 185, 111)';
             }
             return color;
           }
@@ -185,7 +185,7 @@ export const AssetChart = props => {
         display: false
       },
       crosshair: {
-        color: 'grey',
+        color: 'rgb(137,128,128)', //grey
         width: 2
       }
     }

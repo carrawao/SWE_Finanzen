@@ -3,6 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 import Impressum from '../components/screens/Impressum';
 import AGB from '../components/screens/AGB';
 import Privacy from '../components/screens/Privacy';
+import ErrorPage from '../components/screens/ErrorPage';
 
 import {
   DailyDataArraysService,
@@ -33,7 +34,7 @@ const emptyPortfolioData = {
     'gains': 0,
     'realisedGains': 0,
     'totalGains': 0,
-    'dividens': 0,
+    'dividends': 0,
     'performanceWithRealisedGains': 0,
     'performanceWithoutRealisedGains': 0,
     'shares': [],
@@ -243,6 +244,9 @@ const AppRoutes = () => {
       tempPortfolioData[activePortfolio]['updated'] = new Date(activityObj.date).addDays(-1).getFormattedString(); //update Portfolio Data automatically recalculates the dailyValues for the whole portfolio from this date on
       return tempPortfolioData;
     });
+
+    setStatusMessage('Activity saved');
+    setMessageType('success');
   }
 
   /**
@@ -358,6 +362,8 @@ const AppRoutes = () => {
       const response = await fetch(`${process.env.REACT_APP_BASEURL}/getShareInformationsForAnalyse?symbol=${symbol}`, {mode: 'cors'})
       return await response.json();
     } catch (e) {
+      setStatusMessage('Lost connection to server. Please try again later');
+      setMessageType('error');
       console.log('fetching failed === ', e);
     }
   }
@@ -375,7 +381,7 @@ const AppRoutes = () => {
       tempPortfolioData[activePortfolio]['gains'] = dailyDataForValueDevelopment[latestDateWithData]['gains'];
       tempPortfolioData[activePortfolio]['realisedGains'] = dailyDataForValueDevelopment[latestDateWithData]['realisedGains'];
       tempPortfolioData[activePortfolio]['totalGains'] = dailyDataForValueDevelopment[latestDateWithData]['totalGains'];
-      tempPortfolioData[activePortfolio]['dividens'] = dailyDataForValueDevelopment[latestDateWithData]['dividens'];
+      tempPortfolioData[activePortfolio]['dividends'] = dailyDataForValueDevelopment[latestDateWithData]['dividends'];
       tempPortfolioData[activePortfolio]['fees'] = dailyDataForValueDevelopment[latestDateWithData]['fees'];
       tempPortfolioData[activePortfolio]['taxes'] = dailyDataForValueDevelopment[latestDateWithData]['taxes'];
       tempPortfolioData[activePortfolio]['performanceWithRealisedGains'] = dailyDataForPerformanceGraph[latestDateWithData]['performanceWithRealisedGains'];
@@ -395,7 +401,7 @@ const AppRoutes = () => {
         if (assetDailyDataForValueDevelopment[dateKey] === undefined) return; //return equals continue in a forEach loop
 
         const portfolioDateData = dailyDataForValueDevelopment[dateKey] ? dailyDataForValueDevelopment[dateKey] :
-          {value: 0, invested: 0, gains: 0, realisedGains: 0, totalGains: 0, dividens: 0, taxes: 0, fees: 0};
+          {value: 0, invested: 0, gains: 0, realisedGains: 0, totalGains: 0, dividends: 0, taxes: 0, fees: 0};
         let assetDateData = assetDailyDataForValueDevelopment[dateKey];
         dailyDataForValueDevelopment[dateKey] = {};
         Object.keys(assetDateData).forEach(attribute => {
@@ -477,24 +483,6 @@ const AppRoutes = () => {
             portfolioData={portfolioData}
             setPortfolioData={setPortfolioData}
             getAllAssets={getAllAssets}
-            statusMessage={statusMessage}
-            setStatusMessage={setStatusMessage}
-            messageType={messageType}
-            setMessageType={setMessageType}
-          />}
-      />
-      <Route
-        path='/analysis'
-        element={
-          <AnalysisScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            setActivePortfolio={setActivePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
             statusMessage={statusMessage}
             setStatusMessage={setStatusMessage}
             messageType={messageType}
@@ -628,28 +616,11 @@ const AppRoutes = () => {
             setMessageType={setMessageType}
           />}
       />
-      <Route
-        path='/activities/addActivity'
-        element={
-          <AddActivityScreen
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-            watchListsArray={watchListsArray}
-            assetsListArray={assetsListArray}
-            activePortfolio={activePortfolio}
-            portfolioData={portfolioData}
-            setPortfolioData={setPortfolioData}
-            getAllAssets={getAllAssets}
-            statusMessage={statusMessage}
-            setStatusMessage={setStatusMessage}
-            messageType={messageType}
-            setMessageType={setMessageType}
-          />}
-      />
       <Route path='/about' element={<Home/>}/>
       <Route path='/impressum' element={<Impressum/>}/>
       <Route path='/privacy' element={<Privacy/>}/>
       <Route path='/agb' element={<AGB/>}/>
+      <Route path='*' element={<ErrorPage/>}/>
     </Routes>
   );
 }

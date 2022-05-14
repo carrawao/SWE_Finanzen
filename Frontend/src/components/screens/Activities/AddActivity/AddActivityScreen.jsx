@@ -35,6 +35,8 @@ const AddActivityScreen = props => {
           addActivity={props.addActivity}
           portfolioData={portfolioData}
           initialAssetObj={initialAssetObj}
+          setStatusMessage={props.setStatusMessage}
+          setMessageType={props.setMessageType}
         />
       </Container>
     </Grid>
@@ -44,10 +46,14 @@ const AddActivityScreen = props => {
     <React.Fragment>
       <ScreensTemplate
         bodyComponent={renderBody}
-        selectedNavLinkIndex={3}
+        selectedNavLinkIndex={2}
         assetsListArray={props.assetsListArray}
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
+        statusMessage={props.statusMessage}
+        setStatusMessage={props.setStatusMessage}
+        messageType={props.messageType}
+        setMessageType={props.setMessageType}
       />
     </React.Fragment>
   );
@@ -61,7 +67,10 @@ AddActivityScreen.propTypes = {
   portfolioData: PropTypes.object,
   getAllAssets: PropTypes.func,
   assetsListArray: PropTypes.array,
-  addActivity: PropTypes.func
+  addActivity: PropTypes.func,
+  setStatusMessage: PropTypes.func,
+  setMessageType: PropTypes.func
+  
 };
 
 export default AddActivityScreen;

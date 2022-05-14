@@ -22,17 +22,17 @@ const SettingsScreen = props => {
     <Container className='d-flex flex-column px-1 pt-2'>
       <Box className='col-12'>
         <Typography
-          variant='h6'
+          variant='h3'
           fontSize={{
-            lg: 24,
-            xs: 18
+            lg: 36,
+            xs: 24
           }}
           sx={{
-            marginBottom: '40px'
+            marginBottom: '2rem'
           }}
 
         >
-          Settings <SettingsIcon/>
+          Settings <SettingsIcon sx={{ fontSize: {lg: 36, xs: 24} }}/>
         </Typography>
 
       </Box>
@@ -41,12 +41,12 @@ const SettingsScreen = props => {
               sx={{
                 borderRadius: '1rem',
                 border: '1px solid black',
-                padding: '20px',
+                padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(78 185 111) 55%, #FFFFFF 0%);'
                 },
                 background: 'linear-gradient(90deg, rgb(78 185 111) 72%, #FFFFFF 50%);',
-                marginBottom: '40px'
+                marginBottom: '2rem'
               }}
         >
           <Grid item className='col-12 col-md-9 col-xl-9' sx={{
@@ -69,8 +69,7 @@ const SettingsScreen = props => {
               }}
 
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Upload your previously saved data in the form of a Json file to get back to your current state. This way you have complete control over your data!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
@@ -118,12 +117,12 @@ const SettingsScreen = props => {
               sx={{
                 borderRadius: '1rem',
                 border: '1px solid black',
-                padding: '20px',
+                padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(59 151 210) 55%, #FFFFFF 0%);'
                 },
                 background: 'linear-gradient(90deg, rgb(59 151 210) 72%, #FFFFFF 50%);',
-                marginBottom: '40px'
+                marginBottom: '2rem'
               }}
         >
           <Grid item className='col-12 col-md-9 col-xl-9'
@@ -146,8 +145,7 @@ const SettingsScreen = props => {
                 }
               }}
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Download your data here to back it up or use it on another device. Keep the file safe, we have no way to restore your data!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3' sx={{
@@ -184,12 +182,12 @@ const SettingsScreen = props => {
               sx={{
                 borderRadius: '1rem',
                 border: '1px solid black',
-                padding: '20px',
+                padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(228 126 37) 55%, #FFFFFF 0%);'
                 },
                 background: 'linear-gradient(90deg, rgb(228 126 37) 72%, #FFFFFF 50%);',
-                marginBottom: '40px'
+                marginBottom: '2rem'
               }}
         >
           <Grid item className='col-12 col-md-9 col-xl-9' sx={{
@@ -211,8 +209,7 @@ const SettingsScreen = props => {
                 }
               }}
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Delete your data to get an empty portfolio. Your watchlist will be reset as well. Be careful that we can't restore your data, so download it first if you still need it!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
