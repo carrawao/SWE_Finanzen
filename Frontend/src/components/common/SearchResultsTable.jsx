@@ -32,6 +32,7 @@ const SearchResultsTable = props => {
     return isAssetInWatchList;
   }
 
+  let navigate = useNavigate();
   const routeChange = path => {
     navigate(path);
   } 
