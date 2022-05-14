@@ -32,7 +32,7 @@ const SearchResultsTable = props => {
     return isAssetInWatchList;
   }
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const routeChange = path => {
     navigate(path);
   } 
@@ -126,7 +126,8 @@ const SearchResultsTable = props => {
             <Grid item className='d-flex flex-row justify-content-end'>
               <ListItemButton
                 className='p-0 ms-3 flex-grow-0 justify-content-end'
-                onClick={() => {routeChange(`../activities/addActivity/${element.assetType}/${element.symbol}/${element.name}`)}}
+                onClick={() => {
+                  routeChange(`../activities/addActivity/${element.assetType}/${element.symbol}/${element.name}`)}}
               >
                 <Tooltip
                   title='Add Activity'

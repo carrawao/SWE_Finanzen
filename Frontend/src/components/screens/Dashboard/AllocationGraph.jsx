@@ -29,7 +29,7 @@ const AllocationGraph = props => {
   })();
 
   const valueData = (() => {
-    let valueData = []
+    let valueData = [];
     assets.forEach(element => {
       valueData.push(parseFloat(element.value).toFixed(2));
     });
