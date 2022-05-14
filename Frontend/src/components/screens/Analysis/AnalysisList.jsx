@@ -53,12 +53,16 @@ const AnalysisList = (props) => {
         onChange={handleChange}
         value={analysisType}
       >
-        {props.analysisTypes.map((type, index) => (
-          <MenuItem key={index} value={index}>{type}</MenuItem>
-        ))}
+        {props.analysisTypes.map((type, index) => {
+          if(props.allArrays[index].length > 0){
+            return (<MenuItem key={index} value={index}>{type}</MenuItem>);
+          }    
+        })
+        
+        }
       </StyledTextField>
 
-      {
+      { 
         props.allArrays[analysisType] && props.allArrays[analysisType].map((share, index) => (
           <AnalysisDetailItem
             key={`activity_${index}`}
@@ -69,6 +73,7 @@ const AnalysisList = (props) => {
       }
     </List>
   );
+  
 }
 
 AnalysisList.propTypes = {

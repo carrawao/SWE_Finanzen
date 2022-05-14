@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import ScreensTemplate from '../../ScreensTemplate';
-import {Grid} from '@mui/material';
+import {Grid, Typography, Button} from '@mui/material';
 import PropTypes from 'prop-types';
 
 import AnalysisList from './AnalysisList';
 import {DoughnutChart} from '../../common';
+import { useNavigate } from "react-router-dom";
 
 /**
  * Component related to the analysis page
@@ -16,11 +17,23 @@ const AnalysisScreen = props => {
 
   const [analysisType, setAnalysisType] = useState(0);
 
+  let navigate = useNavigate(); 
+
+  const routeChange = () =>{ 
+    let path = `/activities/addActivity`; 
+    navigate(path);
+  }
+
   const portfolioData = props.portfolioData[props.activePortfolio];
   const analysisTypes = ['Asset Type Allocation', 'Shares Allocation', 'Crypto Allocation', 'Cash Allocation', 'Region Allocation', 'Sub region Allocation', 'Country Allocation', 'Sector Allocation', 'Industry Allocation', 'Asset Class Allocation'];
   let keywordCollection = ['region', 'sub_region', 'country', 'sector', 'branche', 'assetClass'];
   let allArrays = [];
   let doughnutChartData = {};
+  let isPortfolioSet = false;
+
+  if(portfolioData.value > 0){
+    isPortfolioSet = true;
+  }
 
   const calculateStockSplit = keyword => {  //Calculate Stock, Crypto and Cash Allocation 
     let value;
@@ -70,7 +83,13 @@ const AnalysisScreen = props => {
             }
           })
         } else {
-          sectorArray.push([element.analysisInfo[keyword], parseFloat(element.value)]);
+          if(element.analysisInfo[keyword]){
+            sectorArray.push([element.analysisInfo[keyword], parseFloat(element.value)]);
+          } else{
+            let unknowKeyword = 'Unknown ' +keyword;
+            sectorArray.push([unknowKeyword, parseFloat(element.value)]);
+          }
+          
         }
       });
 
@@ -97,35 +116,43 @@ const AnalysisScreen = props => {
         }
       })
 
-      percentage = stockValue / value * 100;
+     
 
-      stockArray.push({
-        asset: 'Stock',
-        percentage: percentage.toFixed(2)
-      })
+      if(stockValue){
+        percentage = stockValue / value * 100;
 
+        stockArray.push({
+          asset: 'Stock',
+          percentage: percentage.toFixed(2)
+        })
+      }
+     
+      if(etfValue){
+        percentage = etfValue / value * 100;
 
-      percentage = etfValue / value * 100;
+        stockArray.push({
+          asset: 'ETF',
+          percentage: percentage.toFixed(2)
+        })
+      }
 
-      stockArray.push({
-        asset: 'ETF',
-        percentage: percentage.toFixed(2)
-      })
+      if(portfolioData.cryptoValue){
+        percentage = portfolioData.cryptoValue / value * 100;
 
+        stockArray.push({
+          asset: 'Crypto',
+          percentage: percentage.toFixed(2)
+        })
+      }
 
-      percentage = portfolioData.cryptoValue / value * 100;
+      if(portfolioData.cashValue ){
+        percentage = portfolioData.cashValue / value * 100;
 
-      stockArray.push({
-        asset: 'Crypto',
-        percentage: percentage.toFixed(2)
-      })
-
-      percentage = portfolioData.cashValue / value * 100;
-
-      stockArray.push({
-        asset: 'Cash',
-        percentage: percentage.toFixed(2)
-      })
+        stockArray.push({
+          asset: 'Cash',
+          percentage: percentage.toFixed(2)
+        })
+      }   
     }
 
     return orderArray(stockArray);
@@ -170,28 +197,110 @@ const AnalysisScreen = props => {
 
   doughnutChartData = getDoughnutChartData(allArrays[analysisType]);
 
-  const renderBody = () => (
-    <Grid container
-          className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
-      <Grid item className='col-12 col-md-5 col-xl-3'>
-        <DoughnutChart
-          analysis
-          data={doughnutChartData['data']}
-          labels={doughnutChartData['labels']}
-          defaultMiddleDisplayLabel={analysisTypes[analysisType]}
-          defaultMiddleDisplayValue={''}
-        />
-      </Grid>
-      <Grid item className='col-12 col-md-7 col-xl-9'>
-        <AnalysisList
-          allArrays={allArrays}
-          analysisType={analysisType}
-          setAnalysisType={setAnalysisType}
-          analysisTypes={analysisTypes}
-        />
-      </Grid>
-    </Grid>
-  );
+  const renderBody = () => {
+    if(isPortfolioSet){
+      return(
+        <Grid container className='d-md-flex flex-md-row justify-content-lg-around px-lg-2 px-xl-3 justify-content-center pt-2'>
+          <Grid item className='col-12 col-md-5 col-xl-3'>
+            <DoughnutChart
+              analysis
+              data={doughnutChartData['data']}
+              labels={doughnutChartData['labels']}
+              defaultMiddleDisplayLabel={analysisTypes[analysisType]}
+              defaultMiddleDisplayValue={''}
+            />
+          </Grid>
+          <Grid item className='col-12 col-md-7 col-xl-9'>
+            <AnalysisList
+              allArrays={allArrays}
+              analysisType={analysisType}
+              setAnalysisType={setAnalysisType}
+              analysisTypes={analysisTypes}
+            />
+          </Grid>
+        </Grid>
+      );
+    } else{
+      return(
+   
+        <Grid container
+              sx={{
+           
+                marginTop: '30px'
+              }}
+        >
+          <Grid item className='col-12 col-md-3 col-xl-3'
+                sx={{
+                  '@media screen and (min-width: 768px)': {
+                    display: 'flex !important',
+                    verticalAlign: 'center',
+                    justifyContent: 'center'
+                  },
+                  marginBottom: '50px'
+                }}>
+                  
+            <Button
+              className='ms-3'
+              variant='outlined'
+              onClick={() => routeChange()}
+              sx={{
+                color: 'white',
+                borderColor: 'rgb(78 185 111)',
+                backgroundColor: 'rgb(78 185 111)',
+                '&:hover': {
+                  backgroundColor: 'rgb(78 185 111)',
+                },
+                margin: 'auto !important',
+                display: 'block'
+              }}
+            >
+              Add Activities
+            </Button>
+          </Grid>
+          <Grid item className='col-12 col-md-9 col-xl-9' sx={{
+            paddingRight: '50px',
+            '@media screen and (max-width: 768px)': {
+              paddingRight: '0px'
+            }
+          }}>
+           <Typography
+            variant='h6'
+            fontWeight='bold'
+            fontSize={{
+              lg: 24,
+              xs: 18
+            }}
+          >
+              Start off by adding a Activity
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              With activities you can fill your portfolio with your diffrent types of assets.
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+            </Typography>
+          </Grid>
+
+        </Grid>
+
+    
+      );
+    }
+    
+  }
+   
 
   return (
     <React.Fragment>
