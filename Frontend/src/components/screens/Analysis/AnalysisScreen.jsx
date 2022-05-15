@@ -225,7 +225,6 @@ const AnalysisScreen = props => {
    
         <Grid container
               sx={{
-           
                 marginTop: '30px'
               }}
         >
@@ -242,13 +241,17 @@ const AnalysisScreen = props => {
             <Button
               className='ms-3'
               variant='outlined'
-              onClick={() => routeChange()}
+              onClick={() => routeChange('../activites/addActivity')}
               sx={{
                 color: 'white',
-                borderColor: 'rgb(78 185 111)',
-                backgroundColor: 'rgb(78 185 111)',
+                borderColor: '#4eb96f',
+                backgroundColor: '#4eb96f',
                 '&:hover': {
-                  backgroundColor: 'rgb(78 185 111)',
+                  borderColor: '#068930',
+                  backgroundColor: '#4eb96f',
+                },
+                '&.Mui-disabled': {
+                  backgroundColor: '#f3f4f6',
                 },
                 margin: 'auto !important',
                 display: 'block'
