@@ -86,7 +86,7 @@ const Privacy = () => (
     <Typography variant='h7' className='pt-4 ps-3'>
       Scope of the processing of personal data
     </Typography>
-    <Typography>
+    <Typography variant='h7' className='pt-4 ps-3'>
       We process personal data of our users only insofar as this is necessary for the provision of a functional
       website and our content and services. The processing of personal data of our users is regularly only carried out
       with the consent of the user. An exception applies in those cases where obtaining prior consent is not possible
@@ -155,7 +155,7 @@ const Privacy = () => (
       device. Your browser accesses these files. The use of cookies increases the user-friendliness and security of
       this website.
     </Typography>
-    <Typography>
+    <Typography variant='h7' className='pt-4 ps-3'>
       If you do not want cookies to be stored on your end device for the purpose of measuring reach, you can object to
       the use of these files here:
     </Typography>

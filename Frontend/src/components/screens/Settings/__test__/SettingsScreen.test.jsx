@@ -1,9 +1,9 @@
 import React from 'react';
+import {BrowserRouter} from 'react-router-dom';
 import SettingsScreen from '../SettingsScreen';
 import toJson from 'enzyme-to-json';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import {BrowserRouter} from 'react-router-dom';
 
 Enzyme.configure({adapter: new Adapter()})
 
