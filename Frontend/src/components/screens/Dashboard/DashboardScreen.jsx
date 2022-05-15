@@ -72,8 +72,8 @@ const DashboardScreen = props => {
           </Box>
         </Box>
       </Grid>
-      {Object.keys(props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment']).length === 0 ? 
-        <Typography></Typography>
+      {props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment'] && Object.keys(props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment']).length === 0 ?
+        <Typography/>
         :
         <PortfolioCharts view={view} {...props}/>
       }

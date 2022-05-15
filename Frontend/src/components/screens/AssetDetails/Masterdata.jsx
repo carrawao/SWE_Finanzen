@@ -48,7 +48,7 @@ const Masterdata = props => {
         </List>
       </Grid>
       <Grid item>
-        <Divider orientation='vertical' flexItem sx={1} style={{height: '100%'}}/>
+        <Divider orientation='vertical' flexItem xs={1} style={{height: '100%'}}/>
       </Grid>
       <Grid item xs={5}>
         <List>
