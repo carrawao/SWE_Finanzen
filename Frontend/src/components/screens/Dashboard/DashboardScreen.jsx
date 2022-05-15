@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import ScreensTemplate from '../../ScreensTemplate';
 import {Grid, Typography, Box, Button} from '@mui/material';
 import PropTypes from 'prop-types';
@@ -46,6 +47,11 @@ const DashboardScreen = props => {
     });
   }
 
+  const navigate = useNavigate();
+  const routeChange = path => {
+    navigate(path);
+  } 
+
   const renderBody = () => (
     <React.Fragment>
       <Grid
@@ -72,8 +78,78 @@ const DashboardScreen = props => {
           </Box>
         </Box>
       </Grid>
-      {props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment'] && Object.keys(props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment']).length === 0 ?
-        <Typography/>
+      {props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment'] && Object.keys(props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment']).length === 0 ? 
+        <Grid container
+        sx={{
+     
+          marginTop: '30px'
+        }}
+  >
+    <Grid item className='col-12 col-md-3 col-xl-3'
+          sx={{
+            '@media screen and (min-width: 768px)': {
+              display: 'flex !important',
+              verticalAlign: 'center',
+              justifyContent: 'center'
+            },
+            marginBottom: '50px'
+          }}>
+            
+      <Button
+        className='ms-3'
+        variant='outlined'
+        onClick={() => routeChange('../activities/addActivity')}
+        sx={{
+          color: 'white',
+          borderColor: 'rgb(78 185 111)',
+          backgroundColor: 'rgb(78 185 111)',
+          '&:hover': {
+            backgroundColor: 'rgb(78 185 111)',
+          },
+          margin: 'auto !important',
+          display: 'block'
+        }}
+      >
+        Add Activities
+      </Button>
+    </Grid>
+    <Grid item className='col-12 col-md-9 col-xl-9' sx={{
+      paddingRight: '50px',
+      '@media screen and (max-width: 768px)': {
+        paddingRight: '0px'
+      }
+    }}>
+     <Typography
+      variant='h6'
+      fontWeight='bold'
+      fontSize={{
+        lg: 24,
+        xs: 18
+      }}
+    >
+        Start off by adding a Activity
+      </Typography>
+      <Typography
+        className='mt-2'
+        fontSize={{
+          lg: 20,
+          xs: 16
+        }}
+      >
+        Activities are the base for all data in Bench:market!
+      </Typography>
+      <Typography
+        className='mt-2'
+        fontSize={{
+          lg: 20,
+          xs: 16
+        }}
+      >
+        As soon as you add an activity our algorithms will automatically calculated all important numbers related to your portfolio. If your need any help you can always ask our Chatbot Benchi!
+      </Typography>
+    </Grid>
+
+  </Grid>
         :
         <PortfolioCharts view={view} {...props}/>
       }
