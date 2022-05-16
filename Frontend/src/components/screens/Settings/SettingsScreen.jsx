@@ -28,11 +28,12 @@ const SettingsScreen = props => {
             xs: 24
           }}
           sx={{
+            color: '#30302f',
             marginBottom: '2rem'
           }}
 
         >
-          Settings <SettingsIcon sx={{ fontSize: {lg: 36, xs: 24} }}/>
+          Settings <SettingsIcon sx={{ color: '#30302f', fontSize: {lg: 36, xs: 24} }}/>
         </Typography>
 
       </Box>
@@ -40,7 +41,7 @@ const SettingsScreen = props => {
         <Grid container
               sx={{
                 borderRadius: '1rem',
-                border: '1px solid black',
+                border: '1px solid white',
                 padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(78 185 111) 55%, #FFFFFF 0%);'
@@ -63,6 +64,7 @@ const SettingsScreen = props => {
                 xs: 12
               }}
               sx={{
+                color: 'white',
                 '@media screen and (max-width: 768px)': {
                   marginBottom: '40px'
                 }
@@ -95,9 +97,14 @@ const SettingsScreen = props => {
                 onClick={uploadFile}
                 sx={{
                   color: 'white',
-                  backgroundColor: 'rgb(78 185 111)',
+                  borderColor: '#4eb96f',
+                  backgroundColor: '#4eb96f',
                   '&:hover': {
-                    backgroundColor: 'rgb(78 185 111)',
+                    borderColor: '#068930',
+                    backgroundColor: '#4eb96f',
+                  },
+                  '&.Mui-disabled': {
+                    backgroundColor: '#f3f4f6',
                   },
                   margin: 'auto !important',
                   display: 'block'

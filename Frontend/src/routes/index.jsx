@@ -174,7 +174,12 @@ const AppRoutes = () => {
         const dailyDataForValueDevelopment = dailyDataArrays['dailyDataForValueDevelopment'];
         const dailyDataForPerformanceGraph = dailyDataArrays['dailyDataForPerformanceGraph'];
 
-        const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+        let latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+        const lastKey = (Object.keys(dailyDataForValueDevelopment))[(Object.keys(dailyDataForValueDevelopment)).length-1];
+        if (new Date(latestDateWithData) < new Date(lastKey)) {
+          latestDateWithData = lastKey;
+        }
+
         //save new Data in assetData
         updatedAssetsData[assetData.id] = {
           ...assetData,
@@ -267,7 +272,11 @@ const AppRoutes = () => {
       //update deposits
       const newDeposits = UpdateDepositsArrayService.updateDepositsArray(assetData.deposits, activityObj);
 
-      const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+      let latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+      const lastKey = (Object.keys(dailyDataForValueDevelopment))[(Object.keys(dailyDataForValueDevelopment)).length-1];
+      if (new Date(latestDateWithData) < new Date(lastKey)) {
+        latestDateWithData = lastKey;
+      }
 
       return {
         ...assetData,
@@ -294,7 +303,11 @@ const AppRoutes = () => {
       //update buys and sort them by date
       const newBuys = UpdateBuysArrayService.updateBuysArray(assetData.buys, activityObj);
 
-      const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+      let latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+      const lastKey = (Object.keys(dailyDataForValueDevelopment))[(Object.keys(dailyDataForValueDevelopment)).length-1];
+      if (new Date(latestDateWithData) < new Date(lastKey)) {
+        latestDateWithData = lastKey;
+      }
 
       return {
         ...assetData,
@@ -323,7 +336,11 @@ const AppRoutes = () => {
     const dailyDataForValueDevelopment = dailyDataArrays['dailyDataForValueDevelopment'];
     const dailyDataForPerformanceGraph = dailyDataArrays['dailyDataForPerformanceGraph'];
 
-    const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+    let latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+    const lastKey = (Object.keys(dailyDataForValueDevelopment))[(Object.keys(dailyDataForValueDevelopment)).length-1];
+    if (new Date(latestDateWithData) < new Date(lastKey)) {
+      latestDateWithData = lastKey;
+    }
     return {
       id: portfolio[activityObj.assetType === 'share' ? 'shares' : activityObj.assetType].length,
       firstActivity: activityObj.date,
@@ -371,7 +388,11 @@ const AppRoutes = () => {
   const recalculatePortfolioDataForDates = async dateKeys => {
     const dailyDataForValueDevelopment = await recalculateDailyDataForValueDevelopmentForDates(dateKeys);
     const dailyDataForPerformanceGraph = DailyDataArraysService.createDailyDataForPerformanceGraph(dailyDataForValueDevelopment);
-    const latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+    let latestDateWithData = (Object.keys(dailyDataForValueDevelopment))[0];
+    const lastKey = (Object.keys(dailyDataForValueDevelopment))[(Object.keys(dailyDataForValueDevelopment)).length-1];
+    if (new Date(latestDateWithData) < new Date(lastKey)) {
+      latestDateWithData = lastKey;
+    }
     setPortfolioData(prevData => {
       let tempPortfolioData = {...prevData};
       tempPortfolioData[activePortfolio]['dailyDataForValueDevelopment'] = {...tempPortfolioData[activePortfolio]['dailyDataForValueDevelopment'], ...dailyDataForValueDevelopment};

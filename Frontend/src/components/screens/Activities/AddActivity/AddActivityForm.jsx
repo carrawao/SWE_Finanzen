@@ -393,7 +393,7 @@ const AddActivityForm = props => {
                   backgroundColor: '#4eb96f',
                 },
                 '&.Mui-disabled': {
-                  backgroundColor: 'rgb(228 231 235)',
+                  backgroundColor: '#f3f4f6',
                 }
               }}
             >
@@ -664,7 +664,7 @@ const AddActivityForm = props => {
               backgroundColor: '#4eb96f',
             },
             '&.Mui-disabled': {
-              backgroundColor: 'rgb(228 231 235)',
+              backgroundColor: '#f3f4f6',
             }
           }}
         >
@@ -685,7 +685,7 @@ const AddActivityForm = props => {
               color: '#068930',
             },
             '&.Mui-disabled': {
-              backgroundColor: 'rgb(228 231 235)',
+              backgroundColor: '#f3f4f6',
             }
           }}
         >

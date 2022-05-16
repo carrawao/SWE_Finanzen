@@ -17,12 +17,12 @@ import {AssetDetailItem} from '../../common';
  */
 const ActivitiesList = (props) => {
   const [, setListDropdownIndex] = useState(0);
-  const colorsArray = [{
+  const colorsArray = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)', 'rgb(239 195 21)',{
     'buy': ['blue', 'rgb(59, 151, 210, .2)'],
     'deposit': ['green', 'rgb(78, 185, 111, .2)'],
     'sell': ['brown', 'rgb(228, 126, 37, .2)'],
     'dividend': ['grey', 'rgb(239, 195, 21, .2)'],
-    'payout': ['brown', 'rgb(241, 155, 31, .2)']
+    'payout': ['brown', 'rgb(241, 155, 31, .2)'],
   }];
 
   const findYears = activities => {

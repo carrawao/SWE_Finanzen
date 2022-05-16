@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {List, MenuItem, styled, TextField} from '@mui/material';
 
-import AnalysisDetailItem from './AnalysisDetailitem';
+import AnalysisDetailItem from './AnalysisDetailItem';
 import PropTypes from 'prop-types';
 
 const StyledTextField = styled(TextField)({

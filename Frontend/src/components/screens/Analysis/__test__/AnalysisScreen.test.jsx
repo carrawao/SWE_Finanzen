@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import AnalysisScreen from '../AnalysisScreen';
-import AnalysisDetailItem from '../AnalysisDetailitem';
+import AnalysisDetailItem from '../AnalysisDetailItem';
 import {shallow, mount, configure} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from 'enzyme-to-json';

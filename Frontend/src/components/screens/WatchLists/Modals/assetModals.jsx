@@ -52,11 +52,16 @@ export const renderAddAssetModal = (open, handleClose, errorModal, onChange, onC
         variant='outlined'
         onClick={() => onClick()}
         sx={{
-          color: 'white',
           width: '5rem',
-          backgroundColor: 'rgb(78 185 111)',
+          color: 'white',
+          borderColor: '#4eb96f',
+          backgroundColor: '#4eb96f',
           '&:hover': {
-            backgroundColor: 'rgb(78 185 111)',
+            borderColor: '#068930',
+            backgroundColor: '#4eb96f',
+          },
+          '&.Mui-disabled': {
+            backgroundColor: '#f3f4f6',
           }
         }}
       >

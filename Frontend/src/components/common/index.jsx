@@ -5,6 +5,7 @@ import AssetDetailItem from './AssetDetailItem';
 import DoughnutChart from './DoughnutChart';
 import Benchi from './Benchi';
 import Footer from './Footer';
+import Colors from './Colors';
 
 export {
   SideNavLeft,
@@ -13,5 +14,6 @@ export {
   AssetDetailItem,
   DoughnutChart,
   Footer,
-  Benchi
+  Benchi,
+  Colors
 }
