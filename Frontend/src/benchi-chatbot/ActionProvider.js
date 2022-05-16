@@ -1,3 +1,5 @@
+import TextToSpeech from './TextToSpeech';
+
 class ActionProvider {
   
   strategies = {
@@ -64,82 +66,69 @@ class ActionProvider {
     this.createCustomMessage = createCustomMessage;
   }
 
-  handleChitChat(answer) {
-    const botMessage = this.createChatBotMessage(answer);
-      
-    this.setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
-  }
-
   handleAnswer(answer, questionNr, userPreferences) {
-    if (questionNr === undefined) {
-      questionNr = 0;
-      userPreferences = {experience: '', risk: '', active: false, effort: '', duration: ''};
-    }
-    if (questionNr === -1) {
-      const botAnswer = this.createChatBotMessage(`Hi! I'm Benchi! Are you interested in finding the right investment strategy for you together?`);
-      this.setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, botAnswer],
-        'questionNr': (questionNr + 1)
-      }));
-      return;
-    }
-    if (questionNr === 5) {
-      userPreferences = {...userPreferences, duration: answer};
-      const Strategy = this.findStrategyForUser(userPreferences);
-      const botAnswer = this.createChatBotMessage(this.answerAfterQuestion[questionNr][answer]);
-      const botStrategy = this.createChatBotMessage(`The best strategy for you is ${Strategy}`);
-      const botStrategyExplanation = this.createChatBotMessage(this.strategieDescriptions[Strategy]);
-      this.setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, botAnswer, botStrategy, botStrategyExplanation],
-        questionNr: questionNr + 1
-      }));
-      return;
-    }
-    if (questionNr > 5) {
-      userPreferences = {...userPreferences, duration: answer};
-      const Strategy = this.findStrategyForUser(userPreferences);
-      const botStrategy = this.createChatBotMessage(`The best strategy for you is ${Strategy}`);
-      const botStrategyExplanation = this.createChatBotMessage(this.strategieDescriptions[Strategy]);
-      this.setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, botStrategy, botStrategyExplanation],
-        questionNr: questionNr + 1
-      }));
+    if (answer === 'restart') {
+      const botAnswer = `Okay, starting from the beginning!`;
+      const botNewQuestion = this.questions[0];
+      this.sendMessages(
+        [botAnswer, botNewQuestion], 
+        {questionNr: 1}
+      );
       return;
     }
     
-    if (this.preferencesArray[questionNr-1] === 'active') {
-      answer = answer === 'medium' ? false : answer;
+    if (questionNr === -1) {
+      const message= `Okay, starting from the beginning!`;
+      this.sendMessages([message], {questionNr: (questionNr + 1)});
+      return;
     }
-    const botAnswer = this.createChatBotMessage(this.answerAfterQuestion[questionNr][answer]);
-    const botNewQuestion = this.createChatBotMessage(this.questions[questionNr]);
-      
-    if (questionNr > 0 && questionNr < 5) {
-      this.setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, botAnswer, botNewQuestion],
-        'questionNr': questionNr + 1,
-        'userPreferences': {...userPreferences, [this.preferencesArray[questionNr-1]]: answer}
-      }));
-    } else {
-      if (questionNr === 0 && answer === 'false') {
-        this.setState((prev) => ({
-          ...prev,
-          messages: [...prev.messages, botAnswer],
-          'questionNr': -1,
-        }));  
+    if (questionNr > -1 && questionNr < 5) {
+    
+      if (this.preferencesArray[questionNr-1] === 'active') {
+        answer = answer === 'medium' ? false : answer;
+      }
+      const botAnswer = this.answerAfterQuestion[questionNr][answer];
+      const botNewQuestion = this.questions[questionNr];
+        
+      if (questionNr > 0 && questionNr < 5) {
+        this.sendMessages(
+          [botAnswer, botNewQuestion], 
+          {questionNr: questionNr + 1, userPreferences: {...userPreferences, [this.preferencesArray[questionNr-1]]: answer}}
+        );
+        return;
+      } else {
+        //initial Question
+        if (answer === 'false') {
+          this.sendMessages([botAnswer], {questionNr: 6}); 
+          return;
+        }
+        this.sendMessages(
+          [botAnswer, botNewQuestion], 
+          {questionNr: questionNr + 1}
+        );
         return;
       }
-      this.setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, botAnswer, botNewQuestion],
-        questionNr: questionNr + 1
-      }));
+    }
+    if (questionNr === 5) {
+      userPreferences = {...userPreferences, duration: answer};
+      const strategy = this.findStrategyForUser(userPreferences);
+      const botAnswer = this.answerAfterQuestion[questionNr][answer];
+      const botStrategy = `The best strategy for you is ${strategy}.`;
+      const botStrategyExplanation = this.strategieDescriptions[strategy];
+      this.sendMessages(
+        [botAnswer, botStrategy, botStrategyExplanation],
+        {
+          questionNr: questionNr + 1, 
+          userPreferences: {...userPreferences, [this.preferencesArray[questionNr-1]]: answer},
+          strategy: strategy
+        }
+      );
+      return;
+    }
+    if (questionNr > 5) {
+      const botHowToRestart = `To restart just type restart into the Chat!`;
+      this.sendMessages([botHowToRestart]);
+      return;
     }
   }
 
@@ -172,14 +161,30 @@ class ActionProvider {
     return bestStrategy;
   }
 
+  handleChitChat(answer) {
+    this.sendMessages([answer]);
+  }
+
   handleNoAnswer() {
-    const botMessage = this.createChatBotMessage(`Sorry, but I didn't understand you.`);
-      
+    this.sendMessages([`Sorry, but I didn't understand you.`]);
+  }
+
+  sendMessages(messagesArray, changingStateProperties) {
+    let newMessages = [];
+    let messagesString = '';
+    for (let index = 0; index < messagesArray.length; index++) {
+      const messageString = messagesArray[index];
+      messagesString += ` ${messageString}`;
+      let newMessage = this.createChatBotMessage(messageString);
+      newMessages.push(newMessage);
+    }
+    TextToSpeech.textToSpeech(messagesString);
+    
     this.setState((prev) => ({
       ...prev,
-      messages: [...prev.messages, botMessage],
+      messages: [...prev.messages, ...newMessages],
+      ...changingStateProperties
     }));
-    this.messageCnt = this.messageCnt + 1;
   }
 }
   
