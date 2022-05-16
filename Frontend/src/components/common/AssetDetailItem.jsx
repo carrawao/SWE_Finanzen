@@ -17,6 +17,22 @@ const formatDate = activityDate => {
 }
 
 /**
+ * Creates a hashCode from a String
+ * @param String
+ * @returns {interger}
+ */
+String.prototype.hashCode = function() {
+  let hash = 0, i, chr;
+  if (this.length === 0) return hash;
+  for (i = 0; i < this.length; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
+/**
  * Component related to each asset shown either in activities or assets
  * @param props
  * @returns {JSX.Element}
@@ -35,7 +51,7 @@ const AssetDetailItem = props => (
       borderBottomLeftRadius: props.itemsArray && props.index === props.itemsArray.length - 1 && '0.5rem',
       borderBottomRightRadius: props.itemsArray && props.index === props.itemsArray.length - 1 && '0.5rem',
       backgroundColor: 'white',
-      borderLeftColor: !props.activities && props.colorsArray[props.index % 4],
+      borderLeftColor: props.activities ? props.colorsArray[4][props.row.type][1] : props.colorsArray[props.row.symbol.hashCode() % 4],
       boxShadow: props.index === 0 ?
         'rgb(0 0 0 / 15%) 0px -6px 6px -6px' :
         props.itemsArray && props.index === props.itemsArray.length - 1 ?
@@ -60,8 +76,8 @@ const AssetDetailItem = props => (
               xs: 12
             }}
             sx={{
-              color: props.colorsArray[0][props.row.type][0],
-              backgroundColor: props.colorsArray[0][props.row.type][1],
+              color: props.colorsArray[4][props.row.type][0],
+              backgroundColor: props.colorsArray[4][props.row.type][1],
             }}
           >
             {`${props.row.type}`}
@@ -85,7 +101,7 @@ const AssetDetailItem = props => (
           alt={`${props.activities ? props.row.assetName : props.row.name}-logo`}
           //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`} //TODO: put icon if exists
           sx={{
-            backgroundColor: props.colorsArray[props.index % 4],
+            backgroundColor: props.activities ? props.colorsArray[props.row.asset.hashCode() % 4] : props.colorsArray[props.row.symbol.hashCode() % 4],
             width: {
               xs: '2.5rem',
               md: '2.8rem'

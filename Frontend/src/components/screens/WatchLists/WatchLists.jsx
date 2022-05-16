@@ -14,7 +14,8 @@ import {
   FormControl,
   Button,
   TextField,
-  Tooltip
+  Tooltip,
+  styled
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,6 +24,30 @@ import PropTypes from 'prop-types';
 import DropdownMenu from './DropdownMenu';
 import CustomSelectField from './CustomSelectField';
 import {renderAddWatchlistModal, renderEditListModal, renderRemoveListModal} from './Modals/watchlistModals';
+
+const StyledTextField = styled(TextField)({
+  //Label color when focused
+  '& label.Mui-focused': {
+    color: '#493f35',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#493f35',
+  },
+  '& .MuiOutlinedInput-root': {
+    //Standard border color
+    '& fieldset': {
+      borderColor: '#c4b8ac',
+    },
+    //Border color on hover
+    '&:hover fieldset': {
+      borderColor: '#493f35',
+    },
+    //Border color when focused
+    '&.Mui-focused fieldset': {
+      borderColor: '#493f35',
+    },
+  },
+});
 
 /**
  * Show all the watchLists
@@ -121,7 +146,7 @@ const WatchLists = props => {
           borderRadius: '0.5rem'
         }}
       >
-        <TextField
+        <StyledTextField
           id='outlined-basic'
           variant='outlined'
           className='d-flex pb-3'
@@ -135,11 +160,16 @@ const WatchLists = props => {
           variant='outlined'
           onClick={() => addWatchlist()}
           sx={{
-            color: 'white',
             fontWeight: 'bold',
-            backgroundColor: 'rgb(78 185 111)',
+            color: 'white',
+            borderColor: '#4eb96f',
+            backgroundColor: '#4eb96f',
             '&:hover': {
-              backgroundColor: 'rgb(78 185 111)',
+              borderColor: '#068930',
+              backgroundColor: '#4eb96f',
+            },
+            '&.Mui-disabled': {
+              backgroundColor: '#f3f4f6',
             }
           }}
         >

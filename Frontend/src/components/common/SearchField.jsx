@@ -45,7 +45,7 @@ const SearchField = props => {
       sx={{
         '& .MuiInputBase-input': {
           '&::-webkit-input-placeholder': {
-            color: 'black'
+            color: '#493f35'
           },
         },
         '& .MuiInput-underline': {

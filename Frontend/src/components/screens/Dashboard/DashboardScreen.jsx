@@ -101,10 +101,14 @@ const DashboardScreen = props => {
         onClick={() => routeChange('../activities/addActivity')}
         sx={{
           color: 'white',
-          borderColor: 'rgb(78 185 111)',
-          backgroundColor: 'rgb(78 185 111)',
+          borderColor: '#4eb96f',
+          backgroundColor: '#4eb96f',
           '&:hover': {
-            backgroundColor: 'rgb(78 185 111)',
+            borderColor: '#068930',
+            backgroundColor: '#4eb96f',
+          },
+          '&.Mui-disabled': {
+            backgroundColor: '#f3f4f6',
           },
           margin: 'auto !important',
           display: 'block'
@@ -136,7 +140,7 @@ const DashboardScreen = props => {
           xs: 16
         }}
       >
-        Activities are the base for all data in Bench:market!
+        Activities are the base for all data in Bench:market! They track changes in your portfolio and 
       </Typography>
       <Typography
         className='mt-2'
