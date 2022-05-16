@@ -6,7 +6,7 @@ class TextToSpeech {
         
         let audio;
         try {
-            const response = await fetch(`http://benchmarket.germanywestcentral.cloudapp.azure.com:1880/textToSpeech?text=${answer}`, {mode:'cors'})
+            const response = await fetch(`${process.env.REACT_APP_BOTBACKENDURL}/textToSpeech?text=${answer}`, {mode:'cors'})
             const arrayBuffer = await response.arrayBuffer();
             TextToSpeech.ctx.close();
             TextToSpeech.ctx = new AudioContext();

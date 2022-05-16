@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -17,12 +18,12 @@ let accessURL = '*';
 
 
 const apiKeys =[
-    'ZSQ57OXG4YKUA0B8', //API Key Hakan;
-    'MB6DE4CNFFYGP4M7', //API Key Steffen;
-    'NOGQ7D1A1RHDGMU4', //API Key Cedrik
-    'ZSQ57OXG4YKUA0B8', //API Key Hakan;    //RESERVIERT FÜR MONATLICH
-    'MB6DE4CNFFYGP4M7', //API Key Steffen;
-    'NOGQ7D1A1RHDGMU4'  //API Key Cedrik
+    process.env.APIKEY1,
+    process.env.APIKEY2,
+    process.env.APIKEY3,
+    process.env.APIKEY4,
+    process.env.APIKEY5,
+    process.env.APIKEY6
 ]
 let apiKeyIndex = 0;
 // let apiKey;

@@ -163,6 +163,7 @@ const DashboardScreen = props => {
         onClick={() => dummyCash()}
         sx={{
           margin: '1rem',
+          marginTop: '3rem',
           color: '#4eb96f',
           borderColor: '#4eb96f',
           backgroundColor: 'white',
