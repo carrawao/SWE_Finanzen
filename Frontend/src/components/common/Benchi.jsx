@@ -15,7 +15,7 @@ import ActionProvider from '../../benchi-chatbot/ActionProvider.js';
 import TextToSpeech from '../../benchi-chatbot/TextToSpeech.js';
 
 /**
- * Template to show modals throughout the app
+ * Renders the Benchi Icon and Chat
  * @param props
  * @returns {JSX.Element}
  * @constructor

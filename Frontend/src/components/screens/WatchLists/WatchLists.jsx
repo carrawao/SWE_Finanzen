@@ -25,29 +25,23 @@ import DropdownMenu from './DropdownMenu';
 import CustomSelectField from './CustomSelectField';
 import {renderAddWatchlistModal, renderEditListModal, renderRemoveListModal} from './Modals/watchlistModals';
 
-const StyledTextField = styled(TextField)({
-  //Label color when focused
-  '& label.Mui-focused': {
-    color: '#493f35',
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#493f35',
-  },
-  '& .MuiOutlinedInput-root': {
-    //Standard border color
-    '& fieldset': {
-      borderColor: '#c4b8ac',
-    },
-    //Border color on hover
-    '&:hover fieldset': {
-      borderColor: '#493f35',
-    },
-    //Border color when focused
-    '&.Mui-focused fieldset': {
-      borderColor: '#493f35',
-    },
-  },
-});
+import { StyledTextField, Colors } from '../../common';
+
+/**
+ * Creates a hashCode from a String
+ * @param String
+ * @returns {interger}
+ */
+ String.prototype.hashCode = function() {
+  let hash = 0, i, chr;
+  if (this.length === 0) return hash;
+  for (i = 0; i < this.length; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
 
 /**
  * Show all the watchLists
@@ -62,7 +56,7 @@ const WatchLists = props => {
   const [watchlist, setWatchlist] = useState(undefined);
   const [errorModal, setErrorModal] = useState(false);
   const [listDropdownIndex, setListDropdownIndex] = useState(0);
-  const avatarGroupColors = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)'];
+  const avatarGroupColors = Colors.COLORPALETTE;
 
   const handleWatchListItemClick = (event, index) => {
     props.setSelectedListIndex(index);
@@ -298,7 +292,7 @@ const WatchLists = props => {
                           '&.MuiAvatar-circular': {
                             borderColor: props.selectedListIndex === index ? 'white' : 'black'
                           },
-                          backgroundColor: avatarGroupColors[assetIndex],
+                          backgroundColor: avatarGroupColors[asset.symbol.hashCode() % 10],
                           width: {
                             md: '1.2rem',
                             xl: '1.5rem'

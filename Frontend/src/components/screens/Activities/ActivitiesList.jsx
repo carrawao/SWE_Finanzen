@@ -17,7 +17,7 @@ import {AssetDetailItem} from '../../common';
  */
 const ActivitiesList = (props) => {
   const [, setListDropdownIndex] = useState(0);
-  const colorsArray = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)', 'rgb(239 195 21)',{
+  const colorsArray = [{
     'buy': ['blue', 'rgb(59, 151, 210, .2)'],
     'deposit': ['green', 'rgb(78, 185, 111, .2)'],
     'sell': ['brown', 'rgb(228, 126, 37, .2)'],
@@ -77,7 +77,7 @@ const ActivitiesList = (props) => {
           </Typography>
           <Box className='d-none d-md-flex'>
             <Typography variant='h6' sx={{margin: '1rem', marginBottom: '0rem'}}> 
-            {activitiesForEachYearArray[index].length} total ·&nbsp; 
+              {activitiesForEachYearArray[index].length} total ·&nbsp; 
               {activitiesForEachYearArray[index].filter(activity => activity.type === 'buy').length} buys ·&nbsp; 
               {activitiesForEachYearArray[index].filter(activity => activity.type === 'sell').length} sells ·&nbsp;
               {activitiesForEachYearArray[index].filter(activity => activity.type === 'dividend').length} dividends ·&nbsp; 

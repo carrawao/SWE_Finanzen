@@ -1,18 +1,21 @@
 import React from 'react';
-import {Container, Box} from '@mui/material';
+import {Grid, Box} from '@mui/material';
 import PortfolioPerformance from './PortfolioPerformance';
 import PortfolioValueChart from './PortfolioValuechart';
 
 export const PortfolioCharts = props => {
   return (
-    <Container className='d-flex flex-column flex-xl-row justify-content-center align-items-center'>
-      <Box className='col-12 col-xl-6 mb-4 mb-xl-0 me-xl-4'>
+    <Grid
+      container
+      className='col-12 d-flex flex-column flex-xl-row justify-content-center align-items-center'
+    >
+      <Box className='col-12 col-xl-6' sx={{padding: '1rem'}}>
         <PortfolioValueChart {...props} view={props.view}/>
       </Box>
-      <Box className='col-12 col-xl-6 ms-xl-4'>
+      <Box className='col-12 col-xl-6' sx={{padding: '1rem'}}>
         <PortfolioPerformance {...props} view={props.view}/>
-      </Box>
-    </Container>
+      </Box> 
+    </Grid>
   )
 }
 

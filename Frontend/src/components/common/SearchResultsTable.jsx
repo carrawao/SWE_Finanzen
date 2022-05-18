@@ -6,6 +6,8 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 
+import Colors from './Colors';
+
 /**
  * Component related to the list of search results
  * @param props
@@ -13,7 +15,6 @@ import PropTypes from 'prop-types';
  * @constructor
  */
 const SearchResultsTable = props => {
-  const colorsArray = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)', 'rgb(239 195 21)'];
 
   /**
    * Checks whether asset is already in watchlist
@@ -71,7 +72,7 @@ const SearchResultsTable = props => {
             <Avatar
               alt={`${element.name}-logo`}
               sx={{
-                backgroundColor: colorsArray[index % 4],
+                backgroundColor: Colors.COLORPALETTE[index % 10],
                 width: {
                   xs: '1.8rem',
                   sm: '2rem',
@@ -248,10 +249,11 @@ const SearchResultsTable = props => {
         sx={{
           color: 'white',
           width: '5rem',
-          borderColor: 'rgb(228 126 37)',
-          backgroundColor: 'rgb(228 126 37)',
+          borderColor: '#e47e25',
+          backgroundColor: '#e47e25',
           '&:hover': {
-            backgroundColor: 'rgb(228 126 37)',
+            borderColor: '#c96208',
+            backgroundColor: '#e47e25',
           }
         }}
       >

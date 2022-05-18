@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import AssetChart from './AssetChart';
 import ChartButtons from './ChartButtons';
 import Masterdata from './Masterdata';
-import {Container, Card, Box} from '@mui/material';
+import {Container, Card, Box, Button} from '@mui/material';
 import PropTypes from 'prop-types';
 import SwitchButtons from './SwitchButtons';
 import AssetPerformance from './AssetPerformance';
@@ -49,13 +50,36 @@ const AssetCard = props => {
     }
   }
 
+  const navigate = useNavigate();
+  const routeChange = path => {
+    navigate(path);
+  } 
+
   return (
     <Container className='d-flex flex-column px-1 pt-2'>
       <Card>
         <Box container direction='column'>
-          <Box className='d-flex flex-row justify-content-space-between'>
+          <Box className='d-flex flex-row justify-content-between align-items-center'>
               <SwitchButtons containsAssetData={containsAssetData} setChartType={setChartType} chartType={chartType}/>
               <ChartButtons view={view} setView={setView}/>
+              <Button
+                onClick={() => {routeChange(`../activities/addActivity/${props.assetType}/${props.symbol}/${name}`)}}
+                variant='outlined'
+                sx={{
+                  color: 'white',
+                  borderColor: '#4eb96f',
+                  backgroundColor: '#4eb96f',
+                  '&:hover': {
+                    borderColor: '#068930',
+                    backgroundColor: '#4eb96f',
+                  },
+                  '&.Mui-disabled': {
+                    backgroundColor: '#f3f4f6',
+                  }
+                }}
+              >
+                Add Activity
+              </Button>
           </Box>
           <Box className='mt-2 mb-2'>
             {renderContent()}

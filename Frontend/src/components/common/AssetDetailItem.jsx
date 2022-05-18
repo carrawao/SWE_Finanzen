@@ -4,6 +4,8 @@ import {Avatar, Box, Container, ListItem, Typography} from '@mui/material';
 import DropdownMenu from '../screens/WatchLists/DropdownMenu';
 import PropTypes from 'prop-types';
 
+import Colors from './Colors';
+
 /**
  * Formats the date (day and month)
  * @param activityDate
@@ -51,7 +53,7 @@ const AssetDetailItem = props => (
       borderBottomLeftRadius: props.itemsArray && props.index === props.itemsArray.length - 1 && '0.5rem',
       borderBottomRightRadius: props.itemsArray && props.index === props.itemsArray.length - 1 && '0.5rem',
       backgroundColor: 'white',
-      borderLeftColor: props.activities ? props.colorsArray[4][props.row.type][1] : props.colorsArray[props.row.symbol.hashCode() % 4],
+      borderLeftColor: props.activities ? props.colorsArray[0][props.row.type][1] : Colors.COLORPALETTE[props.row.symbol.hashCode() % 10],
       boxShadow: props.index === 0 ?
         'rgb(0 0 0 / 15%) 0px -6px 6px -6px' :
         props.itemsArray && props.index === props.itemsArray.length - 1 ?
@@ -76,8 +78,8 @@ const AssetDetailItem = props => (
               xs: 12
             }}
             sx={{
-              color: props.colorsArray[4][props.row.type][0],
-              backgroundColor: props.colorsArray[4][props.row.type][1],
+              color: props.colorsArray[0][props.row.type][0],
+              backgroundColor: props.colorsArray[0][props.row.type][1],
             }}
           >
             {`${props.row.type}`}
@@ -101,7 +103,7 @@ const AssetDetailItem = props => (
           alt={`${props.activities ? props.row.assetName : props.row.name}-logo`}
           //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`} //TODO: put icon if exists
           sx={{
-            backgroundColor: props.activities ? props.colorsArray[props.row.asset.hashCode() % 4] : props.colorsArray[props.row.symbol.hashCode() % 4],
+            backgroundColor: props.activities ? Colors.COLORPALETTE[props.row.asset.hashCode() % 10] : Colors.COLORPALETTE[props.row.symbol.hashCode() % 10],
             width: {
               xs: '2.5rem',
               md: '2.8rem'

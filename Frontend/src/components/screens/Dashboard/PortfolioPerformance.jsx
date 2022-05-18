@@ -134,7 +134,7 @@ export const PortfolioPerformance = props => {
             control={<Checkbox checked={realised} onChange={e => {
             setRealised(!realised)
           }}/>}
-            label='Realised Performance'
+            label='Include realised Gains'
           />
         </FormGroup>
       }/>

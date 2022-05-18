@@ -16,10 +16,11 @@ export const renderDeleteDataModal = (open, handleClose, onClick) => (
         sx={{
           color: 'white',
           width: '5rem',
-          borderColor: 'rgb(228 126 37)',
-          backgroundColor: 'rgb(228 126 37)',
+          borderColor: '#e47e25',
+          backgroundColor: '#e47e25',
           '&:hover': {
-            backgroundColor: 'rgb(228 126 37)',
+            borderColor: '#c96208',
+            backgroundColor: '#e47e25',
           }
         }}
       >

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, TextField} from '@mui/material';
-import {CustomModal} from '../../../common';
+import {CustomModal, StyledTextField} from '../../../common';
 
 export const renderRemoveAssetModal = (open, handleClose, onClick) => (
   <CustomModal
@@ -16,10 +16,11 @@ export const renderRemoveAssetModal = (open, handleClose, onClick) => (
         sx={{
           color: 'white',
           width: '5rem',
-          borderColor: 'rgb(228 126 37)',
-          backgroundColor: 'rgb(228 126 37)',
+          borderColor: '#e47e25',
+          backgroundColor: '#e47e25',
           '&:hover': {
-            backgroundColor: 'rgb(228 126 37)',
+            borderColor: '#c96208',
+            backgroundColor: '#e47e25',
           }
         }}
       >
@@ -37,7 +38,7 @@ export const renderAddAssetModal = (open, handleClose, errorModal, onChange, onC
     describedby='add_asset-modal-description'
     modalTitle='New asset'
     modalBody={() => (
-      <TextField
+      <StyledTextField
         variant='outlined'
         className='d-flex flex-grow-2 pb-3'
         label='Enter name'
