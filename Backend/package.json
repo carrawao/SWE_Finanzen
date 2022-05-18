@@ -1,5 +1,5 @@
 {
-  "name": "package.json",
+  "name": "benchmarket-backend",
   "version": "1.0.0",
   "description": "BenchmarketBackendServer",
   "main": "server.js",
@@ -8,7 +8,6 @@
     "start": "node server.js"
   },
   "author": "Steffen Kruschina @fefifef",
-  "license": "ISC",
   "dependencies": {
     "axios": "^0.26.1",
     "body-parser": "^1.19.2",
