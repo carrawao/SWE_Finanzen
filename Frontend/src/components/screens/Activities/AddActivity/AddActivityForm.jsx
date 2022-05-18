@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Grid, Button, Box, TextField, MenuItem, styled, InputAdornment} from '@mui/material';
+import {Grid, Button, Box, TextField, MenuItem, InputAdornment} from '@mui/material';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
@@ -9,30 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import PropTypes from 'prop-types';
 import SearchAssetInput from './SearchAssetsInput';
-
-const StyledTextField = styled(TextField)({
-  //Label color when focused
-  '& label.Mui-focused': {
-    color: '#493f35',
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#493f35',
-  },
-  '& .MuiOutlinedInput-root': {
-    //Standard border color
-    '& fieldset': {
-      borderColor: '#c4b8ac',
-    },
-    //Border color on hover
-    '&:hover fieldset': {
-      borderColor: '#493f35',
-    },
-    //Border color when focused
-    '&.Mui-focused fieldset': {
-      borderColor: '#493f35',
-    },
-  },
-});
+import { StyledTextField } from '../../../common';
 
 /**
  * Form for adding an activity
@@ -43,7 +20,7 @@ const StyledTextField = styled(TextField)({
 const AddActivityForm = props => {
 
   const initialValues = {
-    assetType: 'share',
+    assetType: props.initialAssetObj ? (props.initialAssetObj.assetType === 'Crypto' ? 'crypto' : props.initialAssetObj.assetType === 'Cash' ? 'cash' : 'share') : 'share',
     asset: props.initialAssetObj,
     assetInput: '',
     typeShare: 'buy',

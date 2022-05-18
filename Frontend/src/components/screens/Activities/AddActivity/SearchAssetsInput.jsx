@@ -3,6 +3,7 @@ import {Box} from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
+import { Loading } from '../../../common';
 
 /**
  * Form for adding an activity
@@ -56,7 +57,7 @@ const SearchAssetInput = props => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [cash, setCash] = useState(false);
+  const [cash, setCash] = useState(props.initialAssetObj ? (props.initialAssetObj.assetType === 'Cash' ? true : false) : false);
 
   const sharesInPortfolioOptions = getSharesInPortfolioOptions();
   const cryptoInPortfolioOptions = getCryptoInPortfolioOptions();
@@ -258,7 +259,7 @@ const fetchCryptoOptions = async (query) => {
             autoComplete: 'new-password', // disable autocomplete and autofill
             endAdornment: (
               <React.Fragment>
-                {loading ? <CircularProgress color='inherit' size={20} /> : null}
+                {loading ? <Loading size={30} /> : null}
                 {params.InputProps.endAdornment}
               </React.Fragment>
             ),
