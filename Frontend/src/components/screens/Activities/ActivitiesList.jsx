@@ -22,7 +22,7 @@ const ActivitiesList = (props) => {
     'deposit': ['green', 'rgb(78, 185, 111, .2)'],
     'sell': ['brown', 'rgb(228, 126, 37, .2)'],
     'dividend': ['grey', 'rgb(239, 195, 21, .2)'],
-    'payout': ['brown', 'rgb(241, 155, 31, .2)']
+    'payout': ['brown', 'rgb(241, 155, 31, .2)'],
   }];
 
   const findYears = activities => {
@@ -77,7 +77,7 @@ const ActivitiesList = (props) => {
           </Typography>
           <Box className='d-none d-md-flex'>
             <Typography variant='h6' sx={{margin: '1rem', marginBottom: '0rem'}}> 
-            {activitiesForEachYearArray[index].length} total ·&nbsp; 
+              {activitiesForEachYearArray[index].length} total ·&nbsp; 
               {activitiesForEachYearArray[index].filter(activity => activity.type === 'buy').length} buys ·&nbsp; 
               {activitiesForEachYearArray[index].filter(activity => activity.type === 'sell').length} sells ·&nbsp;
               {activitiesForEachYearArray[index].filter(activity => activity.type === 'dividend').length} dividends ·&nbsp; 

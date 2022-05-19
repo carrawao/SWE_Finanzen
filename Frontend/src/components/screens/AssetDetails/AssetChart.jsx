@@ -198,9 +198,10 @@ export const AssetChart = props => {
   // Manipulate data according to view
   changeData(props.view, data, labels, options, setup);
   return (
-    <Card raised sx={{border: 3, borderColor: 'rgb(73, 63, 53)', borderRadius: 3}}>
-      <CardHeader title={'Price | ' + props.name}
-                  subheader={Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR',}).format(price)}/>
+    <Card className='col-xl-12' raised sx={{border: 3, borderColor: 'rgb(228 126 37)', borderRadius: 3}}>
+      <CardHeader
+        title={'Price | ' + props.name}
+        subheader={Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR',}).format(price)}/>
       <CardContent>
         <Line data={setup} options={options} plugins={[crosshair]}/>
       </CardContent>

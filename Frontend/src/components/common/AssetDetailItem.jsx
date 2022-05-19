@@ -4,6 +4,8 @@ import {Avatar, Box, Container, ListItem, Typography} from '@mui/material';
 import DropdownMenu from '../screens/WatchLists/DropdownMenu';
 import PropTypes from 'prop-types';
 
+import Colors from './Colors';
+
 /**
  * Formats the date (day and month)
  * @param activityDate
@@ -15,6 +17,22 @@ const formatDate = activityDate => {
   let month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth();
   return `${day}.${month}`;
 }
+
+/**
+ * Creates a hashCode from a String
+ * @param String
+ * @returns {interger}
+ */
+String.prototype.hashCode = function() {
+  let hash = 0, i, chr;
+  if (this.length === 0) return hash;
+  for (i = 0; i < this.length; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
 
 /**
  * Component related to each asset shown either in activities or assets
@@ -35,7 +53,7 @@ const AssetDetailItem = props => (
       borderBottomLeftRadius: props.itemsArray && props.index === props.itemsArray.length - 1 && '0.5rem',
       borderBottomRightRadius: props.itemsArray && props.index === props.itemsArray.length - 1 && '0.5rem',
       backgroundColor: 'white',
-      borderLeftColor: !props.activities && props.colorsArray[props.index % 4],
+      borderLeftColor: props.activities ? props.colorsArray[0][props.row.type][1] : Colors.COLORPALETTE[props.row.symbol.hashCode() % 10],
       boxShadow: props.index === 0 ?
         'rgb(0 0 0 / 15%) 0px -6px 6px -6px' :
         props.itemsArray && props.index === props.itemsArray.length - 1 ?
@@ -85,7 +103,7 @@ const AssetDetailItem = props => (
           alt={`${props.activities ? props.row.assetName : props.row.name}-logo`}
           //src={`${process.env.PUBLIC_URL}/assets/images/allianz-logo.jpeg`} //TODO: put icon if exists
           sx={{
-            backgroundColor: props.colorsArray[props.index % 4],
+            backgroundColor: props.activities ? Colors.COLORPALETTE[props.row.asset.hashCode() % 10] : Colors.COLORPALETTE[props.row.symbol.hashCode() % 10],
             width: {
               xs: '2.5rem',
               md: '2.8rem'

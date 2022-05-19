@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    color: #30302f
 }
 
 .App-logo {
@@ -47,4 +48,13 @@
 
 .hovered {
     color: green;
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
 }

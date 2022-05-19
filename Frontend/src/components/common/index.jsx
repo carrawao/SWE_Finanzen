@@ -5,6 +5,9 @@ import AssetDetailItem from './AssetDetailItem';
 import DoughnutChart from './DoughnutChart';
 import Benchi from './Benchi';
 import Footer from './Footer';
+import Loading from './Loading';
+import Colors from './Colors';
+import StyledTextField from './StyledTextField';
 
 export {
   SideNavLeft,
@@ -13,5 +16,8 @@ export {
   AssetDetailItem,
   DoughnutChart,
   Footer,
-  Benchi
+  Benchi,
+  Loading,
+  StyledTextField,
+  Colors
 }

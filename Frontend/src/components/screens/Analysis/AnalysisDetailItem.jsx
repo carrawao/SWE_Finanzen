@@ -10,7 +10,8 @@ import PropTypes from 'prop-types';
  */
 const AnalysisDetailItem = props => {
   const [hovered, setHovered] = useState(false);
-  const toggleHover = () => setHovered(!hovered);
+  const hoveredFalse = () => setHovered(false);
+  const hoveredTrue = () => setHovered(true);
 
   return (
     <ListItem
@@ -18,10 +19,8 @@ const AnalysisDetailItem = props => {
         borderBottom: '2px solid lightgrey'
       }}
       className={hovered ? 'hoverElement hovered' : 'hoverElement'}
-      onMouseEnter={toggleHover}
-      onMouseLeave={toggleHover}
-
-
+      onMouseEnter={hoveredTrue}
+      onMouseLeave={hoveredFalse}
     >
       <Container
         className='d-flex flex-row p-0'

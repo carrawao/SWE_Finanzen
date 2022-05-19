@@ -11,7 +11,7 @@ import {DoughnutChart} from '../../common';
 
 const AllocationGraph = props => {
   const defaultMiddleDisplayLabel = `Value of ${props.activePortfolio}`;
-  const defaultMiddleDisplayValue = `${parseFloat(props.portfolioData.value.toFixed(2)).toLocaleString()} €`;
+  const defaultMiddleDisplayValue = props.portfolioData.value ?`${parseFloat(props.portfolioData.value).toFixed(2).toLocaleString()} €` : '0.00 €';
 
   const assets = props.getAllAssets();
 
@@ -28,8 +28,17 @@ const AllocationGraph = props => {
     return labels;
   })();
 
+  const symbols = (() => {
+    let symbols = [];
+    assets.forEach(element => {
+      let symbol = element['symbol'];
+      symbols.push(symbol);
+    });
+    return symbols;
+  })();
+
   const valueData = (() => {
-    let valueData = []
+    let valueData = [];
     assets.forEach(element => {
       valueData.push(parseFloat(element.value).toFixed(2));
     });
@@ -40,6 +49,7 @@ const AllocationGraph = props => {
     <DoughnutChart
       data={valueData}
       labels={labels}
+      symbols={symbols}
       defaultMiddleDisplayValue={defaultMiddleDisplayValue}
       defaultMiddleDisplayLabel={defaultMiddleDisplayLabel}
     />

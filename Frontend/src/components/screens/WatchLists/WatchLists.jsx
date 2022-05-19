@@ -14,7 +14,8 @@ import {
   FormControl,
   Button,
   TextField,
-  Tooltip
+  Tooltip,
+  styled
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,6 +24,24 @@ import PropTypes from 'prop-types';
 import DropdownMenu from './DropdownMenu';
 import CustomSelectField from './CustomSelectField';
 import {renderAddWatchlistModal, renderEditListModal, renderRemoveListModal} from './Modals/watchlistModals';
+
+import { StyledTextField, Colors } from '../../common';
+
+/**
+ * Creates a hashCode from a String
+ * @param String
+ * @returns {interger}
+ */
+ String.prototype.hashCode = function() {
+  let hash = 0, i, chr;
+  if (this.length === 0) return hash;
+  for (i = 0; i < this.length; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
 
 /**
  * Show all the watchLists
@@ -37,7 +56,7 @@ const WatchLists = props => {
   const [watchlist, setWatchlist] = useState(undefined);
   const [errorModal, setErrorModal] = useState(false);
   const [listDropdownIndex, setListDropdownIndex] = useState(0);
-  const avatarGroupColors = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)'];
+  const avatarGroupColors = Colors.COLORPALETTE;
 
   const handleWatchListItemClick = (event, index) => {
     props.setSelectedListIndex(index);
@@ -121,7 +140,7 @@ const WatchLists = props => {
           borderRadius: '0.5rem'
         }}
       >
-        <TextField
+        <StyledTextField
           id='outlined-basic'
           variant='outlined'
           className='d-flex pb-3'
@@ -135,11 +154,16 @@ const WatchLists = props => {
           variant='outlined'
           onClick={() => addWatchlist()}
           sx={{
-            color: 'white',
             fontWeight: 'bold',
-            backgroundColor: 'rgb(78 185 111)',
+            color: 'white',
+            borderColor: '#4eb96f',
+            backgroundColor: '#4eb96f',
             '&:hover': {
-              backgroundColor: 'rgb(78 185 111)',
+              borderColor: '#068930',
+              backgroundColor: '#4eb96f',
+            },
+            '&.Mui-disabled': {
+              backgroundColor: '#f3f4f6',
             }
           }}
         >
@@ -268,7 +292,7 @@ const WatchLists = props => {
                           '&.MuiAvatar-circular': {
                             borderColor: props.selectedListIndex === index ? 'white' : 'black'
                           },
-                          backgroundColor: avatarGroupColors[assetIndex],
+                          backgroundColor: avatarGroupColors[asset.symbol.hashCode() % 10],
                           width: {
                             md: '1.2rem',
                             xl: '1.5rem'

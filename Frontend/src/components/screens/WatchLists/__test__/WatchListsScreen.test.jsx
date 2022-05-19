@@ -20,6 +20,15 @@ const assetsListArray = [
   ]
 ];
 
+const mockedNavigator = jest.fn();
+jest.mock('react-router-dom', () => ({
+  useNavigate: () => mockedNavigator
+}));
+
+jest.mock('../../../../benchi-chatbot/TextToSpeech', () => ({
+  ctx: {}
+}));
+
 describe('Tests regarding WatchList screen', () => {
   const addToWatchList = jest.fn();
   const setWatchListsArray = jest.fn();
@@ -30,14 +39,15 @@ describe('Tests regarding WatchList screen', () => {
   const setMessageType = jest.fn();
 
   it('search results are not shown', () => {
-    const wrapper = shallow(<SearchResultsTable
-      searchResult={[]}
-      watchListsArray={watchListsArray}
-      selectedListIndex={0}
-      assetsListArray={assetsListArray}
-      addToWatchList={addToWatchList}
-      onClose={onClose}
-    />);
+    const wrapper = shallow(
+      <SearchResultsTable
+        searchResult={[]}
+        watchListsArray={watchListsArray}
+        selectedListIndex={0}
+        assetsListArray={assetsListArray}
+        addToWatchList={addToWatchList}
+        onClose={onClose}
+      />);
 
     expect(wrapper.find(<ListItem/>).exists()).toBeFalsy();
   });

@@ -151,7 +151,7 @@ const ScreensTemplate = props => {
         position: 'fixed',
         bottom: '5%',
         right: '5%',
-        zIndex: '20000',
+        zIndex: '100',
         transform: 'translate(0 0)',
       }}>
         <Benchi/>

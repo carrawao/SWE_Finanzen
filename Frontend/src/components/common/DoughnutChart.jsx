@@ -4,6 +4,24 @@ import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 import {Typography, Grid, Paper} from '@mui/material';
 
+import Colors from './Colors';
+
+/**
+ * Creates a hashCode from a String
+ * @param String
+ * @returns {interger}
+ */
+ String.prototype.hashCode = function() {
+  let hash = 0, i, chr;
+  if (this.length === 0) return hash;
+  for (i = 0; i < this.length; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
 /**
  * Shows a Custom DoughnutChart
  * @param props
@@ -29,16 +47,19 @@ const DoughnutChart = props => {
     setMiddleDisplayValue(defaultMiddleDisplayValue);
   }
 
+  const getColors = (symbols) => {
+    let colors = [];
+    symbols.forEach((symbol, index) => {
+      const symbolColor = Colors.COLORPALETTE[symbol ? symbol.hashCode() % 10 : index*8 % 10];
+      colors.push(symbolColor);
+    });
+    return colors;
+  }
+
   const labels = props.labels;
 
   const valueData = props.data;
-  const colors = [
-    'rgba(59, 151, 210, 1)',
-    'rgba(241, 155, 31, 1)',
-    'rgba(229, 126, 37, 1)',
-    'rgba(239, 195, 25, 1)',
-    'rgba(78, 185, 111, 1)',
-  ]
+  const colors = getColors(props.symbols);
 
   const data = {
     labels: labels,
@@ -133,7 +154,8 @@ DoughnutChart.propTypes = {
   defaultMiddleDisplayLabel: PropTypes.string,
   defaultMiddleDisplayValue: PropTypes.string,
   data: PropTypes.array,
-  labels: PropTypes.array
+  labels: PropTypes.array,
+  symbols: PropTypes.array
 };
 
 export default DoughnutChart;

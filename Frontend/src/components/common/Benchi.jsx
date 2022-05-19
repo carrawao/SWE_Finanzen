@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {
-  Box,
-  Modal,
-  Container,
-  Typography,
   Avatar,
   IconButton,
   Grid,
@@ -13,12 +9,13 @@ import {
 
 import Chatbot from 'react-chatbot-kit';
 import 'react-chatbot-kit/build/main.css';
-import config from '../../benchi/config.js';
-import MessageParser from '../../benchi/MessageParser.js';
-import ActionProvider from '../../benchi/ActionProvider.js';
+import config from '../../benchi-chatbot/config.js';
+import MessageParser from '../../benchi-chatbot/MessageParser.js';
+import ActionProvider from '../../benchi-chatbot/ActionProvider.js';
+import TextToSpeech from '../../benchi-chatbot/TextToSpeech.js';
 
 /**
- * Template to show modals throughout the app
+ * Renders the Benchi Icon and Chat
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -27,7 +24,7 @@ import ActionProvider from '../../benchi/ActionProvider.js';
   const [showBot, toggleBot] = useState(false);
   
   const saveMessages = (messages, HTMLString) => {
-    console.log(messages)
+    console.log(messages);
     localStorage.setItem('chatMessages', JSON.stringify(HTMLString));
   };
 
@@ -45,6 +42,7 @@ import ActionProvider from '../../benchi/ActionProvider.js';
               <Chatbot
                 config={config}
                 actionProvider={ActionProvider}
+                runInitialMessagesWithHistory={true}
                 messageHistory={loadMessages()}
                 messageParser={MessageParser}
                 saveMessages={saveMessages}
@@ -56,9 +54,14 @@ import ActionProvider from '../../benchi/ActionProvider.js';
           <IconButton
             aria-label='Open Benchi Chat'
             size='small'
-            onClick={() => toggleBot((prev) => !prev)}
-            sx={{
-              
+            onClick={() => {
+              if (showBot === false) {
+                TextToSpeech.textToSpeech(`Hi I'm Benchi! Are you interested in finding the right investment strategy for you together?`);
+              } else if (showBot === true) {
+                TextToSpeech.ctx.close();
+                TextToSpeech.ctx = new AudioContext();
+              }
+              toggleBot((prev) => !prev);
             }}
           >
             <Avatar
@@ -67,7 +70,7 @@ import ActionProvider from '../../benchi/ActionProvider.js';
               src={`${process.env.PUBLIC_URL}/assets/images/chatbot.png`}
               sx={{
                 backgroundColor: 'white',
-                border: '1px solid #493f35',
+                border: '3px solid #eacfb4',
                 width: {
                   xs: '4rem',
                   md: '5rem'

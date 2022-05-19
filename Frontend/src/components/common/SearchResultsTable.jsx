@@ -6,6 +6,8 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import AddIcon from '@mui/icons-material/Add';
 import PropTypes from 'prop-types';
 
+import Colors from './Colors';
+
 /**
  * Component related to the list of search results
  * @param props
@@ -13,7 +15,6 @@ import PropTypes from 'prop-types';
  * @constructor
  */
 const SearchResultsTable = props => {
-  const colorsArray = ['rgb(59 151 210)', 'rgb(78 185 111)', 'rgb(228 126 37)', 'rgb(239 195 21)'];
 
   /**
    * Checks whether asset is already in watchlist
@@ -21,7 +22,7 @@ const SearchResultsTable = props => {
    * @returns {boolean}
    */
   const checkAssetInWatchLists = asset => {
-    let isAssetInWatchList = false
+    let isAssetInWatchList = false;
     props.assetsListArray.forEach(innerArray => {
       innerArray.forEach(assetInWatchList => {
         if (assetInWatchList.name === asset.name || assetInWatchList.name === asset.symbol) {
@@ -32,7 +33,7 @@ const SearchResultsTable = props => {
     return isAssetInWatchList;
   }
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const routeChange = path => {
     navigate(path);
   } 
@@ -71,7 +72,7 @@ const SearchResultsTable = props => {
             <Avatar
               alt={`${element.name}-logo`}
               sx={{
-                backgroundColor: colorsArray[index % 4],
+                backgroundColor: Colors.COLORPALETTE[index % 10],
                 width: {
                   xs: '1.8rem',
                   sm: '2rem',
@@ -94,13 +95,12 @@ const SearchResultsTable = props => {
             item
             className={`d-flex flex-column ${props.watchListsArray && props.watchListsArray.length > 0 ? 'flex-xl-row flex-grow-1 col-1 pe-4' : 'col-9 col-sm-10'}`}>
             <Link
-              className='col-12 text-decoration-none text-black'
+              className={`d-flex flex-grow-1 text-decoration-none text-black ${props.watchListsArray && props.watchListsArray.length > 0 && 'col-xl-8'}`}
               to={`/asset/${element.assetType}/${element.symbol}`}
               key={`search_result_links_${index}`}
             >
               <Typography
                 noWrap
-                className={`${props.watchListsArray && props.watchListsArray.length > 0 && 'col-xl-8'}`}
                 fontSize={{
                   lg: 16,
                   md: 15,
@@ -127,7 +127,8 @@ const SearchResultsTable = props => {
             <Grid item className='d-flex flex-row justify-content-end'>
               <ListItemButton
                 className='p-0 ms-3 flex-grow-0 justify-content-end'
-                onClick={() => {routeChange(`../activities/addActivity/${element.assetType}/${element.symbol}/${element.name}`)}}
+                onClick={() => {
+                  routeChange(`../activities/addActivity/${element.assetType}/${element.symbol}/${element.name}`)}}
               >
                 <Tooltip
                   title='Add Activity'
@@ -248,10 +249,11 @@ const SearchResultsTable = props => {
         sx={{
           color: 'white',
           width: '5rem',
-          borderColor: 'rgb(228 126 37)',
-          backgroundColor: 'rgb(228 126 37)',
+          borderColor: '#e47e25',
+          backgroundColor: '#e47e25',
           '&:hover': {
-            backgroundColor: 'rgb(228 126 37)',
+            borderColor: '#c96208',
+            backgroundColor: '#e47e25',
           }
         }}
       >

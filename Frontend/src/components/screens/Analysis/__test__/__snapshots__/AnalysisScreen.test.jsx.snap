@@ -1,21 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnalysisScreen renders without crashing 1`] = `
-<Fragment>
-  <ScreensTemplate
+<Router
+  location={
+    Object {
+      "hash": "",
+      "key": "default",
+      "pathname": "/",
+      "search": "",
+      "state": null,
+    }
+  }
+  navigationType="POP"
+  navigator={
+    Object {
+      "action": "POP",
+      "back": [Function],
+      "block": [Function],
+      "createHref": [Function],
+      "forward": [Function],
+      "go": [Function],
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "key": "default",
+        "pathname": "/",
+        "search": "",
+        "state": null,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <AnalysisScreen
+    activePortfolio="Portfolio"
     assetsListArray={
       Array [
         Array [],
       ]
     }
-    bodyComponent={[Function]}
+    portfolioData={
+      Object {
+        "Portfolio": Object {
+          "activities": Array [],
+          "activitiesLastId": -1,
+          "cash": Array [],
+          "cashValue": 0,
+          "crypto": Array [],
+          "cryptoValue": 0,
+          "dailyDataForPerformanceGraph": Object {},
+          "dailyDataForValueDevelopment": Object {},
+          "gains": 0,
+          "name": "Portfolio",
+          "performanceWithRealisedGains": 0,
+          "performanceWithoutRealisedGains": 0,
+          "realisedGains": 0,
+          "shareValue": 0,
+          "shares": Array [],
+          "totalGains": 0,
+          "updated": "1970-01-01",
+          "value": 0,
+        },
+      }
+    }
     searchResult={Array []}
-    selectedNavLinkIndex={3}
     setMessageType={[MockFunction]}
+    setPortfolioData={[MockFunction]}
     setSearchResult={[MockFunction]}
     setStatusMessage={[MockFunction]}
+    watchListsArray={Array []}
   />
-</Fragment>
+</Router>
 `;
 
 exports[`Snapshot Test AnalysisDetailItem 1`] = `

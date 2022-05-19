@@ -27,6 +27,10 @@ const AssetDetailsScreen = props => {
         assetsListArray={props.assetsListArray}
         searchResult={props.searchResult}
         setSearchResult={props.setSearchResult}
+        statusMessage={props.statusMessage}
+        setStatusMessage={props.setStatusMessage}
+        messageType={props.messageType}
+        setMessageType={props.setMessageType}
       />
     </React.Fragment>
   );
@@ -39,6 +43,10 @@ AssetDetailsScreen.propTypes = {
   activePortfolio: PropTypes.string,
   watchListsArray: PropTypes.array,
   assetsListArray: PropTypes.array,
+  statusMessage: PropTypes.string,
+  setStatusMessage: PropTypes.func,
+  messageType: PropTypes.string,
+  setMessageType: PropTypes.func
 };
 
 export default AssetDetailsScreen;

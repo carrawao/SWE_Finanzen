@@ -1,11 +1,16 @@
 import React from 'react';
+import {BrowserRouter} from 'react-router-dom';
 import AnalysisScreen from '../AnalysisScreen';
-import AnalysisDetailItem from '../AnalysisDetailitem';
+import AnalysisDetailItem from '../AnalysisDetailItem';
 import {shallow, mount, configure} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from 'enzyme-to-json';
 
 configure({adapter: new Adapter()});
+
+jest.mock('../../../../benchi-chatbot/TextToSpeech', () => ({
+  ctx: {}
+}));
 
 it('AnalysisScreen renders without crashing', () => {
   const setSearchResult = jest.fn();
@@ -36,17 +41,19 @@ it('AnalysisScreen renders without crashing', () => {
     }
   }
 
-  const tree = shallow(<AnalysisScreen
-    searchResult={[]}
-    setSearchResult={setSearchResult}
-    watchListsArray={[]}
-    assetsListArray={[[]]}
-    portfolioData={portfolioData}
-    activePortfolio={'Portfolio'}
-    setPortfolioData={setPortfolioData}
-    setStatusMessage={setStatusMessage}
-    setMessageType={setMessageType}
-  />);
+  const tree = shallow(<BrowserRouter>
+    <AnalysisScreen
+      searchResult={[]}
+      setSearchResult={setSearchResult}
+      watchListsArray={[]}
+      assetsListArray={[[]]}
+      portfolioData={portfolioData}
+      activePortfolio={'Portfolio'}
+      setPortfolioData={setPortfolioData}
+      setStatusMessage={setStatusMessage}
+      setMessageType={setMessageType}
+    />
+  </BrowserRouter>);
 
   expect(toJson(tree)).toMatchSnapshot();
 });

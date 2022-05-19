@@ -4,7 +4,6 @@ import ScreensTemplate from '../../ScreensTemplate';
 import {Container, Box, Button} from '@mui/material';
 import {renderDeleteDataModal} from './Modals/settingsModals'
 import PropTypes from 'prop-types';
-import {margin} from '@mui/system';
 import {Grid} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -28,11 +27,12 @@ const SettingsScreen = props => {
             xs: 24
           }}
           sx={{
+            color: '#30302f',
             marginBottom: '2rem'
           }}
 
         >
-          Settings <SettingsIcon sx={{ fontSize: {lg: 36, xs: 24} }}/>
+          Settings <SettingsIcon sx={{ color: '#30302f', fontSize: {lg: 36, xs: 24} }}/>
         </Typography>
 
       </Box>
@@ -40,7 +40,7 @@ const SettingsScreen = props => {
         <Grid container
               sx={{
                 borderRadius: '1rem',
-                border: '1px solid black',
+                border: '3px solid rgb(78 185 111)',
                 padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(78 185 111) 55%, #FFFFFF 0%);'
@@ -63,6 +63,7 @@ const SettingsScreen = props => {
                 xs: 12
               }}
               sx={{
+                color: 'white',
                 '@media screen and (max-width: 768px)': {
                   marginBottom: '40px'
                 }
@@ -95,9 +96,14 @@ const SettingsScreen = props => {
                 onClick={uploadFile}
                 sx={{
                   color: 'white',
-                  backgroundColor: 'rgb(78 185 111)',
+                  borderColor: '#4eb96f',
+                  backgroundColor: '#4eb96f',
                   '&:hover': {
-                    backgroundColor: 'rgb(78 185 111)',
+                    borderColor: '#068930',
+                    backgroundColor: '#4eb96f',
+                  },
+                  '&.Mui-disabled': {
+                    backgroundColor: '#f3f4f6',
                   },
                   margin: 'auto !important',
                   display: 'block'
@@ -116,7 +122,7 @@ const SettingsScreen = props => {
         <Grid container
               sx={{
                 borderRadius: '1rem',
-                border: '1px solid black',
+                border: '3px solid rgb(59 151 210)',
                 padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(59 151 210) 55%, #FFFFFF 0%);'
@@ -140,6 +146,7 @@ const SettingsScreen = props => {
                 xs: 12
               }}
               sx={{
+                color: 'white',
                 '@media screen and (max-width: 768px)': {
                   marginBottom: '40px'
                 }
@@ -181,7 +188,7 @@ const SettingsScreen = props => {
         <Grid container
               sx={{
                 borderRadius: '1rem',
-                border: '1px solid black',
+                border: '3px solid rgb(228 126 37)',
                 padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(228 126 37) 55%, #FFFFFF 0%);'
@@ -204,12 +211,13 @@ const SettingsScreen = props => {
                 xs: 12
               }}
               sx={{
+                color: 'white',
                 '@media screen and (max-width: 768px)': {
                   marginBottom: '40px'
                 }
               }}
             >
-              Delete your data to get an empty portfolio. Your watchlist will be reset as well. Be careful that we can't restore your data, so download it first if you still need it!
+              Delete your data to get an empty portfolio. Your watchlist will be reset as well. Be careful because we can't restore your data, so download it first if you still need it!
             </Typography>
           </Grid>
           <Grid item className='col-12 col-md-3 col-xl-3'
@@ -226,10 +234,11 @@ const SettingsScreen = props => {
               onClick={() => setDeleteDataModal(true)}
               sx={{
                 color: 'white',
-                borderColor: 'rgb(228 126 37)',
-                backgroundColor: 'rgb(228 126 37)',
+                borderColor: '#e47e25',
+                backgroundColor: '#e47e25',
                 '&:hover': {
-                  backgroundColor: 'rgb(228 126 37)',
+                  borderColor: '#c96208',
+                  backgroundColor: '#e47e25',
                 },
                 margin: 'auto !important',
                 display: 'block'
