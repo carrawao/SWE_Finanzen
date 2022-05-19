@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField} from '@mui/material';
-import {CustomModal} from '../../../common';
+import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select} from '@mui/material';
+import {CustomModal, StyledTextField} from '../../../common';
 
 export const renderAddWatchlistModal = (open, handleClose, errorModal, onChange, onClick) => (
   <CustomModal
@@ -10,7 +10,7 @@ export const renderAddWatchlistModal = (open, handleClose, errorModal, onChange,
     describedby='add_list-modal-description'
     modalTitle='New watchlist:'
     modalBody={() => (
-      <TextField
+      <StyledTextField
         variant='outlined'
         className='d-flex flex-grow-2 pb-3'
         label='Enter name'
@@ -53,7 +53,7 @@ export const renderEditListModal = (open, handleClose, errorModal, onChange, def
       describedby='edit_list-modal-description'
       modalTitle='Rename watchlist:'
       modalBody={() => (
-        <TextField
+        <StyledTextField
           id='outlined-basic'
           variant='outlined'
           className='d-flex flex-grow-2 pb-3'
@@ -103,10 +103,11 @@ export const renderRemoveListModal = (open, handleClose, onClick) => (
         sx={{
           color: 'white',
           width: '5rem',
-          borderColor: 'rgb(228 126 37)',
-          backgroundColor: 'rgb(228 126 37)',
+          borderColor: '#e47e25',
+          backgroundColor: '#e47e25',
           '&:hover': {
-            backgroundColor: 'rgb(228 126 37)',
+            borderColor: '#c96208',
+            backgroundColor: '#e47e25',
           }
         }}
       >

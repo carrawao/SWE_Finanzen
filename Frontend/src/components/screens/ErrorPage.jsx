@@ -1,5 +1,5 @@
 import React from 'react';
-import {Typography, Container, List, ListItem} from '@mui/material';
+import {Typography, Container } from '@mui/material';
 import {Link} from 'react-router-dom';
 
 const ErrorPage = () => (

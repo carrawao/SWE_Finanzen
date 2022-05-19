@@ -1,19 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DashboardScreen renders without crashing 1`] = `
-<Fragment>
-  <ScreensTemplate
+<Router
+  location={
+    Object {
+      "hash": "",
+      "key": "default",
+      "pathname": "/",
+      "search": "",
+      "state": null,
+    }
+  }
+  navigationType="POP"
+  navigator={
+    Object {
+      "action": "POP",
+      "back": [Function],
+      "block": [Function],
+      "createHref": [Function],
+      "forward": [Function],
+      "go": [Function],
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "key": "default",
+        "pathname": "/",
+        "search": "",
+        "state": null,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <DashboardScreen
+    activePortfolio="Portfolio"
     assetsListArray={
       Array [
         Array [],
       ]
     }
-    bodyComponent={[Function]}
+    getAllAssets={[MockFunction]}
+    portfolioData={
+      Object {
+        "Portfolio": Object {
+          "activities": Array [],
+          "cash": Array [],
+          "crypto": Array [],
+          "gains": 0,
+          "name": "Portfolio",
+          "performance": 0,
+          "realisedGains": 0,
+          "shares": Array [],
+          "updated": "1970-01-01",
+          "value": 0,
+        },
+      }
+    }
     searchResult={Array []}
-    selectedNavLinkIndex={0}
+    setActivePortfolio={[MockFunction]}
     setMessageType={[MockFunction]}
+    setPortfolioData={[MockFunction]}
     setSearchResult={[MockFunction]}
     setStatusMessage={[MockFunction]}
+    watchListsArray={Array []}
   />
-</Fragment>
+</Router>
 `;

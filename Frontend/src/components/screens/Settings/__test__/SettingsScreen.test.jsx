@@ -7,6 +7,10 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 Enzyme.configure({adapter: new Adapter()})
 
+jest.mock('../../../../benchi-chatbot/TextToSpeech', () => ({
+  ctx: {}
+}));
+
 it('SettingsScreen renders without crashing', () => {
   const emptyPortfolioData = {
     'Portfolio': {

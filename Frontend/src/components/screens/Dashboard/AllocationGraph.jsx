@@ -28,6 +28,15 @@ const AllocationGraph = props => {
     return labels;
   })();
 
+  const symbols = (() => {
+    let symbols = [];
+    assets.forEach(element => {
+      let symbol = element['symbol'];
+      symbols.push(symbol);
+    });
+    return symbols;
+  })();
+
   const valueData = (() => {
     let valueData = [];
     assets.forEach(element => {
@@ -40,6 +49,7 @@ const AllocationGraph = props => {
     <DoughnutChart
       data={valueData}
       labels={labels}
+      symbols={symbols}
       defaultMiddleDisplayValue={defaultMiddleDisplayValue}
       defaultMiddleDisplayLabel={defaultMiddleDisplayLabel}
     />

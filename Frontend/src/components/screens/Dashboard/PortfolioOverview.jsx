@@ -61,7 +61,7 @@ const PortfolioOverview = props => {
             <IconButton
               aria-label='add a portfolio'
               size='medium'
-              onClick={() => {}}
+              onClick={() => props.setAddPortfolioModal(true)}
             >
               <AddIcon/>
             </IconButton>
@@ -96,6 +96,7 @@ PortfolioOverview.propTypes = {
   activePortfolio: PropTypes.any,
   setActivePortfolio: PropTypes.func,
   portfolioData: PropTypes.object,
+  setAddPortfolioModal: PropTypes.func
 };
 
 export default PortfolioOverview;

@@ -7,6 +7,7 @@ import AllocationGraph from './AllocationGraph';
 import PortfolioOverview from './PortfolioOverview';
 import PortfolioCharts from './PortfolioCharts';
 import ChartButtons from '../AssetDetails/ChartButtons';
+import {RenderAddPortfolioModal} from './Modals/dashboardModals'
 
 /**
  * Component related to the dashboard screen
@@ -15,8 +16,10 @@ import ChartButtons from '../AssetDetails/ChartButtons';
  * @constructor
  */
 const DashboardScreen = props => {
-  const [view, setView] = useState('month');
+  const [view, setView] = useState('all');
+  const [addPortfolioModal, setAddPortfolioModal] = useState(false);
 
+  //adds a dummyCash account to the data
   const dummyCash = () => {
     const cash = [{
       firstActivity: '2900-01-01',     
@@ -46,6 +49,42 @@ const DashboardScreen = props => {
       return portfolioData;
     });
   }
+  
+  //adds a new Portfolio to the data
+  const addPortfolio = (name) => {
+    props.setPortfolioData(prevData => {
+      const portfolioData = {...prevData,
+        [name]: {
+          'name': name,
+          'value': 0,
+          'gains': 0,
+          'realisedGains': 0,
+          'totalGains': 0,
+          'dividends': 0,
+          'performanceWithRealisedGains': 0,
+          'performanceWithoutRealisedGains': 0,
+          'shares': [],
+          'crypto': [],
+          'cash': [],
+          'activities': [],
+          'activitiesLastId': -1,
+          'dailyDataForValueDevelopment': {},
+          'dailyDataForPerformanceGraph': {},
+          'updated': '1970-01-01',
+          'shareValue': 0,
+          'cryptoValue': 0,
+          'cashValue': 0
+        }
+      };
+      return portfolioData;
+    });
+    props.setActivePortfolio(name);
+  }
+
+  // Function to close the modals
+  const handleClose = () => {
+    setAddPortfolioModal(false);
+  }
 
   const navigate = useNavigate();
   const routeChange = path => {
@@ -56,7 +95,7 @@ const DashboardScreen = props => {
     <React.Fragment>
       <Grid
         container
-        className=' col-12 d-flex flex-column flex-xl-row justify-content-center align-items-center'
+        className='col-12 d-flex flex-column flex-xl-row justify-content-center align-items-center'
       >
         <Grid item className='col-11 col-sm-7 col-md-5 col-xl-4'>
           <AllocationGraph
@@ -71,6 +110,7 @@ const DashboardScreen = props => {
               portfolioData={props.portfolioData}
               activePortfolio={props.activePortfolio}
               setActivePortfolio={props.setActivePortfolio}
+              setAddPortfolioModal={setAddPortfolioModal}
             />
           </Box>
           <Box className='d-flex justify-content-center mb-2'>
@@ -79,81 +119,81 @@ const DashboardScreen = props => {
         </Box>
       </Grid>
       {props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment'] && Object.keys(props.portfolioData[props.activePortfolio]['dailyDataForValueDevelopment']).length === 0 ? 
-        <Grid container
-        sx={{
-     
-          marginTop: '30px'
-        }}
-  >
-    <Grid item className='col-12 col-md-3 col-xl-3'
+        <Grid container className='col-12 d-flex flex-column flex-xl-row justify-content-center align-items-center'
           sx={{
-            '@media screen and (min-width: 768px)': {
-              display: 'flex !important',
-              verticalAlign: 'center',
-              justifyContent: 'center'
-            },
-            marginBottom: '50px'
-          }}>
-            
-      <Button
-        className='ms-3'
-        variant='outlined'
-        onClick={() => routeChange('../activities/addActivity')}
-        sx={{
-          color: 'white',
-          borderColor: '#4eb96f',
-          backgroundColor: '#4eb96f',
-          '&:hover': {
-            borderColor: '#068930',
-            backgroundColor: '#4eb96f',
-          },
-          '&.Mui-disabled': {
-            backgroundColor: '#f3f4f6',
-          },
-          margin: 'auto !important',
-          display: 'block'
-        }}
-      >
-        Add Activities
-      </Button>
-    </Grid>
-    <Grid item className='col-12 col-md-9 col-xl-9' sx={{
-      paddingRight: '50px',
-      '@media screen and (max-width: 768px)': {
-        paddingRight: '0px'
-      }
-    }}>
-     <Typography
-      variant='h6'
-      fontWeight='bold'
-      fontSize={{
-        lg: 24,
-        xs: 18
-      }}
-    >
-        Start off by adding a Activity
-      </Typography>
-      <Typography
-        className='mt-2'
-        fontSize={{
-          lg: 20,
-          xs: 16
-        }}
-      >
-        Activities are the base for all data in Bench:market! They track changes in your portfolio and 
-      </Typography>
-      <Typography
-        className='mt-2'
-        fontSize={{
-          lg: 20,
-          xs: 16
-        }}
-      >
-        As soon as you add an activity our algorithms will automatically calculated all important numbers related to your portfolio. If your need any help you can always ask our Chatbot Benchi!
-      </Typography>
-    </Grid>
-
-  </Grid>
+            marginTop: '30px'
+          }}
+        >
+          <Grid item className='col-12 col-md-3 col-xl-3'
+            sx={{
+              '@media screen and (min-width: 768px)': {
+                display: 'flex !important',
+                verticalAlign: 'center',
+                justifyContent: 'center'
+              },
+              marginBottom: '50px'
+            }}
+          >
+            <Button
+              className='ms-3'
+              variant='outlined'
+              onClick={() => routeChange('../activities/addActivity')}
+              sx={{
+                color: 'white',
+                borderColor: '#4eb96f',
+                backgroundColor: '#4eb96f',
+                '&:hover': {
+                  borderColor: '#068930',
+                  backgroundColor: '#4eb96f',
+                },
+                '&.Mui-disabled': {
+                  backgroundColor: '#f3f4f6',
+                },
+                margin: 'auto !important',
+                display: 'block'
+              }}
+            >
+              Add Activities
+            </Button>
+          </Grid>
+          <Grid item className='col-12 col-md-9 col-xl-9' 
+            sx={{
+              paddingRight: '50px',
+              '@media screen and (max-width: 768px)': {
+                paddingRight: '0px'
+              }
+            }}
+          >
+            <Typography
+              variant='h6'
+              fontWeight='bold'
+              fontSize={{
+                lg: 24,
+                xs: 18
+              }}
+            >
+              Start off by adding an Activity
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              Activities are the base for all data in Bench:market! They track changes in your portfolio and allow us to create detailed Charts about your Portfolio.
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              As soon as you add an activity our algorithms will automatically calculated all important numbers related to your portfolio. If your need any help you can always ask our Chatbot Benchi!
+            </Typography>
+          </Grid>
+        </Grid>
         :
         <PortfolioCharts view={view} {...props}/>
       }
@@ -163,6 +203,7 @@ const DashboardScreen = props => {
         onClick={() => dummyCash()}
         sx={{
           margin: '1rem',
+          marginTop: '3rem',
           color: '#4eb96f',
           borderColor: '#4eb96f',
           backgroundColor: 'white',
@@ -190,6 +231,12 @@ const DashboardScreen = props => {
         setStatusMessage={props.setStatusMessage}
         messageType={props.messageType}
         setMessageType={props.setMessageType}
+      />
+      <RenderAddPortfolioModal
+        open={addPortfolioModal}
+        portfolioData={props.portfolioData}
+        handleClose={() => handleClose()}
+        onClick={(newPortfolioName) => addPortfolio(newPortfolioName)}
       />
     </React.Fragment>
 

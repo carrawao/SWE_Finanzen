@@ -52,7 +52,8 @@ const AnalysisScreen = props => {
 
       stockArray.push({
         asset: element.name,
-        percentage: parseFloat(percentage.toFixed(2))
+        percentage: parseFloat(percentage.toFixed(2)),
+        symbol: element.symbol
       })
     });
 
@@ -116,8 +117,6 @@ const AnalysisScreen = props => {
         }
       })
 
-     
-
       if(stockValue){
         percentage = stockValue / value * 100;
 
@@ -145,7 +144,7 @@ const AnalysisScreen = props => {
         })
       }
 
-      if(portfolioData.cashValue ){
+      if(portfolioData.cashValue){
         percentage = portfolioData.cashValue / value * 100;
 
         stockArray.push({
@@ -161,15 +160,18 @@ const AnalysisScreen = props => {
   const getDoughnutChartData = (splitArray) => { //Perpare data for the doughnut chart
     let labelArray = [];
     let dataArray = [];
+    let symbolsArray = [];
 
     splitArray.forEach(arrayElement => {
       labelArray.push(arrayElement.asset)
       dataArray.push(arrayElement.percentage)
+      symbolsArray.push(arrayElement.symbol)
     });
 
     return {
       'labels': labelArray,
-      'data': dataArray
+      'data': dataArray,
+      'symbols': symbolsArray
     }
   }
 
@@ -206,6 +208,7 @@ const AnalysisScreen = props => {
               analysis
               data={doughnutChartData['data']}
               labels={doughnutChartData['labels']}
+              symbols={doughnutChartData['symbols']}
               defaultMiddleDisplayLabel={analysisTypes[analysisType]}
               defaultMiddleDisplayValue={''}
             />
@@ -274,7 +277,7 @@ const AnalysisScreen = props => {
               xs: 18
             }}
           >
-              Start off by adding a Activity
+              Start off by adding an Activity
             </Typography>
             <Typography
               className='mt-2'
@@ -283,7 +286,7 @@ const AnalysisScreen = props => {
                 xs: 16
               }}
             >
-              With activities you can fill your portfolio with your diffrent types of assets.
+              With activities you can fill your portfolio with your different types of assets.
             </Typography>
             <Typography
               className='mt-2'
@@ -292,7 +295,7 @@ const AnalysisScreen = props => {
                 xs: 16
               }}
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+              Come back after adding one and see how your Portfolio is allocated!
             </Typography>
           </Grid>
 

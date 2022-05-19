@@ -3,6 +3,7 @@ import {CircularProgress} from '@mui/material';
 import {BrowserRouter as Router} from 'react-router-dom';
 import AppRoutes from './routes';
 import './App.css';
+import { Loading } from './components/common';
 
 /**
  * App root component with link navigations and routes
@@ -17,7 +18,7 @@ const App = () => (
           transform: 'translate(-50%, -50%)'
         }}
       >
-        <CircularProgress/>
+        <Loading/>
       </div>}>
       <AppRoutes/>
     </Suspense>

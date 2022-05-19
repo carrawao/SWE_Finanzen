@@ -10,7 +10,7 @@ To avoid incompatibility's issues it is recommended to [install](https://nodejs.
 - Node (version 16.14.2)
 - npm (version 8.5.0)
 
-Once the installation is finished, for load the used dependencies it is required to run:
+Once the installation is finished, for loading the used dependencies it is required to run:
 ####`npm install`
 
 ## Available Scripts

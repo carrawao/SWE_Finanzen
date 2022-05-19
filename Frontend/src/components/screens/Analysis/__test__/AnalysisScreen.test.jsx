@@ -8,6 +8,10 @@ import toJson from 'enzyme-to-json';
 
 configure({adapter: new Adapter()});
 
+jest.mock('../../../../benchi-chatbot/TextToSpeech', () => ({
+  ctx: {}
+}));
+
 it('AnalysisScreen renders without crashing', () => {
   const setSearchResult = jest.fn();
   const setPortfolioData = jest.fn();

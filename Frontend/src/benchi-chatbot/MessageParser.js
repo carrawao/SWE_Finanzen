@@ -32,7 +32,7 @@ class MessageParser {
 
   async fetchAnswer(message) {
     try {
-      const response = await fetch(`http://benchmarket.germanywestcentral.cloudapp.azure.com:1880/interpretMessage?message=${message}`, {mode:'cors'})
+      const response = await fetch(`${process.env.REACT_APP_BOTBACKENDURL}/interpretMessage?message=${message}`, {mode:'cors'})
       const json = await response.json();
       return json.answers;
     } catch (e) {

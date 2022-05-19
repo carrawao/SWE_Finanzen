@@ -156,13 +156,51 @@ const ActivitiesScreen = props => {
             Add Activity
           </Button>
         </Grid>
-        <ActivitiesList
-          activePortfolio={props.activePortfolio}
-          portfolioData={props.portfolioData}
-          setPortfolioData={props.setPortfolioData}
-          setSelectedActivityId={setSelectedActivityId}
-          setDeleteActivityModal={setDeleteActivityModal}
-        />
+        {props.portfolioData[props.activePortfolio]['activities'].length === 0 ? 
+          <Grid container
+            sx={{
+              marginTop: '5rem'
+            }}
+          >
+            <Typography
+              variant='h6'
+              fontWeight='bold'
+              fontSize={{
+                lg: 24,
+                xs: 18
+              }}
+            >
+              Start off by adding an Activity
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              Activities are the base for all data in Bench:market! They track changes in your portfolio and allow us to create detailed Charts about your Portfolio.
+            </Typography>
+            <Typography
+              className='mt-2'
+              fontSize={{
+                lg: 20,
+                xs: 16
+              }}
+            >
+              As soon as you add an activity our algorithms will automatically calculated all important numbers related to your portfolio. If your need any help you can always ask our Chatbot Benchi!
+            </Typography>
+          </Grid>
+      
+        :
+          <ActivitiesList
+            activePortfolio={props.activePortfolio}
+            portfolioData={props.portfolioData}
+            setPortfolioData={props.setPortfolioData}
+            setSelectedActivityId={setSelectedActivityId}
+            setDeleteActivityModal={setDeleteActivityModal}
+          />
+        }
       </Container>
     </Grid>
   );
