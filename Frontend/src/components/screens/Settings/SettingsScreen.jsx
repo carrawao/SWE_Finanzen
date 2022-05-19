@@ -40,6 +40,7 @@ const SettingsScreen = props => {
         <Grid container
               sx={{
                 borderRadius: '1rem',
+                border: '3px solid rgb(78 185 111)',
                 padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(78 185 111) 55%, #FFFFFF 0%);'
@@ -121,6 +122,7 @@ const SettingsScreen = props => {
         <Grid container
               sx={{
                 borderRadius: '1rem',
+                border: '3px solid rgb(59 151 210)',
                 padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(59 151 210) 55%, #FFFFFF 0%);'
@@ -186,6 +188,7 @@ const SettingsScreen = props => {
         <Grid container
               sx={{
                 borderRadius: '1rem',
+                border: '3px solid rgb(228 126 37)',
                 padding: '1rem',
                 '@media screen and (max-width: 768px)': {
                   background: 'linear-gradient(180deg, rgb(228 126 37) 55%, #FFFFFF 0%);'
