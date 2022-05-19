@@ -3,9 +3,13 @@ import DashboardScreen from '../DashboardScreen';
 import toJson from 'enzyme-to-json';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import {BrowserRouter} from 'react-router-dom';
 
 Enzyme.configure({adapter: new Adapter()})
 
+jest.mock('../../../../benchi-chatbot/TextToSpeech', () => ({
+  ctx: {}
+}));
 
 it('DashboardScreen renders without crashing', () => {
   const portfolioData = {
@@ -29,8 +33,9 @@ it('DashboardScreen renders without crashing', () => {
   const getAllAssets = jest.fn();
   const setStatusMessage = jest.fn();
   const setMessageType = jest.fn();
+  const addPortfolio = jest.fn();
 
-  const wrapper = shallow(
+  const wrapper = shallow(<BrowserRouter>
     <DashboardScreen
       searchResult={[]}
       setSearchResult={setSearchResult}
@@ -43,7 +48,8 @@ it('DashboardScreen renders without crashing', () => {
       setPortfolioData={setPortfolioData}
       setStatusMessage={setStatusMessage}
       setMessageType={setMessageType}
-    />);
+    />
+  </BrowserRouter>);
 
   expect(toJson(wrapper)).toMatchSnapshot();
 })

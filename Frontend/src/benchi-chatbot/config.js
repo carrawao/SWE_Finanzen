@@ -12,7 +12,6 @@ const config = {
   state: {
     questionNr: 0,
     userPreferences: {experience: '', risk: '', active: false, effort: '', duration: ''},
-    textToSpeech: new TextToSpeech()
   },
   customComponents: {
      // Replaces the default header

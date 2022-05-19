@@ -25,6 +25,10 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedNavigator
 }));
 
+jest.mock('../../../../benchi-chatbot/TextToSpeech', () => ({
+  ctx: {}
+}));
+
 describe('Tests regarding WatchList screen', () => {
   const addToWatchList = jest.fn();
   const setWatchListsArray = jest.fn();
